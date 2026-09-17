@@ -2159,55 +2159,37 @@ body.is-personalization-realtor [data-personalization-home-owner-only]{
 
 .spaces-ai-chats-heading-filter-wrap{
     position: relative;
-    min-width: 0;
-    margin-right: 4px;
+    flex: 0 0 auto;
+    margin: 0 4px 0 auto;
+    opacity: 0;
+    transition: opacity 100ms ease;
+}
+
+.spaces-ai-chats-heading:hover .spaces-ai-chats-heading-filter-wrap,
+.spaces-ai-chats-heading:focus-within .spaces-ai-chats-heading-filter-wrap,
+.spaces-ai-chats-section:hover .spaces-ai-chats-heading-filter-wrap,
+.spaces-ai-chats-heading-filter-wrap.is-open,
+.spaces-ai-chats-heading-filter-wrap.is-filtered{
+    opacity: 1;
 }
 
 .spaces-ai-chats-heading-filter{
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    max-width: 132px;
+    display: grid;
+    place-items: center;
+    width: 24px;
     height: 24px;
-    padding: 0 6px 0 4px;
+    padding: 0;
     border: 0;
-    border-radius: 8px;
+    border-radius: 100px;
     box-sizing: border-box;
-    color: #747474;
-    font: 600 12px/16px "Open Sans", Arial, sans-serif;
     background: transparent;
     cursor: pointer;
 }
 
-.spaces-ai-chats-heading-filter-icon,
-.spaces-ai-chats-heading-filter-icon > img,
-.spaces-ai-chats-heading-filter-icon > .spaces-home-space-initial,
-.spaces-ai-chats-heading-filter-icon > .spaces-no-space-icon{
+.spaces-ai-chats-heading-filter > img{
     display: block;
-    flex: 0 0 16px;
     width: 16px;
     height: 16px;
-}
-
-.spaces-ai-chats-heading-filter-icon > .spaces-home-space-initial{
-    font-size: 9px;
-    line-height: 14px;
-    border-radius: 4px;
-}
-
-.spaces-ai-chats-heading-filter-label{
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.spaces-ai-chats-heading-filter-chevron{
-    display: block;
-    flex: 0 0 16px;
-    width: 16px;
-    height: 16px;
-    opacity: .7;
 }
 
 .spaces-ai-chats-heading-filter:hover,

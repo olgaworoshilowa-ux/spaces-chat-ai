@@ -10,8 +10,6 @@
     const newWrap = section?.querySelector('[data-ai-chats-new-wrap]');
     const newButton = section?.querySelector('[data-ai-chats-new]');
     const sidebarFilter = section?.querySelector('[data-ai-chats-sidebar-filter]');
-    const sidebarFilterIcon = section?.querySelector('[data-ai-chats-sidebar-filter-icon]');
-    const sidebarFilterLabel = section?.querySelector('[data-ai-chats-sidebar-filter-label]');
     const sidebarFilterMenu = section?.querySelector('[data-ai-chats-sidebar-filter-menu]');
     const sidebarFilterWrap = section?.querySelector('.spaces-ai-chats-heading-filter-wrap');
     const page = document.querySelector('[data-ai-chats-page]');
@@ -259,6 +257,7 @@
             slot.menu.style.left = '';
             slot.menu.style.right = '';
             slot.menu.style.minWidth = '';
+            slot.wrap?.classList.remove('is-open');
         });
     };
 
@@ -279,8 +278,8 @@
         },
         {
             button: sidebarFilter,
-            icon: sidebarFilterIcon,
-            label: sidebarFilterLabel,
+            icon: null,
+            label: null,
             menu: sidebarFilterMenu,
             wrap: sidebarFilterWrap,
             iconSize: 16
@@ -320,6 +319,7 @@
         filterSlots().forEach(slot => {
             if (slot.label) slot.label.textContent = title;
             slot.button?.setAttribute('aria-label', `Filter chats by space: ${title}`);
+            slot.wrap?.classList.toggle('is-filtered', pageSpaceFilter !== 'all');
             setFilterIcon(slot, selected);
         });
         renderSpaceFilterMenu();
@@ -390,6 +390,7 @@
         }
         slot.menu.hidden = false;
         slot.button?.setAttribute('aria-expanded', 'true');
+        slot.wrap?.classList.add('is-open');
     };
 
     const spaceBadge = space => {
