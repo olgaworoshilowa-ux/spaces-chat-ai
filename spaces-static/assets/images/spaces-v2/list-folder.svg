@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Folder" clip-path="url(#clip0_0_349)">
+<g id="Rectangle">
+<path d="M0 1.92857C0 0.863451 0.844263 0 1.88571 0H7.52003C7.92851 0 8.31152 0.202969 8.54708 0.544264L9.68149 2.18788C9.91705 2.52917 10.3001 2.73214 10.7085 2.73214H20.1143C21.1557 2.73214 22 3.59559 22 4.66071V16.0714C22 17.1365 21.1557 18 20.1143 18H1.88571C0.844263 18 0 17.1365 0 16.0714V1.92857Z" fill="var(--fill-0, #B0DDFD)"/>
+<path d="M1.88574 0.5H7.52051C7.7615 0.500157 7.99191 0.619758 8.13574 0.828125L9.26953 2.47168C9.59673 2.94575 10.1332 3.23242 10.709 3.23242H20.1143C20.869 3.23242 21.5 3.8615 21.5 4.66113V16.0713C21.5 16.8709 20.869 17.5 20.1143 17.5H1.88574C1.13097 17.5 0.5 16.8709 0.5 16.0713V1.92871C0.5 1.12908 1.13097 0.5 1.88574 0.5Z" stroke="var(--stroke-0, black)" stroke-opacity="0.8" style="mix-blend-mode:overlay"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_349">
+<rect width="22" height="18" fill="white"/>
+</clipPath>
+</defs>
+</svg>
