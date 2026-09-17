@@ -27,8 +27,8 @@
     const artifactPreviewImage = document.querySelector('[data-home-artifact-preview-image]');
     const artifactPreviewClose = document.querySelector('[data-home-artifact-preview-close]');
     const homeThread = document.querySelector('[data-home-thread]');
-    const bubbleIcon = '/spaces-static/assets/images/sidebar/layout-aa/ai-chat-bubble.svg';
-    const moreIcon = '/spaces-static/assets/images/sidebar/more.svg';
+    const bubbleIcon = './assets/images/sidebar/layout-aa/ai-chat-bubble.svg';
+    const moreIcon = './assets/images/sidebar/more.svg';
 
     if (!section || !list) return;
 
@@ -249,35 +249,35 @@
             id: 'demo-floor-plan',
             title: 'Generated floor plan',
             type: 'Floor plan',
-            previewUrl: '/spaces-static/assets/images/spaces-v2/inside-section-file.webp'
+            previewUrl: './assets/images/spaces-v2/inside-section-file.webp'
         },
         {
             test: /stage the living room|staging/i,
             id: 'demo-staging',
             title: 'Living room staging',
             type: 'Render',
-            previewUrl: '/spaces-static/assets/images/spaces/card-image-1.webp'
+            previewUrl: './assets/images/spaces/card-image-1.webp'
         },
         {
             test: /home tour|walkthrough/i,
             id: 'demo-tour',
             title: 'Home tour',
             type: '360° walkthrough',
-            previewUrl: '/spaces-static/assets/images/spaces-v2/collection-preview.png'
+            previewUrl: './assets/images/spaces-v2/collection-preview.png'
         },
         {
             test: /furnish the bedroom/i,
             id: 'demo-bedroom',
             title: 'Bedroom furniture',
             type: 'Render',
-            previewUrl: '/spaces-static/assets/images/spaces/card-image-1.webp'
+            previewUrl: './assets/images/spaces/card-image-1.webp'
         },
         {
             test: /without lightn/i,
             id: 'demo-lighting',
             title: 'Lighting check',
             type: 'Note',
-            previewUrl: '/spaces-static/assets/images/spaces-v2/inside-section-file.webp'
+            previewUrl: './assets/images/spaces-v2/inside-section-file.webp'
         }
     ];
 
@@ -300,7 +300,7 @@
                 kind: 'listing',
                 title: spaceTitle ? `Listing: ${spaceTitle}` : 'Listing draft',
                 type: 'Listing',
-                previewUrl: '/listings-final/photos/villa.jpg'
+                previewUrl: '../listings-final/photos/villa.jpg'
             });
             const include = snapshot?.listingInclude || [];
             if (include.includes('floor-plan')) {
@@ -309,7 +309,7 @@
                     kind: 'file',
                     title: 'Floor plan',
                     type: 'Floor plan',
-                    previewUrl: '/spaces-static/assets/images/spaces-v2/inside-section-file.webp'
+                    previewUrl: './assets/images/spaces-v2/inside-section-file.webp'
                 });
             }
             if (include.includes('tour')) {
@@ -318,7 +318,7 @@
                     kind: 'file',
                     title: 'Home tour',
                     type: '360° walkthrough',
-                    previewUrl: '/spaces-static/assets/images/spaces-v2/collection-preview.png'
+                    previewUrl: './assets/images/spaces-v2/collection-preview.png'
                 });
             }
         }
@@ -331,7 +331,7 @@
                     ? `Bedroom · ${snapshot.furnishStyle}`
                     : 'Bedroom floor plan',
                 type: 'Floor plan',
-                previewUrl: '/spaces-static/assets/images/spaces-v2/inside-section-file.webp'
+                previewUrl: './assets/images/spaces-v2/inside-section-file.webp'
             });
         }
 

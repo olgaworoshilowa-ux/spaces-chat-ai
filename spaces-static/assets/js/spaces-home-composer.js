@@ -21,10 +21,10 @@
     const uploadInput = home?.querySelector('[data-home-composer-file]');
     const sendButton = home?.querySelector('[data-home-composer-send]');
     const sendIcon = home?.querySelector('[data-home-composer-send-icon]');
-    const voiceIconSrc = '/spaces-static/assets/images/spaces-v2/home-composer/voice.svg';
-    const sendIconSrc = '/spaces-static/assets/images/spaces-v2/home-composer/send.svg';
-    const checkIcon = '/spaces-static/assets/images/sidebar/dropdown-check.svg';
-    const fallbackPreview = '/spaces-static/assets/images/spaces-v2/collection-preview.png';
+    const voiceIconSrc = './assets/images/spaces-v2/home-composer/voice.svg';
+    const sendIconSrc = './assets/images/spaces-v2/home-composer/send.svg';
+    const checkIcon = './assets/images/sidebar/dropdown-check.svg';
+    const fallbackPreview = './assets/images/spaces-v2/collection-preview.png';
     const scopeStorageKey = 'planner5d-spaces-v2-home-composer-scope';
     const modeStorageKey = 'planner5d-spaces-v2-home-composer-mode';
     const modes = ['Lite', 'Pro'];

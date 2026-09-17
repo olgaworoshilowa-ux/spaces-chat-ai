@@ -4,7 +4,7 @@
     const storageKey = 'planner5d-spaces-v2-user-profile';
     const defaultProfileVersionKey = 'planner5d-spaces-v2-user-profile-default-version';
     const defaultProfileVersion = 'demo-2026-07-24';
-    const assetUrl = path => `/spaces-static/assets/${path}`;
+    const assetUrl = path => `./assets/${path}`;
     const fallbackImage = assetUrl('images/spaces-v2/collection-preview.png');
     const fallbackSpaceImage = assetUrl('images/spaces/card-image-1.webp');
     const emptyCollectionIcons = {
@@ -322,7 +322,7 @@
             toggle.setAttribute('aria-label', `${isExpanded ? 'Collapse' : 'Expand'} ${collection} folders`);
             toggle.setAttribute('aria-expanded', String(isExpanded));
             const toggleIcon = document.createElement('img');
-            toggleIcon.src = '/spaces-static/assets/images/sidebar/chevron-down.svg';
+            toggleIcon.src = './assets/images/sidebar/chevron-down.svg';
             toggleIcon.alt = '';
             toggleIcon.setAttribute('aria-hidden', 'true');
             toggle.append(toggleIcon);

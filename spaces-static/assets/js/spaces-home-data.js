@@ -8,9 +8,9 @@
     const forYouSection = home?.querySelector('[data-home-for-you]');
     const forYouToggle = home?.querySelector('[data-home-for-you-toggle]');
     const forYouContent = home?.querySelector('[data-home-for-you-content]');
-    const fallbackPreview = '/spaces-static/assets/images/spaces-v2/collection-preview.png';
-    const fallbackSpacePreview = '/spaces-static/assets/images/spaces/card-image-1.webp';
-    const moreIcon = '/spaces-static/assets/images/spaces-v2/list-more.svg';
+    const fallbackPreview = './assets/images/spaces-v2/collection-preview.png';
+    const fallbackSpacePreview = './assets/images/spaces/card-image-1.webp';
+    const moreIcon = './assets/images/spaces-v2/list-more.svg';
     const collapsedRecentLimit = 5;
 
     if (!home || !recentList || !spacesList || !window.SpacesAccountData?.load) return;

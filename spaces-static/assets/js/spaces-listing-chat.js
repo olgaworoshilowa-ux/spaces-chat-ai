@@ -49,7 +49,7 @@
 
     const isListingJob = text => String(text || '').trim().toLowerCase() === 'turn this home into a listing';
     const isFurnishJob = text => /furnish/i.test(String(text || ''));
-    const FURNISH_PLAN_IMAGE = '/spaces-static/assets/images/spaces-v2/inside-section-file.webp';
+    const FURNISH_PLAN_IMAGE = './assets/images/spaces-v2/inside-section-file.webp';
     const styleOptions = [
         { id: 'scandinavian', label: 'Scandinavian' },
         { id: 'modern', label: 'Modern' },
@@ -530,9 +530,9 @@
         if (isTemplate) card.classList.add('is-template');
         card.innerHTML = `
             <div class="spaces-home-listing-card-media">
-                <figure class="is-hero"><img src="/listings-final/photos/villa.jpg" alt=""></figure>
-                <figure class="is-top"><img src="/listings-final/photos/facade.jpg" alt=""></figure>
-                <figure class="is-bottom"><img src="/listings-final/photos/kitchen.jpg" alt=""></figure>
+                <figure class="is-hero"><img src="../listings-final/photos/villa.jpg" alt=""></figure>
+                <figure class="is-top"><img src="../listings-final/photos/facade.jpg" alt=""></figure>
+                <figure class="is-bottom"><img src="../listings-final/photos/kitchen.jpg" alt=""></figure>
             </div>
             <div class="spaces-home-listing-card-body">
                 ${isTemplate ? '<p class="spaces-home-listing-card-template">This is a template</p>' : ''}

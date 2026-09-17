@@ -2,11 +2,11 @@
     'use strict';
 
     const PREVIEW_IMAGES = [
-        '/spaces-static/assets/images/spaces-v2/all-spaces/space-1.png',
-        '/spaces-static/assets/images/spaces-v2/all-spaces/space-2.png',
-        '/spaces-static/assets/images/spaces-v2/all-spaces/space-3.png'
+        './assets/images/spaces-v2/all-spaces/space-1.png',
+        './assets/images/spaces-v2/all-spaces/space-2.png',
+        './assets/images/spaces-v2/all-spaces/space-3.png'
     ];
-    const SHARED_ICON = '/spaces-static/assets/images/spaces-v2/all-spaces/shared.svg';
+    const SHARED_ICON = './assets/images/spaces-v2/all-spaces/shared.svg';
     const page = document.querySelector('[data-all-spaces-page]');
     const grid = page?.querySelector('[data-all-spaces-grid]');
     const title = page?.querySelector('[data-all-spaces-title]');
