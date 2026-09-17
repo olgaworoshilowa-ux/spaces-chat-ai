@@ -49,7 +49,7 @@
 
     const isListingJob = text => String(text || '').trim().toLowerCase() === 'turn this home into a listing';
     const isFurnishJob = text => /furnish/i.test(String(text || ''));
-    const FURNISH_PLAN_IMAGE = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/inside-section-file.webp';
+    const FURNISH_PLAN_IMAGE = '/spaces-static/assets/images/spaces-v2/inside-section-file.webp';
     const styleOptions = [
         { id: 'scandinavian', label: 'Scandinavian' },
         { id: 'modern', label: 'Modern' },

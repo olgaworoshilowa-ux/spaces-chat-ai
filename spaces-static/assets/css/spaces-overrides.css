@@ -8171,25 +8171,25 @@ body.is-new-chat-placement-option3.is-home-feed .spaces-home:not(.is-centered-ch
     letter-spacing: -.64px;
 }
 
-/* Option 3 greeting only on Home feed — never on New chat */
+/* Option 3 greeting: Home feed + empty New chat (same copy) */
 [data-chat-placement-option3-copy]{
     display: none !important;
 }
 
-body.is-new-chat-placement-option3.is-home-feed .spaces-home:not(.is-centered-chat) [data-chat-placement-option3-copy]{
+body.is-new-chat-placement-option3 .spaces-home:not(.is-centered-chat) [data-chat-placement-option3-copy]{
     display: flex !important;
     flex-direction: column;
     align-items: center;
     gap: 8px;
 }
 
-body.is-new-chat-placement-option3.is-home-feed .spaces-home-option3-hi{
+body.is-new-chat-placement-option3 .spaces-home-option3-hi{
     display: block;
     font: 700 32px/40px "Open Sans", Arial, sans-serif;
     letter-spacing: -.64px;
 }
 
-body.is-new-chat-placement-option3.is-home-feed .spaces-home-option3-prompt{
+body.is-new-chat-placement-option3 .spaces-home-option3-prompt{
     display: block;
     color: var(--space-neutral-text-beta, #575757);
     font: 400 18px/28px "Open Sans", Arial, sans-serif;
@@ -8206,19 +8206,26 @@ body.is-new-chat-placement-option3.is-home-feed .spaces-home:not(.is-centered-ch
     display: none !important;
 }
 
-body.is-new-chat-placement-option3.is-home-feed .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1 [data-chat-ui-option1-copy],
-body.is-new-chat-placement-option3.is-home-feed .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1 [data-chat-ui-option2-copy]{
+body.is-new-chat-placement-option3 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1 [data-chat-ui-option1-copy],
+body.is-new-chat-placement-option3 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1 [data-chat-ui-option2-copy]{
     display: none !important;
 }
 
-body.is-new-chat-placement-option3.is-home-feed .spaces-home.is-centered-chat .spaces-home-for-you,
-body.is-new-chat-placement-option3.is-home-feed .spaces-home.is-centered-chat [data-chat-placement-option3-copy]{
+/* Keep For you cards off New chat; greeting stays visible on empty New chat */
+body.is-new-chat-placement-option3 .spaces-home.is-centered-chat .spaces-home-for-you,
+body.is-new-chat-placement-option3 .spaces-home.is-centered-chat [data-chat-placement-option3-copy]{
     display: none !important;
 }
 
-body.is-new-chat-placement-option3.is-home-feed .spaces-home.is-centered-chat .spaces-home-composer-hero > h1 [data-chat-ui-option1-copy],
-body.is-new-chat-placement-option3.is-home-feed .spaces-home.is-centered-chat .spaces-home-composer-hero > h1 [data-chat-ui-option2-copy]{
-    display: revert;
+body.is-new-chat-placement-option3:not(.is-home-feed) .spaces-home:not(.is-centered-chat) .spaces-home-composer-mark{
+    display: none;
+}
+
+body.is-new-chat-placement-option3:not(.is-home-feed) .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1{
+    max-width: none;
+    margin: 0 0 24px;
+    font: 700 32px/40px "Open Sans", Arial, sans-serif;
+    letter-spacing: -.64px;
 }
 
 .spaces-home-recommendation{
@@ -9320,12 +9327,6 @@ body > .is-spaces-item-menu-portal [data-add-to-new-chat] svg path{
     overflow: visible;
     background: #fff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .16);
-}
-
-.spaces-wrap > main.get-started-main .spaces-main-content .spaces-inside-section .space-section-item:has(.spaces-item-dropdown:hover) .spaces-ai-generated-badge,
-.spaces-wrap > main.get-started-main .spaces-main-content .spaces-inside-section .space-section-item:has(.spaces-item-dropdown:focus-within) .spaces-ai-generated-badge,
-.spaces-wrap > main.get-started-main .spaces-main-content .spaces-inside-section .space-section-item:has(.spaces-item-dropdown.is-open) .spaces-ai-generated-badge{
-    visibility: hidden;
 }
 
 .spaces-item-dropdown [data-add-to-new-chat] svg,

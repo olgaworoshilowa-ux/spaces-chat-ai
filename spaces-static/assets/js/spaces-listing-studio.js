@@ -4,6 +4,7 @@
     const SESSION_KEY = 'listings-final-session-v2';
     const EMBEDDED_KEY = 'listings-spaces-embedded';
     const RETURN_KEY = 'listings-spaces-return';
+    const RETURN_VIEW_KEY = 'listings-spaces-return-view';
     const LISTING_ID = 'spaces-draft';
     const PHOTO_BASE = '/listings-final/photos';
     const studio = document.querySelector('[data-listing-studio]');
@@ -61,12 +62,34 @@
         centeredChat: Boolean(homePage?.classList.contains('is-centered-chat')),
         homeSurface: homePage?.dataset.homeSurface || '',
         homeFeed: document.body.classList.contains('is-home-feed'),
-        fabHidden: Boolean(fab?.hidden)
+        fabHidden: Boolean(fab?.hidden),
+        chatSnapshot: window.SpacesListingChat?.isActive?.()
+            ? window.SpacesListingChat.serialize()
+            : null
     });
 
+    const readStoredReturnView = () => {
+        try {
+            const raw = sessionStorage.getItem(RETURN_VIEW_KEY);
+            return raw ? JSON.parse(raw) : null;
+        } catch {
+            return null;
+        }
+    };
+
+    const storeReturnView = view => {
+        try {
+            if (view) sessionStorage.setItem(RETURN_VIEW_KEY, JSON.stringify(view));
+            else sessionStorage.removeItem(RETURN_VIEW_KEY);
+        } catch {
+            // sessionStorage may be unavailable in private mode
+        }
+    };
+
     const restoreReturnView = () => {
-        const view = returnView;
+        const view = returnView || readStoredReturnView();
         returnView = null;
+        storeReturnView(null);
         mainContent.classList.remove('is-home-page', 'is-all-spaces-page', 'is-ai-chats-page', 'is-listing-studio-page');
         document.body.classList.remove('is-space-home-page', 'is-home-feed');
         if (homePage) {
@@ -79,6 +102,13 @@
         const aiChatsPage = document.querySelector('[data-ai-chats-page]');
         if (aiChatsPage) aiChatsPage.hidden = true;
 
+        const restoreChat = () => {
+            if (view?.chatSnapshot) {
+                window.SpacesListingChat?.restore?.(view.chatSnapshot);
+            }
+            window.SpacesAiChats?.syncChatHeader?.();
+        };
+
         if (!view || view.homePage) {
             mainContent.classList.add('is-home-page');
             if (view?.spaceHome) document.body.classList.add('is-space-home-page');
@@ -88,7 +118,7 @@
                 homePage.classList.toggle('is-centered-chat', Boolean(view?.centeredChat ?? true));
             }
             if (fab) fab.hidden = true;
-            window.SpacesAiChats?.syncChatHeader?.();
+            restoreChat();
             return;
         }
 
@@ -120,7 +150,7 @@
             homePage.classList.add('is-centered-chat');
         }
         if (fab) fab.hidden = true;
-        window.SpacesAiChats?.syncChatHeader?.();
+        restoreChat();
     };
 
     const photoUrl = file => `${PHOTO_BASE}/${file}`;
@@ -281,7 +311,7 @@
                 }
             ],
             editorOption: 'option2',
-            option2Panel: 'content',
+            option2Panel: 'chat',
             credits: 80,
             generatedPayload: null,
             briefPending: false
@@ -291,8 +321,20 @@
         sessionStorage.setItem(RETURN_KEY, `${window.location.pathname}${window.location.search}${window.location.hash}`);
     };
 
+    const listingsFinalUrl = (hash = '') => {
+        const here = window.location.pathname || '';
+        // GitHub project pages live under /spaces-chat-ai/…
+        const base = here.includes('/spaces-chat-ai/')
+            ? '/spaces-chat-ai/listings-final/index.html'
+            : '/listings-final/index.html';
+        return `${base}?from=spaces&t=${Date.now()}${hash}`;
+    };
+
     const open = (options = {}) => {
+        // Keep the Spaces listing chat alive while the editor is open.
+        window.SpacesListingChat?.prepareOpen?.();
         returnView = captureReturnView();
+        storeReturnView(returnView);
         mainContent.classList.remove('is-home-page', 'is-all-spaces-page', 'is-ai-chats-page');
         document.body.classList.remove('is-space-home-page');
         mainContent.classList.add('is-listing-studio-page');
@@ -304,29 +346,39 @@
         studio.hidden = false;
         if (fab) fab.hidden = true;
         window.SpacesPrototypeNavigation?.closeCollection?.({ restoreScroll: false });
-        window.SpacesCopilotPanel?.close();
+        // hide() only collapses the panel — close() would wipe the listing chat.
+        window.SpacesCopilotPanel?.hide?.();
         seedSession(createListing(options));
         const mode = options.mode === 'preview' ? 'preview' : 'edit';
         const hash = mode === 'preview'
             ? `#/listing/${LISTING_ID}/preview`
             : `#/listing/${LISTING_ID}`;
-        frame.src = `/listings-final/index.html?from=spaces&t=${Date.now()}${hash}`;
+        frame.src = listingsFinalUrl(hash);
     };
 
+    let closing = false;
     const close = () => {
+        if (closing) return;
         if (!mainContent.classList.contains('is-listing-studio-page') && studio.hidden) return;
-        studio.hidden = true;
-        frame.src = 'about:blank';
-        sessionStorage.removeItem(EMBEDDED_KEY);
-        sessionStorage.removeItem(RETURN_KEY);
-        document.body.classList.remove('is-listing-studio-open');
-        restoreReturnView();
+        closing = true;
+        try {
+            studio.hidden = true;
+            frame.src = 'about:blank';
+            sessionStorage.removeItem(EMBEDDED_KEY);
+            sessionStorage.removeItem(RETURN_KEY);
+            document.body.classList.remove('is-listing-studio-open');
+            mainContent.classList.remove('is-listing-studio-page');
+            restoreReturnView();
+        } finally {
+            window.setTimeout(() => {
+                closing = false;
+            }, 0);
+        }
     };
 
     window.addEventListener('message', event => {
         if (event.data?.type !== 'listings-spaces-close') return;
-        // Prefer the studio iframe as source; also accept same-site origins
-        // (localhost vs 127.0.0.1) so Back always returns to Spaces.
+        // Accept close from the studio iframe or same-site origins.
         const fromFrame = frame.contentWindow && event.source === frame.contentWindow;
         const sameSite = (() => {
             try {
@@ -338,18 +390,53 @@
                 return false;
             }
         })();
-        if (!fromFrame && event.origin !== window.location.origin && !sameSite) return;
+        if (!fromFrame && event.origin !== window.location.origin && !sameSite && event.origin !== '*') {
+            // Still close if studio is open — Back must never trap users on the wizard.
+            if (!isOpen()) return;
+        }
         close();
     });
 
+    // If the iframe leaves the listing route (e.g. lands on Start wizard),
+    // exit the studio instead of trapping the user there.
+    frame.addEventListener('load', () => {
+        if (!isOpen() || closing) return;
+        try {
+            const win = frame.contentWindow;
+            if (!win || win.location.href === 'about:blank') return;
+            const hash = String(win.location.hash || '');
+            const path = String(win.location.pathname || '');
+            const onListing = hash.includes('/listing/');
+            const onListingsApp = path.includes('listings-final');
+            if (onListingsApp && !onListing) close();
+        } catch {
+            // Cross-origin — ignore
+        }
+    });
+
     document.addEventListener('spaces-navigation-start', () => {
+        if (closing) return;
+        if (studio.hidden && !mainContent.classList.contains('is-listing-studio-page')) return;
+        // Sidebar navigation while studio is open: leave without restoring chat.
+        closing = true;
         studio.hidden = true;
         frame.src = 'about:blank';
         sessionStorage.removeItem(EMBEDDED_KEY);
         sessionStorage.removeItem(RETURN_KEY);
+        storeReturnView(null);
         returnView = null;
         mainContent.classList.remove('is-listing-studio-page');
         document.body.classList.remove('is-listing-studio-open');
+        window.setTimeout(() => {
+            closing = false;
+        }, 0);
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && isOpen()) {
+            event.preventDefault();
+            close();
+        }
     });
 
     window.SpacesListingStudio = { open, close, isOpen };

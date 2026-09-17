@@ -21,10 +21,10 @@
     const uploadInput = home?.querySelector('[data-home-composer-file]');
     const sendButton = home?.querySelector('[data-home-composer-send]');
     const sendIcon = home?.querySelector('[data-home-composer-send-icon]');
-    const voiceIconSrc = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/home-composer/voice.svg';
-    const sendIconSrc = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/home-composer/send.svg';
-    const checkIcon = '/spaces-chat-ai/spaces-static/assets/images/sidebar/dropdown-check.svg';
-    const fallbackPreview = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/collection-preview.png';
+    const voiceIconSrc = '/spaces-static/assets/images/spaces-v2/home-composer/voice.svg';
+    const sendIconSrc = '/spaces-static/assets/images/spaces-v2/home-composer/send.svg';
+    const checkIcon = '/spaces-static/assets/images/sidebar/dropdown-check.svg';
+    const fallbackPreview = '/spaces-static/assets/images/spaces-v2/collection-preview.png';
     const scopeStorageKey = 'planner5d-spaces-v2-home-composer-scope';
     const modeStorageKey = 'planner5d-spaces-v2-home-composer-mode';
     const modes = ['Lite', 'Pro'];
@@ -454,18 +454,14 @@
     home.querySelectorAll('[data-home-composer-suggestion]').forEach(button => {
         button.addEventListener('click', () => {
             const text = button.dataset.homeComposerSuggestion || button.textContent.trim();
-            if (String(text).trim().toLowerCase() === 'turn this home into a listing') {
-                window.SpacesListingChat?.start();
-                return;
-            }
-            if (/furnish/i.test(String(text))) {
-                window.SpacesListingChat?.startFurnish(text);
-                return;
-            }
-            input.value = text;
+            // Suggestions only fill the composer. The user sends when ready.
+            input.value = String(text || '').trim();
             syncPlaceholder();
             resizeInput();
             input.focus();
+            // Move caret to the end so the user can edit before sending.
+            const length = input.value.length;
+            input.setSelectionRange?.(length, length);
         });
     });
 

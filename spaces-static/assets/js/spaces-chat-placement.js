@@ -7,8 +7,8 @@
     const sendIcon = dock?.querySelector('[data-chat-placement-send-icon]');
     if (!dock || !input || !sendButton) return;
 
-    const voiceIconSrc = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/home-composer/voice.svg';
-    const sendIconSrc = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/home-composer/send.svg';
+    const voiceIconSrc = '/spaces-static/assets/images/spaces-v2/home-composer/voice.svg';
+    const sendIconSrc = '/spaces-static/assets/images/spaces-v2/home-composer/send.svg';
 
     const isPlacementOption2 = () => document.body.classList.contains('is-new-chat-placement-option2');
     const isInChat = () => Boolean(document.querySelector('.spaces-home.is-centered-chat'));

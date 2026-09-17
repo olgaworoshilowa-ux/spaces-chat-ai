@@ -1,0 +1,16 @@
+id,hash,uid,space_id,parent_id,name,tags,cdate,udate,deleted
+207171984,da96e0a1ff0844cb8237986f3719a8bd,146673030,29071888,0,Maintenance & Repair,"[""color_blue"",""maintenance"",""builtin""]",2026-07-08 16:05:26,2026-07-08 16:05:26,0
+207171980,fe01270494a004393db43804ebe4d27e,146673030,29071888,0,Warranties & Manuals,"[""color_green"",""warranties"",""builtin""]",2026-07-08 16:05:26,2026-07-08 16:05:26,0
+207171976,66af539075a53992eb836b2e1bd52b8b,146673030,29071888,0,Ownership & Legal,"[""color_yellow"",""legal"",""builtin""]",2026-07-08 16:05:26,2026-07-08 16:05:26,0
+207171972,cc67e240328cd67ff31d8f4869ae0e7a,146673030,29071888,0,Bills & Invoices,"[""color_pink"",""bills"",""builtin""]",2026-07-08 16:05:26,2026-07-08 16:05:26,0
+207171968,0a7fdca5e0520962708179884fe5a7ef,146673030,29071888,0,Photos & Interiors,"[""color_blue"",""interior_photos"",""builtin""]",2026-07-08 16:05:26,2026-07-08 16:05:26,0
+207171964,fb5151259cf0d732ec0f9b88e9743e35,146673030,29071888,0,Plans & Designs,"[""color_purple"",""plans"",""builtin""]",2026-07-08 16:05:26,2026-07-08 16:05:26,0
+207171960,e5e2ae181a71217ecf632512272fb9d5,146673030,29071888,0,Unsorted,"[""unsorted"",""color_green"",""builtin""]",2026-07-08 16:05:26,2026-07-08 16:05:26,0
+118978590,e225959689bbf0a65f7603b67c5d0088,146673030,12053332,0,__system__,"[""builtin"",""system""]",2026-05-05 21:07:22,2026-05-05 21:07:22,0
+79130488,90bbd4383d0c47b3a1ec947b41b6df33,146673030,12053332,0,Maintenance & Repair,"[""color_blue"",""maintenance"",""builtin""]",2026-03-31 16:08:04,2026-03-31 16:08:04,0
+79130484,174e6c6c204c9d866e6b3fffb944c9c9,146673030,12053332,0,Warranties & Manuals,"[""color_green"",""warranties"",""builtin""]",2026-03-31 16:08:04,2026-03-31 16:08:04,0
+79130480,4fa619e9c641e74a61ca80439023a171,146673030,12053332,0,Ownership & Legal,"[""color_yellow"",""legal"",""builtin""]",2026-03-31 16:08:04,2026-03-31 16:08:04,0
+79130476,46f4419bd9d0fe34b47d5cd093b18770,146673030,12053332,0,Bills & Invoices,"[""color_pink"",""bills"",""builtin""]",2026-03-31 16:08:04,2026-03-31 16:08:04,0
+79130472,61a592b928d3eba017af787ae0d69dd5,146673030,12053332,0,Photos & Interiors,"[""color_blue"",""interior_photos"",""builtin""]",2026-03-31 16:08:04,2026-03-31 16:08:04,0
+79130468,16572f93fcec4aa71a4f76a70c69a67e,146673030,12053332,0,Plans & Designs,"[""color_purple"",""plans"",""builtin""]",2026-03-31 16:08:04,2026-03-31 16:08:04,0
+79130464,1ff6c58adcd8a5b9e4c0ec9f50fab87b,146673030,12053332,0,Unsorted,"[""unsorted"",""color_green"",""builtin""]",2026-03-31 16:08:04,2026-03-31 16:08:04,0

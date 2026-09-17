@@ -18,8 +18,8 @@
     const globalPage = document.querySelector('[data-global-search-page]');
     const homeResults = home?.querySelector('[data-home-global-results]');
     const resultViews = [globalPage, homeResults].filter(Boolean);
-    const fallbackPreview = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/collection-preview.png';
-    const moreIcon = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/list-more.svg';
+    const fallbackPreview = '/spaces-static/assets/images/spaces-v2/collection-preview.png';
+    const moreIcon = '/spaces-static/assets/images/spaces-v2/list-more.svg';
     const resultLimit = 5;
     const fileTypeDefinitions = [
         { label: 'Floor Plans', aliases: ['floor plans', 'floor plan', 'projects', 'project', 'plans'] },

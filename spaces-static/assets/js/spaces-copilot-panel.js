@@ -25,10 +25,10 @@
     const scopeIcon = panel?.querySelector('[data-copilot-scope-icon]');
     const scopeLabel = panel?.querySelector('[data-copilot-scope-label]');
     const scopeMenu = panel?.querySelector('[data-copilot-scope-menu]');
-    const voiceSrc = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/home-composer/voice.svg';
-    const sendSrc = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/home-composer/send.svg';
-    const allSpacesIcon = '/spaces-chat-ai/spaces-static/assets/images/spaces-v2/home-composer/space.svg';
-    const checkIcon = '/spaces-chat-ai/spaces-static/assets/images/sidebar/dropdown-check.svg';
+    const voiceSrc = '/spaces-static/assets/images/spaces-v2/home-composer/voice.svg';
+    const sendSrc = '/spaces-static/assets/images/spaces-v2/home-composer/send.svg';
+    const allSpacesIcon = '/spaces-static/assets/images/spaces-v2/home-composer/space.svg';
+    const checkIcon = '/spaces-static/assets/images/sidebar/dropdown-check.svg';
     const modeStorageKey = 'planner5d-spaces-v2-home-composer-mode';
     const scopeStorageKey = 'planner5d-spaces-v2-home-composer-scope';
     let selectedMode = 'Lite';
