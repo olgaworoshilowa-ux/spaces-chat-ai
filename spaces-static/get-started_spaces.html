@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=badge-stay-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=space-filter-1">
 
         <title>Get Started Spaces</title>
 
@@ -1426,10 +1426,22 @@
             <section class="spaces-ai-chats-page" aria-labelledby="spaces-ai-chats-page-title" data-ai-chats-page hidden>
                 <header class="spaces-ai-chats-page-header">
                     <h1 id="spaces-ai-chats-page-title">AI chats</h1>
-                    <button type="button" class="spaces-ai-chats-page-new" data-ai-chats-page-new>
-                        <img src="./assets/images/spaces-v2/all-spaces/create-plus.svg" width="24" height="24" alt="" aria-hidden="true">
-                        <span>New chat</span>
-                    </button>
+                    <div class="spaces-ai-chats-page-actions">
+                        <div class="spaces-ai-chats-page-filter-wrap">
+                            <button type="button" class="spaces-ai-chats-page-filter" data-ai-chats-space-filter aria-haspopup="listbox" aria-expanded="false" aria-controls="spaces-ai-chats-space-filter-menu" aria-label="Filter chats by space">
+                                <span class="spaces-ai-chats-page-filter-icon" data-ai-chats-space-filter-icon>
+                                    <img src="./assets/images/spaces-v2/home-composer/space.svg" width="20" height="20" alt="" aria-hidden="true">
+                                </span>
+                                <span class="spaces-ai-chats-page-filter-label" data-ai-chats-space-filter-label>All spaces</span>
+                                <img class="spaces-ai-chats-page-filter-chevron" src="./assets/images/spaces-v2/list-chevron.svg" width="16" height="16" alt="" aria-hidden="true">
+                            </button>
+                            <div id="spaces-ai-chats-space-filter-menu" class="spaces-home-composer-scope-menu spaces-ai-chats-page-filter-menu" role="listbox" aria-label="Filter by space" hidden data-ai-chats-space-filter-menu></div>
+                        </div>
+                        <button type="button" class="spaces-ai-chats-page-new" data-ai-chats-page-new>
+                            <img src="./assets/images/spaces-v2/all-spaces/create-plus.svg" width="24" height="24" alt="" aria-hidden="true">
+                            <span>New chat</span>
+                        </button>
+                    </div>
                 </header>
                 <div class="spaces-ai-chats-page-body" data-ai-chats-page-list></div>
                 <p class="spaces-ai-chats-page-empty" data-ai-chats-page-empty hidden>No chats yet.</p>
@@ -2868,7 +2880,7 @@
         <script src="./assets/js/spaces-account-profile.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-home-data.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-home-composer.js?v=asset-base-1"></script>
-        <script src="./assets/js/spaces-ai-chats.js?v=asset-base-1"></script>
+        <script src="./assets/js/spaces-ai-chats.js?v=space-filter-1"></script>
         <script src="./assets/js/spaces-listing-chat.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-all-spaces.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-copilot-panel.js?v=asset-base-1"></script>
