@@ -3,12 +3,17 @@
 
     const STORAGE_KEY = 'planner5d-spaces-v2-ai-chats';
     const SIDEBAR_LIMIT = 3;
-    const ALL_CHATS_MIN = 4;
+    const ALL_CHATS_MIN = 1;
     const section = document.querySelector('[data-ai-chats-section]');
     const list = section?.querySelector('[data-ai-chats-list]');
     const allButton = section?.querySelector('[data-ai-chats-all]');
     const newWrap = section?.querySelector('[data-ai-chats-new-wrap]');
     const newButton = section?.querySelector('[data-ai-chats-new]');
+    const sidebarFilter = section?.querySelector('[data-ai-chats-sidebar-filter]');
+    const sidebarFilterIcon = section?.querySelector('[data-ai-chats-sidebar-filter-icon]');
+    const sidebarFilterLabel = section?.querySelector('[data-ai-chats-sidebar-filter-label]');
+    const sidebarFilterMenu = section?.querySelector('[data-ai-chats-sidebar-filter-menu]');
+    const sidebarFilterWrap = section?.querySelector('.spaces-ai-chats-heading-filter-wrap');
     const page = document.querySelector('[data-ai-chats-page]');
     const pageList = page?.querySelector('[data-ai-chats-page-list]');
     const pageEmpty = page?.querySelector('[data-ai-chats-page-empty]');
@@ -133,7 +138,7 @@
         return Boolean(step && step !== 'generic');
     };
 
-    const visibleChats = () => chats.slice(0, SIDEBAR_LIMIT);
+    const visibleChats = () => filteredChats().slice(0, SIDEBAR_LIMIT);
 
     const isAllChatsPage = () => document.querySelector('.spaces-main-content')?.classList.contains('is-ai-chats-page');
 
@@ -244,9 +249,17 @@
     };
 
     const closeSpaceFilterMenu = () => {
-        if (!pageFilterMenu || pageFilterMenu.hidden) return;
-        pageFilterMenu.hidden = true;
-        pageFilter?.setAttribute('aria-expanded', 'false');
+        filterSlots().forEach(slot => {
+            if (!slot.menu || slot.menu.hidden) return;
+            slot.menu.hidden = true;
+            slot.button?.setAttribute('aria-expanded', 'false');
+            if (slot.wrap && slot.menu.parentElement !== slot.wrap) slot.wrap.append(slot.menu);
+            slot.menu.style.position = '';
+            slot.menu.style.top = '';
+            slot.menu.style.left = '';
+            slot.menu.style.right = '';
+            slot.menu.style.minWidth = '';
+        });
     };
 
     const optionFilterId = option => {
@@ -255,7 +268,47 @@
         return spaceFilterValue(option);
     };
 
-    const applySpaceFilter = (value, { persist = true } = {}) => {
+    const filterSlots = () => [
+        {
+            button: pageFilter,
+            icon: pageFilterIcon,
+            label: pageFilterLabel,
+            menu: pageFilterMenu,
+            wrap: pageFilter?.closest('.spaces-ai-chats-page-filter-wrap'),
+            iconSize: 20
+        },
+        {
+            button: sidebarFilter,
+            icon: sidebarFilterIcon,
+            label: sidebarFilterLabel,
+            menu: sidebarFilterMenu,
+            wrap: sidebarFilterWrap,
+            iconSize: 16
+        }
+    ].filter(slot => slot.button || slot.menu);
+
+    const setFilterIcon = (slot, selected) => {
+        if (!slot.icon) return;
+        const size = slot.iconSize || 20;
+        slot.icon.replaceChildren();
+        if (pageSpaceFilter === 'all') {
+            const img = document.createElement('img');
+            img.src = allSpacesIcon;
+            img.width = size;
+            img.height = size;
+            img.alt = '';
+            img.setAttribute('aria-hidden', 'true');
+            slot.icon.append(img);
+            return;
+        }
+        if (pageSpaceFilter === NONE_FILTER) {
+            slot.icon.append(emptySpaceIcon());
+            return;
+        }
+        slot.icon.append(spaceInitial(selected));
+    };
+
+    const applySpaceFilter = (value, { persist = true, renderLists = true } = {}) => {
         pageSpaceFilter = String(value || 'all');
         const options = spaceFilterOptions();
         if (!options.some(option => optionFilterId(option) === pageSpaceFilter)) {
@@ -263,33 +316,19 @@
         }
         if (persist) persistSpaceFilter(pageSpaceFilter);
         const selected = options.find(option => optionFilterId(option) === pageSpaceFilter) || options[0];
-        if (pageFilterLabel) pageFilterLabel.textContent = selected?.title || 'All spaces';
-        if (pageFilter) {
-            pageFilter.setAttribute('aria-label', `Filter chats by space: ${selected?.title || 'All spaces'}`);
-        }
-        if (pageFilterIcon) {
-            pageFilterIcon.replaceChildren();
-            if (pageSpaceFilter === 'all') {
-                const img = document.createElement('img');
-                img.src = allSpacesIcon;
-                img.width = 20;
-                img.height = 20;
-                img.alt = '';
-                img.setAttribute('aria-hidden', 'true');
-                pageFilterIcon.append(img);
-            } else if (pageSpaceFilter === NONE_FILTER) {
-                pageFilterIcon.append(emptySpaceIcon());
-            } else {
-                pageFilterIcon.append(spaceInitial(selected));
-            }
-        }
-        if (isAllChatsPage()) renderAllPage();
+        const title = selected?.title || 'All spaces';
+        filterSlots().forEach(slot => {
+            if (slot.label) slot.label.textContent = title;
+            slot.button?.setAttribute('aria-label', `Filter chats by space: ${title}`);
+            setFilterIcon(slot, selected);
+        });
         renderSpaceFilterMenu();
+        if (renderLists) render();
     };
 
-    const renderSpaceFilterMenu = () => {
-        if (!pageFilterMenu) return;
-        pageFilterMenu.replaceChildren(...spaceFilterOptions().map(option => {
+    const fillFilterMenu = menu => {
+        if (!menu) return;
+        menu.replaceChildren(...spaceFilterOptions().map(option => {
             const id = optionFilterId(option);
             const isSelected = id === String(pageSpaceFilter);
             const button = document.createElement('button');
@@ -332,11 +371,25 @@
         }));
     };
 
-    const openSpaceFilterMenu = () => {
-        renderSpaceFilterMenu();
-        if (!pageFilterMenu) return;
-        pageFilterMenu.hidden = false;
-        pageFilter?.setAttribute('aria-expanded', 'true');
+    const renderSpaceFilterMenu = () => {
+        filterSlots().forEach(slot => fillFilterMenu(slot.menu));
+    };
+
+    const openSpaceFilterMenu = slot => {
+        closeSpaceFilterMenu();
+        if (!slot?.menu) return;
+        fillFilterMenu(slot.menu);
+        if (slot.button) {
+            const rect = slot.button.getBoundingClientRect();
+            document.body.append(slot.menu);
+            slot.menu.style.position = 'fixed';
+            slot.menu.style.top = `${Math.round(rect.bottom + 6)}px`;
+            slot.menu.style.left = `${Math.round(Math.min(rect.left, window.innerWidth - 228))}px`;
+            slot.menu.style.right = 'auto';
+            slot.menu.style.minWidth = `${Math.max(220, Math.round(rect.width))}px`;
+        }
+        slot.menu.hidden = false;
+        slot.button?.setAttribute('aria-expanded', 'true');
     };
 
     const spaceBadge = space => {
@@ -1217,11 +1270,21 @@
     pageFilter?.addEventListener('click', event => {
         event.preventDefault();
         event.stopPropagation();
+        const slot = filterSlots().find(item => item.button === pageFilter);
         if (pageFilterMenu?.hidden === false) closeSpaceFilterMenu();
-        else openSpaceFilterMenu();
+        else openSpaceFilterMenu(slot);
+    });
+
+    sidebarFilter?.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const slot = filterSlots().find(item => item.button === sidebarFilter);
+        if (sidebarFilterMenu?.hidden === false) closeSpaceFilterMenu();
+        else openSpaceFilterMenu(slot);
     });
 
     pageFilterMenu?.addEventListener('click', event => event.stopPropagation());
+    sidebarFilterMenu?.addEventListener('click', event => event.stopPropagation());
 
     chatMenuButton?.addEventListener('click', event => {
         event.preventDefault();
@@ -1273,7 +1336,7 @@
     document.addEventListener('click', event => {
         if (!event.target.closest('.spaces-home-chat-header-start')) closeChatMenu();
         if (!event.target.closest('[data-home-chat-artifacts]')) closeArtifactsMenu();
-        if (event.target.closest('.spaces-ai-chats-row, .spaces-ai-chats-page-row, .spaces-ai-chats-page-filter-wrap')) return;
+        if (event.target.closest('.spaces-ai-chats-row, .spaces-ai-chats-page-row, .spaces-ai-chats-page-filter-wrap, .spaces-ai-chats-heading-filter-wrap, .spaces-ai-chats-heading-filter-menu, .spaces-ai-chats-page-filter-menu')) return;
         closeMenus();
         closeSpaceFilterMenu();
     });
@@ -1309,7 +1372,7 @@
         knownSpaces = event.detail?.account?.spaces || [];
         if (isAllChatsPage()) renderAllPage();
         renderContinue();
-        applySpaceFilter(pageSpaceFilter, { persist: false });
+        applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: false });
     });
 
     if (window.SpacesAccountData?.load) {
@@ -1317,14 +1380,14 @@
             knownSpaces = account?.spaces || [];
             if (isAllChatsPage()) renderAllPage();
             renderContinue();
-            applySpaceFilter(pageSpaceFilter, { persist: false });
+            applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: false });
         }).catch(() => {});
     }
 
     chats = readStore();
     pageSpaceFilter = readSpaceFilter();
     render();
-    applySpaceFilter(pageSpaceFilter, { persist: false });
+    applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: false });
 
     window.SpacesAiChats = {
         captureCurrent,
