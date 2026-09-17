@@ -6,7 +6,6 @@
     const RETURN_KEY = 'listings-spaces-return';
     const RETURN_VIEW_KEY = 'listings-spaces-return-view';
     const LISTING_ID = 'spaces-draft';
-    const PHOTO_BASE = '/listings-final/photos';
     const studio = document.querySelector('[data-listing-studio]');
     const frame = studio?.querySelector('[data-listing-studio-frame]');
     const mainContent = document.querySelector('.spaces-main-content');
@@ -15,6 +14,14 @@
     const fab = document.querySelector('[data-sparkles-fab]');
 
     if (!studio || !frame || !mainContent) return;
+
+    const listingsBasePath = () => {
+        const here = window.location.pathname || '';
+        return here.includes('/spaces-chat-ai/')
+            ? '/spaces-chat-ai/listings-final'
+            : '/listings-final';
+    };
+    const PHOTO_BASE = `${listingsBasePath()}/photos`;
 
     const PHOTO_FILES = [
         { file: 'villa.jpg', room: 'Exterior' },
@@ -399,20 +406,25 @@
 
     // If the iframe leaves the listing route (e.g. lands on Start wizard),
     // exit the studio instead of trapping the user there.
-    frame.addEventListener('load', () => {
+    // Hash-only navigations do not always fire `load`, so also poll.
+    const leaveIfNotOnListing = () => {
         if (!isOpen() || closing) return;
         try {
             const win = frame.contentWindow;
             if (!win || win.location.href === 'about:blank') return;
             const hash = String(win.location.hash || '');
             const path = String(win.location.pathname || '');
+            const text = String(win.document?.body?.innerText || '');
             const onListing = hash.includes('/listing/');
             const onListingsApp = path.includes('listings-final');
-            if (onListingsApp && !onListing) close();
+            const onWizard = /Start wizard/i.test(text) || /Four short questions/i.test(text);
+            if (onListingsApp && (!onListing || onWizard)) close();
         } catch {
             // Cross-origin — ignore
         }
-    });
+    };
+    frame.addEventListener('load', leaveIfNotOnListing);
+    window.setInterval(leaveIfNotOnListing, 500);
 
     document.addEventListener('spaces-navigation-start', () => {
         if (closing) return;
