@@ -1,5 +1,8 @@
+/* Exact Figma tokens from node 182:13606 — Header with Avatars */
+
 .listing-figma-header{
   position: relative;
+  z-index: 20;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -15,16 +18,18 @@
   align-items: center;
 }
 
+/* Card/Alpha: 0 2px 6px #0000001A + 0 0 0 0.5px GA10 */
 .listing-figma-header__project{
   display: flex;
   min-width: 0;
   align-items: center;
   gap: 4px;
   padding-left: 4px;
-  overflow: hidden;
   border-radius: 100px;
-  background: #fff;
-  box-shadow: 0 0 0 0.5px rgba(0,0,0,.04), 0 2px 6px rgba(0,0,0,.1);
+  background: #ffffff;
+  box-shadow:
+    0 0 0 0.5px #0000000a,
+    0 2px 6px #0000001a;
 }
 
 .listing-figma-header__icon{
@@ -41,39 +46,41 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  max-width: none;
   display: block;
 }
 
+/* Sky Icon Button inner drop-shadow */
 .listing-figma-header__back{
   display: flex;
-  width: 40px;
-  height: 40px;
   align-items: center;
   justify-content: center;
   padding: 8px;
   border: 0;
   border-radius: 100px;
   background: transparent;
+  filter: drop-shadow(0 0 0 #0000000a) drop-shadow(0 2px 3px rgba(0,0,0,.1));
   cursor: pointer;
 }
 
 .listing-figma-header__rule{
   width: 2px;
   height: 18px;
-  border-radius: 3px;
-  background: rgba(0,0,0,.09);
   flex-shrink: 0;
+  border-radius: 3px;
+  background: #00000017;
 }
 
 .listing-figma-header__name{
   display: flex;
   min-width: 0;
-  max-width: 200px;
   align-items: center;
   gap: 8px;
   padding: 8px 8px 8px 12px;
   border: 0;
+  border-radius: 100px;
   background: transparent;
+  filter: drop-shadow(0 0 0 #0000000a) drop-shadow(0 2px 3px rgba(0,0,0,.1));
   cursor: pointer;
 }
 
@@ -81,20 +88,26 @@
   min-width: 0;
   overflow: hidden;
   color: #2c2c2c;
-  font: 600 14px/20px "Open Sans", Inter, Arial, sans-serif;
+  font-family: "Open Sans", Inter, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+/* Card/Beta: 0 4px 10px #00000024 + 0 0 0 0.5px GA10 */
 .listing-figma-header__tabs{
   display: flex;
   align-items: stretch;
   gap: 2px;
   padding: 4px;
-  overflow: hidden;
   border-radius: 20px;
-  background: #fff;
-  box-shadow: 0 0 0 0.5px rgba(0,0,0,.04), 0 4px 10px rgba(0,0,0,.14);
+  background: #ffffff;
+  box-shadow:
+    0 0 0 0.5px #0000000a,
+    0 4px 10px #00000024;
 }
 
 .listing-figma-header__tab{
@@ -106,14 +119,20 @@
   border: 0;
   border-radius: 16px;
   color: #393939;
-  font: 600 16px/24px "Open Sans", Inter, Arial, sans-serif;
+  font-family: "Open Sans", Inter, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0;
   background: transparent;
   cursor: pointer;
 }
 
 .listing-figma-header__tab.is-on{
   background: #e8e8e8;
-  box-shadow: 0 0 0 0.5px rgba(0,0,0,.04), 0 2px 6px rgba(0,0,0,.1);
+  box-shadow:
+    0 0 0 0.5px #0000000a,
+    0 2px 6px #0000001a;
 }
 
 .listing-figma-header__right{
@@ -131,10 +150,15 @@
   padding: 8px 20px 8px 12px;
   border: 0;
   border-radius: 100px;
-  color: #fff;
-  font: 600 14px/20px "Open Sans", Inter, Arial, sans-serif;
-  background-image: linear-gradient(74deg, #0177de, #30ca66);
-  box-shadow: 0 2px 6px rgba(0,0,0,.1);
+  color: #ffffff;
+  font-family: "Open Sans", Inter, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  background-image:
+    linear-gradient(73.68deg, #0177de .5%, #30ca66 99.5%),
+    linear-gradient(90deg, #fff, #fff);
+  box-shadow: 0 2px 6px #0000001a;
   cursor: pointer;
 }
 
@@ -146,8 +170,10 @@
   padding: 4px;
   border: 0;
   border-radius: 100px;
-  background: #fff;
-  box-shadow: 0 0 0 0.5px rgba(0,0,0,.04), 0 4px 10px rgba(0,0,0,.14);
+  background: #ffffff;
+  box-shadow:
+    0 0 0 0.5px #0000000a,
+    0 4px 10px #00000024;
   cursor: pointer;
 }
 
@@ -158,8 +184,11 @@
   align-items: center;
   justify-content: center;
   border-radius: 100px;
-  color: #fff;
-  font: 700 12px/24px "Open Sans", Inter, Arial, sans-serif;
+  color: #ffffff;
+  font-family: "Open Sans", Inter, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 24px;
   letter-spacing: -.12px;
   background: #da4092;
 }
@@ -173,19 +202,64 @@
   display: flex;
   width: 98px;
   max-width: 224px;
-  height: 40px;
   align-items: center;
   justify-content: center;
   padding: 8px 16px 8px 12px;
   border: 0;
   border-radius: 100px;
-  color: #fff;
-  font: 600 14px/20px "Open Sans", Inter, Arial, sans-serif;
+  color: #ffffff;
+  font-family: "Open Sans", Inter, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
   background: #1aa73f;
-  box-shadow: 0 2px 6px rgba(0,0,0,.1);
+  box-shadow: 0 2px 6px #0000001a;
   cursor: pointer;
 }
 
 .listing-figma-header__publish:hover{
   filter: brightness(.96);
+}
+
+/* Chat / Content + preview sit on the canvas as separate cards */
+.listing-figma-stage{
+  position: relative;
+  display: flex;
+  gap: 12px;
+  min-height: 0;
+  flex: 1;
+  padding: 4px 12px 12px;
+  overflow: hidden;
+  background: #f2f3f5;
+}
+
+.listing-figma-panel{
+  min-height: 0;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 0.5px #0000000a,
+    0 4px 10px #00000024;
+}
+
+.listing-figma-panel--side{
+  display: flex;
+  width: 340px;
+  flex-shrink: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.listing-figma-panel--main{
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.listing-figma-panel--main > *{
+  flex: 1;
+  min-height: 0;
+  border-radius: 20px;
 }
