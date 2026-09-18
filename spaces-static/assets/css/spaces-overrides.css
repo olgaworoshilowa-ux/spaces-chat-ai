@@ -10406,6 +10406,10 @@ body.is-new-chat-placement-option4.is-listing-studio-open .spaces-inline-copilot
     display: none !important;
 }
 
+body.is-new-chat-placement-option4 .spaces-collections-controls [data-collections-search-field]{
+    display: none !important;
+}
+
 body.is-new-chat-placement-option4 .spaces-collections.is-content-search-profile .spaces-collections-header h2{
     display: block;
 }
