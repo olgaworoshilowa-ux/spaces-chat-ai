@@ -256,10 +256,14 @@
   flex: 1;
   flex-direction: column;
   overflow: hidden;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .listing-figma-panel--main > *{
   flex: 1;
   min-height: 0;
-  border-radius: 20px;
+  background: transparent;
+  box-shadow: none;
 }
