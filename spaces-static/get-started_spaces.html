@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=inline-copilot-7">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=inline-copilot-8">
 
         <title>Get Started Spaces</title>
 
@@ -208,6 +208,10 @@
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option3" aria-pressed="false">Option 3</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option4" aria-pressed="false">Option 4</button>
                     </div>
+                    <p class="spaces-profile-option4-hint" data-option4-suggestions-settings>
+                        Option 4 chips can be edited.
+                        <button type="button" data-inline-copilot-customize>Customize suggestions</button>
+                    </p>
                 </div>
                 <div class="spaces-profile-sidebar-variants">
                     <p>New chat placement</p>
@@ -1532,15 +1536,58 @@
 
             <section class="spaces-collections" aria-labelledby="spaces-collections-title">
                 <form class="spaces-inline-copilot" data-inline-copilot hidden>
+                    <div class="spaces-inline-copilot-chips" data-inline-copilot-chips></div>
                     <div class="spaces-inline-copilot-field">
-                        <img src="./assets/images/spaces-v2/home-composer/ask-copilot.svg" width="24" height="24" alt="" aria-hidden="true">
                         <label class="visually-hidden" for="spaces-inline-copilot-collections">Ask Copilot</label>
-                        <textarea id="spaces-inline-copilot-collections" rows="2" maxlength="2000" placeholder="Ask Copilot…" data-inline-copilot-input autocomplete="off"></textarea>
+                        <textarea id="spaces-inline-copilot-collections" rows="1" maxlength="2000" data-inline-copilot-input autocomplete="off"></textarea>
+                        <p class="spaces-inline-copilot-placeholder" data-inline-copilot-placeholder>
+                            <span>Type</span>
+                            <img src="./assets/images/spaces-v2/inline-copilot/at-sign.svg" width="14" height="14" alt="@" aria-hidden="true">
+                            <span>to add any floor plan, image or file</span>
+                        </p>
                     </div>
-                    <button type="submit" class="spaces-inline-copilot-send" data-inline-copilot-send aria-label="Voice">
-                        <img src="./assets/images/spaces-v2/home-composer/voice.svg" width="24" height="24" alt="" data-inline-copilot-send-icon>
-                    </button>
+                    <div class="spaces-inline-copilot-toolbar">
+                        <div class="spaces-inline-copilot-toolbar-left">
+                            <button type="button" class="spaces-inline-copilot-icon-btn" data-inline-copilot-attach aria-label="Add from space">
+                                <span class="spaces-inline-copilot-icon-frame">
+                                    <img src="./assets/images/spaces-v2/inline-copilot/plus.svg" width="24" height="24" alt="">
+                                </span>
+                            </button>
+                            <span class="spaces-inline-copilot-space">
+                                <span class="spaces-inline-copilot-space-letter" data-inline-copilot-space-letter>M</span>
+                                <span class="spaces-inline-copilot-space-name" data-inline-copilot-space-name>My Home</span>
+                            </span>
+                        </div>
+                        <div class="spaces-inline-copilot-toolbar-right">
+                            <span class="spaces-inline-copilot-mode">Lite</span>
+                            <button type="button" class="spaces-inline-copilot-icon-btn" data-inline-copilot-mic aria-label="Voice input">
+                                <span class="spaces-inline-copilot-icon-frame">
+                                    <img src="./assets/images/spaces-v2/inline-copilot/mic.svg" width="24" height="24" alt="">
+                                </span>
+                            </button>
+                            <button type="submit" class="spaces-inline-copilot-send" data-inline-copilot-send aria-label="Voice">
+                                <span class="spaces-inline-copilot-icon-frame">
+                                    <img src="./assets/images/spaces-v2/inline-copilot/send.svg" width="24" height="24" alt="" data-inline-copilot-send-icon>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
                 </form>
+                <div class="spaces-inline-copilot-editor" data-inline-copilot-editor hidden>
+                    <div class="spaces-inline-copilot-editor-card" role="dialog" aria-labelledby="spaces-inline-copilot-editor-title">
+                        <header>
+                            <h3 id="spaces-inline-copilot-editor-title">Customize suggestions</h3>
+                            <button type="button" data-inline-copilot-editor-close aria-label="Close">×</button>
+                        </header>
+                        <p>These chips sit on the Copilot box. Change the text now — it is saved in this browser.</p>
+                        <div data-inline-copilot-editor-list></div>
+                        <button type="button" class="spaces-inline-copilot-editor-add" data-inline-copilot-editor-add>+ Add suggestion</button>
+                        <div class="spaces-inline-copilot-editor-actions">
+                            <button type="button" data-inline-copilot-editor-reset>Reset to default</button>
+                            <button type="button" class="is-primary" data-inline-copilot-editor-save>Save</button>
+                        </div>
+                    </div>
+                </div>
                 <header class="spaces-collections-header">
                     <h2 id="spaces-collections-title" data-collections-title>Collections</h2>
                     <div class="spaces-collections-controls">
@@ -2905,7 +2952,7 @@
         <script src="./assets/js/spaces-all-spaces.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-copilot-panel.js?v=asset-base-2"></script>
         <script src="./assets/js/spaces-listing-studio.js?v=listing-back-12"></script>
-        <script src="./assets/js/spaces-chat-placement.js?v=inline-copilot-6"></script>
+        <script src="./assets/js/spaces-chat-placement.js?v=inline-copilot-8"></script>
         <script>
             (() => {
                 const collections = document.querySelector('.spaces-collections');
