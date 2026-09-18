@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=chat-option4-gone">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=inline-copilot-4">
 
         <title>Get Started Spaces</title>
 
@@ -206,6 +206,7 @@
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option1" aria-pressed="true">Option 1</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option2" aria-pressed="false">Option 2</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option3" aria-pressed="false">Option 3</button>
+                        <button type="button" data-new-chat-placement-option data-new-chat-placement="option4" aria-pressed="false">Option 4</button>
                     </div>
                 </div>
                 <div class="spaces-profile-sidebar-variants">
@@ -1547,6 +1548,14 @@
                             <img src="./icons/ic-search.svg" alt="" aria-hidden="true">
                             <input type="search" data-collections-search placeholder="Search inside space" aria-label="Search inside space">
                         </label>
+                        <form class="spaces-inline-copilot" data-inline-copilot hidden>
+                            <img src="./assets/images/spaces-v2/home-composer/ask-copilot.svg" width="20" height="20" alt="" aria-hidden="true">
+                            <label class="visually-hidden" for="spaces-inline-copilot-collections">Ask Copilot</label>
+                            <input id="spaces-inline-copilot-collections" type="text" maxlength="2000" placeholder="Ask Copilot…" data-inline-copilot-input autocomplete="off">
+                            <button type="submit" class="spaces-inline-copilot-send" data-inline-copilot-send aria-label="Voice">
+                                <img src="./assets/images/spaces-v2/home-composer/voice.svg" width="20" height="20" alt="" data-inline-copilot-send-icon>
+                            </button>
+                        </form>
                         <button type="button" class="spaces-collections-icon-button" data-collections-view-toggle aria-label="Switch to list view" aria-pressed="false">
                             <img src="./icons/ic-list.svg" alt="" aria-hidden="true">
                         </button>
@@ -1643,6 +1652,14 @@
                                 <img src="./icons/ic-search.svg" alt="" aria-hidden="true">
                                 <input type="search" data-inside-search placeholder="Search inside space" aria-label="Search inside files">
                             </label>
+                            <form class="spaces-inline-copilot" data-inline-copilot hidden>
+                                <img src="./assets/images/spaces-v2/home-composer/ask-copilot.svg" width="20" height="20" alt="" aria-hidden="true">
+                                <label class="visually-hidden" for="spaces-inline-copilot-inside">Ask Copilot</label>
+                                <input id="spaces-inline-copilot-inside" type="text" maxlength="2000" placeholder="Ask Copilot…" data-inline-copilot-input autocomplete="off">
+                                <button type="submit" class="spaces-inline-copilot-send" data-inline-copilot-send aria-label="Voice">
+                                    <img src="./assets/images/spaces-v2/home-composer/voice.svg" width="20" height="20" alt="" data-inline-copilot-send-icon>
+                                </button>
+                            </form>
                         </div>
                         <div class="space-section-toolbar-filters" data-inside-filters>
                             <button type="button" class="spaces-collections-filter space-section-filter" aria-haspopup="listbox" aria-expanded="false">
@@ -2110,12 +2127,13 @@
                 };
 
                 const setNewChatPlacement = placement => {
-                    const selected = placement === 'option2' || placement === 'option3'
+                    const selected = placement === 'option2' || placement === 'option3' || placement === 'option4'
                         ? placement
                         : 'option1';
                     document.body.classList.toggle('is-new-chat-placement-option1', selected === 'option1');
                     document.body.classList.toggle('is-new-chat-placement-option2', selected === 'option2');
                     document.body.classList.toggle('is-new-chat-placement-option3', selected === 'option3');
+                    document.body.classList.toggle('is-new-chat-placement-option4', selected === 'option4');
                     newChatPlacementOptions.forEach(option => {
                         option.setAttribute('aria-pressed', String(option.dataset.newChatPlacement === selected));
                     });
@@ -2194,7 +2212,7 @@
                     savedChatUi = localStorage.getItem(chatUiStorageKey) === 'option1' ? 'option1' : 'option2';
                     savedNewChatPlacement = (() => {
                         const storedPlacement = localStorage.getItem(newChatPlacementStorageKey);
-                        return storedPlacement === 'option2' || storedPlacement === 'option3'
+                        return storedPlacement === 'option2' || storedPlacement === 'option3' || storedPlacement === 'option4'
                             ? storedPlacement
                             : 'option1';
                     })();
@@ -2893,7 +2911,7 @@
         <script src="./assets/js/spaces-all-spaces.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-copilot-panel.js?v=asset-base-2"></script>
         <script src="./assets/js/spaces-listing-studio.js?v=listing-back-12"></script>
-        <script src="./assets/js/spaces-chat-placement.js?v=asset-base-1"></script>
+        <script src="./assets/js/spaces-chat-placement.js?v=inline-copilot-4"></script>
         <script>
             (() => {
                 const collections = document.querySelector('.spaces-collections');

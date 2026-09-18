@@ -10400,3 +10400,93 @@ body.is-chat-placement-dock-visible .spaces-wrap > main.get-started-main{
     width: 24px;
     height: 24px;
 }
+
+body.is-new-chat-placement-option4 [data-collections-search-field],
+body.is-new-chat-placement-option4 [data-inside-search-field]{
+    display: none !important;
+}
+
+body:not(.is-new-chat-placement-option4) .spaces-inline-copilot,
+body.is-new-chat-placement-option4.is-listing-studio-open .spaces-inline-copilot{
+    display: none !important;
+}
+
+.spaces-inline-copilot{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 280px;
+    width: 280px;
+    max-width: 280px;
+    height: 40px;
+    margin: 0;
+    padding: 4px 4px 4px 12px;
+    box-sizing: border-box;
+    border: 1px solid var(--space-neutral-border-gamma, #00000017);
+    border-radius: var(--space-radius-round, 100px);
+    background: var(--space-neutral-background-alpha, #fff);
+}
+
+.spaces-inline-copilot[hidden]{
+    display: none !important;
+}
+
+.spaces-inline-copilot:focus-within{
+    border-color: rgba(1, 157, 43, .9);
+    box-shadow: 0 0 0 3px rgba(51, 178, 92, .12);
+}
+
+.spaces-inline-copilot > img{
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.spaces-inline-copilot input{
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    color: var(--space-neutral-text-alpha, #1c1c1c);
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    background: transparent;
+}
+
+.spaces-inline-copilot-send{
+    display: flex;
+    flex: 0 0 32px;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--primary-fill-gamma, rgba(15, 255, 15, .19));
+    cursor: pointer;
+}
+
+.spaces-inline-copilot-send.is-ready{
+    background: var(--space-primary-fill-beta, #1aa73f);
+}
+
+.spaces-inline-copilot-send > img{
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.spaces-collections.is-content-search-profile .spaces-inline-copilot{
+    order: -1;
+    margin-right: auto;
+}
+
+body.is-new-chat-placement-option4 .spaces-collections-header{
+    height: 40px;
+}
