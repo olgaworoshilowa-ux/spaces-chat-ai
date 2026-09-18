@@ -257,15 +257,9 @@
   flex: 1;
   flex-direction: column;
   overflow: hidden;
-  background: transparent !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
 }
 
 .listing-figma-panel--main > *{
   flex: 1;
   min-height: 0;
-  background: transparent !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
 }
