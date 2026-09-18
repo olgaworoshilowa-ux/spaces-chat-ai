@@ -272,7 +272,7 @@
     };
 
     const open = () => {
-        if (isHomeOpen() && !document.body.classList.contains('is-new-chat-placement-option4')) {
+        if (isHomeOpen()) {
             hidePanel();
             document.querySelector('[data-home-composer-input]')?.focus();
             return;
