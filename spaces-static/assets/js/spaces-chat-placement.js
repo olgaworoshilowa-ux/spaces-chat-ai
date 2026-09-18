@@ -33,7 +33,10 @@
     const inlineSendIconSrc = './assets/images/spaces-v2/home-composer/send.svg';
 
     const isPlacementOption2 = () => document.body.classList.contains('is-new-chat-placement-option2');
-    const isPlacementOption4 = () => document.body.classList.contains('is-new-chat-placement-option4');
+    const isPlacementOption4 = () => (
+        document.body.classList.contains('is-new-chat-placement-option4')
+        || document.body.classList.contains('is-new-chat-placement-option5')
+    );
     const isInChat = () => Boolean(document.querySelector('.spaces-home.is-centered-chat'));
     const isNewChatHome = () => {
         const main = document.querySelector('.spaces-main-content');

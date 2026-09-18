@@ -78,9 +78,13 @@
 
     const isChatUiOption1 = () => document.body.classList.contains('is-chat-ui-option1');
     const isPlacementOption4 = () => {
-        if (document.body.classList.contains('is-new-chat-placement-option4')) return true;
+        if (
+            document.body.classList.contains('is-new-chat-placement-option4')
+            || document.body.classList.contains('is-new-chat-placement-option5')
+        ) return true;
         try {
-            return localStorage.getItem('planner5d-spaces-v2-new-chat-placement') === 'option4';
+            const stored = localStorage.getItem('planner5d-spaces-v2-new-chat-placement');
+            return stored === 'option4' || stored === 'option5';
         } catch {
             return false;
         }

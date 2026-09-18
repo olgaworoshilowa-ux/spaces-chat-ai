@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=inline-copilot-12">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=inline-copilot-13">
 
         <title>Get Started Spaces</title>
 
@@ -207,9 +207,14 @@
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option2" aria-pressed="false">Option 2</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option3" aria-pressed="false">Option 3</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option4" aria-pressed="false">Option 4</button>
+                        <button type="button" data-new-chat-placement-option data-new-chat-placement="option5" aria-pressed="false">Option 5</button>
                     </div>
                     <p class="spaces-profile-option4-hint" data-option4-suggestions-settings>
                         Option 4 chips can be edited.
+                        <button type="button" data-inline-copilot-customize>Customize suggestions</button>
+                    </p>
+                    <p class="spaces-profile-option4-hint" data-option5-placement-hint>
+                        Option 5: Create circles hidden. Same Copilot chips, quieter look.
                         <button type="button" data-inline-copilot-customize>Customize suggestions</button>
                     </p>
                 </div>
@@ -2169,13 +2174,14 @@
                 };
 
                 const setNewChatPlacement = placement => {
-                    const selected = placement === 'option2' || placement === 'option3' || placement === 'option4'
+                    const selected = placement === 'option2' || placement === 'option3' || placement === 'option4' || placement === 'option5'
                         ? placement
                         : 'option1';
                     document.body.classList.toggle('is-new-chat-placement-option1', selected === 'option1');
                     document.body.classList.toggle('is-new-chat-placement-option2', selected === 'option2');
                     document.body.classList.toggle('is-new-chat-placement-option3', selected === 'option3');
                     document.body.classList.toggle('is-new-chat-placement-option4', selected === 'option4');
+                    document.body.classList.toggle('is-new-chat-placement-option5', selected === 'option5');
                     newChatPlacementOptions.forEach(option => {
                         option.setAttribute('aria-pressed', String(option.dataset.newChatPlacement === selected));
                     });
@@ -2254,7 +2260,7 @@
                     savedChatUi = localStorage.getItem(chatUiStorageKey) === 'option1' ? 'option1' : 'option2';
                     savedNewChatPlacement = (() => {
                         const storedPlacement = localStorage.getItem(newChatPlacementStorageKey);
-                        return storedPlacement === 'option2' || storedPlacement === 'option3' || storedPlacement === 'option4'
+                        return storedPlacement === 'option2' || storedPlacement === 'option3' || storedPlacement === 'option4' || storedPlacement === 'option5'
                             ? storedPlacement
                             : 'option1';
                     })();
@@ -2947,13 +2953,13 @@
         </script>
         <script src="./assets/js/spaces-account-profile.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-home-data.js?v=asset-base-1"></script>
-        <script src="./assets/js/spaces-home-composer.js?v=option4-home-1"></script>
+        <script src="./assets/js/spaces-home-composer.js?v=option4-home-2"></script>
         <script src="./assets/js/spaces-ai-chats.js?v=space-filter-3"></script>
         <script src="./assets/js/spaces-listing-chat.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-all-spaces.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-copilot-panel.js?v=asset-base-2"></script>
         <script src="./assets/js/spaces-listing-studio.js?v=listing-back-12"></script>
-        <script src="./assets/js/spaces-chat-placement.js?v=inline-copilot-12"></script>
+        <script src="./assets/js/spaces-chat-placement.js?v=inline-copilot-13"></script>
         <script>
             (() => {
                 const collections = document.querySelector('.spaces-collections');
