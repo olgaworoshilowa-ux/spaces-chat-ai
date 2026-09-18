@@ -10437,10 +10437,10 @@ body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-h
 
 body.is-new-chat-placement-option4 .spaces-main-content.is-home-page .spaces-home:not(.is-centered-chat),
 body.is-new-chat-placement-option5 .spaces-main-content.is-home-page .spaces-home:not(.is-centered-chat){
-    width: min(100%, 720px);
-    max-width: 720px;
+    width: min(100%, 880px);
+    max-width: 880px;
     justify-content: center;
-    padding: 32px 24px 48px;
+    padding: 28px 24px 40px;
 }
 
 body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero,
@@ -10463,7 +10463,7 @@ body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-h
     display: block;
     width: 100%;
     max-width: 100%;
-    margin: 16px 0 0;
+    margin: 14px 0 0;
     font: 500 26px/32px "Open Sans", Arial, sans-serif;
     letter-spacing: -.4px;
     text-align: center;
@@ -10473,12 +10473,22 @@ body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-h
 body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer{
     width: 100%;
     max-width: 100%;
-    min-height: 168px;
-    margin-top: 28px;
-    padding: 16px;
+    min-height: 0;
+    margin-top: 24px;
+    padding: 14px 16px 12px;
     gap: 12px;
     justify-content: flex-start;
     box-shadow: 0 0 0 .5px rgba(0, 0, 0, .04), 0 2px 3px rgba(0, 0, 0, .1);
+}
+
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-toolbar,
+body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer-toolbar{
+    margin-top: 4px;
+}
+
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-inline-copilot-chips,
+body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-inline-copilot-chips{
+    gap: 8px;
 }
 
 body.is-new-chat-placement-option4 .spaces-home.is-centered-chat .spaces-home-composer,
@@ -10495,8 +10505,8 @@ body.is-new-chat-placement-option5 .spaces-home .spaces-home-composer:focus-with
     box-shadow: 0 0 0 3px rgba(51, 178, 92, .12);
 }
 
-body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-toolbar,
-body.is-new-chat-placement-option5 .spaces-home .spaces-home-composer-toolbar{
+body.is-new-chat-placement-option4 .spaces-home.is-centered-chat .spaces-home-composer-toolbar,
+body.is-new-chat-placement-option5 .spaces-home.is-centered-chat .spaces-home-composer-toolbar{
     margin-top: auto;
 }
 
