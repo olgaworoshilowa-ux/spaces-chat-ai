@@ -10437,42 +10437,57 @@ body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-h
 
 body.is-new-chat-placement-option4 .spaces-main-content.is-home-page .spaces-home:not(.is-centered-chat),
 body.is-new-chat-placement-option5 .spaces-main-content.is-home-page .spaces-home:not(.is-centered-chat){
-    width: 100%;
-    max-width: none;
-    justify-content: flex-start;
-    padding: 40px 0 56px;
+    width: min(100%, 720px);
+    max-width: 720px;
+    justify-content: center;
+    padding: 32px 24px 48px;
 }
 
 body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero,
 body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero{
     align-items: center;
     width: 100%;
+    gap: 0;
 }
 
 body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-mark,
 body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer-mark{
     display: block;
+    width: 64px;
+    height: 64px;
+    margin: 0;
 }
 
 body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1,
 body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1{
     display: block;
     width: 100%;
-    max-width: none;
-    margin: 20px 0 24px;
+    max-width: 100%;
+    margin: 16px 0 0;
+    font: 500 26px/32px "Open Sans", Arial, sans-serif;
+    letter-spacing: -.4px;
     text-align: center;
 }
 
-body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer,
-body.is-new-chat-placement-option5 .spaces-home .spaces-home-composer{
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer,
+body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer{
     width: 100%;
-    max-width: none;
-    min-height: 185px;
-    margin-top: 0;
-    padding: 20px 16px 16px;
-    gap: 16px;
+    max-width: 100%;
+    min-height: 168px;
+    margin-top: 28px;
+    padding: 16px;
+    gap: 12px;
     justify-content: flex-start;
     box-shadow: 0 0 0 .5px rgba(0, 0, 0, .04), 0 2px 3px rgba(0, 0, 0, .1);
+}
+
+body.is-new-chat-placement-option4 .spaces-home.is-centered-chat .spaces-home-composer,
+body.is-new-chat-placement-option5 .spaces-home.is-centered-chat .spaces-home-composer{
+    width: 100%;
+    max-width: none;
+    min-height: 104px;
+    margin-top: 0;
+    padding: 16px;
 }
 
 body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer:focus-within,
