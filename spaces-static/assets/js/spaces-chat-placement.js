@@ -107,10 +107,23 @@
                 input,
                 sendButton,
                 sendIcon,
-                canSubmit: () => isPlacementOption4() && !isBlocked()
+                canSubmit: () => isPlacementOption4() && !isBlocked(),
+                onAfterSend: () => {
+                    input.style.height = 'auto';
+                    input.style.height = `${Math.min(Math.max(48, input.scrollHeight), 160)}px`;
+                }
             })
         };
     }).filter(Boolean);
+
+    inlineApis.forEach(api => {
+        const input = api.form.querySelector('[data-inline-copilot-input]');
+        if (!input || input.tagName !== 'TEXTAREA') return;
+        input.addEventListener('input', () => {
+            input.style.height = 'auto';
+            input.style.height = `${Math.min(Math.max(48, input.scrollHeight), 160)}px`;
+        });
+    });
 
     const syncVisibility = () => {
         const showDock = Boolean(dock) && isPlacementOption2() && !isInChat() && !isNewChatHome() && !isBlocked();
