@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=inline-copilot-16">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=inline-copilot-17">
 
         <title>Get Started Spaces</title>
 
@@ -214,7 +214,7 @@
                         <button type="button" data-inline-copilot-customize>Customize suggestions</button>
                     </p>
                     <p class="spaces-profile-option4-hint" data-option5-placement-hint>
-                        Option 5: Create circles hidden. Same Copilot chips, quieter look.
+                        Option 5: Create circles collapsed by default — open with the Create button. Colorful chips stay.
                         <button type="button" data-inline-copilot-customize>Customize suggestions</button>
                     </p>
                 </div>
@@ -1170,7 +1170,13 @@
             </script>
             
 
-            <section class="get-started-panel spaces-quick-actions" aria-label="Create">
+            <div class="spaces-option5-create" data-option5-create>
+                <button type="button" class="spaces-option5-create-toggle" data-option5-create-toggle aria-expanded="false" aria-controls="spaces-quick-actions-panel">
+                    <img src="./assets/images/spaces-v2/action-create.svg" width="20" height="20" alt="" aria-hidden="true">
+                    <span>Create</span>
+                    <img class="spaces-option5-create-chevron" src="./assets/images/spaces-v2/list-chevron.svg" width="16" height="16" alt="" aria-hidden="true">
+                </button>
+                <section id="spaces-quick-actions-panel" class="get-started-panel spaces-quick-actions" aria-label="Create">
                 <button class="get-started-panel-button create"><img src="./assets/images/spaces-v2/action-create.svg" alt=""><span>Create</span></button>
                 <span class="spaces-quick-actions-divider" aria-hidden="true"></span>
                 <button class="get-started-panel-button scratch"><img src="./assets/images/spaces-v2/action-from-scratch.svg" alt=""><span>From Scratch</span></button>
@@ -1184,7 +1190,8 @@
                 <button class="get-started-panel-button moodboard"><img src="./assets/images/spaces-v2/action-moodboard.svg" alt=""><span>Moodboard</span></button>
                 <span class="spaces-quick-actions-divider" aria-hidden="true"></span>
                 <button type="button" class="get-started-panel-button hire-designer"><img src="./assets/images/spaces-v2/action-hire-designer.svg" alt="" aria-hidden="true"><span>Hire a Designer</span></button>
-            </section>
+                </section>
+            </div>
 
             <section class="spaces-home" aria-labelledby="spaces-home-title" data-home-page data-home-data-state="loading" hidden>
                 <span class="visually-hidden" data-home-profile-name>Dora</span>
@@ -2182,6 +2189,7 @@
                     document.body.classList.toggle('is-new-chat-placement-option3', selected === 'option3');
                     document.body.classList.toggle('is-new-chat-placement-option4', selected === 'option4');
                     document.body.classList.toggle('is-new-chat-placement-option5', selected === 'option5');
+                    if (selected !== 'option5') document.body.classList.remove('is-option5-create-open');
                     newChatPlacementOptions.forEach(option => {
                         option.setAttribute('aria-pressed', String(option.dataset.newChatPlacement === selected));
                     });
@@ -2342,6 +2350,18 @@
                     option.addEventListener('click', () => {
                         setNewChatPlacement(option.dataset.newChatPlacement);
                     });
+                });
+
+                const option5CreateToggle = document.querySelector('[data-option5-create-toggle]');
+                option5CreateToggle?.addEventListener('click', () => {
+                    const open = document.body.classList.toggle('is-option5-create-open');
+                    option5CreateToggle.setAttribute('aria-expanded', String(open));
+                });
+                document.addEventListener('spaces-new-chat-placement-changed', () => {
+                    option5CreateToggle?.setAttribute(
+                        'aria-expanded',
+                        String(document.body.classList.contains('is-option5-create-open'))
+                    );
                 });
 
                 newChatEntryOptions.forEach(option => {

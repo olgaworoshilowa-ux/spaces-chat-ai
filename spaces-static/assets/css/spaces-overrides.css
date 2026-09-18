@@ -10424,6 +10424,70 @@ body.is-new-chat-placement-option5 .spaces-quick-actions{
     display: none !important;
 }
 
+body.is-new-chat-placement-option5.is-option5-create-open .spaces-quick-actions{
+    display: flex !important;
+}
+
+body:not(.is-new-chat-placement-option5) .spaces-option5-create-toggle{
+    display: none !important;
+}
+
+body.is-new-chat-placement-option5 .spaces-option5-create{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 24px 0 0;
+}
+
+body.is-new-chat-placement-option5 .spaces-option5-create .spaces-quick-actions{
+    margin-top: 0;
+}
+
+.spaces-option5-create-toggle{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 12px 0 8px;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 100px;
+    color: var(--space-neutral-text-alpha, #1c1c1c);
+    font: 600 13px/16px "Open Sans", Arial, sans-serif;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+}
+
+.spaces-option5-create-toggle:hover,
+.spaces-option5-create-toggle:focus-visible{
+    outline: 0;
+    border-color: rgba(0, 0, 0, .2);
+    background: #fafafa;
+}
+
+.spaces-option5-create-toggle > img:first-child{
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    background: var(--space-primary-fill-beta, #1aa73f);
+}
+
+.spaces-option5-create-chevron{
+    display: block;
+    width: 16px;
+    height: 16px;
+    opacity: .55;
+    transition: transform .15s ease;
+}
+
+body.is-option5-create-open .spaces-option5-create-chevron{
+    transform: rotate(180deg);
+}
+
 body.is-new-chat-placement-option5 .spaces-collections{
     margin-top: 16px;
 }
@@ -10571,76 +10635,17 @@ body:not(.is-new-chat-placement-option4):not(.is-new-chat-placement-option5) [da
     display: none !important;
 }
 
-/* Option 5: quieter Copilot — no rainbow chips, softer chrome */
+/* Option 5: same colorful chips as Option 4; slightly softer card chrome */
 body.is-new-chat-placement-option5 .spaces-inline-copilot,
-body.is-new-chat-placement-option5 .spaces-home .spaces-home-composer{
-    gap: 14px;
-    min-height: 168px;
-    padding: 16px;
-    border-color: rgba(0, 0, 0, .08);
+body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer{
+    border-color: rgba(0, 0, 0, .1);
     box-shadow: none;
 }
 
 body.is-new-chat-placement-option5 .spaces-inline-copilot:focus-within,
 body.is-new-chat-placement-option5 .spaces-home .spaces-home-composer:focus-within{
-    border-color: rgba(0, 0, 0, .28);
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, .06);
-}
-
-body.is-new-chat-placement-option5 .spaces-inline-copilot-chips{
-    gap: 8px;
-}
-
-body.is-new-chat-placement-option5 .spaces-inline-copilot-chip{
-    height: 36px;
-    gap: 8px;
-    padding: 6px 12px 6px 8px;
-    border: 1px solid rgba(0, 0, 0, .08);
-    color: rgba(28, 28, 28, .78);
-    background: #f7f7f7;
-    box-shadow: none;
-}
-
-body.is-new-chat-placement-option5 .spaces-inline-copilot-chip:hover,
-body.is-new-chat-placement-option5 .spaces-inline-copilot-chip:focus-visible{
-    color: #1c1c1c;
-    background: #f0f0f0;
-    box-shadow: none;
-}
-
-body.is-new-chat-placement-option5 .spaces-inline-copilot-chip-icon.is-rose,
-body.is-new-chat-placement-option5 .spaces-inline-copilot-chip-icon.is-lilac,
-body.is-new-chat-placement-option5 .spaces-inline-copilot-chip-icon.is-lime{
-    background: rgba(0, 0, 0, .06);
-}
-
-body.is-new-chat-placement-option5 .spaces-inline-copilot-chip-icon > img{
-    filter: brightness(0);
-    opacity: .45;
-}
-
-body.is-new-chat-placement-option5 .spaces-inline-copilot-space-letter,
-body.is-new-chat-placement-option5 .spaces-home .spaces-home-composer-scope-icon > .spaces-home-space-initial,
-body.is-new-chat-placement-option5 .spaces-home .spaces-home-composer-scope-icon > .spaces-no-space-icon{
-    color: rgba(0, 0, 0, .7);
-    background: #e8e8e8 !important;
-    border-color: rgba(0, 0, 0, .06);
-}
-
-body.is-new-chat-placement-option5 .spaces-inline-copilot-send,
-body.is-new-chat-placement-option5 .spaces-home-composer-send{
-    background: rgba(0, 0, 0, .06);
-}
-
-body.is-new-chat-placement-option5 .spaces-inline-copilot-send.is-ready,
-body.is-new-chat-placement-option5 .spaces-home-composer-send.is-ready{
-    background: var(--space-primary-fill-beta, #1aa73f);
-}
-
-body.is-new-chat-placement-option5 .spaces-inline-copilot-mode,
-body.is-new-chat-placement-option5 .spaces-home .spaces-home-composer-mode{
-    color: rgba(28, 28, 28, .55);
-    font-weight: 500;
+    border-color: var(--space-primary-fill-beta, #1aa73f);
+    box-shadow: 0 0 0 3px rgba(51, 178, 92, .12);
 }
 
 .spaces-profile-option4-hint{
