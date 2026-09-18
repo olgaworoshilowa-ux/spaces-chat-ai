@@ -10430,12 +10430,8 @@ body.is-new-chat-placement-option5 .spaces-collections{
 
 body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-suggestions,
 body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-continue,
-body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-mark,
-body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1,
 body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer-suggestions,
-body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-continue,
-body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer-mark,
-body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1{
+body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-continue{
     display: none !important;
 }
 
@@ -10444,13 +10440,27 @@ body.is-new-chat-placement-option5 .spaces-main-content.is-home-page .spaces-hom
     width: 100%;
     max-width: none;
     justify-content: flex-start;
-    padding: 24px 0 56px;
+    padding: 40px 0 56px;
 }
 
 body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero,
 body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero{
-    align-items: stretch;
+    align-items: center;
     width: 100%;
+}
+
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-mark,
+body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer-mark{
+    display: block;
+}
+
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1,
+body.is-new-chat-placement-option5 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1{
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 20px 0 24px;
+    text-align: center;
 }
 
 body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer,
