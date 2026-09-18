@@ -77,6 +77,26 @@
     };
 
     const isChatUiOption1 = () => document.body.classList.contains('is-chat-ui-option1');
+    const isPlacementOption4 = () => {
+        if (document.body.classList.contains('is-new-chat-placement-option4')) return true;
+        try {
+            return localStorage.getItem('planner5d-spaces-v2-new-chat-placement') === 'option4';
+        } catch {
+            return false;
+        }
+    };
+
+    const option4ScopeId = () => {
+        const currentName = document.querySelector('[data-space-name]')?.textContent?.trim();
+        const byName = currentName && spaces.find(space => space.title === currentName);
+        return String(byName?.id || spaces[0]?.id || 'all');
+    };
+
+    const resolveInitialScope = () => {
+        const stored = readStoredScope();
+        if (isPlacementOption4() && (stored === 'all' || !spaceById(stored))) return option4ScopeId();
+        return stored;
+    };
 
     const syncOption1Copy = () => {
         const space = selectedScopeId !== 'all' ? spaceById(selectedScopeId) : null;
@@ -430,7 +450,7 @@
     const loadAccount = account => {
         spaces = Array.isArray(account?.spaces) ? account.spaces : [];
         files = Array.isArray(account?.files) ? account.files : [];
-        applyScope(readStoredScope(), { persist: false });
+        applyScope(resolveInitialScope(), { persist: false });
     };
 
     input.addEventListener('input', () => {
@@ -551,6 +571,10 @@
 
     document.addEventListener('spaces-account-profile-ready', event => {
         loadAccount(event.detail?.account);
+    });
+    document.addEventListener('spaces-new-chat-placement-changed', () => {
+        if (!isPlacementOption4()) return;
+        if (selectedScopeId === 'all') applyScope(option4ScopeId());
     });
 
     if (window.SpacesAccountData?.load) {

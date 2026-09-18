@@ -10416,6 +10416,96 @@ body.is-new-chat-placement-option4 .spaces-collections.is-content-search-profile
     display: block;
 }
 
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-suggestions,
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-continue,
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-mark,
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero > h1{
+    display: none !important;
+}
+
+body.is-new-chat-placement-option4 .spaces-main-content.is-home-page .spaces-home:not(.is-centered-chat){
+    width: 100%;
+    max-width: none;
+    justify-content: flex-start;
+    padding: 24px 0 56px;
+}
+
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) .spaces-home-composer-hero{
+    align-items: stretch;
+    width: 100%;
+}
+
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer{
+    width: 100%;
+    max-width: none;
+    min-height: 185px;
+    margin-top: 0;
+    padding: 20px 16px 16px;
+    gap: 16px;
+    justify-content: flex-start;
+    box-shadow: 0 0 0 .5px rgba(0, 0, 0, .04), 0 2px 3px rgba(0, 0, 0, .1);
+}
+
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer:focus-within{
+    box-shadow: 0 0 0 3px rgba(51, 178, 92, .12);
+}
+
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-toolbar{
+    margin-top: auto;
+}
+
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-mode-chevron,
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-scope-clear{
+    display: none !important;
+}
+
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-scope,
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-mode{
+    height: auto;
+    padding: 0;
+}
+
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-scope{
+    gap: 12px;
+    max-width: none;
+}
+
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-scope-label{
+    color: var(--text-alpha, #1c1c1c);
+    font: 600 14px/20px "Open Sans", Arial, sans-serif;
+}
+
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-mode{
+    color: var(--neutral-text-alpha, #393939);
+}
+
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-scope-icon > .spaces-home-space-initial,
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-scope-icon > .spaces-no-space-icon{
+    border: 1px solid rgba(0, 0, 0, .04);
+    border-radius: 6px;
+    background: #aeea8f;
+}
+
+body.is-new-chat-placement-option4 .spaces-home .spaces-home-composer-scope-icon > .spaces-home-space-initial{
+    color: rgba(0, 0, 0, .76);
+    font: 700 11px/20px "Open Sans", Arial, sans-serif;
+    background: #aeea8f !important;
+}
+
+body.is-new-chat-placement-option4 .spaces-home.is-centered-chat .spaces-home-composer-hero{
+    width: 100%;
+    max-width: none;
+}
+
+body.is-new-chat-placement-option4 .spaces-home:not(.is-centered-chat) [data-home-option4-chips]:not([hidden]){
+    display: flex;
+}
+
+.spaces-home.is-centered-chat [data-home-option4-chips],
+body:not(.is-new-chat-placement-option4) [data-home-option4-chips]{
+    display: none !important;
+}
+
 .spaces-profile-option4-hint{
     display: flex;
     flex-direction: column;
@@ -10513,14 +10603,36 @@ body.is-new-chat-placement-option4 .spaces-collections.is-content-search-profile
 }
 
 .spaces-inline-copilot-customize{
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     height: 32px;
-    padding: 0 12px;
-    border: 1px dashed var(--space-neutral-border-gamma, #0000003d);
-    border-radius: 100px;
+    padding: 0 2px;
+    border: 0;
+    border-radius: 8px;
     color: var(--text-gamma, #919191);
-    font: 400 13px/20px "Open Sans", Arial, sans-serif;
     background: transparent;
     cursor: pointer;
+}
+
+.spaces-inline-copilot-customize:hover,
+.spaces-inline-copilot-customize:focus-visible{
+    outline: 0;
+    background: rgba(0, 0, 0, .04);
+}
+
+.spaces-inline-copilot-shortcut-key{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 5px;
+    border-radius: 5px;
+    color: rgba(60, 60, 67, .6);
+    font: 600 12px/1 "SF Pro Text", "Open Sans", Arial, sans-serif;
+    background: #f2f2f7;
+    box-shadow: inset 0 0 0 .5px rgba(0, 0, 0, .08), 0 1px 0 rgba(0, 0, 0, .04);
 }
 
 .spaces-inline-copilot-field{

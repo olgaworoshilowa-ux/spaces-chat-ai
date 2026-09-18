@@ -7,6 +7,7 @@
     const dockSendIcon = dock?.querySelector('[data-chat-placement-send-icon]');
     const inlineForms = [...document.querySelectorAll('[data-inline-copilot]')];
     const chipsRoot = document.querySelector('[data-inline-copilot-chips]');
+    const homeChipsRoot = document.querySelector('[data-home-option4-chips]');
     const editor = document.querySelector('[data-inline-copilot-editor]');
     const editorList = document.querySelector('[data-inline-copilot-editor-list]');
     const placeholder = document.querySelector('[data-inline-copilot-placeholder]');
@@ -185,34 +186,43 @@
         inlineApis[0]?.fill(text);
     };
 
+    const fillHomeComposer = (text) => {
+        const homeInput = document.querySelector('[data-home-composer-input]');
+        if (!homeInput) return;
+        homeInput.value = text;
+        homeInput.dispatchEvent(new Event('input', { bubbles: true }));
+        homeInput.focus();
+        const length = homeInput.value.length;
+        homeInput.setSelectionRange?.(length, length);
+    };
+
+    const chipRoots = () => [chipsRoot, homeChipsRoot].filter(Boolean);
+
     const renderChips = () => {
-        if (!chipsRoot) return;
-        chipsRoot.replaceChildren();
-        readSuggestions().forEach(item => {
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.className = 'spaces-inline-copilot-chip';
-            const icon = document.createElement('span');
-            icon.className = `spaces-inline-copilot-chip-icon is-${item.tone}`;
-            const img = document.createElement('img');
-            img.src = TONE_ICONS[item.tone];
-            img.width = 16;
-            img.height = 16;
-            img.alt = '';
-            icon.append(img);
-            const label = document.createElement('span');
-            label.textContent = item.title;
-            button.append(icon, label);
-            button.addEventListener('click', () => fillComposer(item.prompt));
-            chipsRoot.append(button);
+        chipRoots().forEach(root => {
+            root.replaceChildren();
+            readSuggestions().forEach(item => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'spaces-inline-copilot-chip';
+                const icon = document.createElement('span');
+                icon.className = `spaces-inline-copilot-chip-icon is-${item.tone}`;
+                const img = document.createElement('img');
+                img.src = TONE_ICONS[item.tone];
+                img.width = 16;
+                img.height = 16;
+                img.alt = '';
+                icon.append(img);
+                const label = document.createElement('span');
+                label.textContent = item.title;
+                button.append(icon, label);
+                button.addEventListener('click', () => {
+                    if (root === homeChipsRoot) fillHomeComposer(item.prompt);
+                    else fillComposer(item.prompt);
+                });
+                root.append(button);
+            });
         });
-        const customize = document.createElement('button');
-        customize.type = 'button';
-        customize.className = 'spaces-inline-copilot-customize';
-        customize.setAttribute('data-inline-copilot-customize', '');
-        customize.textContent = 'Customize';
-        customize.addEventListener('click', openEditor);
-        chipsRoot.append(customize);
     };
 
     const editorState = { draft: cloneDefaults() };
@@ -277,6 +287,9 @@
             api.form.hidden = !showInline;
             if (!showInline) api.clear();
         });
+        if (homeChipsRoot) {
+            homeChipsRoot.hidden = !(isPlacementOption4() && isNewChatHome() && !isBlocked());
+        }
         syncSpace();
     };
 
@@ -311,6 +324,11 @@
 
     document.addEventListener('spaces-new-chat-placement-changed', syncVisibility);
     document.addEventListener('spaces-navigation-start', syncVisibility);
+    document.addEventListener('click', event => {
+        if (event.target.closest('[data-home-page-trigger], [data-home-page-profile-option], [data-copilot-trigger]')) {
+            requestAnimationFrame(syncVisibility);
+        }
+    });
 
     const observer = new MutationObserver(() => {
         syncVisibility();
