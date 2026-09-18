@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=dock-icon-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=chat-option4-3">
 
         <title>Get Started Spaces</title>
 
@@ -206,6 +206,15 @@
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option1" aria-pressed="true">Option 1</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option2" aria-pressed="false">Option 2</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option3" aria-pressed="false">Option 3</button>
+                        <button type="button" data-new-chat-placement-option data-new-chat-placement="option4" aria-pressed="false">Option 4</button>
+                    </div>
+                </div>
+                <div class="spaces-profile-sidebar-variants" data-chat-dock-picker hidden>
+                    <p>Attach chat</p>
+                    <div role="group" aria-label="Attach chat panel">
+                        <button type="button" data-chat-dock-edge="left" aria-pressed="false">Left</button>
+                        <button type="button" data-chat-dock-edge="right" aria-pressed="true">Right</button>
+                        <button type="button" data-chat-dock-edge="bottom" aria-pressed="false">Bottom</button>
                     </div>
                 </div>
                 <div class="spaces-profile-sidebar-variants">
@@ -1724,6 +1733,17 @@
                 <button type="button" class="spaces-copilot-icon-btn" aria-label="New chat" data-copilot-new>
                     <img src="./assets/images/spaces-v2/copilot-panel/plus.svg" width="24" height="24" alt="" aria-hidden="true">
                 </button>
+                <div class="spaces-chat-dock-toggles" data-chat-dock-toggles hidden>
+                    <button type="button" class="spaces-chat-dock-btn" data-chat-dock-edge="left" aria-pressed="false" aria-label="Dock chat left" title="Left">
+                        <span class="spaces-chat-dock-icon is-left" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="spaces-chat-dock-btn" data-chat-dock-edge="bottom" aria-pressed="false" aria-label="Dock chat bottom" title="Bottom">
+                        <span class="spaces-chat-dock-icon is-bottom" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="spaces-chat-dock-btn" data-chat-dock-edge="right" aria-pressed="true" aria-label="Dock chat right" title="Right">
+                        <span class="spaces-chat-dock-icon is-right" aria-hidden="true"></span>
+                    </button>
+                </div>
                 <div class="spaces-copilot-layout-wrap" data-copilot-layout>
                     <button type="button" class="spaces-copilot-icon-btn" aria-label="Collapse Copilot" aria-haspopup="menu" aria-expanded="false" aria-controls="spaces-copilot-layout-menu" data-copilot-close>
                         <img src="./assets/images/spaces-v2/copilot-panel/panel-close.svg?v=panel-icon-1" width="24" height="24" alt="" aria-hidden="true">
@@ -2110,12 +2130,13 @@
                 };
 
                 const setNewChatPlacement = placement => {
-                    const selected = placement === 'option2' || placement === 'option3'
+                    const selected = placement === 'option2' || placement === 'option3' || placement === 'option4'
                         ? placement
                         : 'option1';
                     document.body.classList.toggle('is-new-chat-placement-option1', selected === 'option1');
                     document.body.classList.toggle('is-new-chat-placement-option2', selected === 'option2');
                     document.body.classList.toggle('is-new-chat-placement-option3', selected === 'option3');
+                    document.body.classList.toggle('is-new-chat-placement-option4', selected === 'option4');
                     newChatPlacementOptions.forEach(option => {
                         option.setAttribute('aria-pressed', String(option.dataset.newChatPlacement === selected));
                     });
@@ -2194,7 +2215,7 @@
                     savedChatUi = localStorage.getItem(chatUiStorageKey) === 'option1' ? 'option1' : 'option2';
                     savedNewChatPlacement = (() => {
                         const storedPlacement = localStorage.getItem(newChatPlacementStorageKey);
-                        return storedPlacement === 'option2' || storedPlacement === 'option3'
+                        return storedPlacement === 'option2' || storedPlacement === 'option3' || storedPlacement === 'option4'
                             ? storedPlacement
                             : 'option1';
                     })();
@@ -2891,7 +2912,8 @@
         <script src="./assets/js/spaces-ai-chats.js?v=space-filter-3"></script>
         <script src="./assets/js/spaces-listing-chat.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-all-spaces.js?v=asset-base-1"></script>
-        <script src="./assets/js/spaces-copilot-panel.js?v=asset-base-1"></script>
+        <script src="./assets/js/spaces-copilot-panel.js?v=chat-option4-1"></script>
+        <script src="./assets/js/spaces-chat-dock.js?v=chat-option4-5"></script>
         <script src="./assets/js/spaces-listing-studio.js?v=listing-back-10"></script>
         <script src="./assets/js/spaces-chat-placement.js?v=asset-base-1"></script>
         <script>
