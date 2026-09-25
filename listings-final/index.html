@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planner 5D — Listings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Open+Sans:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var embedded = params.get('from') === 'spaces';
+        if (embedded) document.documentElement.classList.add('is-embedded');
+
+        // Back in Spaces embed → return to Spaces (leave the listing studio).
+        if (embedded) {
+          document.addEventListener('click', function (event) {
+            var back = event.target && event.target.closest && (
+              event.target.closest('.listing-figma-header__back')
+              || event.target.closest('button[aria-label="Back"]')
+            );
+            if (!back) return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ type: 'listings-spaces-close' }, '*');
+            }
+          }, true);
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="./assets/index-GdVonQwo.js?v=header-transparent-1"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DTfhpxN4.css?v=header-transparent-1">
+    <link rel="stylesheet" id="listing-figma-css" href="./assets/header-figma.css?v=header-transparent-1">
+    <style>
+      /*
+        Embedded in Spaces: listing editor on gray canvas.
+        Header stays transparent — only the pills are white.
+      */
+      html.is-embedded,
+      html.is-embedded body,
+      html.is-embedded #root{
+        height: 100% !important;
+        min-height: 100% !important;
+        max-height: 100% !important;
+        overflow: hidden !important;
+        background: #f2f3f5 !important;
+      }
+      html.is-embedded .flex.h-screen,
+      html.is-embedded .flex.min-h-screen{
+        height: 100% !important;
+        max-height: 100% !important;
+        min-height: 100% !important;
+        background: #f2f3f5 !important;
+      }
+      html.is-embedded .listing-figma-header{
+        flex: 0 0 56px !important;
+        height: 56px !important;
+        min-height: 56px !important;
+        max-height: 56px !important;
+        padding: 0 12px !important;
+        background: transparent !important;
+        border-bottom: 0 !important;
+        box-shadow: none !important;
+        box-sizing: border-box !important;
+      }
+      html.is-embedded .listing-figma-stage{
+        background: #f2f3f5 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

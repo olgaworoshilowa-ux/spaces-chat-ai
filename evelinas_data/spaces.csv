@@ -1,0 +1,10 @@
+id,hash,cdate,udate,uid,name,title,cover,color,address,address_latitude,address_longitude,price_amount,price_currency,deleted,active,attribute_id,attribute_name,attribute_value,attribute_deleted
+11834724,bf94fbd026cc6b75fdcfdc436bc1198c,2026-03-27 07:51:06,2026-06-04 12:52:57,4550601,alexey,Alexey,-1,14464248,"200 N Spring St #90012, Los Angeles, CA 90012",34,-118,0,USD,0,0,46776376,area,950,0
+11834724,bf94fbd026cc6b75fdcfdc436bc1198c,2026-03-27 07:51:06,2026-06-04 12:52:57,4550601,alexey,Alexey,-1,14464248,"200 N Spring St #90012, Los Angeles, CA 90012",34,-118,0,USD,0,0,46776380,build_date,20220,0
+11834724,bf94fbd026cc6b75fdcfdc436bc1198c,2026-03-27 07:51:06,2026-06-04 12:52:57,4550601,alexey,Alexey,-1,14464248,"200 N Spring St #90012, Los Angeles, CA 90012",34,-118,0,USD,0,0,46776384,total_bedrooms,2,0
+11834724,bf94fbd026cc6b75fdcfdc436bc1198c,2026-03-27 07:51:06,2026-06-04 12:52:57,4550601,alexey,Alexey,-1,14464248,"200 N Spring St #90012, Los Angeles, CA 90012",34,-118,0,USD,0,0,46776388,total_bathrooms,2,0
+745096,e957c4100b4b962e0f1534a9a95d2bb5,2025-05-09 11:30:48,2026-06-04 14:48:47,4550601,new-space-349772eb,New Space,0,10735074,Unknown address,0,0,0,USD,0,1,2416828,area,0,0
+745096,e957c4100b4b962e0f1534a9a95d2bb5,2025-05-09 11:30:48,2026-06-04 14:48:47,4550601,new-space-349772eb,New Space,0,10735074,Unknown address,0,0,0,USD,0,1,2416832,build_date,"",0
+745096,e957c4100b4b962e0f1534a9a95d2bb5,2025-05-09 11:30:48,2026-06-04 14:48:47,4550601,new-space-349772eb,New Space,0,10735074,Unknown address,0,0,0,USD,0,1,2416836,total_bedrooms,0,0
+745096,e957c4100b4b962e0f1534a9a95d2bb5,2025-05-09 11:30:48,2026-06-04 14:48:47,4550601,new-space-349772eb,New Space,0,10735074,Unknown address,0,0,0,USD,0,1,2416840,total_bathrooms,0,0
+
