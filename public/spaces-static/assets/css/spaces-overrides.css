@@ -16416,7 +16416,7 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-plan-cta-wrap{
     position: relative;
-    min-height: 44px;
+    min-height: 52px;
 }
 
 .spaces-upgrade-save{
@@ -16640,8 +16640,8 @@ body.is-upgrade-modal-open{
     align-items: center;
     justify-content: center;
     width: 100%;
-    min-height: 44px;
-    padding: 10px 20px;
+    min-height: 52px;
+    padding: 14px 20px;
     border: 0;
     border-radius: 100px;
     box-sizing: border-box;
