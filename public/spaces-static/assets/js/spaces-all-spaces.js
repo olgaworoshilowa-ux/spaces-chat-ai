@@ -463,17 +463,21 @@
     };
 
     const syncEmptyState = (filter, isEmpty) => {
-        if (!empty) return;
-        empty.hidden = !isEmpty;
-        if (!isEmpty) return;
-        const copy = emptyCopy(filter);
-        const title = empty.querySelector('[data-all-spaces-empty-title]');
-        const bodyText = empty.querySelector('[data-all-spaces-empty-body]');
-        const illustration = empty.querySelector('[data-all-spaces-empty-illustration]');
-        if (title) title.textContent = copy.title;
-        if (bodyText) bodyText.textContent = copy.body;
-        if (illustration) illustration.hidden = !copy.illustration;
-        empty.classList.toggle('is-illustrated', Boolean(copy.illustration));
+        if (empty) {
+            empty.hidden = !isEmpty;
+            if (isEmpty) {
+                const copy = emptyCopy(filter);
+                const title = empty.querySelector('[data-all-spaces-empty-title]');
+                const bodyText = empty.querySelector('[data-all-spaces-empty-body]');
+                const illustration = empty.querySelector('[data-all-spaces-empty-illustration]');
+                if (title) title.textContent = copy.title;
+                if (bodyText) bodyText.textContent = copy.body;
+                if (illustration) illustration.hidden = !copy.illustration;
+                empty.classList.toggle('is-illustrated', Boolean(copy.illustration));
+            }
+        }
+        // View toggle only makes sense when there are items to display.
+        if (viewButton) viewButton.hidden = isEmpty || filter === 'chats';
     };
 
     const render = (filter = 'files') => {
@@ -483,7 +487,6 @@
         syncChips(selected);
         syncSpaceFilterUi();
         body.classList.toggle('is-chats-list', selected === 'chats');
-        if (viewButton) viewButton.hidden = selected === 'chats';
 
         if (selected === 'chats') {
             body.replaceChildren();
