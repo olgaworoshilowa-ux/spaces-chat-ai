@@ -16153,10 +16153,10 @@ body.is-upgrade-modal-open{
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     width: min(800px, 100%);
     max-height: calc(100vh - 32px);
-    padding: 20px 24px 20px;
+    padding: 24px 24px 20px;
     overflow: hidden;
     border-radius: 24px;
     box-sizing: border-box;
@@ -16191,7 +16191,7 @@ body.is-upgrade-modal-open{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 12px;
     padding-right: 40px;
     flex: 0 0 auto;
 }
@@ -16264,12 +16264,12 @@ body.is-upgrade-modal-open{
     position: relative;
     display: grid;
     grid-template-rows: subgrid;
-    grid-row: span 6;
-    row-gap: 10px;
+    grid-row: span 5;
+    row-gap: 12px;
     align-content: start;
     min-height: 0;
     height: auto;
-    padding: 16px 16px 14px;
+    padding: 20px 18px 16px;
     overflow: hidden;
     border: 1px solid #e8e8e8;
     border-radius: 24px;
@@ -16293,7 +16293,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-plan-head{
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
     min-height: 0;
 }
 
@@ -16315,10 +16315,10 @@ body.is-upgrade-modal-open{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 4px;
+    gap: 6px;
     min-height: 0;
     margin: 0;
-    padding: 12px 14px;
+    padding: 14px 14px 12px;
     border-radius: 16px;
     box-sizing: border-box;
     background: rgba(0, 0, 0, .04);
@@ -16344,6 +16344,69 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-credits-note{
     margin-top: 2px;
+}
+
+.spaces-upgrade-price-row{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 8px;
+    min-height: 32px;
+    margin-top: 2px;
+}
+
+.spaces-upgrade-offer{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+}
+
+.spaces-upgrade-plan-cta-wrap{
+    position: relative;
+    min-height: 44px;
+}
+
+.spaces-upgrade-save{
+    margin: 0;
+    min-height: 16px;
+    color: #1c1c1c;
+    font: 400 12px/16px "Open Sans", Arial, sans-serif;
+    text-align: center;
+}
+
+.spaces-upgrade-save > span{
+    color: #fd614a;
+    font-weight: 600;
+}
+
+.spaces-upgrade-save[hidden]{
+    display: block !important;
+    visibility: hidden;
+}
+
+.spaces-upgrade-features-block{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 2px 0 0;
+    padding-top: 14px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.spaces-upgrade-features-lead{
+    margin: 0;
+    color: #1b1b1b;
+    font: 600 13px/18px "Open Sans", Arial, sans-serif;
+}
+
+.spaces-upgrade-features{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .spaces-upgrade-slider{
@@ -16441,14 +16504,6 @@ body.is-upgrade-modal-open{
     font-weight: 600;
 }
 
-.spaces-upgrade-price-row{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px 8px;
-    min-height: 32px;
-}
-
 .spaces-upgrade-price-old{
     position: relative;
     color: #747474;
@@ -16480,11 +16535,6 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-price-period{
     color: #575757;
     font: 600 13px/18px "Open Sans", Arial, sans-serif;
-}
-
-.spaces-upgrade-plan-cta-wrap{
-    position: relative;
-    min-height: 44px;
 }
 
 .spaces-upgrade-badge{
@@ -16538,47 +16588,6 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-plan-cta.is-pro:focus-visible{
     outline: 0;
     background: #000;
-}
-
-.spaces-upgrade-save{
-    margin: 0;
-    min-height: 16px;
-    color: #1c1c1c;
-    font: 400 12px/16px "Open Sans", Arial, sans-serif;
-    text-align: center;
-}
-
-.spaces-upgrade-save > span{
-    color: #fd614a;
-    font-weight: 600;
-}
-
-.spaces-upgrade-save[hidden]{
-    visibility: hidden;
-}
-
-.spaces-upgrade-features-block{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 2px 0 0;
-    padding-top: 12px;
-    border-top: 1px solid #e8e8e8;
-}
-
-.spaces-upgrade-features-lead{
-    margin: 0;
-    color: #1b1b1b;
-    font: 600 13px/18px "Open Sans", Arial, sans-serif;
-}
-
-.spaces-upgrade-features{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
 }
 
 .spaces-upgrade-features > li{
