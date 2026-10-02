@@ -435,14 +435,45 @@
     };
 
     const emptyCopy = filter => {
-        if (spaceFilter !== 'all') {
-            if (filter === 'chats') return 'No chats in this space.';
-            if (filter === 'shared') return 'No shared items in this space.';
-            return 'No files in this space.';
+        if (filter === 'shared') {
+            return {
+                title: 'Nothing shared yet',
+                body: spaceFilter !== 'all'
+                    ? 'No shared items in this space yet.'
+                    : 'When someone shares a file, project or space with you, it will appear here.',
+                illustration: true
+            };
         }
-        if (filter === 'chats') return 'No chats yet.';
-        if (filter === 'shared') return 'No shared spaces yet.';
-        return 'No files yet.';
+        if (filter === 'chats') {
+            return {
+                title: spaceFilter !== 'all' ? 'No chats in this space' : 'No chats yet',
+                body: spaceFilter !== 'all'
+                    ? 'Try another space or start a new chat.'
+                    : 'Start a chat to see it here.',
+                illustration: false
+            };
+        }
+        return {
+            title: spaceFilter !== 'all' ? 'No files in this space' : 'No files yet',
+            body: spaceFilter !== 'all'
+                ? 'Try another space or open a file.'
+                : 'Files you open will appear here.',
+            illustration: false
+        };
+    };
+
+    const syncEmptyState = (filter, isEmpty) => {
+        if (!empty) return;
+        empty.hidden = !isEmpty;
+        if (!isEmpty) return;
+        const copy = emptyCopy(filter);
+        const title = empty.querySelector('[data-all-spaces-empty-title]');
+        const bodyText = empty.querySelector('[data-all-spaces-empty-body]');
+        const illustration = empty.querySelector('[data-all-spaces-empty-illustration]');
+        if (title) title.textContent = copy.title;
+        if (bodyText) bodyText.textContent = copy.body;
+        if (illustration) illustration.hidden = !copy.illustration;
+        empty.classList.toggle('is-illustrated', Boolean(copy.illustration));
     };
 
     const render = (filter = 'files') => {
@@ -457,19 +488,13 @@
         if (selected === 'chats') {
             body.replaceChildren();
             const selectedSpace = spaceFilterOptions().find(option => String(option.id) === String(spaceFilter));
-            const count = window.SpacesAiChats?.renderListInto?.(body, empty, {
+            const count = window.SpacesAiChats?.renderListInto?.(body, null, {
                 spaceFilter,
                 spaceTitle: selectedSpace?.id === 'all' || selectedSpace?.id === NONE_FILTER
                     ? ''
                     : (selectedSpace?.title || '')
             }) ?? 0;
-            if (!window.SpacesAiChats?.renderListInto && empty) {
-                empty.hidden = false;
-                empty.textContent = emptyCopy(selected);
-            } else if (empty && count === 0) {
-                empty.hidden = false;
-                empty.textContent = emptyCopy(selected);
-            }
+            syncEmptyState(selected, count === 0);
             return;
         }
 
@@ -479,10 +504,7 @@
         appendSection(body, 'Older', groups.older);
 
         const total = groups.today.length + groups.older.length;
-        if (empty) {
-            empty.hidden = total > 0;
-            empty.textContent = emptyCopy(selected);
-        }
+        syncEmptyState(selected, total === 0);
     };
 
     chips.forEach(chip => {
