@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=scope-menu-z-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=upgrade-modal-1">
 
         <title>Get Started Spaces</title>
 
@@ -390,7 +390,7 @@
                         </div>
                         <div class="header-credits-menu-row">
                             <span class="header-credits-menu-upsell">Need extra credits?</span>
-                            <button type="button" class="header-credits-menu-upgrade">Upgrade</button>
+                            <button type="button" class="header-credits-menu-upgrade" data-upgrade-modal-open>Upgrade</button>
                         </div>
                     </div>
                 </div>
@@ -421,7 +421,7 @@
                                 <span style="width: 10%"></span>
                             </span>
                         </a>
-                        <a href="" class="spaces-profile-menu-premium" role="menuitem">
+                        <a href="" class="spaces-profile-menu-premium" role="menuitem" data-upgrade-modal-open>
                             <span class="spaces-profile-menu-premium-label">
                                 <img src="./assets/images/header/header-icon-crown.svg" width="16" height="16" alt="" aria-hidden="true">
                                 <span>Go Premium</span>
@@ -4224,5 +4224,103 @@
         <script src="./assets/js/spaces-ask-copilot-promo.js?v=onboarding-3tips-1"></script>
         <script src="./assets/js/spaces-history-navigation.js?v=all-chats-page-1"></script>
         <script src="./assets/js/spaces-global-search.js?v=suggest-new-chat-1"></script>
+        <script src="./assets/js/spaces-upgrade-modal.js?v=1"></script>
+
+        <div class="spaces-upgrade-modal" data-upgrade-modal hidden>
+            <div class="spaces-upgrade-modal-backdrop" data-upgrade-modal-close tabindex="-1" aria-hidden="true"></div>
+            <div class="spaces-upgrade-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="spaces-upgrade-modal-title" data-upgrade-modal-dialog>
+                <button type="button" class="spaces-upgrade-modal-close" data-upgrade-modal-close aria-label="Close">
+                    <img src="./assets/images/spaces-v2/upgrade/close.svg" width="24" height="24" alt="" aria-hidden="true">
+                </button>
+                <header class="spaces-upgrade-modal-header">
+                    <h2 id="spaces-upgrade-modal-title">Upgrade your plan</h2>
+                    <div class="spaces-upgrade-billing" role="group" aria-label="Billing period">
+                        <span class="spaces-upgrade-billing-label" data-upgrade-billing-monthly-label>Monthly</span>
+                        <button type="button" class="spaces-upgrade-billing-toggle is-annual" data-upgrade-billing-toggle aria-pressed="true" aria-label="Annually billing, save 20%">
+                            <span class="spaces-upgrade-billing-knob" aria-hidden="true"></span>
+                        </button>
+                        <span class="spaces-upgrade-billing-label is-annual">
+                            Annually
+                            <strong>(safe 20%)</strong>
+                        </span>
+                    </div>
+                </header>
+                <div class="spaces-upgrade-plans">
+                    <article class="spaces-upgrade-plan is-premium" data-upgrade-plan="premium">
+                        <div class="spaces-upgrade-plan-top">
+                            <h3>Premium</h3>
+                            <p class="spaces-upgrade-plan-subtitle">For everyday interior design with AI</p>
+                            <div class="spaces-upgrade-credits-box">
+                                <p class="spaces-upgrade-credits-title">1,000 credits/month</p>
+                                <p class="spaces-upgrade-credits-copy">Enough for daily Copilot help and several AI studio room looks</p>
+                                <p class="spaces-upgrade-credits-note">Fixed amount of credits</p>
+                            </div>
+                        </div>
+                        <div class="spaces-upgrade-plan-bottom">
+                            <div class="spaces-upgrade-price-row">
+                                <span class="spaces-upgrade-price-old" data-upgrade-premium-old>$19.99</span>
+                                <strong class="spaces-upgrade-price-new" data-upgrade-premium-price>$4.99</strong>
+                                <span class="spaces-upgrade-price-period" data-upgrade-premium-period>month/billed annually</span>
+                            </div>
+                            <button type="button" class="spaces-upgrade-plan-cta is-premium">Get Premium</button>
+                            <p class="spaces-upgrade-save" data-upgrade-premium-save>Save $390 compared to monthly</p>
+                            <ul class="spaces-upgrade-features">
+                                <li>
+                                    <img src="./assets/images/spaces-v2/upgrade/check.svg" width="20" height="20" alt="" aria-hidden="true">
+                                    <span>Access to <strong>AI Designer</strong> and <strong>Smart Wizard</strong> tools to automate project creation</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="spaces-upgrade-plan is-pro" data-upgrade-plan="pro">
+                        <div class="spaces-upgrade-plan-top">
+                            <h3>Professional</h3>
+                            <p class="spaces-upgrade-plan-subtitle">For ambitious projects</p>
+                            <div class="spaces-upgrade-credits-box is-adjustable">
+                                <p class="spaces-upgrade-credits-title"><span data-upgrade-pro-credits>3,000</span> credits/month</p>
+                                <p class="spaces-upgrade-credits-copy">More Copilot help and AI studio looks for busy client work</p>
+                                <div class="spaces-upgrade-slider" data-upgrade-pro-slider>
+                                    <input type="range" min="0" max="2" step="1" value="0" aria-label="Monthly credits" data-upgrade-pro-range>
+                                    <div class="spaces-upgrade-slider-labels" aria-hidden="true">
+                                        <span>3,000</span>
+                                        <span>5,000</span>
+                                        <span>8,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spaces-upgrade-plan-bottom">
+                            <div class="spaces-upgrade-price-row">
+                                <span class="spaces-upgrade-price-old" data-upgrade-pro-old>$44.99</span>
+                                <strong class="spaces-upgrade-price-new" data-upgrade-pro-price>$33.99</strong>
+                                <span class="spaces-upgrade-price-period" data-upgrade-pro-period>month/billed annually</span>
+                            </div>
+                            <div class="spaces-upgrade-plan-cta-wrap">
+                                <span class="spaces-upgrade-badge">7 days free</span>
+                                <button type="button" class="spaces-upgrade-plan-cta is-pro">Get Pro</button>
+                            </div>
+                            <p class="spaces-upgrade-save" data-upgrade-pro-save>Save $450 compared to monthly</p>
+                            <ul class="spaces-upgrade-features">
+                                <li>
+                                    <img src="./assets/images/spaces-v2/upgrade/check.svg" width="20" height="20" alt="" aria-hidden="true">
+                                    <span>Access to <strong>AI Designer</strong> and <strong>Smart Wizard</strong> tools to automate project creation</span>
+                                </li>
+                                <li>
+                                    <img src="./assets/images/spaces-v2/upgrade/check.svg" width="20" height="20" alt="" aria-hidden="true">
+                                    <span>Adjustable monthly credits</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+                <div class="spaces-upgrade-footer">
+                    <p>Don’t want to upgrade right away? Buy credits instead</p>
+                    <button type="button" class="spaces-upgrade-buy-credits">
+                        <span>Buy credits</span>
+                        <img src="./assets/images/spaces-v2/upgrade/arrow-right.svg" width="24" height="24" alt="" aria-hidden="true">
+                    </button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
