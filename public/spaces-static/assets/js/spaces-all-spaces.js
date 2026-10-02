@@ -91,7 +91,8 @@
     const normalizeFilter = filter => {
         if (filter === 'shared') return 'shared';
         if (filter === 'chats') return 'chats';
-        if (filter === 'all') return 'files';
+        if (filter === 'spaces') return 'spaces';
+        if (filter === 'files' || filter === 'all') return 'files';
         return 'files';
     };
 
@@ -457,6 +458,22 @@
         root.append(section);
     };
 
+    const filterByType = (groups, predicate) => ({
+        today: (groups.today || []).filter(predicate),
+        older: (groups.older || []).filter(predicate)
+    });
+
+    const spacesFromSidebarCards = () => spacesFromSidebar().map((space, index) => ({
+        id: space.id,
+        title: space.title,
+        type: 'Space',
+        image: [IMG.living, IMG.vacation, IMG.apartment][index % 3],
+        letter: { text: space.initial, color: space.avatarColor },
+        spaceTitle: space.title,
+        spaceId: space.id,
+        spaceButton: space.spaceButton
+    }));
+
     const itemsForFilter = filter => {
         if (filter === 'chats') return { today: [], older: [] };
         if (filter === 'shared') {
@@ -466,17 +483,26 @@
             }
             return SHARED_DEMO;
         }
-        return FILES_DEMO;
+        if (filter === 'spaces') {
+            const live = spacesFromSidebarCards();
+            if (live.length) {
+                return { today: live, older: [] };
+            }
+            return filterByType(FILES_DEMO, item => item.type === 'Space');
+        }
+        return filterByType(FILES_DEMO, item => item.type !== 'Space');
     };
 
     const emptyCopy = filter => {
         if (spaceFilter !== 'all') {
             if (filter === 'chats') return 'No chats in this space.';
             if (filter === 'shared') return 'No shared items in this space.';
+            if (filter === 'spaces') return 'No spaces in this filter.';
             return 'No files in this space.';
         }
         if (filter === 'chats') return 'No chats yet.';
         if (filter === 'shared') return 'No shared spaces yet.';
+        if (filter === 'spaces') return 'No spaces yet.';
         return 'No files yet.';
     };
 
