@@ -16324,36 +16324,38 @@ body.is-upgrade-modal-open{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 4px;
+    gap: 8px;
     min-height: 0;
     margin: 0;
-    padding: 12px 14px;
-    border-radius: 14px;
-    box-sizing: border-box;
-    background: rgba(0, 0, 0, .04);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
 }
 
 .spaces-upgrade-plan.is-pro .spaces-upgrade-credits-box{
-    background: rgba(255, 255, 255, .92);
+    background: transparent;
 }
 
 .spaces-upgrade-credits-title{
     margin: 0;
     color: #1b1b1b;
-    font: 600 15px/22px "Open Sans", Arial, sans-serif;
+    font: 600 16px/22px "Open Sans", Arial, sans-serif;
     letter-spacing: -.2px;
 }
 
 .spaces-upgrade-credits-copy,
 .spaces-upgrade-credits-note{
     margin: 0;
-    color: #6b6b6b;
-    font: 400 13px/18px "Open Sans", Arial, sans-serif;
+    color: #5d5d5d;
+    font: 400 14px/20px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credits-note{
-    margin-top: 2px;
+    margin-top: 0;
     color: #8a8a8a;
+    font-size: 13px;
+    line-height: 18px;
 }
 
 .spaces-upgrade-pricing{
@@ -16430,11 +16432,11 @@ body.is-upgrade-modal-open{
     display: flex;
     align-items: center;
     gap: 8px;
-    margin: 0;
+    margin: 0 0 4px;
     padding: 0;
     border: 0;
     color: #0d0d0d;
-    font: 600 14px/20px "Open Sans", Arial, sans-serif;
+    font: 600 15px/22px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-features-lead > span{
@@ -16450,7 +16452,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features{
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -16462,8 +16464,8 @@ body.is-upgrade-modal-open{
     z-index: 2;
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-top: 4px;
+    gap: 8px;
+    margin-top: 8px;
     touch-action: none;
 }
 
@@ -16643,13 +16645,13 @@ body.is-upgrade-modal-open{
     gap: 10px;
     margin: 0;
     color: #1b1b1b;
-    font: 400 14px/20px "Open Sans", Arial, sans-serif;
+    font: 400 15px/22px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-features > li > img{
-    flex: 0 0 18px;
-    width: 18px;
-    height: 18px;
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
     margin-top: 1px;
 }
 
