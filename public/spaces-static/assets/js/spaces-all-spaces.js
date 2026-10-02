@@ -280,6 +280,22 @@
         });
     };
 
+    const visibleSpaceCount = () => spacesFromSidebar().length;
+
+    const spacesChip = () => chips.find(chip => chip.dataset.allSpacesChip === 'spaces');
+
+    const syncSpacesChipVisibility = () => {
+        const chip = spacesChip();
+        if (!chip) return false;
+        const showSpaces = visibleSpaceCount() > 1;
+        chip.hidden = !showSpaces;
+        chip.setAttribute('aria-hidden', String(!showSpaces));
+        if (!showSpaces && page?.dataset.allSpacesFilter === 'spaces') {
+            return true;
+        }
+        return false;
+    };
+
     const syncSpaceFilterUi = () => {
         const options = spaceFilterOptions();
         if (!options.some(option => String(option.id) === String(spaceFilter))) {
@@ -468,7 +484,10 @@
 
     const render = (filter = 'files') => {
         if (!page || !body) return;
-        const selected = normalizeFilter(filter);
+        let selected = normalizeFilter(filter);
+        if (syncSpacesChipVisibility() || (selected === 'spaces' && visibleSpaceCount() <= 1)) {
+            selected = 'files';
+        }
         page.dataset.allSpacesFilter = selected;
         syncChips(selected);
         syncSpaceFilterUi();
