@@ -196,12 +196,8 @@
             spaces.push({ ...space, id });
         };
         add({ id: 'all', title: 'All spaces' });
+        // Only real sidebar spaces — never invent options from demo file titles.
         spacesFromSidebar().forEach(add);
-        [...FILES_DEMO.today, ...FILES_DEMO.older, ...SHARED_DEMO.today, ...SHARED_DEMO.older]
-            .forEach(item => {
-                const title = item.spaceTitle || (item.type === 'Space' ? item.title : '');
-                if (title) add({ title, initial: title.slice(0, 1).toUpperCase() });
-            });
         add({ id: NONE_FILTER, title: 'No space' });
         return spaces;
     };
