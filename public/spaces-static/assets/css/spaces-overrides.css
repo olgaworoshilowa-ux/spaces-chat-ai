@@ -16162,7 +16162,7 @@ body.is-upgrade-modal-open{
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     width: min(960px, calc(100vw - 24px));
     height: calc(100vh - 24px);
     height: calc(100dvh - 24px);
@@ -16203,7 +16203,7 @@ body.is-upgrade-modal-open{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 6px;
     padding-right: 40px;
     flex: 0 0 auto;
 }
@@ -16223,7 +16223,7 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-billing-label{
     color: #1c1c1c;
-    font: 400 16px/24px "Open Sans", Arial, sans-serif;
+    font: 400 15px/22px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-billing-label.is-annual strong{
