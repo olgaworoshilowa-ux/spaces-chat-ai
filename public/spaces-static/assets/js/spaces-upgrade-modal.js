@@ -69,7 +69,7 @@
             if (premiumPeriod) premiumPeriod.textContent = 'month/billed annually';
             if (premiumSave) {
                 premiumSave.hidden = false;
-                premiumSave.innerHTML = `Save $${PREMIUM.save}/year`;
+                premiumSave.innerHTML = `<span>Save $${PREMIUM.save}</span> compared to monthly`;
             }
             if (proOld) {
                 proOld.hidden = false;
@@ -79,7 +79,7 @@
             if (proPeriod) proPeriod.textContent = 'month/billed annually';
             if (proSave) {
                 proSave.hidden = false;
-                proSave.innerHTML = `Save $${tier.save}/year`;
+                proSave.innerHTML = `<span>Save $${tier.save}</span> compared to monthly`;
             }
         } else {
             if (premiumOld) premiumOld.hidden = true;
