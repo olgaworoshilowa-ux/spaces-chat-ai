@@ -825,12 +825,26 @@
     border-radius: 999px;
     box-sizing: border-box;
     color: #7c5cff;
-    font: 700 13px/20px "Open Sans", Arial, sans-serif;
+    font-family: "Open Sans", OpenSans, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 20px;
     letter-spacing: -.1px;
     background: #fff;
     box-shadow: none;
     cursor: pointer;
     transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+.header-editor.header-spaces.header-spaces-v2 .header-credits-button [data-header-credits-count]{
+    font-family: "Open Sans", OpenSans, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 20px;
+    letter-spacing: -.1px;
+    color: inherit;
 }
 
 .header-editor.header-spaces.header-spaces-v2 .header-credits-button > img{
