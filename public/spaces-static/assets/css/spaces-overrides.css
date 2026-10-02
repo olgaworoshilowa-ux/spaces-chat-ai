@@ -9870,7 +9870,7 @@ body.is-copilot-panel-open .spaces-main-content.is-all-spaces-page{
 
 .spaces-home-composer-scope-menu{
     position: absolute;
-    z-index: 8;
+    z-index: 40;
     top: calc(100% + 6px);
     left: 0;
     display: flex;
@@ -9886,6 +9886,7 @@ body.is-copilot-panel-open .spaces-main-content.is-all-spaces-page{
     border-radius: 16px;
     background: #fff;
     box-shadow: 0 8px 28px rgba(0, 0, 0, .16);
+    isolation: isolate;
 }
 
 .spaces-home-composer-scope-menu[hidden]{
@@ -9932,7 +9933,7 @@ body.is-copilot-panel-open .spaces-main-content.is-all-spaces-page{
 }
 
 .spaces-home-composer-scope-option.is-selected{
-    background: var(--space-neutral-fill-gamma, #0000000a);
+    background: #f3f3f3;
 }
 
 .spaces-home-composer-scope-option.is-selected .spaces-home-composer-scope-check{
@@ -9942,7 +9943,7 @@ body.is-copilot-panel-open .spaces-main-content.is-all-spaces-page{
 .spaces-home-composer-scope-option:hover,
 .spaces-home-composer-scope-option:focus-visible{
     outline: 0;
-    background: var(--space-neutral-fill-gamma, #0000000a);
+    background: #f3f3f3;
 }
 
 .spaces-home-composer-scope-divider{
@@ -13722,18 +13723,26 @@ body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is
     margin: 0;
 }
 
-/* Composer isolation keeps the halo behind the chips. While a menu is open, lift the field so the menu paints on top of the chips instead of sliding under them. */
+/* Composer isolation keeps the halo behind the chips. While a menu is open, lift the field so the menu paints on top of the chips / role switch instead of sliding under them. */
 body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-home:not(.is-centered-chat):has(.spaces-home-composer-scope-menu:not([hidden])) .spaces-home-composer,
 body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-home:not(.is-centered-chat):has(.spaces-home-composer-mode-menu:not([hidden])) .spaces-home-composer,
 body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-home:not(.is-centered-chat):has(.spaces-home-composer-attach-menu:not([hidden])) .spaces-home-composer,
 body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-inline-copilot:has(.spaces-home-composer-scope-menu:not([hidden])) .spaces-inline-copilot-bar,
 body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-inline-copilot:has(.spaces-home-composer-mode-menu:not([hidden])) .spaces-inline-copilot-bar,
 body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-inline-copilot:has(.spaces-home-composer-attach-menu:not([hidden])) .spaces-inline-copilot-bar{
-    z-index: 6;
+    position: relative;
+    z-index: 30;
 }
 
 body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-home:not(.is-centered-chat):has(.spaces-home-composer-scope-menu:not([hidden])) .spaces-inline-copilot-chips,
-body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-inline-copilot:has(.spaces-home-composer-scope-menu:not([hidden])) .spaces-inline-copilot-chips{
+body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-inline-copilot:has(.spaces-home-composer-scope-menu:not([hidden])) .spaces-inline-copilot-chips,
+body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-home:not(.is-centered-chat):has(.spaces-home-composer-scope-menu:not([hidden])) .spaces-home-chips-row,
+body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-home:not(.is-centered-chat):has(.spaces-home-composer-mode-menu:not([hidden])) .spaces-home-chips-row,
+body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-home:not(.is-centered-chat):has(.spaces-home-composer-attach-menu:not([hidden])) .spaces-home-chips-row,
+body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-home:not(.is-centered-chat):has(.spaces-home-composer-scope-menu:not([hidden])) .spaces-home-role-switch,
+body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-home:not(.is-centered-chat):has(.spaces-home-composer-mode-menu:not([hidden])) .spaces-home-role-switch,
+body.is-new-chat-placement-option5:not(.is-new-chat-placement-option5-1):not(.is-new-chat-placement-option5-2) .spaces-home:not(.is-centered-chat):has(.spaces-home-composer-attach-menu:not([hidden])) .spaces-home-role-switch{
+    position: relative;
     z-index: 1;
 }
 
