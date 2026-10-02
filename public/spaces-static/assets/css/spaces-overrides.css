@@ -16285,7 +16285,7 @@ body.is-upgrade-modal-open{
     align-content: start;
     min-height: 0;
     height: auto;
-    padding: 22px 20px 22px;
+    padding: 28px 24px 28px;
     overflow: hidden;
     border: 1px solid #e8e8e8;
     border-radius: 24px;
@@ -16788,7 +16788,7 @@ body.is-upgrade-modal-open{
 
     .spaces-upgrade-plan{
         row-gap: 20px;
-        padding: 18px;
+        padding: 22px 20px;
     }
 
     .spaces-upgrade-credits-box{
