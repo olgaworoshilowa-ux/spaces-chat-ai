@@ -52,7 +52,6 @@
     const normalizeFilter = filter => {
         if (filter === 'shared') return 'shared';
         if (filter === 'chats') return 'chats';
-        if (filter === 'spaces') return 'spaces';
         if (filter === 'files' || filter === 'all') return 'files';
         return 'files';
     };
@@ -280,22 +279,6 @@
         });
     };
 
-    const visibleSpaceCount = () => spacesFromSidebar().length;
-
-    const spacesChip = () => chips.find(chip => chip.dataset.allSpacesChip === 'spaces');
-
-    const syncSpacesChipVisibility = () => {
-        const chip = spacesChip();
-        if (!chip) return false;
-        const showSpaces = visibleSpaceCount() > 1;
-        chip.hidden = !showSpaces;
-        chip.setAttribute('aria-hidden', String(!showSpaces));
-        if (!showSpaces && page?.dataset.allSpacesFilter === 'spaces') {
-            return true;
-        }
-        return false;
-    };
-
     const syncSpaceFilterUi = () => {
         const options = spaceFilterOptions();
         if (!options.some(option => String(option.id) === String(spaceFilter))) {
@@ -439,17 +422,6 @@
         older: (groups.older || []).filter(predicate)
     });
 
-    const spacesFromSidebarCards = () => spacesFromSidebar().map((space, index) => ({
-        id: space.id,
-        title: space.title,
-        type: 'Space',
-        image: [IMG.living, IMG.vacation, IMG.apartment][index % 3],
-        letter: { text: space.initial, color: space.avatarColor },
-        spaceTitle: space.title,
-        spaceId: space.id,
-        spaceButton: space.spaceButton
-    }));
-
     const itemsForFilter = filter => {
         if (filter === 'chats') return { today: [], older: [] };
         if (filter === 'shared') {
@@ -459,13 +431,6 @@
             }
             return SHARED_DEMO;
         }
-        if (filter === 'spaces') {
-            const live = spacesFromSidebarCards();
-            if (live.length) {
-                return { today: live, older: [] };
-            }
-            return filterByType(FILES_DEMO, item => item.type === 'Space');
-        }
         return filterByType(FILES_DEMO, item => item.type !== 'Space');
     };
 
@@ -473,21 +438,16 @@
         if (spaceFilter !== 'all') {
             if (filter === 'chats') return 'No chats in this space.';
             if (filter === 'shared') return 'No shared items in this space.';
-            if (filter === 'spaces') return 'No spaces in this filter.';
             return 'No files in this space.';
         }
         if (filter === 'chats') return 'No chats yet.';
         if (filter === 'shared') return 'No shared spaces yet.';
-        if (filter === 'spaces') return 'No spaces yet.';
         return 'No files yet.';
     };
 
     const render = (filter = 'files') => {
         if (!page || !body) return;
-        let selected = normalizeFilter(filter);
-        if (syncSpacesChipVisibility() || (selected === 'spaces' && visibleSpaceCount() <= 1)) {
-            selected = 'files';
-        }
+        const selected = normalizeFilter(filter);
         page.dataset.allSpacesFilter = selected;
         syncChips(selected);
         syncSpaceFilterUi();
