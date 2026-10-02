@@ -16321,9 +16321,10 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-credits-box{
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 12px;
     min-height: 0;
     height: 100%;
@@ -16340,11 +16341,8 @@ body.is-upgrade-modal-open{
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06);
 }
 
-.spaces-upgrade-credits-main{
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-height: 0;
+.spaces-upgrade-credits-box:has(.spaces-upgrade-credits-note) .spaces-upgrade-credits-main{
+    padding-right: 150px;
 }
 
 .spaces-upgrade-credits-title{
@@ -16354,18 +16352,30 @@ body.is-upgrade-modal-open{
     letter-spacing: -.2px;
 }
 
-.spaces-upgrade-credits-copy,
-.spaces-upgrade-credits-note{
+.spaces-upgrade-credits-copy{
     margin: 0;
     color: #5d5d5d;
     font: 400 14px/20px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credits-note{
-    margin-top: 0;
-    color: #8a8a8a;
-    font-size: 13px;
-    line-height: 18px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    max-width: calc(100% - 24px);
+    margin: 0;
+    padding: 4px 10px;
+    border-radius: 100px;
+    box-sizing: border-box;
+    color: #5d5d5d;
+    font: 600 11px/14px "Open Sans", Arial, sans-serif;
+    letter-spacing: -.1px;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, .82);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06);
 }
 
 .spaces-upgrade-pricing{
