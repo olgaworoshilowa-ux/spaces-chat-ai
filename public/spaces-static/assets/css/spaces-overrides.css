@@ -16348,7 +16348,7 @@ body.is-upgrade-modal-open{
     min-height: 0;
 }
 
-.spaces-upgrade-credits-box:has(.spaces-upgrade-credits-note) .spaces-upgrade-credits-main{
+.spaces-upgrade-credits-box:has(.spaces-upgrade-credits-note) .spaces-upgrade-credits-title{
     padding-right: 150px;
 }
 
@@ -16361,6 +16361,7 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-credits-copy{
     margin: 0;
+    max-width: none;
     color: #5d5d5d;
     font: 400 14px/20px "Open Sans", Arial, sans-serif;
 }
