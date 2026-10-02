@@ -6451,8 +6451,9 @@ body.is-copilot-panel-open .spaces-main-content.is-all-spaces-page{
 
 .spaces-all-spaces-header{
     display: flex;
-    align-items: center;
-    gap: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
 }
 
 .spaces-all-spaces-header > h1{
