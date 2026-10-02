@@ -16388,23 +16388,22 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-save{
     margin: 0;
-    min-height: 22px;
+    min-height: 18px;
     color: #8a8a8a;
-    font: 400 12px/18px "Open Sans", Arial, sans-serif;
+    font: 400 13px/18px "Open Sans", Arial, sans-serif;
     text-align: center;
 }
 
 .spaces-upgrade-save > span{
-    display: inline-flex;
-    align-items: center;
-    margin-right: 4px;
-    padding: 2px 8px;
-    border-radius: 100px;
-    color: #fff;
-    font-weight: 700;
-    letter-spacing: -.1px;
-    background: #ff4d35;
-    box-shadow: 0 1px 0 rgba(255, 77, 53, .25);
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    color: #c2412d;
+    font-weight: 600;
+    letter-spacing: 0;
+    background: none;
+    box-shadow: none;
 }
 
 .spaces-upgrade-save[hidden]{
