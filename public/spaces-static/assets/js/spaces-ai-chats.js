@@ -40,7 +40,7 @@
     const artifactPreviewImage = document.querySelector('[data-home-artifact-preview-image]');
     const artifactPreviewClose = document.querySelector('[data-home-artifact-preview-close]');
     const homeThread = document.querySelector('[data-home-thread]');
-    const bubbleIcon = './assets/images/sidebar/layout-aa/ai-chat-bubble.svg';
+    const bubbleIcon = './assets/images/sidebar/layout-aa/ai-chat-bubble.svg?v=figma-1';
     const moreIcon = './assets/images/sidebar/more.svg';
 
     if (!section || !list) return;
