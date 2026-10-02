@@ -16641,15 +16641,25 @@ body.is-upgrade-modal-open{
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    width: 100%;
     min-height: 0;
     padding: 12px 18px;
     border: 1px solid #e8e8e8;
     border-radius: 20px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .7);
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
 }
 
-.spaces-upgrade-footer > p{
+.spaces-upgrade-footer:hover,
+.spaces-upgrade-footer:focus-visible{
+    outline: 0;
+    background: #fff;
+}
+
+.spaces-upgrade-footer > span:first-child{
     margin: 0;
     color: #1b1b1b;
     font: 600 14px/20px "Open Sans", Arial, sans-serif;
