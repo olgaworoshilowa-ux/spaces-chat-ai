@@ -3,7 +3,7 @@
 
     const STORAGE_KEY = 'planner5d-spaces-v2-ai-chats';
     const SIDEBAR_LIMIT = 3;
-    const ALL_CHATS_MIN = 1;
+    const ALL_CHATS_MIN = 3;
     const section = document.querySelector('[data-ai-chats-section]');
     const list = section?.querySelector('[data-ai-chats-list]');
     const allButton = section?.querySelector('[data-ai-chats-all]');
