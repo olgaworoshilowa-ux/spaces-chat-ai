@@ -160,7 +160,6 @@
         add({ id: 'all', title: 'All spaces' });
         // Only real sidebar spaces — never invent options from demo file titles.
         spacesFromSidebar().forEach(add);
-        add({ id: NONE_FILTER, title: 'No space' });
         return spaces;
     };
 
