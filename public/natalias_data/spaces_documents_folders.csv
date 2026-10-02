@@ -1,0 +1,23 @@
+id,hash,uid,space_id,parent_id,name,tags,cdate,udate,deleted
+185892623,2657b6f8abfc110e2f70a1a2f002139c,179895932,5998468,0,__system__,"[""builtin"",""system""]",2026-06-23 08:10:13,2026-06-23 08:10:13,0
+170232879,a03baf5145a0afa6a77bf4efc2388cb1,179895932,24891971,0,Maintenance & Repair,"[""color_blue"",""maintenance"",""builtin""]",2026-06-11 14:29:08,2026-06-11 14:29:08,0
+170232875,aee51a558da437c8c42414ee4825636d,179895932,24891971,0,Warranties & Manuals,"[""color_green"",""warranties"",""builtin""]",2026-06-11 14:29:08,2026-06-11 14:29:08,0
+170232871,48a4dfed40f63a8d8b472fb6e06d080e,179895932,24891971,0,Ownership & Legal,"[""color_yellow"",""legal"",""builtin""]",2026-06-11 14:29:08,2026-06-11 14:29:08,0
+170232867,144076ef691f2fe3bc9358cb34ad4044,179895932,24891971,0,Bills & Invoices,"[""color_pink"",""bills"",""builtin""]",2026-06-11 14:29:08,2026-06-11 14:29:08,0
+170232863,fb79c3801e4fae78f7069df67977dadf,179895932,24891971,0,Photos & Interiors,"[""color_blue"",""interior_photos"",""builtin""]",2026-06-11 14:29:08,2026-06-11 14:29:08,0
+170232859,f41ba8ceecdb373389008faff268182a,179895932,24891971,0,Plans & Designs,"[""color_purple"",""plans"",""builtin""]",2026-06-11 14:29:08,2026-06-11 14:29:08,0
+170232855,f4e08fcc35e86cbe88054803c60e4caa,179895932,24891971,0,Unsorted,"[""unsorted"",""color_green"",""builtin""]",2026-06-11 14:29:08,2026-06-11 14:29:08,0
+170043439,a27f255e36671936f56e442b42d43d46,179895932,24870839,0,Maintenance & Repair,"[""color_blue"",""maintenance"",""builtin""]",2026-06-11 11:20:19,2026-06-11 11:20:19,0
+170043435,9502fe2250a5fe319586066c371456ad,179895932,24870839,0,Warranties & Manuals,"[""color_green"",""warranties"",""builtin""]",2026-06-11 11:20:19,2026-06-11 11:20:19,0
+170043431,8c58fe03b27f6fee327b465733fc65ec,179895932,24870839,0,Ownership & Legal,"[""color_yellow"",""legal"",""builtin""]",2026-06-11 11:20:19,2026-06-11 11:20:19,0
+170043427,682cc6ced388406ad8c53841a71869b1,179895932,24870839,0,Bills & Invoices,"[""color_pink"",""bills"",""builtin""]",2026-06-11 11:20:19,2026-06-11 11:20:19,0
+170043423,f486b44986ccea3eeb349d42ed29ea19,179895932,24870839,0,Photos & Interiors,"[""color_blue"",""interior_photos"",""builtin""]",2026-06-11 11:20:19,2026-06-11 11:20:19,0
+170043419,0d188d8a9a1e3ea1525d1094e2a79f09,179895932,24870839,0,Plans & Designs,"[""color_purple"",""plans"",""builtin""]",2026-06-11 11:20:19,2026-06-11 11:20:19,0
+170043415,45807fed4c5d19ddc63975d5e392bcf2,179895932,24870839,0,Unsorted,"[""unsorted"",""color_green"",""builtin""]",2026-06-11 11:20:19,2026-06-11 11:20:19,0
+35838556,e3fd3136ff2d976df3f683a450380fb2,179895932,5998468,0,Mantenimiento y reparación,"[""color_blue"",""maintenance"",""builtin""]",2025-12-19 11:20:59,2025-12-19 11:20:59,0
+35838552,8a00b592caa34c902238d62e0d64e6f7,179895932,5998468,0,Garantías y manuales,"[""color_green"",""warranties"",""builtin""]",2025-12-19 11:20:59,2025-12-19 11:20:59,0
+35838548,87ae7cccfe99df37e3997595c9f79fca,179895932,5998468,0,Propiedad y aspectos legales,"[""color_yellow"",""legal"",""builtin""]",2025-12-19 11:20:59,2025-12-19 11:20:59,0
+35838544,75330a723685c369b289298b5e4980c5,179895932,5998468,0,Facturas y facturas,"[""color_pink"",""bills"",""builtin""]",2025-12-19 11:20:59,2025-12-19 11:20:59,0
+35838540,060407334504500de5f8fd1b96848859,179895932,5998468,0,Fotos e interiores,"[""color_blue"",""interior_photos"",""builtin""]",2025-12-19 11:20:59,2025-12-19 11:20:59,0
+35838536,9c6d184060af290098c59e671f4922ad,179895932,5998468,0,Planos y diseños,"[""color_purple"",""plans"",""builtin""]",2025-12-19 11:20:59,2025-12-19 11:20:59,0
+35838532,49c8a9758abdf0f829a5373850c2d65d,179895932,5998468,0,Sin ordenar,"[""unsorted"",""color_green"",""builtin""]",2025-12-19 11:20:59,2025-12-19 11:20:59,0

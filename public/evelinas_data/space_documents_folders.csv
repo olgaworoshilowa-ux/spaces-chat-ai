@@ -1,0 +1,9 @@
+id,hash,uid,space_id,parent_id,name,tags,cdate,udate,deleted
+77555096,c83cced2030d29ddc00abe517f36e5d0,4550601,11834724,0,Maintenance & Repair,"[""color_blue"",""maintenance"",""builtin""]",2026-03-27 07:51:06,2026-03-27 07:51:06,0
+77555092,6615ca3e918ffe1afba6ffe95e4a464f,4550601,11834724,0,Warranties & Manuals,"[""color_green"",""warranties"",""builtin""]",2026-03-27 07:51:06,2026-03-27 07:51:06,0
+77555088,e7782efb07491fd9f52e6d1b8f425484,4550601,11834724,0,Ownership & Legal,"[""color_yellow"",""legal"",""builtin""]",2026-03-27 07:51:06,2026-03-27 07:51:06,0
+77555084,091e1241d273056bc20b4ad2f0e68a7d,4550601,11834724,0,Bills & Invoices,"[""color_pink"",""bills"",""builtin""]",2026-03-27 07:51:06,2026-03-27 07:51:06,0
+77555080,4cd1a4fb650140f382febe9674af7891,4550601,11834724,0,Photos & Interiors,"[""color_blue"",""interior_photos"",""builtin""]",2026-03-27 07:51:06,2026-03-27 07:51:06,0
+77555076,ca23be0395f95d6aa9db8f9f09e190c2,4550601,11834724,0,Plans & Designs,"[""color_purple"",""plans"",""builtin""]",2026-03-27 07:51:06,2026-03-27 07:51:06,0
+77555072,dd48f23daa0e7d6572c6679dc34dc4c8,4550601,11834724,0,Unsorted,"[""unsorted"",""color_green"",""builtin""]",2026-03-27 07:51:06,2026-03-27 07:51:06,0
+

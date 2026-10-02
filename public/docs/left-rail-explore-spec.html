@@ -1,0 +1,2209 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Planner 5D Spaces — Left Rail / Explore — Developer Specification</title>
+  <meta
+    name="description"
+    content="Developer specification for the Planner 5D Spaces Left Rail Explore profile."
+  >
+  <link rel="icon" href="../icons/icon-assets.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --doc-bg: #f5f6f8;
+      --doc-surface: #ffffff;
+      --doc-surface-muted: #f8f9fb;
+      --doc-text: #1c1c1c;
+      --doc-text-secondary: #575757;
+      --doc-text-tertiary: #747474;
+      --doc-border: #e3e5e8;
+      --doc-border-strong: #cfd2d7;
+      --doc-blue: #0194f5;
+      --doc-blue-muted: #e8f5ff;
+      --doc-green: #0a8f5a;
+      --doc-green-muted: #e8f8f0;
+      --doc-amber: #9a6700;
+      --doc-amber-muted: #fff6d8;
+      --doc-red: #b42318;
+      --doc-code: #202328;
+      --doc-radius: 16px;
+      --doc-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+
+      --rail-width: 256px;
+      --rail-row: 36px;
+      --rail-pad: 12px;
+      --rail-gap: 2px;
+      --rail-radius: 100px;
+      --rail-text: #1c1c1c;
+      --rail-text-secondary: #747474;
+      --rail-icon: #747474;
+      --rail-hover: rgba(0, 0, 0, 0.04);
+      --rail-selected: #f5f5f5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 28px;
+    }
+
+    body {
+      margin: 0;
+      color: var(--doc-text);
+      background: var(--doc-bg);
+      font-family: Inter, "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    code,
+    pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: #26415d;
+      background: #eef3f7;
+      font-size: 0.88em;
+    }
+
+    .page-shell {
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      max-width: 1480px;
+      min-height: 100vh;
+      margin: 0 auto;
+    }
+
+    .doc-nav {
+      position: sticky;
+      top: 0;
+      align-self: start;
+      height: 100vh;
+      padding: 28px 20px;
+      border-right: 1px solid var(--doc-border);
+      background: rgba(245, 246, 248, 0.92);
+      backdrop-filter: blur(14px);
+      overflow: auto;
+    }
+
+    .doc-nav__brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      font-size: 13px;
+      font-weight: 750;
+      letter-spacing: -0.01em;
+    }
+
+    .doc-nav__mark {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      color: white;
+      background: var(--doc-blue);
+      box-shadow: 0 5px 14px rgba(1, 148, 245, 0.25);
+    }
+
+    .doc-nav__label {
+      margin: 18px 10px 8px;
+      color: var(--doc-text-tertiary);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .doc-nav ul {
+      display: grid;
+      gap: 3px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .doc-nav a {
+      display: block;
+      padding: 7px 10px;
+      border-radius: 9px;
+      color: var(--doc-text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .doc-nav a:hover,
+    .doc-nav a:focus-visible {
+      color: var(--doc-text);
+      background: var(--doc-surface);
+      outline: none;
+    }
+
+    .doc-nav__meta {
+      margin: 28px 10px 0;
+      color: var(--doc-text-tertiary);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    main {
+      min-width: 0;
+      padding: 48px clamp(28px, 4.2vw, 72px) 96px;
+    }
+
+    .hero {
+      max-width: 980px;
+      margin-bottom: 36px;
+    }
+
+    .eyebrow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      color: var(--doc-text-secondary);
+      background: var(--doc-surface);
+      border: 1px solid var(--doc-border);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .badge--ready {
+      color: var(--doc-green);
+      border-color: transparent;
+      background: var(--doc-green-muted);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 900px;
+      margin-bottom: 16px;
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+    }
+
+    .hero__lead {
+      max-width: 780px;
+      margin-bottom: 24px;
+      color: var(--doc-text-secondary);
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .hero__facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      margin: 0;
+      padding: 0;
+      color: var(--doc-text-tertiary);
+      list-style: none;
+      font-size: 13px;
+    }
+
+    .hero__facts strong {
+      color: var(--doc-text);
+    }
+
+    .section {
+      max-width: 1120px;
+      margin-top: 72px;
+      scroll-margin-top: 24px;
+    }
+
+    .section__head {
+      max-width: 780px;
+      margin-bottom: 24px;
+    }
+
+    .section__kicker {
+      margin-bottom: 8px;
+      color: var(--doc-blue);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-size: clamp(28px, 3vw, 38px);
+      line-height: 1.12;
+      letter-spacing: -0.035em;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 17px;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+    }
+
+    .section__head p,
+    .card > p,
+    .note p {
+      color: var(--doc-text-secondary);
+    }
+
+    .showcase {
+      display: grid;
+      grid-template-columns: minmax(360px, 0.82fr) minmax(320px, 1.18fr);
+      overflow: hidden;
+      border: 1px solid var(--doc-border);
+      border-radius: 24px;
+      background: var(--doc-surface);
+      box-shadow: var(--doc-shadow);
+    }
+
+    .showcase__stage {
+      display: grid;
+      place-items: start center;
+      min-height: 720px;
+      padding: 32px;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(1, 148, 245, 0.11), transparent 34%),
+        linear-gradient(145deg, #f5f8fb, #edf1f5);
+    }
+
+    .rail-frame {
+      width: var(--rail-width);
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 20px 55px rgba(29, 39, 54, 0.14);
+    }
+
+    .rail-frame__top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 48px;
+      padding: 0 12px;
+      border-bottom: 1px solid #efefef;
+      color: #4b4b4b;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .rail-frame__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #16a36a;
+    }
+
+    .rail-demo {
+      width: var(--rail-width);
+      max-height: 620px;
+      padding: var(--rail-pad);
+      overflow-y: auto;
+      color: var(--rail-text);
+      background: #fff;
+      scrollbar-width: thin;
+      scrollbar-color: #e9e9e9 transparent;
+    }
+
+    .rail-demo[data-density="comfortable"] {
+      --rail-row: 40px;
+    }
+
+    .rail-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--rail-gap);
+      margin: 0 0 2px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .rail-item,
+    .rail-space {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      height: var(--rail-row);
+      padding: 8px 12px;
+      border: 0;
+      border-radius: var(--rail-radius);
+      color: var(--rail-text);
+      background: transparent;
+      font-family: "Open Sans", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .rail-item:hover,
+    .rail-space:hover,
+    .rail-control:hover {
+      background: var(--rail-hover);
+    }
+
+    .rail-item.is-active {
+      background: var(--rail-selected);
+    }
+
+    .rail-item img {
+      flex: 0 0 20px;
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    .rail-section {
+      margin: 0;
+    }
+
+    .rail-section__header {
+      display: flex;
+      align-items: center;
+      height: var(--rail-row);
+      margin-top: 2px;
+      padding: 0 4px 0 12px;
+    }
+
+    .rail-section__title {
+      color: var(--rail-text-secondary);
+      font-family: "Open Sans", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+    }
+
+    .rail-control {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      margin-left: 2px;
+      padding: 4px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .rail-control img {
+      width: 20px;
+      height: 20px;
+      opacity: 0;
+      transition: transform 100ms ease, opacity 100ms ease;
+    }
+
+    .rail-section__header:hover .rail-control img,
+    .rail-control:focus-visible img {
+      opacity: 1;
+    }
+
+    .rail-section[data-collapsed="true"] .rail-control img {
+      transform: rotate(-90deg);
+    }
+
+    .rail-section__body {
+      max-height: 640px;
+      overflow: hidden;
+      opacity: 1;
+      transition: max-height 180ms ease, opacity 120ms ease;
+    }
+
+    .rail-section[data-collapsed="true"] .rail-section__body {
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .rail-space {
+      position: relative;
+    }
+
+    .rail-avatar {
+      display: grid;
+      place-items: center;
+      flex: 0 0 20px;
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      border-radius: 6px;
+      color: rgba(0, 0, 0, 0.6);
+      background: #aad0ff;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .rail-space__chevron {
+      width: 16px;
+      height: 16px;
+      margin-left: auto;
+      opacity: 0.55;
+    }
+
+    .showcase__notes {
+      padding: 32px;
+    }
+
+    .demo-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .segmented {
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid var(--doc-border);
+      border-radius: 10px;
+      background: var(--doc-surface-muted);
+    }
+
+    .segmented button {
+      min-height: 30px;
+      padding: 5px 10px;
+      border: 0;
+      border-radius: 7px;
+      color: var(--doc-text-secondary);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .segmented button[aria-pressed="true"] {
+      color: var(--doc-text);
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
+    }
+
+    .anatomy-list {
+      display: grid;
+      gap: 16px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .anatomy-list li {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--doc-border);
+    }
+
+    .anatomy-list li:last-child {
+      padding-bottom: 0;
+      border: 0;
+    }
+
+    .number {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      color: var(--doc-blue);
+      background: var(--doc-blue-muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .anatomy-list strong,
+    .anatomy-list span {
+      display: block;
+    }
+
+    .anatomy-list span {
+      margin-top: 3px;
+      color: var(--doc-text-secondary);
+      font-size: 13px;
+    }
+
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--doc-border);
+      border-radius: var(--doc-radius);
+      background: var(--doc-surface);
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.025);
+    }
+
+    .card > :last-child {
+      margin-bottom: 0;
+    }
+
+    .metric {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 28px;
+      font-weight: 760;
+      line-height: 1;
+      letter-spacing: -0.035em;
+    }
+
+    .metric + span {
+      display: block;
+      color: var(--doc-text-secondary);
+      font-size: 13px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--doc-border);
+      border-radius: var(--doc-radius);
+      background: var(--doc-surface);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--doc-border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--doc-text-tertiary);
+      background: var(--doc-surface-muted);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    td:first-child {
+      color: var(--doc-text);
+      font-weight: 700;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      color: var(--doc-green);
+      background: var(--doc-green-muted);
+      font-size: 11px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .note {
+      margin-top: 16px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--doc-blue);
+      border-radius: 0 12px 12px 0;
+      background: var(--doc-blue-muted);
+    }
+
+    .note--warning {
+      border-left-color: #d99b00;
+      background: var(--doc-amber-muted);
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .note p {
+      margin-bottom: 0;
+      font-size: 13px;
+    }
+
+    .code-block {
+      position: relative;
+      overflow: auto;
+      padding: 20px;
+      border-radius: var(--doc-radius);
+      color: #d7e1ea;
+      background: var(--doc-code);
+      font-size: 12px;
+      line-height: 1.65;
+      box-shadow: var(--doc-shadow);
+    }
+
+    .code-block code {
+      padding: 0;
+      color: inherit;
+      background: transparent;
+      font-size: inherit;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist li {
+      position: relative;
+      min-height: 24px;
+      padding-left: 32px;
+      color: var(--doc-text-secondary);
+    }
+
+    .checklist li::before {
+      position: absolute;
+      top: 1px;
+      left: 0;
+      display: grid;
+      place-items: center;
+      width: 21px;
+      height: 21px;
+      border: 1px solid #b8d9cb;
+      border-radius: 6px;
+      color: var(--doc-green);
+      background: var(--doc-green-muted);
+      content: "✓";
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .file-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .file-list li {
+      padding: 12px 14px;
+      border: 1px solid var(--doc-border);
+      border-radius: 10px;
+      color: var(--doc-text-secondary);
+      background: var(--doc-surface-muted);
+      font-size: 13px;
+    }
+
+    .file-list code {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--doc-text);
+      background: transparent;
+      font-weight: 700;
+    }
+
+    .scenario-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .scenario-summary__item {
+      padding: 16px;
+      border: 1px solid var(--doc-border);
+      border-radius: 14px;
+      background: var(--doc-surface);
+    }
+
+    .scenario-summary__item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .scenario-summary__item span {
+      color: var(--doc-text-secondary);
+      font-size: 12px;
+    }
+
+    .scenario-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .scenario-status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 23px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .scenario-status--done {
+      color: var(--doc-green);
+      background: var(--doc-green-muted);
+    }
+
+    .scenario-status--partial {
+      color: var(--doc-amber);
+      background: var(--doc-amber-muted);
+    }
+
+    .scenario-status--contract {
+      color: #5f4bb6;
+      background: #f0edff;
+    }
+
+    .scenario-status--edge {
+      color: var(--doc-text-secondary);
+      background: #eceff2;
+    }
+
+    .scenario-group {
+      margin-top: 32px;
+    }
+
+    .scenario-group__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .scenario-group__head h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .scenario-group__head span {
+      color: var(--doc-text-tertiary);
+      font-size: 12px;
+    }
+
+    .scenario-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .scenario {
+      overflow: hidden;
+      border: 1px solid var(--doc-border);
+      border-radius: 14px;
+      background: var(--doc-surface);
+    }
+
+    .scenario[open] {
+      border-color: var(--doc-border-strong);
+      box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    .scenario summary {
+      display: grid;
+      grid-template-columns: 62px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 58px;
+      padding: 12px 16px;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .scenario summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .scenario summary::after {
+      width: 8px;
+      height: 8px;
+      margin-left: 4px;
+      border-right: 2px solid var(--doc-text-tertiary);
+      border-bottom: 2px solid var(--doc-text-tertiary);
+      content: "";
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform 120ms ease;
+    }
+
+    .scenario[open] summary::after {
+      transform: rotate(225deg) translate(-2px, -2px);
+    }
+
+    .scenario__id {
+      color: var(--doc-blue);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .scenario__title {
+      min-width: 0;
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .scenario__status-wrap {
+      margin-left: auto;
+    }
+
+    .scenario__body {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 24px;
+      padding: 18px 20px 22px 90px;
+      border-top: 1px solid var(--doc-border);
+      background: var(--doc-surface-muted);
+    }
+
+    .scenario__block h4 {
+      margin: 0 0 6px;
+      color: var(--doc-text-tertiary);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .scenario__block p,
+    .scenario__block ol,
+    .scenario__block ul {
+      margin: 0;
+      color: var(--doc-text-secondary);
+      font-size: 13px;
+    }
+
+    .scenario__block ol,
+    .scenario__block ul {
+      padding-left: 18px;
+    }
+
+    .scenario__block--wide {
+      grid-column: 1 / -1;
+    }
+
+    .scenario__result {
+      color: var(--doc-text) !important;
+      font-weight: 650;
+    }
+
+    .footer {
+      max-width: 1120px;
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--doc-border);
+      color: var(--doc-text-tertiary);
+      font-size: 12px;
+    }
+
+    @media (max-width: 1080px) {
+      .page-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .doc-nav {
+        position: static;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+        height: auto;
+        padding: 12px 20px;
+        border-right: 0;
+        border-bottom: 1px solid var(--doc-border);
+        overflow-x: auto;
+      }
+
+      .doc-nav__brand {
+        flex: 0 0 auto;
+        margin: 0;
+      }
+
+      .doc-nav__label,
+      .doc-nav__meta {
+        display: none;
+      }
+
+      .doc-nav ul {
+        display: flex;
+        flex: 0 0 auto;
+      }
+
+      main {
+        padding-top: 38px;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .showcase,
+      .grid-2,
+      .grid-3,
+      .scenario-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .showcase__stage {
+        min-height: auto;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      main {
+        padding: 28px 16px 72px;
+      }
+
+      .showcase__stage,
+      .showcase__notes {
+        padding: 20px;
+      }
+
+      .rail-frame {
+        max-width: 100%;
+      }
+
+      .rail-demo {
+        max-width: 100%;
+      }
+
+      .section {
+        margin-top: 56px;
+      }
+
+      .scenario summary {
+        grid-template-columns: 52px minmax(0, 1fr) auto;
+      }
+
+      .scenario__status-wrap {
+        display: none;
+      }
+
+      .scenario__body {
+        grid-template-columns: 1fr;
+        padding-left: 20px;
+      }
+
+      .scenario__block--wide {
+        grid-column: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="doc-nav" aria-label="Навигация по спецификации">
+      <div class="doc-nav__brand">
+        <span class="doc-nav__mark">P5</span>
+        <span>Spaces UI Spec</span>
+      </div>
+      <div>
+        <p class="doc-nav__label">Содержание</p>
+        <ul>
+          <li><a href="#overview">Обзор</a></li>
+          <li><a href="#anatomy">Анатомия</a></li>
+          <li><a href="#dimensions">Размеры и токены</a></li>
+          <li><a href="#content">Контент</a></li>
+          <li><a href="#states">Состояния</a></li>
+          <li><a href="#behavior">Поведение</a></li>
+          <li><a href="#accessibility">Accessibility</a></li>
+          <li><a href="#implementation">Implementation</a></li>
+          <li><a href="#scenarios">User scenarios</a></li>
+          <li><a href="#acceptance">Acceptance</a></li>
+        </ul>
+      </div>
+      <p class="doc-nav__meta">
+        Snapshot: 27 July 2026<br>
+        Scope: standalone Spaces 2.0 lab<br>
+        Profile: Explore / 36px
+      </p>
+    </aside>
+
+    <main>
+      <header class="hero" id="overview">
+        <div class="eyebrow">
+          <span class="badge badge--ready">Implementation-ready</span>
+          <span class="badge">Standalone HTML/CSS/JS</span>
+          <span class="badge">Explore profile</span>
+        </div>
+        <h1>Left Rail<br>Explore version</h1>
+        <p class="hero__lead">
+          Спецификация для реализации левого rail в Planner 5D Spaces.
+          Документ фиксирует текущий Explore-профиль: структуру, визуальные
+          параметры, состояния, интеракции, storage-контракт, пользовательские
+          сценарии и критерии приёмки.
+        </p>
+        <ul class="hero__facts">
+          <li><strong>Source of truth:</strong> текущий Spaces 2.0 prototype</li>
+          <li><strong>Default:</strong> Explore + 36px density</li>
+          <li><strong>Rail:</strong> 256px fixed width</li>
+          <li><strong>Runtime:</strong> framework-agnostic contract</li>
+        </ul>
+      </header>
+
+      <section class="showcase" aria-labelledby="showcase-title">
+        <div class="showcase__stage">
+          <div class="rail-frame">
+            <div class="rail-frame__top">
+              <span class="rail-frame__dot" aria-hidden="true"></span>
+              Live component reference
+            </div>
+            <nav class="rail-demo" data-density="default" aria-label="Демонстрация Explore rail">
+              <ul class="rail-list">
+                <li>
+                  <button class="rail-item is-active" type="button">
+                    <img src="../spaces-static/assets/images/sidebar/home.svg" alt="" aria-hidden="true">
+                    <span>Home</span>
+                  </button>
+                </li>
+                <li>
+                  <button class="rail-item" type="button">
+                    <img src="../spaces-static/assets/images/sidebar/recents.svg" alt="" aria-hidden="true">
+                    <span>Recents</span>
+                  </button>
+                </li>
+                <li>
+                  <button class="rail-item" type="button">
+                    <img src="../spaces-static/assets/images/sidebar/shared.svg" alt="" aria-hidden="true">
+                    <span>Shared with me</span>
+                  </button>
+                </li>
+                <li>
+                  <button class="rail-item" type="button">
+                    <img src="../icons/icon-assets.svg" alt="" aria-hidden="true">
+                    <span>Assets</span>
+                  </button>
+                </li>
+              </ul>
+
+              <section class="rail-section">
+                <div class="rail-section__header">
+                  <span class="rail-section__title">Spaces</span>
+                </div>
+                <div class="rail-section__body">
+                  <ul class="rail-list">
+                    <li>
+                      <button class="rail-space" type="button">
+                        <span class="rail-avatar">R</span>
+                        <span>River house</span>
+                        <img
+                          class="rail-space__chevron"
+                          src="../spaces-static/assets/images/sidebar/chevron-down.svg"
+                          alt=""
+                          aria-hidden="true"
+                        >
+                      </button>
+                    </li>
+                    <li>
+                      <button class="rail-space" type="button">
+                        <span class="rail-avatar" style="background:#ffad82">A</span>
+                        <span>Apartment</span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="rail-section" data-demo-explore data-collapsed="false">
+                <div class="rail-section__header">
+                  <span class="rail-section__title">Explore</span>
+                  <button
+                    class="rail-control"
+                    type="button"
+                    aria-label="Collapse Explore"
+                    aria-expanded="true"
+                    aria-controls="demo-explore-content"
+                    data-demo-collapse
+                  >
+                    <img
+                      src="../spaces-static/assets/images/sidebar/chevron-down.svg"
+                      alt=""
+                      aria-hidden="true"
+                    >
+                  </button>
+                </div>
+                <div class="rail-section__body" id="demo-explore-content">
+                  <ul class="rail-list">
+                    <li><button class="rail-item" type="button"><img src="../icons/ic-templates.svg" alt="" aria-hidden="true"><span>Templates</span></button></li>
+                    <li><button class="rail-item" type="button"><img src="../icons/ic-get-ideas.svg" alt="" aria-hidden="true"><span>Get Ideas</span></button></li>
+                    <li><button class="rail-item" type="button"><img src="../icons/ic-apps.svg" alt="" aria-hidden="true"><span>iOS, Android Apps</span></button></li>
+                    <li><button class="rail-item" type="button"><img src="../icons/ic-battles.svg" alt="" aria-hidden="true"><span>Design Battles</span></button></li>
+                    <li><button class="rail-item" type="button"><img src="../icons/ic-school.svg" alt="" aria-hidden="true"><span>Design School</span></button></li>
+                    <li><button class="rail-item" type="button"><img src="../icons/ic-blog.svg" alt="" aria-hidden="true"><span>Blog</span></button></li>
+                    <li><button class="rail-item" type="button"><img src="../icons/ic-pricing.svg" alt="" aria-hidden="true"><span>Pricing</span></button></li>
+                    <li><button class="rail-item" type="button"><img src="../icons/ic-enterprise.svg" alt="" aria-hidden="true"><span>Enterprise</span></button></li>
+                  </ul>
+                </div>
+              </section>
+            </nav>
+          </div>
+        </div>
+
+        <div class="showcase__notes">
+          <p class="section__kicker">Interactive reference</p>
+          <h2 id="showcase-title">Целевой вид</h2>
+          <p>
+            Демо повторяет структуру и ключевые размеры текущего компонента.
+            Переключатели ниже нужны только для чтения спецификации.
+          </p>
+          <div class="demo-toolbar">
+            <div class="segmented" role="group" aria-label="Demo density">
+              <button type="button" aria-pressed="true" data-demo-density="default">36px</button>
+              <button type="button" aria-pressed="false" data-demo-density="comfortable">40px</button>
+            </div>
+            <div class="segmented" role="group" aria-label="Demo Explore state">
+              <button type="button" aria-pressed="true" data-demo-explore-state="open">Expanded</button>
+              <button type="button" aria-pressed="false" data-demo-explore-state="closed">Collapsed</button>
+            </div>
+          </div>
+
+          <ol class="anatomy-list">
+            <li>
+              <span class="number">1</span>
+              <div><strong>Primary navigation</strong><span>Home, Recents, Shared with me, Assets. В Explore-профиле пункт More заменён на Assets.</span></div>
+            </li>
+            <li>
+              <span class="number">2</span>
+              <div><strong>Spaces</strong><span>Секция пользовательских spaces остаётся общей для Sidebar и Explore профилей.</span></div>
+            </li>
+            <li>
+              <span class="number">3</span>
+              <div><strong>Explore</strong><span>Отдельная раскрываемая секция из восьми продуктовых и контентных destinations.</span></div>
+            </li>
+            <li>
+              <span class="number">4</span>
+              <div><strong>Single scroll owner</strong><span>Весь rail скроллится одной областью; scrollbar не меняет ширину контента.</span></div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="anatomy">
+        <div class="section__head">
+          <p class="section__kicker">01 · Anatomy</p>
+          <h2>Компонентная структура</h2>
+          <p>
+            Explore — это профиль существующего Left Rail, а не отдельный sidebar.
+            Общий shell, Spaces tree, pinned-состояния и navigation selection не дублируются.
+          </p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Rail shell</h3>
+            <p>Фиксирует ширину, фон, высоту, padding и единую scroll-area.</p>
+            <code>.spaces-sidebar</code>
+          </article>
+          <article class="card">
+            <h3>Shared content</h3>
+            <p>Primary navigation, Pinned и Spaces одинаковы в двух профилях.</p>
+            <code>.spaces-sidebar-primary</code>
+          </article>
+          <article class="card">
+            <h3>Explore extension</h3>
+            <p>Показывается только при активном profile value <code>explore</code>.</p>
+            <code>[data-explore-section]</code>
+          </article>
+        </div>
+        <div class="note">
+          <strong>Implementation boundary</strong>
+          <p>
+            Не создавайте второй DOM-tree для Explore. Переключатель профиля должен
+            менять только modifier class, visibility секции и представление пункта Assets/More.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="dimensions">
+        <div class="section__head">
+          <p class="section__kicker">02 · Dimensions &amp; tokens</p>
+          <h2>Размеры и визуальные параметры</h2>
+          <p>Значения ниже сняты из текущего CSS standalone-реализации.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card"><strong class="metric">256px</strong><span>ширина rail и min-width</span></article>
+          <article class="card"><strong class="metric">12px</strong><span>внутренний padding со всех сторон</span></article>
+          <article class="card"><strong class="metric">36px</strong><span>высота строки по умолчанию</span></article>
+          <article class="card"><strong class="metric">40px</strong><span>comfortable density, уровни 1–2</span></article>
+          <article class="card"><strong class="metric">20px</strong><span>размер иконки и space avatar</span></article>
+          <article class="card"><strong class="metric">2px</strong><span>вертикальный gap между строками</span></article>
+        </div>
+        <div class="table-wrap" style="margin-top:16px">
+          <table>
+            <thead>
+              <tr><th>Property</th><th>Value</th><th>Token / fallback</th><th>Комментарий</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Background</td><td>#FFFFFF</td><td><code>--space-bg-alpha</code></td><td>Rail и aside shell</td></tr>
+              <tr><td>Primary text</td><td>#1C1C1C</td><td><code>--spaces-sidebar-text-alpha</code></td><td>14/20, weight 600</td></tr>
+              <tr><td>Section title</td><td>#747474</td><td>local rail value</td><td>14/20, weight 600</td></tr>
+              <tr><td>Icon</td><td>#747474</td><td><code>--space-neutral-icon-beta</code></td><td>20×20px</td></tr>
+              <tr><td>Hover fill</td><td>black 4%</td><td><code>--space-neutral-fill-gamma</code></td><td>100ms transition</td></tr>
+              <tr><td>Selected fill</td><td>#F5F5F5</td><td><code>--space-solid-gray-g10</code></td><td>Не заменяет focus indicator</td></tr>
+              <tr><td>Item radius</td><td>100px</td><td><code>--space-radius-round</code></td><td>Pill shape</td></tr>
+              <tr><td>Rail height</td><td>100vh − 64px</td><td>layout contract</td><td>Header остаётся 64px</td></tr>
+              <tr><td>Scrollbar</td><td>8px</td><td>2px transparent border</td><td>thumb G20, hover G40</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="content">
+        <div class="section__head">
+          <p class="section__kicker">03 · Information architecture</p>
+          <h2>Контент и порядок элементов</h2>
+          <p>
+            Порядок является частью контракта. Не сортировать Explore destinations
+            на клиенте и не смешивать их с пользовательскими Spaces.
+          </p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Primary navigation</h3>
+            <ol>
+              <li>Home</li>
+              <li>Recents</li>
+              <li>Shared with me</li>
+              <li>Assets</li>
+            </ol>
+          </article>
+          <article class="card">
+            <h3>Explore destinations</h3>
+            <ol>
+              <li>Templates</li>
+              <li>Get Ideas</li>
+              <li>iOS, Android Apps</li>
+              <li>Design Battles</li>
+              <li>Design School</li>
+              <li>Blog</li>
+              <li>Pricing</li>
+              <li>Enterprise</li>
+            </ol>
+          </article>
+        </div>
+        <div class="note note--warning">
+          <strong>Route ownership is not implemented in the lab</strong>
+          <p>
+            В текущем prototype Explore-кнопки визуально готовы, но не имеют
+            production URL/API contract. Интегратор должен подключить destinations
+            через общий navigation/router adapter, а не через inline redirects.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="states">
+        <div class="section__head">
+          <p class="section__kicker">04 · State model</p>
+          <h2>Состояния и модификаторы</h2>
+          <p>UI-состояние описывается небольшим набором независимых значений.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>State</th><th>DOM / value</th><th>Expected result</th><th>Persistence</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Explore profile</td><td><code>.is-explore-profile</code></td><td>Показать Explore; More → Assets; скрыть notification dot</td><td><span class="status">Local</span></td></tr>
+              <tr><td>Sidebar profile</td><td>modifier absent</td><td>Скрыть Explore; Assets → More; разрешить More popover</td><td><span class="status">Local</span></td></tr>
+              <tr><td>Explore expanded</td><td><code>.is-collapsed</code> absent</td><td>Контент видим; chevron направлен вниз</td><td><span class="status">Local</span></td></tr>
+              <tr><td>Explore collapsed</td><td><code>.is-collapsed</code></td><td>max-height 0; opacity 0; pointer-events none</td><td><span class="status">Local</span></td></tr>
+              <tr><td>Default density</td><td>modifier absent</td><td>Строки первого/второго уровня 36px</td><td><span class="status">Local</span></td></tr>
+              <tr><td>Comfortable density</td><td><code>.is-comfortable-density</code></td><td>Уровни 1–2: 40px; папки третьего уровня: 36px</td><td><span class="status">Local</span></td></tr>
+              <tr><td>Selected item</td><td><code>.is-active</code> + <code>aria-current="page"</code></td><td>G10 background; одна активная destination в navigation scope</td><td>Router state</td></tr>
+              <tr><td>Aside hidden</td><td><code>.is-hidden</code></td><td>width/min-width → 0</td><td>Not specified</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="behavior">
+        <div class="section__head">
+          <p class="section__kicker">05 · Interaction</p>
+          <h2>Поведение и storage-контракт</h2>
+          <p>
+            Preferences относятся к lab UI. В production их нужно привязать к
+            согласованному preferences layer, если требуется cross-device sync.
+          </p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Profile switch</h3>
+            <ul>
+              <li>При <code>explore</code> показать секцию Explore.</li>
+              <li>Заменить label/icon More на Assets.</li>
+              <li>Закрыть открытый More popover.</li>
+              <li>Обновить <code>aria-pressed</code> profile controls.</li>
+              <li>Не перезагружать страницу.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Collapse</h3>
+            <ul>
+              <li>Клик по chevron переключает только Explore content.</li>
+              <li>Обновить <code>aria-expanded</code> и action label.</li>
+              <li>Анимация: max-height 180ms, opacity 120ms.</li>
+              <li>В collapsed state контент не принимает pointer events.</li>
+              <li>При reduced motion переход выполняется без анимации.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="table-wrap" style="margin-top:16px">
+          <table>
+            <thead><tr><th>Storage key</th><th>Allowed values</th><th>Default</th></tr></thead>
+            <tbody>
+              <tr><td><code>planner5d-spaces-v2-sidebar-profile</code></td><td><code>sidebar</code> | <code>explore</code></td><td><code>explore</code></td></tr>
+              <tr><td><code>planner5d-spaces-v2-explore-collapsed</code></td><td><code>true</code> | <code>false</code></td><td><code>false</code></td></tr>
+              <tr><td><code>planner5d-spaces-v2-left-rail-density</code></td><td><code>default</code> | <code>comfortable</code></td><td><code>default</code></td></tr>
+              <tr><td><code>planner5d-spaces-v2-profile-defaults-version</code></td><td>date/version string</td><td><code>2026-07-23</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note">
+          <strong>Failure behavior</strong>
+          <p>
+            Любая ошибка чтения или записи <code>localStorage</code> не должна
+            блокировать navigation. Компонент продолжает работать с in-memory defaults.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="accessibility">
+        <div class="section__head">
+          <p class="section__kicker">06 · Accessibility</p>
+          <h2>Семантика и клавиатура</h2>
+          <p>Минимальный контракт для production-компонента.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Required semantics</h3>
+            <ul class="checklist">
+              <li>Общий контейнер — <code>nav</code> с доступным именем.</li>
+              <li>Destination — нативная ссылка, если меняется URL; иначе button.</li>
+              <li>Активный route получает <code>aria-current="page"</code>.</li>
+              <li>Collapse control связан с content через <code>aria-controls</code>.</li>
+              <li>Декоративные иконки имеют пустой <code>alt</code> и <code>aria-hidden</code>.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Keyboard behavior</h3>
+            <ul class="checklist">
+              <li>Tab order следует визуальному порядку сверху вниз.</li>
+              <li>Enter/Space активируют collapse button.</li>
+              <li>Focus indicator не полагается только на selected background.</li>
+              <li>Скрытый collapsed content исключён из keyboard flow.</li>
+              <li>При profile switch фокус остаётся на выбранном control.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="implementation">
+        <div class="section__head">
+          <p class="section__kicker">07 · Developer handoff</p>
+          <h2>Implementation contract</h2>
+          <p>
+            Ниже — минимальная логика переключения. Код иллюстрирует контракт,
+            а не требует сохранения текущего inline-script в production.
+          </p>
+        </div>
+        <pre class="code-block"><code>type SidebarProfile = "sidebar" | "explore";
+type LeftRailDensity = "default" | "comfortable";
+
+interface LeftRailPreferences {
+  profile: SidebarProfile;          // default: "explore"
+  exploreCollapsed: boolean;        // default: false
+  density: LeftRailDensity;         // default: "default"
+}
+
+function applyExploreProfile(root, preferences) {
+  const isExplore = preferences.profile === "explore";
+
+  root.classList.toggle("is-explore-profile", isExplore);
+  root.classList.toggle(
+    "is-comfortable-density",
+    preferences.density === "comfortable"
+  );
+
+  exploreSection.hidden = !isExplore;
+  exploreSection.classList.toggle(
+    "is-collapsed",
+    preferences.exploreCollapsed
+  );
+
+  assetsLabel.textContent = isExplore ? "Assets" : "More";
+  collapseButton.ariaExpanded =
+    String(!preferences.exploreCollapsed);
+}</code></pre>
+
+        <div class="grid-2" style="margin-top:16px">
+          <article class="card">
+            <h3>Current source files</h3>
+            <ul class="file-list">
+              <li><code>public/spaces-static/get-started_spaces.html</code>Markup, state application, preferences controls.</li>
+              <li><code>public/spaces-static/assets/css/spaces-overrides.css</code>Rail layout, tokens, density and animation.</li>
+              <li><code>public/spaces-static/assets/js/spaces-sidebar-navigation.js</code>Active selection and Space/collection navigation.</li>
+              <li><code>public/icons/*.svg</code>Explore and Assets icons.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Production integration notes</h3>
+            <ul class="checklist">
+              <li>Вынести preferences из inline script в UI preferences adapter.</li>
+              <li>Подключить реальные routes для восьми Explore destinations.</li>
+              <li>Сохранить единый navigation selection state.</li>
+              <li>Не привязывать UI напрямую к analytics vendor.</li>
+              <li>Добавить typed event только после согласования product analytics.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="scenarios">
+        <div class="section__head">
+          <p class="section__kicker">08 · User scenarios</p>
+          <h2>Полная карта пользовательских сценариев</h2>
+          <p>
+            Сценарии покрывают весь Left Rail, потому что Explore-профиль использует
+            общий navigation shell, Spaces tree, Pinned и preferences. Статус
+            показывает не приоритет, а степень готовности текущего standalone prototype.
+          </p>
+        </div>
+
+        <div class="scenario-summary">
+          <div class="scenario-summary__item"><strong>47</strong><span>сценариев и edge cases</span></div>
+          <div class="scenario-summary__item"><strong>6</strong><span>функциональных групп</span></div>
+          <div class="scenario-summary__item"><strong>8</strong><span>Explore destinations</span></div>
+          <div class="scenario-summary__item"><strong>3</strong><span>локальных preferences</span></div>
+        </div>
+
+        <div class="scenario-legend" aria-label="Статусы сценариев">
+          <span class="scenario-status scenario-status--done">Реализовано</span>
+          <span class="scenario-status scenario-status--partial">Частично</span>
+          <span class="scenario-status scenario-status--contract">Нужен контракт</span>
+          <span class="scenario-status scenario-status--edge">Обязательный edge case</span>
+        </div>
+
+        <div class="note">
+          <strong>Как читать сценарии</strong>
+          <p>
+            Нажмите на строку, чтобы увидеть предусловия, шаги, ожидаемый результат
+            и исключения. «Нужен контракт» означает: UI-элемент существует, но
+            prototype не определяет production route, API, permission или аналитику.
+          </p>
+        </div>
+
+        <div class="scenario-group">
+          <div class="scenario-group__head">
+            <h3>A. Вход, профиль и персональные настройки</h3>
+            <span>SC-01 — SC-07</span>
+          </div>
+          <div class="scenario-list">
+            <details class="scenario" open>
+              <summary>
+                <span class="scenario__id">SC-01</span>
+                <span class="scenario__title">Первый вход пользователя в Spaces</span>
+                <span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span>
+              </summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>В браузере нет актуальной версии profile defaults.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><ol><li>Пользователь открывает Spaces.</li><li>Приложение инициализирует Left Rail.</li></ol></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Профиль Explore включён, секция Explore раскрыта, density = 36px, rail имеет ширину 256px.</p></div>
+                <div class="scenario__block"><h4>Сохранение</h4><p>Defaults записываются с version key <code>2026-07-23</code>.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary>
+                <span class="scenario__id">SC-02</span>
+                <span class="scenario__title">Повторный вход и восстановление настроек</span>
+                <span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span>
+              </summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>Пользователь ранее менял profile, density или состояние Explore.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><ol><li>Обновить страницу или открыть её повторно.</li><li>Приложение читает три preference key.</li></ol></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Rail появляется в последнем сохранённом состоянии без обязательного ручного выбора.</p></div>
+                <div class="scenario__block"><h4>Исключение</h4><p>Неизвестные значения нормализуются к поддерживаемым defaults.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary>
+                <span class="scenario__id">SC-03</span>
+                <span class="scenario__title">Переключение Sidebar → Explore</span>
+                <span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span>
+              </summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>Открыт settings FAB, активен Sidebar profile.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><ol><li>Выбрать Explore.</li><li>Не закрывать settings popover.</li></ol></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">More превращается в Assets, notification dot скрывается, после Spaces появляется Explore.</p></div>
+                <div class="scenario__block"><h4>Дополнительно</h4><p>Открытый More popover закрывается; <code>aria-pressed</code> синхронизируется.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary>
+                <span class="scenario__id">SC-04</span>
+                <span class="scenario__title">Переключение Explore → Sidebar</span>
+                <span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span>
+              </summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>Активен Explore profile.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><p>Выбрать Sidebar в settings FAB.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Explore скрывается, Assets становится More, доступен More popover.</p></div>
+                <div class="scenario__block"><h4>Сохранение</h4><p>Collapsed state Explore не удаляется и применяется при возврате в Explore.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary>
+                <span class="scenario__id">SC-05</span>
+                <span class="scenario__title">Изменение плотности 36px ↔ 40px</span>
+                <span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span>
+              </summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Выбрать 36px или 40px в Left rail density.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Высота элементов уровней 1–2 меняется без reload; третьему уровню сохраняется 36px.</p></div>
+                <div class="scenario__block"><h4>Не должно происходить</h4><p>Ширина rail, scroll position и active selection не меняются.</p></div>
+                <div class="scenario__block"><h4>Сохранение</h4><p><code>default</code> или <code>comfortable</code> записывается локально.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary>
+                <span class="scenario__id">SC-06</span>
+                <span class="scenario__title">Скрыть и снова показать Left Rail</span>
+                <span class="scenario__status-wrap"><span class="scenario-status scenario-status--partial">Частично</span></span>
+              </summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать Toggle sidebar в глобальном header; нажать повторно.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Aside переходит 256px → 0 → 256px, main занимает освободившееся место.</p></div>
+                <div class="scenario__block"><h4>Не определено</h4><p>Prototype не сохраняет hidden-state и не задаёт отдельный mobile drawer contract.</p></div>
+                <div class="scenario__block"><h4>Focus</h4><p>При скрытии фокус не должен оставаться внутри невидимого rail.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary>
+                <span class="scenario__id">SC-07</span>
+                <span class="scenario__title">Миграция на новую версию defaults</span>
+                <span class="scenario__status-wrap"><span class="scenario-status scenario-status--partial">Частично</span></span>
+              </summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>У пользователя сохранена старая версия profile defaults.</p></div>
+                <div class="scenario__block"><h4>Текущее поведение</h4><p>При несовпадении version key все profile defaults перезаписываются.</p></div>
+                <div class="scenario__block"><h4>Production expectation</h4><p class="scenario__result">Миграция должна менять только устаревшие значения и не стирать валидные пользовательские preferences без решения продукта.</p></div>
+                <div class="scenario__block"><h4>Риск</h4><p>Silent reset воспринимается как потеря настройки.</p></div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="scenario-group">
+          <div class="scenario-group__head">
+            <h3>B. Primary navigation</h3>
+            <span>SC-08 — SC-13</span>
+          </div>
+          <div class="scenario-list">
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-08</span><span class="scenario__title">Открыть Home из rail</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать Home.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Открывается Home, предыдущая Space/collection selection очищается, Home получает <code>aria-current="page"</code>.</p></div>
+                <div class="scenario__block"><h4>History</h4><p>Добавляется navigation state для Back/Forward.</p></div>
+                <div class="scenario__block"><h4>Повторный клик</h4><p>Остаётся Home; не создаётся визуально новое состояние.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-09</span><span class="scenario__title">Открыть Home по логотипу</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать глобальный Planner 5D logo.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Результат идентичен SC-08, включая active state в rail.</p></div>
+                <div class="scenario__block"><h4>Consistency</h4><p>Logo и Home используют один navigation action.</p></div>
+                <div class="scenario__block"><h4>Не должно происходить</h4><p>Не открывать root другого приложения и не сбрасывать account.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-10</span><span class="scenario__title">Открыть Recents</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--contract">Нужен контракт</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать Recents.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Открыть account-scoped recent items, синхронизировать URL и active state.</p></div>
+                <div class="scenario__block"><h4>Не определено</h4><p>Route, пустое состояние, временное окно и типы recent items.</p></div>
+                <div class="scenario__block"><h4>Prototype</h4><p>Кнопка присутствует визуально, destination не подключена.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-11</span><span class="scenario__title">Открыть Shared with me</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--contract">Нужен контракт</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать Shared with me.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Показать только доступные пользователю shared resources с корректным permission state.</p></div>
+                <div class="scenario__block"><h4>Не определено</h4><p>Route, grouping, revoked access, pending invites и empty state.</p></div>
+                <div class="scenario__block"><h4>Security</h4><p>Фильтрация должна выполняться server-side, не только в rail.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-12</span><span class="scenario__title">Открыть Assets в Explore profile</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--contract">Нужен контракт</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать Assets.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Открыть Assets destination как самостоятельную страницу, не More popover.</p></div>
+                <div class="scenario__block"><h4>Не определено</h4><p>URL, состав assets, account/global scope и permissions.</p></div>
+                <div class="scenario__block"><h4>Guardrail</h4><p>В Explore profile клик не должен открывать legacy More menu.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-13</span><span class="scenario__title">Открыть и закрыть More в Sidebar profile</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>Активен Sidebar profile.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><ol><li>Нажать More.</li><li>Закрыть повторным кликом, Escape или кликом вне popover.</li></ol></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Popover позиционируется рядом с More, <code>aria-expanded</code> синхронизирован.</p></div>
+                <div class="scenario__block"><h4>Explore guard</h4><p>При активном Explore обработчик More ничего не открывает.</p></div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="scenario-group">
+          <div class="scenario-group__head">
+            <h3>C. Space, collection и folder navigation</h3>
+            <span>SC-14 — SC-23</span>
+          </div>
+          <div class="scenario-list">
+            <details class="scenario" open>
+              <summary><span class="scenario__id">SC-14</span><span class="scenario__title">Открыть корневую страницу Space</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать название или avatar Space.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Открывается root выбранного Space, заголовок и данные переключаются, Space становится active.</p></div>
+                <div class="scenario__block"><h4>State</h4><p>Сохраняется стабильный Space order/id; предыдущая collection закрывается.</p></div>
+                <div class="scenario__block"><h4>History</h4><p>Создаётся запись, достаточная для Back/Forward.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-15</span><span class="scenario__title">Раскрыть или свернуть дерево Space</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать chevron справа от Space.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Collection tree раскрывается/сворачивается; chevron и label Expand/Collapse обновляются.</p></div>
+                <div class="scenario__block"><h4>Сохранение</h4><p>ID раскрытых деревьев хранится в <code>expanded-tree-ids</code>.</p></div>
+                <div class="scenario__block"><h4>Разделение действий</h4><p>Клик по Space открывает root; chevron управляет только деревом.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-16</span><span class="scenario__title">Открыть collection из дерева</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>В раскрытом Space нажать Floor Plans, Renders, AI Studio, Moodboards, 360°, Documents или другую доступную collection.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Открывается collection активного Space; Space и collection подсвечены одновременно.</p></div>
+                <div class="scenario__block"><h4>Data scope</h4><p>Файлы и counters относятся только к выбранному account + space + collection.</p></div>
+                <div class="scenario__block"><h4>Empty</h4><p>Collection может быть видима с нулём файлов, но 0-counter не показывается.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-17</span><span class="scenario__title">Раскрыть folders внутри collection</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>Collection имеет top-level folders.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать отдельный folder chevron у collection.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Показываются только папки выбранной collection, без навигации со страницы.</p></div>
+                <div class="scenario__block"><h4>State</h4><p><code>aria-expanded</code> и label синхронизируются; expansion сохраняется при rerender account data.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-18</span><span class="scenario__title">Открыть folder из Left Rail</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--partial">Частично</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать название папки третьего уровня.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Открывается folder context текущей collection, rail сохраняет Space + collection + folder selection.</p></div>
+                <div class="scenario__block"><h4>Prototype</h4><p>Folder buttons и data существуют; полный самостоятельный route contract не завершён.</p></div>
+                <div class="scenario__block"><h4>History</h4><p>Back должен вернуть collection, не root другого Space.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-19</span><span class="scenario__title">Переключить collection в Tabs mode</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>Collections type = Tabs.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать collection в rail.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Меняется активный tab внутри Space; selected tab = selected rail collection.</p></div>
+                <div class="scenario__block"><h4>Fallback</h4><p>При выборе Space root активируется Floor Plans tab, если Tabs mode этого требует.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-20</span><span class="scenario__title">Перейти в другой Space из открытой collection</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>Открыта collection Space A.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать Space B.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Открывается root Space B. Collection из Space A не переносится.</p></div>
+                <div class="scenario__block"><h4>Regression guard</h4><p>Active state и заголовок должны ссылаться на один стабильный <code>space.id</code>.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-21</span><span class="scenario__title">Вернуться из collection по breadcrumb Back</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать Space name / Back в breadcrumb.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Открывается root того же Space; collection перестаёт быть active, Space остаётся active.</p></div>
+                <div class="scenario__block"><h4>Не должно происходить</h4><p>Home и другой Space не активируются.</p></div>
+                <div class="scenario__block"><h4>Scroll</h4><p>Root Space может восстановить собственную scroll position.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-22</span><span class="scenario__title">Использовать browser Back / Forward</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--partial">Частично</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Пример</h4><p>Home → Space A → Renders → Space B.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажимать Back и Forward в браузере.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Контент, active rail item, заголовок и выбранный account восстанавливаются согласованно.</p></div>
+                <div class="scenario__block"><h4>Риск</h4><p>History реализована частично; требуется regression test для всех route combinations.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-23</span><span class="scenario__title">Просмотреть counters и длинные названия</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Данные</h4><p>Collection/folder может иметь file count; Space/folder name может быть длинным.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Положительный count видим в pill; нулевой отсутствует; название обрезается ellipsis без overlap controls.</p></div>
+                <div class="scenario__block"><h4>Density</h4><p>Результат одинаково корректен при 36px и 40px.</p></div>
+                <div class="scenario__block"><h4>Shared Space</h4><p>Shared icon не перекрывает pin, chevron или название.</p></div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="scenario-group">
+          <div class="scenario-group__head">
+            <h3>D. Управление Spaces и Pinned</h3>
+            <span>SC-24 — SC-35</span>
+          </div>
+          <div class="scenario-list">
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-24</span><span class="scenario__title">Свернуть или раскрыть секцию Spaces</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Навести на Spaces header и нажать chevron.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Скрывается/показывается список Spaces и Show all; Explore остаётся независимой.</p></div>
+                <div class="scenario__block"><h4>ARIA</h4><p>Label и <code>aria-expanded</code> обновляются.</p></div>
+                <div class="scenario__block"><h4>Не определено</h4><p>Collapsed state Spaces пока не сохраняется отдельно.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-25</span><span class="scenario__title">Показать все Spaces / свернуть до лимита</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>У account больше видимых Spaces, чем текущий лимит.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать Show all; затем Show less.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Показываются все account Spaces, затем снова первые N; <code>aria-expanded</code> синхронизирован.</p></div>
+                <div class="scenario__block"><h4>Security</h4><p>Никогда не показывать элементы другого account/user profile.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-26</span><span class="scenario__title">Открыть меню действий секции Spaces</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Навести/focus Spaces header и нажать More options.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Открывается menu Sort by / Show items; закрывается повторным кликом, Escape или outside click.</p></div>
+                <div class="scenario__block"><h4>ARIA</h4><p>Trigger использует <code>aria-expanded</code>; radio options — <code>aria-checked</code>.</p></div>
+                <div class="scenario__block"><h4>Layering</h4><p>Popover не обрезается rail overflow и не перекрывается main content.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-27</span><span class="scenario__title">Выбрать Oldest / Newest / Last update</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--partial">Частично</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Открыть Spaces actions и выбрать sort option.</p></div>
+                <div class="scenario__block"><h4>Prototype result</h4><p>Radio selection меняется, popover закрывается.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Spaces реально сортируются стабильным способом; pinned остаются в отдельной группе.</p></div>
+                <div class="scenario__block"><h4>Не определено</h4><p>Дата создания/обновления, tie-breaker, persistence и server/client ownership.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-28</span><span class="scenario__title">Перейти на Manual sorting</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Триггер</h4><p>Выбрать Manual или начать drag Space при наличии более одного Space.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Manual становится выбранным; порядок сохраняется в <code>manual-space-orders</code>.</p></div>
+                <div class="scenario__block"><h4>Восстановление</h4><p>После reload manual order применяется до pin restore.</p></div>
+                <div class="scenario__block"><h4>Identity</h4><p>Production должен сохранять стабильные <code>space.id</code>, не DOM index.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-29</span><span class="scenario__title">Выбрать лимит 5 или 10 Spaces</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>В Show items выбрать 5 items или 10 items.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Rail показывает не больше N обычных Spaces и корректно обновляет Show all.</p></div>
+                <div class="scenario__block"><h4>Pinned</h4><p>Pinned group не должна неожиданно считаться частью лимита обычного списка.</p></div>
+                <div class="scenario__block"><h4>Persistence</h4><p>Текущий prototype не сохраняет выбранный limit после reload.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-30</span><span class="scenario__title">Задать Custom limit</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--contract">Нужен контракт</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Выбрать Custom в Show items.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Открыть числовой input/submenu, валидировать диапазон, применить и сохранить значение.</p></div>
+                <div class="scenario__block"><h4>Не определено</h4><p>Min/max, UX ввода, persistence и поведение при числе больше доступных Spaces.</p></div>
+                <div class="scenario__block"><h4>Prototype</h4><p>Пункт присутствует, обработчик отсутствует.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-31</span><span class="scenario__title">Создать новый Space из rail</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--contract">Нужен контракт</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать New space (+) в Spaces header.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Открыть create flow; после успеха добавить Space с реальным ID и сделать его active.</p></div>
+                <div class="scenario__block"><h4>Ошибки</h4><p>Обработать plan limit, network error, duplicate submit и отмену.</p></div>
+                <div class="scenario__block"><h4>Prototype</h4><p>Control существует, server create contract отсутствует.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario" open>
+              <summary><span class="scenario__id">SC-32</span><span class="scenario__title">Закрепить Space через pin</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>У account больше одного Space; pin видим на hover.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать Pin у Space.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Появляется Pinned section, Space переносится туда, control становится Unpin и получает <code>aria-pressed="true"</code>.</p></div>
+                <div class="scenario__block"><h4>Сохранение</h4><p>Pinned order сохраняется; название, avatar и ID Space не изменяются.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-33</span><span class="scenario__title">Открепить Space</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать Unpin у элемента в Pinned.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Space возвращается в обычный список по сохранённому order; пустая Pinned section скрывается.</p></div>
+                <div class="scenario__block"><h4>Selection</h4><p>Если Space открыт, он остаётся active после перемещения.</p></div>
+                <div class="scenario__block"><h4>Limit</h4><p>После возврата заново применяется Show items limit.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-34</span><span class="scenario__title">Изменить порядок Pinned drag-and-drop</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><ol><li>Зажать строку pinned Space вне pin/chevron.</li><li>Сдвинуть больше 4px.</li><li>Перетащить вертикально и отпустить.</li></ol></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Появляется drag ghost, соседние строки анимируются 150ms, новый порядок сохраняется.</p></div>
+                <div class="scenario__block"><h4>Click guard</h4><p>Pointer-up после drag не должен открыть Space случайным click.</p></div>
+                <div class="scenario__block"><h4>Cancel</h4><p><code>pointercancel</code> очищает ghost и временные classes.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-35</span><span class="scenario__title">Перетащить обычный Space в Pinned и обратно</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Перетащить обычный Space в drop-area Pinned; затем вывести его обратно в обычный список.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Pin state меняется по drop target; Pinned временно показывается как цель даже если был пуст.</p></div>
+                <div class="scenario__block"><h4>Ограничение</h4><p>Reorder разрешён только при более чем одном доступном Space.</p></div>
+                <div class="scenario__block"><h4>Persistence</h4><p>Сохраняются pinned orders и manual orders.</p></div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="scenario-group">
+          <div class="scenario-group__head">
+            <h3>E. Explore section и destinations</h3>
+            <span>SC-36 — SC-39</span>
+          </div>
+          <div class="scenario-list">
+            <details class="scenario" open>
+              <summary><span class="scenario__id">SC-36</span><span class="scenario__title">Свернуть Explore</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Навести/focus Explore header и нажать chevron.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Восемь destinations скрываются, Explore title остаётся, chevron поворачивается на −90°.</p></div>
+                <div class="scenario__block"><h4>Accessibility</h4><p>Контент исключён из pointer/keyboard flow; control получает <code>aria-expanded="false"</code>.</p></div>
+                <div class="scenario__block"><h4>Сохранение</h4><p><code>explore-collapsed = true</code>.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-37</span><span class="scenario__title">Раскрыть Explore</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать chevron свернутой секции Explore.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Destinations появляются в фиксированном порядке, control получает <code>aria-expanded="true"</code>.</p></div>
+                <div class="scenario__block"><h4>Animation</h4><p>max-height 180ms и opacity 120ms; без анимации при reduced motion.</p></div>
+                <div class="scenario__block"><h4>Scroll</h4><p>Rail не должен прыгать по ширине при появлении scrollbar.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-38</span><span class="scenario__title">Открыть одну из восьми Explore destinations</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--contract">Нужен контракт</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Варианты</h4><p>Templates, Get Ideas, iOS/Android Apps, Design Battles, Design School, Blog, Pricing, Enterprise.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать destination.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Открыть согласованный internal route или external URL; показать корректный active/external state.</p></div>
+                <div class="scenario__block"><h4>Нужно решить</h4><p>Same tab/new tab, auth gating, locale, UTM, analytics, offline и unavailable destination.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-39</span><span class="scenario__title">Вернуться в Spaces после Explore destination</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--contract">Нужен контракт</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>Explore destination открыта внутри текущего product shell.</p></div>
+                <div class="scenario__block"><h4>Шаги</h4><p>Нажать последний выбранный Space или Home.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Вернуться к выбранному account/Space без потери pinned, expanded и scroll preferences.</p></div>
+                <div class="scenario__block"><h4>History</h4><p>Back/Forward не должны создавать цикл или восстанавливать stale active item.</p></div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="scenario-group">
+          <div class="scenario-group__head">
+            <h3>F. Account, ошибки, accessibility и responsive</h3>
+            <span>SC-40 — SC-47</span>
+          </div>
+          <div class="scenario-list">
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-40</span><span class="scenario__title">Переключить пользователя/account profile</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>В settings выбрать Demo, Evelina, Vanessa или Natalia.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Rail перестраивается только из данных выбранного account; active Space выбирается по стабильному ID.</p></div>
+                <div class="scenario__block"><h4>Isolation</h4><p>Show all, pinned и folders не показывают данные другого пользователя.</p></div>
+                <div class="scenario__block"><h4>Regression</h4><p>Pin не должен менять имя/аватар Space на данные предыдущего account.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-41</span><span class="scenario__title">Account с одним Space</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>В account ровно один Space.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Единственный Space видим; pin controls и tooltips скрыты; Show all отсутствует.</p></div>
+                <div class="scenario__block"><h4>Navigation</h4><p>Space root и collections продолжают работать.</p></div>
+                <div class="scenario__block"><h4>Drag</h4><p>Manual reorder не запускается.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-42</span><span class="scenario__title">Account без Spaces</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--edge">Обязательный edge case</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>API возвращает пустой список Spaces.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Показать пустое состояние и доступный Create Space CTA; скрыть Pinned, Show all и tree controls.</p></div>
+                <div class="scenario__block"><h4>Не должно происходить</h4><p>Не использовать demo Space как скрытый fallback и не падать на undefined activeSpace.</p></div>
+                <div class="scenario__block"><h4>Prototype</h4><p>Полное zero-state не реализовано.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-43</span><span class="scenario__title">Space удалён или доступ отозван</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--edge">Обязательный edge case</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>Сохранённый active/pinned Space больше недоступен.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Удалить stale item из rail/preferences, выбрать первый доступный Space или Home и показать понятное уведомление.</p></div>
+                <div class="scenario__block"><h4>Security</h4><p>Не показывать cached название, preview или files после revoke.</p></div>
+                <div class="scenario__block"><h4>History</h4><p>Старый route должен завершиться 403/404 state без navigation loop.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-44</span><span class="scenario__title">Storage недоступен или повреждён</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Примеры</h4><p>Private mode restriction, quota error, invalid JSON, неизвестные values.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Rail работает с безопасными defaults; navigation не блокируется.</p></div>
+                <div class="scenario__block"><h4>Recovery</h4><p>Некорректные массивы pinned/expanded трактуются как пустые.</p></div>
+                <div class="scenario__block"><h4>Telemetry</h4><p>Production может записать техническую ошибку без PII и без прямой зависимости UI от vendor.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-45</span><span class="scenario__title">Навигация только с клавиатуры</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--edge">Обязательный edge case</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Шаги</h4><p>Использовать Tab, Shift+Tab, Enter, Space и Escape без pointer.</p></div>
+                <div class="scenario__block"><h4>Production result</h4><p class="scenario__result">Все actions доступны в визуальном порядке; focus видим; collapse и popovers управляются с клавиатуры.</p></div>
+                <div class="scenario__block"><h4>Collapsed content</h4><p>Скрытые items не получают focus.</p></div>
+                <div class="scenario__block"><h4>Drag alternative</h4><p>Нужен keyboard-способ pin/reorder или доступная альтернатива drag-and-drop.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-46</span><span class="scenario__title">Маленькая высота и переполнение rail</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--done">Реализовано</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Предусловия</h4><p>Низкий viewport, раскрыто несколько деревьев и Explore.</p></div>
+                <div class="scenario__block"><h4>Ожидаемый результат</h4><p class="scenario__result">Один vertical scroll owner показывает весь rail; scrollbar gutter стабилен.</p></div>
+                <div class="scenario__block"><h4>Hover</h4><p>Thumb: G20 при hover rail, G40 при hover scrollbar.</p></div>
+                <div class="scenario__block"><h4>Не должно происходить</h4><p>Нет overlap, horizontal scroll, обрезания chevron или двойного вложенного скролла.</p></div>
+              </div>
+            </details>
+
+            <details class="scenario">
+              <summary><span class="scenario__id">SC-47</span><span class="scenario__title">Узкий viewport, touch и reduced motion</span><span class="scenario__status-wrap"><span class="scenario-status scenario-status--edge">Обязательный edge case</span></span></summary>
+              <div class="scenario__body">
+                <div class="scenario__block"><h4>Текущее поведение</h4><p>Rail сохраняет фиксированную ширину 256px; весь prototype имеет desktop fixed-width baseline.</p></div>
+                <div class="scenario__block"><h4>Production decision</h4><p class="scenario__result">Явно выбрать: overlay drawer, fixed desktop canvas или отдельная mobile navigation.</p></div>
+                <div class="scenario__block"><h4>Touch</h4><p>Controls должны иметь достаточный hit area; drag не должен конфликтовать с vertical scroll.</p></div>
+                <div class="scenario__block"><h4>Motion</h4><p>При <code>prefers-reduced-motion</code> collapse/reorder transitions отключаются.</p></div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="note note--warning">
+          <strong>Сценарии, блокирующие Production handoff</strong>
+          <p>
+            До production необходимо закрыть SC-10–12, SC-18, SC-22, SC-27,
+            SC-30–31, SC-38–39 и SC-42–47: определить реальные routes, API,
+            permissions, empty/error states, keyboard reorder и responsive strategy.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="acceptance">
+        <div class="section__head">
+          <p class="section__kicker">09 · Definition of done</p>
+          <h2>Acceptance checklist</h2>
+          <p>Критерии, по которым разработчик и дизайнер принимают Explore rail.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Visual</h3>
+            <ul class="checklist">
+              <li>Rail ровно 256px; контент не сжимает его.</li>
+              <li>Base rows 36px; comfortable rows 40px.</li>
+              <li>Иконки 20×20px; horizontal gap 12px.</li>
+              <li>Hover и selected визуально различимы.</li>
+              <li>Scrollbar не вызывает horizontal layout shift.</li>
+              <li>Explore section следует сразу после Spaces.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Functional</h3>
+            <ul class="checklist">
+              <li>Explore является default profile на чистом storage.</li>
+              <li>Profile, density и collapse переживают reload.</li>
+              <li>Storage failure не ломает rail.</li>
+              <li>Collapse state синхронизирован с ARIA.</li>
+              <li>More popover недоступен в Explore profile.</li>
+              <li>Активный route единственный и получает aria-current.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="note note--warning">
+          <strong>Перед Production</strong>
+          <p>
+            Отдельно проверить реальные URL Explore, analytics events, permissions
+            для account-specific destinations и поведение rail на минимальной
+            поддерживаемой высоте viewport. Эти части prototype пока не подтверждает.
+          </p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        Planner 5D Spaces 2.0 · Left Rail / Explore developer specification ·
+        локальный standalone artifact, без Production/Test deployment.
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (() => {
+      const rail = document.querySelector(".rail-demo");
+      const explore = document.querySelector("[data-demo-explore]");
+      const collapse = document.querySelector("[data-demo-collapse]");
+      const densityButtons = [...document.querySelectorAll("[data-demo-density]")];
+      const stateButtons = [...document.querySelectorAll("[data-demo-explore-state]")];
+
+      const setDensity = (density) => {
+        rail.dataset.density = density;
+        densityButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.demoDensity === density));
+        });
+      };
+
+      const setExploreCollapsed = (collapsed) => {
+        explore.dataset.collapsed = String(collapsed);
+        collapse.setAttribute("aria-expanded", String(!collapsed));
+        collapse.setAttribute("aria-label", collapsed ? "Expand Explore" : "Collapse Explore");
+        stateButtons.forEach((button) => {
+          const selected = button.dataset.demoExploreState === (collapsed ? "closed" : "open");
+          button.setAttribute("aria-pressed", String(selected));
+        });
+      };
+
+      densityButtons.forEach((button) => {
+        button.addEventListener("click", () => setDensity(button.dataset.demoDensity));
+      });
+
+      stateButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setExploreCollapsed(button.dataset.demoExploreState === "closed");
+        });
+      });
+
+      collapse.addEventListener("click", () => {
+        setExploreCollapsed(explore.dataset.collapsed !== "true");
+      });
+    })();
+  </script>
+</body>
+</html>

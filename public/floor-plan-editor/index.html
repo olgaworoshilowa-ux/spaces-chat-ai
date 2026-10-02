@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Object Editing</title>
+    <link rel="stylesheet" href="styles.css?v=ai-mode-left-chat-1" />
+  </head>
+  <body>
+    <main class="app">
+      <img class="grid-bg" src="assets/grid.png" alt="" />
+
+      <header class="header">
+        <div class="header-left">
+          <div class="pill project-pill">
+            <button class="back-btn" type="button" aria-label="Back">
+              <img src="assets/arrow-left.svg" alt="" />
+            </button>
+            <span class="v-rule"></span>
+            <button class="project-btn" type="button">
+              <span class="project-name">
+                <img src="assets/cloud.svg" alt="" />
+                <span>My Awesome project</span>
+              </span>
+              <img src="assets/chevron-bottom.svg" alt="" />
+            </button>
+          </div>
+
+          <button class="pill floor-btn" type="button">
+            <img src="assets/floor.svg" alt="" />
+            <span>Floor 1</span>
+            <img src="assets/chevron-bottom.svg" alt="" />
+          </button>
+        </div>
+
+        <div class="segment" role="group" aria-label="View">
+          <button class="segment-item is-on" type="button">2D</button>
+          <button class="segment-item" type="button">3D</button>
+        </div>
+
+        <div class="header-right">
+          <span class="copilot-shell">
+            <button class="label-btn copilot" type="button" aria-expanded="false" aria-controls="copilot-panel">
+              <img class="copilot-color" src="assets/copilot.svg?v=purple" alt="" />
+              <span class="follow-spark" aria-hidden="true"></span>
+              <img class="copilot-gray" src="assets/copilot-gray.svg" alt="" />
+              <svg class="copilot-rainbow" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="icon-rainbow" x1="3.4" y1="12" x2="20.6" y2="12" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#5b8cff" />
+                    <stop offset="0.16" stop-color="#7ad7ff" />
+                    <stop offset="0.32" stop-color="#6ee7b7" />
+                    <stop offset="0.48" stop-color="#f6e27a" />
+                    <stop offset="0.64" stop-color="#f6b07a" />
+                    <stop offset="0.8" stop-color="#ff8f8f" />
+                    <stop offset="1" stop-color="#d4a0ff" />
+                  </linearGradient>
+                </defs>
+                <path d="M12 3.42871C12.458 3.42871 12.8577 3.74029 12.9688 4.18457L13.3506 5.71289C13.9584 8.14378 15.8562 10.0416 18.2871 10.6494L19.8154 11.0322C20.2597 11.1433 20.5713 11.5421 20.5713 12C20.5713 12.458 20.2597 12.8577 19.8154 12.9688L18.2871 13.3506C15.8563 13.9584 13.9584 15.8563 13.3506 18.2871L12.9688 19.8154C12.8577 20.2597 12.458 20.5713 12 20.5713C11.5421 20.5713 11.1433 20.2597 11.0322 19.8154L10.6494 18.2871C10.0416 15.8562 8.14378 13.9584 5.71289 13.3506L4.18457 12.9688C3.74029 12.8577 3.42871 12.458 3.42871 12C3.42874 11.5421 3.74033 11.1433 4.18457 11.0322L5.71289 10.6494C8.1438 10.0416 10.0416 8.1438 10.6494 5.71289L11.0322 4.18457C11.1433 3.74033 11.5421 3.42874 12 3.42871Z" fill="url(#icon-rainbow)" />
+              </svg>
+              <svg class="copilot-spark" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="spark-blue" x1="12" y1="3.4" x2="12" y2="20.6" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#3b82f6" />
+                    <stop offset="0.48" stop-color="#6366f1" />
+                    <stop offset="1" stop-color="#a855f7" />
+                  </linearGradient>
+                </defs>
+                <path d="M12 3.42871C12.458 3.42871 12.8577 3.74029 12.9688 4.18457L13.3506 5.71289C13.9584 8.14378 15.8562 10.0416 18.2871 10.6494L19.8154 11.0322C20.2597 11.1433 20.5713 11.5421 20.5713 12C20.5713 12.458 20.2597 12.8577 19.8154 12.9688L18.2871 13.3506C15.8563 13.9584 13.9584 15.8563 13.3506 18.2871L12.9688 19.8154C12.8577 20.2597 12.458 20.5713 12 20.5713C11.5421 20.5713 11.1433 20.2597 11.0322 19.8154L10.6494 18.2871C10.0416 15.8562 8.14378 13.9584 5.71289 13.3506L4.18457 12.9688C3.74029 12.8577 3.42871 12.458 3.42871 12C3.42874 11.5421 3.74033 11.1433 4.18457 11.0322L5.71289 10.6494C8.1438 10.0416 10.0416 8.1438 10.6494 5.71289L11.0322 4.18457C11.1433 3.74033 11.5421 3.42874 12 3.42871Z" fill="url(#spark-blue)" />
+              </svg>
+              <span>AI Mode</span>
+            </button>
+          </span>
+          <button class="icon-round with-edge" type="button" aria-label="Render">
+            <img src="assets/camera.svg" alt="" />
+          </button>
+          <button class="icon-round with-edge" type="button" aria-label="Ruler">
+            <img src="assets/ruler.svg" alt="" />
+          </button>
+          <button class="icon-round" type="button" aria-label="Comment">
+            <img src="assets/comment.svg" alt="" />
+          </button>
+          <button class="icon-round with-edge" type="button" aria-label="Add">
+            <img src="assets/plus.svg" alt="" />
+          </button>
+          <button class="icon-round" type="button" aria-label="Settings">
+            <img src="assets/settings.svg" alt="" />
+          </button>
+          <button class="pro-btn" type="button">Switch to Pro</button>
+          <button class="avatar" type="button" aria-label="Account">
+            <span class="avatar-letter">H</span>
+            <img class="chevron-flip" src="assets/chevron-top.svg" alt="" />
+          </button>
+          <button class="share-btn" type="button">
+            <img src="assets/share.svg" alt="" />
+            <span>Share</span>
+          </button>
+        </div>
+      </header>
+
+      <button class="hire label-btn" type="button">
+        <img src="assets/hire.svg" alt="" />
+        <span>Hire a designer</span>
+      </button>
+
+      <nav class="toolbar" aria-label="Tools">
+        <div class="toolbar-group">
+          <button class="tool" type="button" aria-label="Search">
+            <img src="assets/search.svg" alt="" />
+          </button>
+          <button class="tool" type="button" aria-label="Draw">
+            <img src="assets/create.svg" alt="" />
+          </button>
+          <button class="tool" type="button" aria-label="Furniture">
+            <img src="assets/armchairs.svg" alt="" />
+          </button>
+          <button class="tool" type="button" aria-label="Plants">
+            <img src="assets/trees.svg" alt="" />
+          </button>
+        </div>
+        <span class="h-rule"></span>
+        <button class="tool" type="button" aria-label="Add object">
+          <img src="assets/plus-3d.svg" alt="" />
+        </button>
+      </nav>
+
+      <div class="history">
+        <button class="mini" type="button" aria-label="History">
+          <img src="assets/history.svg" alt="" />
+        </button>
+        <span class="v-rule"></span>
+        <div class="history-pair">
+          <button class="mini" type="button" aria-label="Undo">
+            <img src="assets/undo.svg" alt="" />
+          </button>
+          <button class="mini" type="button" aria-label="Redo">
+            <img src="assets/redo.svg" alt="" />
+          </button>
+        </div>
+      </div>
+
+      <button class="area" type="button">
+        <img src="assets/hash.svg" alt="" />
+        <span>1394 ft<sup>2</sup></span>
+      </button>
+
+      <div class="save">
+        <div class="save-row">
+          <p>Unlock all features</p>
+          <button class="explore" type="button">Explore Plans</button>
+        </div>
+      </div>
+
+      <div class="zoom">
+        <button class="zoom-btn" type="button" aria-label="Help">
+          <img src="assets/help.svg" alt="" />
+        </button>
+        <button class="zoom-btn" type="button" aria-label="Fullscreen">
+          <img src="assets/fullscreen.svg" alt="" />
+        </button>
+        <button class="zoom-btn" type="button" aria-label="Center">
+          <img src="assets/center.svg" alt="" />
+        </button>
+        <div class="zoom-pair">
+          <button class="zoom-step" type="button" aria-label="Zoom in">
+            <img src="assets/zoom-in.svg" alt="" />
+          </button>
+          <button class="zoom-step" type="button" aria-label="Zoom out">
+            <img src="assets/zoom-out.svg" alt="" />
+          </button>
+        </div>
+      </div>
+
+      <aside class="copilot-panel" id="copilot-panel" hidden>
+        <div class="panel-head">
+          <p class="panel-title">Copilot</p>
+          <div class="panel-tools">
+            <div class="panel-badge">
+              <img src="assets/panel-generator.svg" alt="" />
+              <span>25</span>
+            </div>
+            <button class="panel-icon" type="button" aria-label="History">
+              <img src="assets/panel-history.svg" alt="" />
+            </button>
+            <button class="panel-icon panel-close" type="button" aria-label="Close">
+              <img src="assets/panel-close.svg" alt="" />
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <img class="panel-spark" src="assets/panel-spark.svg" alt="" />
+          <h2 class="panel-heading">What would you like<br />to design today?</h2>
+          <button class="panel-suggest panel-suggest-plan" type="button">
+            <span class="panel-tile tile-lilac">
+              <img src="assets/panel-plan.svg" alt="" />
+            </span>
+            <span>Plan a room renovation</span>
+          </button>
+          <button class="panel-suggest panel-suggest-mood" type="button">
+            <span class="panel-tile tile-rose">
+              <img src="assets/panel-moodboard.svg" alt="" />
+            </span>
+            <span>Create a moodboard</span>
+          </button>
+          <button class="panel-suggest panel-suggest-room" type="button">
+            <span class="panel-tile tile-orange">
+              <img src="assets/panel-sofa.svg" alt="" />
+            </span>
+            <span>Design my dream living room</span>
+          </button>
+        </div>
+
+        <div class="panel-composer">
+          <p class="panel-hint">Use&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to add projects or files to the chat</p>
+          <img class="panel-at" src="assets/panel-at.svg" alt="" />
+          <button class="panel-tool panel-clip" type="button" aria-label="Attach">
+            <img src="assets/panel-clip.svg" alt="" />
+          </button>
+          <button class="panel-lite" type="button">
+            <span>Lite</span>
+            <img src="assets/panel-chevron.svg" alt="" />
+          </button>
+          <button class="panel-tool panel-mic-btn" type="button" aria-label="Voice">
+            <img src="assets/panel-mic.svg" alt="" />
+          </button>
+          <button class="panel-tool panel-audio" type="button" aria-label="Audio">
+            <img src="assets/panel-audio.svg" alt="" />
+          </button>
+        </div>
+      </aside>
+    </main>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const embedded = params.get("from") === "spaces";
+      const withSpacesChat = params.get("spacesChat") === "1";
+      const projectName = (params.get("project") || "").trim();
+      const app = document.querySelector(".app");
+      const copilotButton = document.querySelector(".copilot");
+      const copilotPanel = document.querySelector(".copilot-panel");
+      const closeButton = document.querySelector(".panel-close");
+      const backButton = document.querySelector(".back-btn");
+      const projectLabel = document.querySelector(".project-name > span:last-child");
+
+      if (embedded) document.documentElement.classList.add("is-embedded");
+      if (withSpacesChat) app.classList.add("is-spaces-chat");
+      if (projectName && projectLabel) projectLabel.textContent = projectName;
+
+      // Tell Spaces parent to dismiss overlays (history menu, etc.)
+      if (embedded && window.parent && window.parent !== window) {
+        const notifyParent = () => {
+          window.parent.postMessage({ type: "floor-plan-spaces-pointer" }, "*");
+        };
+        document.addEventListener("pointerdown", notifyParent, true);
+        window.addEventListener("focus", notifyParent);
+      }
+
+      function setCopilotOpen(open) {
+        // Beside Spaces left chat, never use the right Copilot drawer.
+        if (withSpacesChat) {
+          app.classList.remove("is-copilot-open");
+          copilotButton.setAttribute("aria-expanded", "false");
+          copilotPanel.hidden = true;
+          return;
+        }
+        app.classList.toggle("is-copilot-open", open);
+        copilotButton.setAttribute("aria-expanded", open ? "true" : "false");
+        copilotPanel.hidden = !open;
+      }
+
+      function closeToSpaces() {
+        if (!embedded) return false;
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: "floor-plan-spaces-close" }, "*");
+          return true;
+        }
+        return false;
+      }
+
+      copilotButton.addEventListener("click", function () {
+        if (withSpacesChat) {
+          setCopilotOpen(false);
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage({ type: "floor-plan-spaces-chat-open" }, "*");
+          }
+          return;
+        }
+        setCopilotOpen(!app.classList.contains("is-copilot-open"));
+      });
+
+      closeButton.addEventListener("click", function () {
+        setCopilotOpen(false);
+      });
+
+      backButton?.addEventListener("click", function (event) {
+        if (closeToSpaces()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && embedded) closeToSpaces();
+      });
+    </script>
+  </body>
+</html>

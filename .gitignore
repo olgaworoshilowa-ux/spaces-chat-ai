@@ -1,0 +1,18 @@
+# Local configuration and deployment links
+.env*
+.vercel/
+
+# Generated Next.js and package-manager output
+.next/
+node_modules/
+*.tsbuildinfo
+
+# Generated test output
+test-results/
+playwright-report/
+
+# Finder metadata
+.DS_Store
+
+# Accidental download artifact
+http:/
