@@ -16165,7 +16165,7 @@ body.is-upgrade-modal-open{
     gap: 16px;
     width: min(800px, 100%);
     max-height: calc(100vh - 32px);
-    padding: 24px 24px 20px;
+    padding: 20px 20px 16px;
     overflow: hidden;
     border-radius: 24px;
     box-sizing: border-box;
@@ -16200,7 +16200,7 @@ body.is-upgrade-modal-open{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 8px;
     padding-right: 40px;
     flex: 0 0 auto;
 }
@@ -16209,7 +16209,7 @@ body.is-upgrade-modal-open{
     margin: 0;
     color: #1c1c1c;
     font: 700 22px/28px "Open Sans", Arial, sans-serif;
-    letter-spacing: -.5px;
+    letter-spacing: -.4px;
 }
 
 .spaces-upgrade-billing{
@@ -16278,7 +16278,7 @@ body.is-upgrade-modal-open{
     align-content: start;
     min-height: 0;
     height: auto;
-    padding: 20px 18px 16px;
+    padding: 16px 16px 14px;
     overflow: hidden;
     border: 1px solid #e8e8e8;
     border-radius: 24px;
@@ -16302,21 +16302,21 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-plan-head{
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
     min-height: 0;
 }
 
 .spaces-upgrade-plan h3{
     margin: 0;
     color: #1b1b1b;
-    font: 700 18px/24px "Open Sans", Arial, sans-serif;
+    font: 700 20px/26px "Open Sans", Arial, sans-serif;
     letter-spacing: -.4px;
 }
 
 .spaces-upgrade-plan-subtitle{
     margin: 0;
     min-height: 18px;
-    color: #747474;
+    color: #575757;
     font: 400 13px/18px "Open Sans", Arial, sans-serif;
 }
 
@@ -16324,10 +16324,10 @@ body.is-upgrade-modal-open{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 6px;
+    gap: 4px;
     min-height: 0;
     margin: 0;
-    padding: 14px 14px 12px;
+    padding: 12px 14px;
     border-radius: 16px;
     box-sizing: border-box;
     background: rgba(0, 0, 0, .04);
@@ -16339,35 +16339,36 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-credits-title{
     margin: 0;
-    color: #575757;
-    font: 600 16px/22px "Open Sans", Arial, sans-serif;
-    letter-spacing: -.2px;
+    color: #1b1b1b;
+    font: 700 18px/24px "Open Sans", Arial, sans-serif;
+    letter-spacing: -.3px;
 }
 
 .spaces-upgrade-credits-copy,
 .spaces-upgrade-credits-note{
     margin: 0;
-    color: #747474;
+    color: #575757;
     font: 400 13px/18px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credits-note{
     margin-top: 2px;
+    color: #747474;
 }
 
 .spaces-upgrade-price-row{
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 4px 8px;
+    gap: 6px 8px;
     min-height: 32px;
-    margin-top: 2px;
+    margin: 0;
 }
 
 .spaces-upgrade-offer{
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     min-height: 0;
 }
 
@@ -16397,9 +16398,9 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features-block{
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin: 2px 0 0;
-    padding-top: 14px;
+    gap: 10px;
+    margin: 0;
+    padding-top: 12px;
     border-top: 1px solid #e8e8e8;
     overflow: auto;
     min-height: 0;
@@ -16408,7 +16409,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features-lead{
     margin: 0;
     color: #1b1b1b;
-    font: 600 13px/18px "Open Sans", Arial, sans-serif;
+    font: 600 14px/20px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-features-group{
@@ -16419,10 +16420,10 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-features-label{
     margin: 0;
-    color: #747474;
-    font: 700 11px/14px "Open Sans", Arial, sans-serif;
-    letter-spacing: .04em;
-    text-transform: uppercase;
+    color: #1b1b1b;
+    font: 600 13px/18px "Open Sans", Arial, sans-serif;
+    letter-spacing: 0;
+    text-transform: none;
 }
 
 .spaces-upgrade-features{
@@ -16553,13 +16554,13 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-price-new{
     color: #1b1b1b;
-    font: 700 26px/32px "Open Sans", Arial, sans-serif;
+    font: 700 28px/34px "Open Sans", Arial, sans-serif;
     letter-spacing: -.6px;
 }
 
 .spaces-upgrade-price-period{
     color: #575757;
-    font: 600 13px/18px "Open Sans", Arial, sans-serif;
+    font: 400 13px/18px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-badge{
@@ -16620,7 +16621,7 @@ body.is-upgrade-modal-open{
     align-items: flex-start;
     gap: 8px;
     color: #1b1b1b;
-    font: 400 13px/18px "Open Sans", Arial, sans-serif;
+    font: 400 14px/20px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-features > li > img{
