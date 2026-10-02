@@ -25,6 +25,26 @@
 
     const money = value => `$${Number(value).toFixed(2)}`;
 
+    const syncSliderUi = () => {
+        if (!range) return;
+        const max = Number(range.max) || Math.max(CREDIT_TIERS.length - 1, 1);
+        const pct = max > 0 ? (proTier / max) * 100 : 0;
+        range.value = String(proTier);
+        range.style.setProperty('--upgrade-slider-progress', `${pct}%`);
+        range.setAttribute('aria-valuetext', `${(CREDIT_TIERS[proTier] || CREDIT_TIERS[0]).credits} credits`);
+        const slider = range.closest('[data-upgrade-pro-slider]');
+        slider?.style.setProperty('--upgrade-slider-progress', `${pct}%`);
+        slider?.querySelectorAll('.spaces-upgrade-slider-labels > span').forEach((label, index) => {
+            label.classList.toggle('is-active', index === proTier);
+        });
+    };
+
+    const setProTier = (nextTier) => {
+        const max = CREDIT_TIERS.length - 1;
+        proTier = Math.max(0, Math.min(max, Number(nextTier) || 0));
+        syncPrices();
+    };
+
     const syncPrices = () => {
         const premiumOld = modal.querySelector('[data-upgrade-premium-old]');
         const premiumPrice = modal.querySelector('[data-upgrade-premium-price]');
@@ -37,6 +57,7 @@
         const proCredits = modal.querySelector('[data-upgrade-pro-credits]');
         const tier = CREDIT_TIERS[proTier] || CREDIT_TIERS[0];
 
+        syncSliderUi();
         if (proCredits) proCredits.textContent = tier.credits.toLocaleString('en-US');
 
         if (annual) {
@@ -123,9 +144,61 @@
         syncPrices();
     });
 
-    range?.addEventListener('input', () => {
-        proTier = Number(range.value) || 0;
-        syncPrices();
+    const onRangeInput = () => setProTier(range.value);
+    range?.addEventListener('input', onRangeInput);
+    range?.addEventListener('change', onRangeInput);
+
+    // Drag/click on the track even if the native thumb is hard to grab.
+    const sliderRoot = range?.closest('[data-upgrade-pro-slider]');
+    const tierFromClientX = clientX => {
+        if (!range) return 0;
+        const rect = range.getBoundingClientRect();
+        if (!rect.width) return proTier;
+        const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+        const max = Number(range.max) || CREDIT_TIERS.length - 1;
+        return Math.round(ratio * max);
+    };
+
+    const startSliderPointer = event => {
+        if (!range || event.button != null && event.button !== 0) return;
+        event.preventDefault();
+        event.stopPropagation();
+        range.focus({ preventScroll: true });
+        range.setPointerCapture?.(event.pointerId);
+        setProTier(tierFromClientX(event.clientX));
+
+        const onMove = moveEvent => {
+            setProTier(tierFromClientX(moveEvent.clientX));
+        };
+        const onUp = () => {
+            range.releasePointerCapture?.(event.pointerId);
+            window.removeEventListener('pointermove', onMove);
+            window.removeEventListener('pointerup', onUp);
+            window.removeEventListener('pointercancel', onUp);
+        };
+        window.addEventListener('pointermove', onMove);
+        window.addEventListener('pointerup', onUp);
+        window.addEventListener('pointercancel', onUp);
+    };
+
+    range?.addEventListener('pointerdown', startSliderPointer);
+    sliderRoot?.addEventListener('pointerdown', event => {
+        if (event.target === range) return;
+        if (event.target.closest('.spaces-upgrade-slider-labels')) return;
+        startSliderPointer(event);
+    });
+
+    sliderRoot?.querySelectorAll('.spaces-upgrade-slider-labels > span').forEach((label, index) => {
+        label.setAttribute('role', 'button');
+        label.tabIndex = 0;
+        const pick = event => {
+            event.preventDefault();
+            setProTier(index);
+        };
+        label.addEventListener('click', pick);
+        label.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') pick(event);
+        });
     });
 
     document.addEventListener('keydown', event => {
