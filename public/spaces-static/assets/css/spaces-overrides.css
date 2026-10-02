@@ -16281,11 +16281,11 @@ body.is-upgrade-modal-open{
     display: grid;
     grid-template-rows: subgrid;
     grid-row: span 4;
-    row-gap: 28px;
+    row-gap: 32px;
     align-content: start;
     min-height: 0;
     height: auto;
-    padding: 28px 24px 28px;
+    padding: 36px 32px 32px;
     overflow: hidden;
     border: 1px solid #e8e8e8;
     border-radius: 24px;
@@ -16336,7 +16336,7 @@ body.is-upgrade-modal-open{
     min-height: 0;
     height: 100%;
     margin: 0;
-    padding: 18px 20px;
+    padding: 20px 22px;
     border: 0;
     border-radius: 16px;
     box-sizing: border-box;
@@ -16449,16 +16449,16 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features-block{
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     margin: 4px 0 0;
-    padding-top: 18px;
+    padding-top: 24px;
     border-top: 1px solid #d8d8d8;
     min-height: 0;
 }
 
 .spaces-upgrade-plan.is-premium .spaces-upgrade-features-block{
     margin-top: 4px;
-    padding-top: 18px;
+    padding-top: 24px;
     border-top: 1px solid #d8d8d8;
 }
 
@@ -16787,8 +16787,8 @@ body.is-upgrade-modal-open{
     }
 
     .spaces-upgrade-plan{
-        row-gap: 20px;
-        padding: 22px 20px;
+        row-gap: 24px;
+        padding: 28px 24px;
     }
 
     .spaces-upgrade-credits-box{
