@@ -13,6 +13,7 @@
     const dialog = modal?.querySelector('[data-buy-credits-dialog]');
     const list = modal?.querySelector('[data-buy-credits-list]');
     const cta = modal?.querySelector('[data-buy-credits-cta]');
+    const backBtn = modal?.querySelector('[data-buy-credits-back]');
     if (!modal || !dialog || !list) return;
 
     let selected = 1;
@@ -52,7 +53,12 @@
         modal.hidden = false;
         document.body.classList.add('is-buy-credits-modal-open');
         syncSelection();
-        modal.querySelector('[data-buy-credits-close]')?.focus();
+        backBtn?.focus();
+    };
+
+    const goBackToPaywall = () => {
+        closeModal({ restoreFocus: false });
+        window.SpacesUpgradeModal?.open(lastFocus);
     };
 
     list.querySelectorAll('[data-buy-credits-option]').forEach((option, index) => {
@@ -75,6 +81,12 @@
         const pack = getSelectedPack();
         closeModal({ restoreFocus: false });
         window.SpacesCheckoutModal?.open(pack, cta);
+    });
+
+    backBtn?.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        goBackToPaywall();
     });
 
     document.querySelectorAll('[data-buy-credits-open]').forEach(button => {

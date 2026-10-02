@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=upgrade-sell-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=buy-back-1">
 
         <title>Get Started Spaces</title>
 
@@ -409,7 +409,7 @@
                         </div>
                     </div>
                     <div class="spaces-profile-menu-billing">
-                        <a href="" class="spaces-profile-menu-credits" role="menuitem">
+                        <a href="" class="spaces-profile-menu-credits" role="menuitem" data-buy-credits-open>
                             <span class="spaces-profile-menu-credits-row">
                                 <span class="spaces-profile-menu-credits-title">Credits</span>
                                 <span class="spaces-profile-menu-credits-meta">
@@ -4382,7 +4382,12 @@
                 <div class="spaces-buy-credits-main">
                     <div class="spaces-buy-credits-copy">
                         <div class="spaces-buy-credits-intro">
-                            <h2 id="spaces-buy-credits-title">Buy credits to continue with your task</h2>
+                            <div class="spaces-buy-credits-title-row">
+                                <button type="button" class="spaces-buy-credits-back" data-buy-credits-back aria-label="Back to plans">
+                                    <img src="./assets/images/spaces-v2/checkout/chevron-left.svg" width="24" height="24" alt="" aria-hidden="true">
+                                </button>
+                                <h2 id="spaces-buy-credits-title">Buy credits to continue with your task</h2>
+                            </div>
                             <p>Pick the size of your work. The same balance powers Copilot here and everything in AI Studio</p>
                         </div>
                         <div class="spaces-buy-credits-list" role="radiogroup" aria-label="Credit packs" data-buy-credits-list>
@@ -4560,7 +4565,7 @@
             </div>
         </div>
         <script src="./assets/js/spaces-upgrade-modal.js?v=slider-1"></script>
-        <script src="./assets/js/spaces-buy-credits-modal.js?v=2"></script>
+        <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
         <script src="./assets/js/spaces-checkout-modal.js?v=1"></script>
     </body>
 </html>

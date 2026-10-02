@@ -16762,6 +16762,34 @@ body.is-buy-credits-modal-open{
     gap: 8px;
 }
 
+.spaces-buy-credits-title-row{
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.spaces-buy-credits-back{
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-top: 2px;
+    padding: 4px;
+    border: 0;
+    border-radius: 100px;
+    background: rgba(0, 0, 0, .04);
+    cursor: pointer;
+}
+
+.spaces-buy-credits-back:hover,
+.spaces-buy-credits-back:focus-visible{
+    outline: 0;
+    background: rgba(0, 0, 0, .08);
+}
+
+.spaces-buy-credits-title-row > h2,
 .spaces-buy-credits-intro > h2{
     margin: 0;
     color: #1c1c1c;
