@@ -1,28 +1,28 @@
 (() => {
     'use strict';
 
+    const PACKS = [
+        { credits: 100, price: 5.99, copy: 'Enough for designing a one flat', summary: 'Enough for one flat, room by room. One-time top-up, no renewal.' },
+        { credits: 500, price: 27.99, copy: 'Enough for designing a one flat', summary: 'Enough for one flat, room by room. One-time top-up, no renewal.', popular: true },
+        { credits: 1000, price: 54.99, copy: 'Enough for the whole home with retries', summary: 'Enough for the whole home with retries. One-time top-up, no renewal.' },
+        { credits: 2500, price: 129.99, copy: 'Months of ongoing work with several houses', summary: 'Months of ongoing work with several houses. One-time top-up, no renewal.' },
+        { credits: 5000, price: 249.99, copy: 'Enough to design anything every day', summary: 'Enough to design anything every day. One-time top-up, no renewal.' }
+    ];
+
     const modal = document.querySelector('[data-buy-credits-modal]');
     const dialog = modal?.querySelector('[data-buy-credits-dialog]');
     const list = modal?.querySelector('[data-buy-credits-list]');
     const cta = modal?.querySelector('[data-buy-credits-cta]');
     if (!modal || !dialog || !list) return;
 
-    const PACKS = [
-        { credits: 100, price: 5.99, copy: 'Enough for designing a one flat' },
-        { credits: 500, price: 27.99, copy: 'Enough for designing a one flat', popular: true },
-        { credits: 1000, price: 54.99, copy: 'Enough for the whole home with retries' },
-        { credits: 2500, price: 129.99, copy: 'Months of ongoing work with several houses' },
-        { credits: 5000, price: 249.99, copy: 'Enough to design anything every day' }
-    ];
-
     let selected = 1;
     let lastFocus = null;
 
-    const money = value => `$${Number(value).toFixed(2)}`;
     const formatCredits = value => Number(value).toLocaleString('en-US');
+    const getSelectedPack = () => PACKS[selected] || PACKS[1];
 
     const syncSelection = () => {
-        const pack = PACKS[selected] || PACKS[1];
+        const pack = getSelectedPack();
         list.querySelectorAll('[data-buy-credits-option]').forEach((option, index) => {
             const active = index === selected;
             option.classList.toggle('is-selected', active);
@@ -32,24 +32,23 @@
                 radio.src = active
                     ? './assets/images/spaces-v2/buy-credits/radio-on.svg'
                     : './assets/images/spaces-v2/buy-credits/radio-off.svg';
-                radio.alt = active ? 'Selected' : '';
             }
         });
         if (cta) cta.textContent = `Buy ${formatCredits(pack.credits)} credits`;
     };
 
-    const closeModal = () => {
+    const closeModal = ({ restoreFocus = true } = {}) => {
         if (modal.hidden) return;
         modal.hidden = true;
         document.body.classList.remove('is-buy-credits-modal-open');
-        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-        lastFocus = null;
+        if (restoreFocus && lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+        if (restoreFocus) lastFocus = null;
     };
 
     const openModal = (trigger) => {
         lastFocus = trigger || document.activeElement;
-        // Close upgrade modal if it is open underneath.
         if (window.SpacesUpgradeModal?.close) window.SpacesUpgradeModal.close();
+        if (window.SpacesCheckoutModal?.close) window.SpacesCheckoutModal.close({ restoreFocus: false });
         modal.hidden = false;
         document.body.classList.add('is-buy-credits-modal-open');
         syncSelection();
@@ -68,6 +67,14 @@
                 syncSelection();
             }
         });
+    });
+
+    cta?.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const pack = getSelectedPack();
+        closeModal({ restoreFocus: false });
+        window.SpacesCheckoutModal?.open(pack, cta);
     });
 
     document.querySelectorAll('[data-buy-credits-open]').forEach(button => {
@@ -93,5 +100,9 @@
     });
 
     syncSelection();
-    window.SpacesBuyCreditsModal = { open: openModal, close: closeModal };
+    window.SpacesBuyCreditsModal = {
+        open: openModal,
+        close: closeModal,
+        getSelectedPack
+    };
 })();

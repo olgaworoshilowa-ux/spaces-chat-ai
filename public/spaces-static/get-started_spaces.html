@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=buy-credits-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-1">
 
         <title>Get Started Spaces</title>
 
@@ -4403,8 +4403,7 @@
                     </div>
                     <div class="spaces-buy-credits-visual" aria-hidden="true">
                         <div class="spaces-buy-credits-visual-panel">
-                            <img class="spaces-buy-credits-visual-bg" src="./assets/images/spaces-v2/buy-credits/panel-bg.png" alt="">
-                            <img class="spaces-buy-credits-visual-card" src="./assets/images/spaces-v2/buy-credits/credit-card.png" alt="">
+                            <img class="spaces-buy-credits-visual-card" src="./assets/images/spaces-v2/buy-credits/visual-room.png" alt="">
                         </div>
                         <button type="button" class="spaces-buy-credits-close" data-buy-credits-close aria-label="Close">
                             <img src="./assets/images/spaces-v2/buy-credits/close.svg" width="24" height="24" alt="" aria-hidden="true">
@@ -4413,7 +4412,123 @@
                 </div>
             </div>
         </div>
+        <div class="spaces-checkout-modal" data-checkout-modal hidden>
+            <div class="spaces-checkout-backdrop" data-checkout-close tabindex="-1" aria-hidden="true"></div>
+            <div class="spaces-checkout-dialog" role="dialog" aria-modal="true" aria-labelledby="spaces-checkout-title" data-checkout-dialog>
+                <div class="spaces-checkout-main">
+                    <div class="spaces-checkout-form">
+                        <div class="spaces-checkout-intro">
+                            <div class="spaces-checkout-title-row">
+                                <button type="button" class="spaces-checkout-back" data-checkout-back aria-label="Back">
+                                    <img src="./assets/images/spaces-v2/checkout/chevron-left.svg" width="24" height="24" alt="" aria-hidden="true">
+                                </button>
+                                <h2 id="spaces-checkout-title">Complete your order</h2>
+                            </div>
+                            <p>Credits are added to your balance as soon as the payment goes through</p>
+                        </div>
+                        <div class="spaces-checkout-section">
+                            <p class="spaces-checkout-section-title">Contact information</p>
+                            <div class="spaces-checkout-card">
+                                <label class="visually-hidden" for="spaces-checkout-email">Email</label>
+                                <input id="spaces-checkout-email" class="spaces-checkout-email" type="email" value="iheartnowhere@gmail.com" autocomplete="email">
+                                <div class="spaces-checkout-divider"></div>
+                                <label class="spaces-checkout-toggle-row">
+                                    <button type="button" class="spaces-checkout-toggle" data-checkout-company-toggle aria-pressed="false" aria-label="Add company details"></button>
+                                    <span>Add company details</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="spaces-checkout-section">
+                            <p class="spaces-checkout-section-title">Payment method</p>
+                            <div class="spaces-checkout-card spaces-checkout-payment" data-checkout-payment>
+                                <button type="button" class="spaces-checkout-pay-option is-selected" data-checkout-pay="card" aria-pressed="true">
+                                    <img src="./assets/images/spaces-v2/checkout/radio-on.svg" width="24" height="24" alt="" aria-hidden="true" data-checkout-pay-radio>
+                                    <span>Card</span>
+                                </button>
+                                <div class="spaces-checkout-card-fields" data-checkout-card-fields>
+                                    <div class="spaces-checkout-field is-card-number">
+                                        <span class="spaces-checkout-field-label">Card informations</span>
+                                        <input type="text" inputmode="numeric" placeholder="1424 1424 1424 1424" value="1424 1424 1424 1424" aria-label="Card number">
+                                        <span class="spaces-checkout-brands" aria-hidden="true">
+                                            <img src="./assets/images/spaces-v2/checkout/mastercard.svg" width="35" height="24" alt="">
+                                            <img src="./assets/images/spaces-v2/checkout/visa.svg" width="35" height="24" alt="">
+                                            <img src="./assets/images/spaces-v2/checkout/amex.svg" width="35" height="24" alt="">
+                                        </span>
+                                    </div>
+                                    <div class="spaces-checkout-field-row">
+                                        <div class="spaces-checkout-field">
+                                            <span class="spaces-checkout-field-label">Expiration date</span>
+                                            <input type="text" inputmode="numeric" placeholder="MM/YY" aria-label="Expiration date">
+                                        </div>
+                                        <div class="spaces-checkout-field">
+                                            <span class="spaces-checkout-field-label">CVC</span>
+                                            <input type="text" inputmode="numeric" placeholder="CVC" aria-label="CVC">
+                                        </div>
+                                    </div>
+                                    <div class="spaces-checkout-field">
+                                        <span class="spaces-checkout-field-label">Cardholder name</span>
+                                        <input type="text" placeholder="Full name on the card" aria-label="Cardholder name">
+                                    </div>
+                                </div>
+                                <div class="spaces-checkout-divider"></div>
+                                <button type="button" class="spaces-checkout-pay-option" data-checkout-pay="apple" aria-pressed="false">
+                                    <img src="./assets/images/spaces-v2/checkout/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-checkout-pay-radio>
+                                    <span class="spaces-checkout-apple">
+                                        <img src="./assets/images/spaces-v2/checkout/apple-pay.svg" width="35" height="24" alt="" aria-hidden="true">
+                                        <span>Apple Pay</span>
+                                    </span>
+                                </button>
+                                <div class="spaces-checkout-divider"></div>
+                                <label class="spaces-checkout-save-row">
+                                    <input type="checkbox" checked>
+                                    <span>Safe information for future payments</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="button" class="spaces-checkout-cta" data-checkout-cta>Buy 500 credits</button>
+                        <p class="spaces-checkout-legal">Payment is encrypted. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+                    </div>
+                    <aside class="spaces-checkout-summary">
+                        <button type="button" class="spaces-checkout-close" data-checkout-close aria-label="Close">
+                            <img src="./assets/images/spaces-v2/checkout/close.svg" width="24" height="24" alt="" aria-hidden="true">
+                        </button>
+                        <div class="spaces-checkout-summary-art" aria-hidden="true">
+                            <img src="./assets/images/spaces-v2/checkout/card-coins.png" alt="">
+                        </div>
+                        <div class="spaces-checkout-summary-body">
+                            <p class="spaces-checkout-order-label">Order</p>
+                            <div class="spaces-checkout-order-price-row">
+                                <strong data-checkout-price>$27.99</strong>
+                                <span data-checkout-credits-label>500 credits</span>
+                            </div>
+                            <p class="spaces-checkout-order-copy" data-checkout-summary-copy>Enough for one flat, room by room. One-time top-up, no renewal.</p>
+                            <div class="spaces-checkout-divider is-dark"></div>
+                            <p class="spaces-checkout-receive-title">You receive</p>
+                            <ul class="spaces-checkout-receive-list">
+                                <li>
+                                    <img src="./assets/images/spaces-v2/checkout/check.svg" width="24" height="24" alt="" aria-hidden="true">
+                                    <span>One-time credits added to this account</span>
+                                </li>
+                                <li>
+                                    <img src="./assets/images/spaces-v2/checkout/check.svg" width="24" height="24" alt="" aria-hidden="true">
+                                    <span>Works in Copilot and everywhere in AI Studio</span>
+                                </li>
+                                <li>
+                                    <img src="./assets/images/spaces-v2/checkout/check.svg" width="24" height="24" alt="" aria-hidden="true">
+                                    <span>No subscription, no renewal</span>
+                                </li>
+                                <li>
+                                    <img src="./assets/images/spaces-v2/checkout/check.svg" width="24" height="24" alt="" aria-hidden="true">
+                                    <span>Your paused task continues right away</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
         <script src="./assets/js/spaces-upgrade-modal.js?v=slider-1"></script>
-        <script src="./assets/js/spaces-buy-credits-modal.js?v=1"></script>
+        <script src="./assets/js/spaces-buy-credits-modal.js?v=2"></script>
+        <script src="./assets/js/spaces-checkout-modal.js?v=1"></script>
     </body>
 </html>
