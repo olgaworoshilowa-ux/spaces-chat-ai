@@ -1103,7 +1103,7 @@
     line-height: 32px;
     letter-spacing: -.01em;
     text-align: center;
-    background: #fd92c9 !important;
+    background: #009BCA !important;
 }
 
 .header-editor.header-spaces.header-spaces-v2 .header-avatar-letter::before{
@@ -1121,7 +1121,7 @@
     border-radius: 50%;
     color: #fff;
     font: 700 14px/1 "Open Sans", Arial, sans-serif;
-    background: #fd92c9 !important;
+    background: #009BCA !important;
 }
 
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .header-spaces-username-badge{
@@ -1195,7 +1195,7 @@
     gap: 10px;
     width: 100%;
     min-height: 0;
-    margin: 0;
+    margin: 0 0 20px !important;
     padding: 0 4px;
     border: 0;
     box-sizing: border-box;
@@ -1231,7 +1231,7 @@
     flex-direction: column;
     gap: 0;
     width: 100%;
-    margin: 0;
+    margin: 0 !important;
     padding: 0;
     border: 1px solid rgba(0, 0, 0, .08);
     border-radius: 12px;
