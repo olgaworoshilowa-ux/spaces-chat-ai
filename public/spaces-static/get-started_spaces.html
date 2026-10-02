@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=chats-title-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=buy-credits-1">
 
         <title>Get Started Spaces</title>
 
@@ -4341,13 +4341,83 @@
                 </div>
                 <div class="spaces-upgrade-footer">
                     <p>Don’t want to upgrade right away? Buy credits instead</p>
-                    <button type="button" class="spaces-upgrade-buy-credits">
+                    <button type="button" class="spaces-upgrade-buy-credits" data-buy-credits-open>
                         <span>Buy credits</span>
                         <img src="./assets/images/spaces-v2/upgrade/arrow-right.svg" width="24" height="24" alt="" aria-hidden="true">
                     </button>
                 </div>
             </div>
         </div>
+        <div class="spaces-buy-credits-modal" data-buy-credits-modal hidden>
+            <div class="spaces-buy-credits-backdrop" data-buy-credits-close tabindex="-1" aria-hidden="true"></div>
+            <div class="spaces-buy-credits-dialog" role="dialog" aria-modal="true" aria-labelledby="spaces-buy-credits-title" data-buy-credits-dialog>
+                <div class="spaces-buy-credits-main">
+                    <div class="spaces-buy-credits-copy">
+                        <div class="spaces-buy-credits-intro">
+                            <h2 id="spaces-buy-credits-title">Buy credits to continue with your task</h2>
+                            <p>Pick the size of your work. The same balance powers Copilot here and everything in AI Studio</p>
+                        </div>
+                        <div class="spaces-buy-credits-list" role="radiogroup" aria-label="Credit packs" data-buy-credits-list>
+                            <button type="button" class="spaces-buy-credits-option" role="radio" aria-checked="false" data-buy-credits-option>
+                                <img class="spaces-buy-credits-radio" src="./assets/images/spaces-v2/buy-credits/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-buy-credits-radio>
+                                <span class="spaces-buy-credits-option-text">
+                                    <span class="spaces-buy-credits-option-title">100 credits</span>
+                                    <span class="spaces-buy-credits-option-copy">Enough for designing a one flat</span>
+                                </span>
+                                <strong class="spaces-buy-credits-option-price">$5.99</strong>
+                            </button>
+                            <button type="button" class="spaces-buy-credits-option is-selected" role="radio" aria-checked="true" data-buy-credits-option>
+                                <img class="spaces-buy-credits-radio" src="./assets/images/spaces-v2/buy-credits/radio-on.svg" width="24" height="24" alt="" aria-hidden="true" data-buy-credits-radio>
+                                <span class="spaces-buy-credits-option-text">
+                                    <span class="spaces-buy-credits-option-title-row">
+                                        <span class="spaces-buy-credits-option-title">500 credits</span>
+                                        <span class="spaces-buy-credits-popular">MOST POPULAR</span>
+                                    </span>
+                                    <span class="spaces-buy-credits-option-copy">Enough for designing a one flat</span>
+                                </span>
+                                <strong class="spaces-buy-credits-option-price">$27.99</strong>
+                            </button>
+                            <button type="button" class="spaces-buy-credits-option" role="radio" aria-checked="false" data-buy-credits-option>
+                                <img class="spaces-buy-credits-radio" src="./assets/images/spaces-v2/buy-credits/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-buy-credits-radio>
+                                <span class="spaces-buy-credits-option-text">
+                                    <span class="spaces-buy-credits-option-title">1,000 credits</span>
+                                    <span class="spaces-buy-credits-option-copy">Enough for the whole home with retries</span>
+                                </span>
+                                <strong class="spaces-buy-credits-option-price">$54.99</strong>
+                            </button>
+                            <button type="button" class="spaces-buy-credits-option" role="radio" aria-checked="false" data-buy-credits-option>
+                                <img class="spaces-buy-credits-radio" src="./assets/images/spaces-v2/buy-credits/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-buy-credits-radio>
+                                <span class="spaces-buy-credits-option-text">
+                                    <span class="spaces-buy-credits-option-title">2,500 credits</span>
+                                    <span class="spaces-buy-credits-option-copy">Months of ongoing work with several houses</span>
+                                </span>
+                                <strong class="spaces-buy-credits-option-price">$129.99</strong>
+                            </button>
+                            <button type="button" class="spaces-buy-credits-option" role="radio" aria-checked="false" data-buy-credits-option>
+                                <img class="spaces-buy-credits-radio" src="./assets/images/spaces-v2/buy-credits/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-buy-credits-radio>
+                                <span class="spaces-buy-credits-option-text">
+                                    <span class="spaces-buy-credits-option-title">5,000 credits</span>
+                                    <span class="spaces-buy-credits-option-copy">Enough to design anything every day</span>
+                                </span>
+                                <strong class="spaces-buy-credits-option-price">$249.99</strong>
+                            </button>
+                        </div>
+                        <button type="button" class="spaces-buy-credits-cta" data-buy-credits-cta>Buy 500 credits</button>
+                        <p class="spaces-buy-credits-note">One-time payment · credits don’t expire · your plan stays the same</p>
+                    </div>
+                    <div class="spaces-buy-credits-visual" aria-hidden="true">
+                        <div class="spaces-buy-credits-visual-panel">
+                            <img class="spaces-buy-credits-visual-bg" src="./assets/images/spaces-v2/buy-credits/panel-bg.png" alt="">
+                            <img class="spaces-buy-credits-visual-card" src="./assets/images/spaces-v2/buy-credits/credit-card.png" alt="">
+                        </div>
+                        <button type="button" class="spaces-buy-credits-close" data-buy-credits-close aria-label="Close">
+                            <img src="./assets/images/spaces-v2/buy-credits/close.svg" width="24" height="24" alt="" aria-hidden="true">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="./assets/js/spaces-upgrade-modal.js?v=slider-1"></script>
+        <script src="./assets/js/spaces-buy-credits-modal.js?v=1"></script>
     </body>
 </html>
