@@ -22,25 +22,7 @@
 
     const FILES_DEMO = {
         today: [
-            { id: 'file-1', title: 'Project Name', type: 'Floor plan', image: IMG.living, spaceTitle: 'My Home' },
-            {
-                id: 'space-vacation',
-                title: 'Vacation House',
-                type: 'Space',
-                image: IMG.vacation,
-                letter: { text: 'V', color: '#fd92c9' },
-                spaceTitle: 'Vacation House'
-            },
-            {
-                id: 'space-apartment',
-                title: 'Appartment',
-                type: 'Space',
-                image: IMG.apartment,
-                letter: { text: 'A', color: '#d3aaff' },
-                shared: true,
-                spaceTitle: 'Appartment'
-            },
-            { id: 'file-2', title: 'Project Name', type: 'Floor plan', image: IMG.plan, shared: true, spaceTitle: 'Appartment' }
+            { id: 'file-1', title: 'Project Name', type: 'Floor plan', image: IMG.living, spaceTitle: 'My Home' }
         ],
         older: [
             { id: 'file-3', title: 'File name', type: 'Floor plan', image: IMG.living, spaceTitle: 'My Home' },
@@ -48,31 +30,10 @@
         ]
     };
 
+    // Shared tab uses live sidebar shared spaces only — no fake multi-space demos.
     const SHARED_DEMO = {
-        today: [
-            {
-                id: 'shared-vacation',
-                title: 'Vacation House',
-                type: 'Space',
-                image: IMG.vacation,
-                letter: { text: 'V', color: '#fd92c9' },
-                shared: true,
-                spaceTitle: 'Vacation House'
-            },
-            {
-                id: 'shared-apartment',
-                title: 'Appartment',
-                type: 'Space',
-                image: IMG.apartment,
-                letter: { text: 'A', color: '#d3aaff' },
-                shared: true,
-                spaceTitle: 'Appartment'
-            },
-            { id: 'shared-plan', title: 'Project Name', type: 'Floor plan', image: IMG.plan, shared: true, spaceTitle: 'Vacation House' }
-        ],
-        older: [
-            { id: 'shared-older', title: 'File name', type: 'Floor plan', image: IMG.living, shared: true, spaceTitle: 'My Home' }
-        ]
+        today: [],
+        older: []
     };
 
     const page = document.querySelector('[data-all-spaces-page]');
