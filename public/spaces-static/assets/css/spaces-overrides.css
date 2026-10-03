@@ -16600,9 +16600,9 @@ body.is-upgrade-modal-open{
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 52px;
-    height: 32px;
-    padding: 3px;
+    width: 36px;
+    height: 22px;
+    padding: 2px;
     border: 0;
     border-radius: 999px;
     background: rgba(20, 21, 19, .2);
@@ -16615,11 +16615,11 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-trial-knob{
-    width: 26px;
-    height: 26px;
+    width: 18px;
+    height: 18px;
     border-radius: 999px;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .18);
 }
 
 .spaces-upgrade-plan-cta{
