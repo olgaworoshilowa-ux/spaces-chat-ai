@@ -16689,12 +16689,6 @@ body.is-upgrade-modal-open{
     font-weight: 600;
 }
 
-.spaces-upgrade-features > li.is-divider{
-    height: 1px;
-    margin: 2px 0;
-    background: rgba(20, 21, 19, .06);
-}
-
 .spaces-upgrade-features > li > p{
     margin: 0;
 }
