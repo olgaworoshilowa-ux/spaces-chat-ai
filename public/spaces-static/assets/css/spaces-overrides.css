@@ -16348,7 +16348,12 @@ body.is-upgrade-modal-open{
     font: 700 11px/1 "Open Sans", Arial, sans-serif;
 }
 
-.spaces-upgrade-modal-close{
+.spaces-upgrade-modal-close,
+.spaces-checkout-close{
+    position: absolute;
+    z-index: 3;
+    top: max(16px, env(safe-area-inset-top));
+    right: max(16px, env(safe-area-inset-right));
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -16358,15 +16363,17 @@ body.is-upgrade-modal-open{
     border: 1px solid rgba(255, 255, 255, .9);
     border-radius: 999px;
     background: rgba(255, 255, 255, .7);
+    color: #141513;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(20, 21, 19, .06);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 1px 2px rgba(20, 21, 19, .06);
-    cursor: pointer;
-    flex: 0 0 auto;
 }
 
 .spaces-upgrade-modal-close:hover,
-.spaces-upgrade-modal-close:focus-visible{
+.spaces-upgrade-modal-close:focus-visible,
+.spaces-checkout-close:hover,
+.spaces-checkout-close:focus-visible{
     outline: 0;
     background: rgba(255, 255, 255, .9);
 }
@@ -17588,17 +17595,18 @@ body.is-checkout-modal-open{
     letter-spacing: -.025em;
 }
 
-.spaces-checkout-back,
-.spaces-checkout-close{
+.spaces-checkout-back{
     position: absolute;
     z-index: 2;
     top: max(16px, env(safe-area-inset-top));
+    left: max(16px, env(safe-area-inset-left));
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
+    width: auto;
     height: 40px;
-    padding: 0;
+    gap: 4px;
+    padding: 0 14px 0 12px;
     border: 1px solid rgba(255, 255, 255, .9);
     border-radius: 999px;
     background: rgba(255, 255, 255, .7);
@@ -17607,26 +17615,7 @@ body.is-checkout-modal-open{
     box-shadow: 0 1px 2px rgba(20, 21, 19, .06);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-}
-
-.spaces-checkout-back{
-    left: max(16px, env(safe-area-inset-left));
-    width: auto;
-    gap: 4px;
-    padding: 0 14px 0 12px;
     font: 600 14px/1 "Open Sans", Arial, sans-serif;
-}
-
-.spaces-checkout-close{
-    right: max(16px, env(safe-area-inset-right));
-}
-
-.spaces-checkout-back:hover,
-.spaces-checkout-back:focus-visible,
-.spaces-checkout-close:hover,
-.spaces-checkout-close:focus-visible{
-    outline: 0;
-    background: #f4f4f1;
 }
 
 .spaces-checkout-main{
