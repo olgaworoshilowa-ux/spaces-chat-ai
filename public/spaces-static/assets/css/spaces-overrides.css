@@ -16341,11 +16341,11 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-billing-save{
     margin-left: 6px;
-    padding: 3px 8px;
+    padding: 4px 8px;
     border-radius: 999px;
-    background: rgba(47, 143, 58, .14);
-    color: #1f6b29;
-    font: 600 11px/1 "Open Sans", Arial, sans-serif;
+    background: #22c55e;
+    color: #fff;
+    font: 700 11px/1 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-modal-close{
