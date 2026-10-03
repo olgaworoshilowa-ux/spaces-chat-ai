@@ -16325,11 +16325,9 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-plans{
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(7, auto);
-    column-gap: 20px;
-    row-gap: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     align-items: stretch;
     width: 100%;
     flex: 1 1 auto;
@@ -16342,10 +16340,10 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-plan{
     position: relative;
-    display: grid;
-    grid-row: span 7;
-    grid-template-rows: subgrid;
-    row-gap: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
     min-height: 0;
     padding: 22px;
     border: 1px solid rgba(255, 255, 255, .95);
@@ -16362,6 +16360,23 @@ body.is-upgrade-modal-open{
     border: 1.5px solid #8b6fe0;
     background: rgba(237, 230, 252, .72);
     box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(60, 40, 120, .06), 0 20px 48px rgba(80, 50, 160, .14);
+}
+
+@media (min-width: 901px){
+    .spaces-upgrade-plans{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(7, auto);
+        column-gap: 20px;
+        row-gap: 0;
+        gap: unset;
+    }
+
+    .spaces-upgrade-plan{
+        display: grid;
+        grid-row: span 7;
+        grid-template-rows: subgrid;
+    }
 }
 
 .spaces-upgrade-plan-head{
@@ -16718,13 +16733,15 @@ body.is-upgrade-modal-open{
     align-items: center;
     gap: 12px;
     width: 100%;
-    padding: 14px 14px 14px 20px;
-    border: 1px solid rgba(255, 255, 255, .95);
-    border-radius: 18px;
+    margin: 0;
+    padding: 4px 0 0;
+    border: 0;
+    border-radius: 0;
     box-sizing: border-box;
-    background: rgba(255, 255, 255, .5);
-    backdrop-filter: blur(28px) saturate(160%);
-    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     color: inherit;
     text-align: left;
     cursor: pointer;
@@ -16733,7 +16750,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-footer:hover,
 .spaces-upgrade-footer:focus-visible{
     outline: 0;
-    background: rgba(255, 255, 255, .7);
+    background: transparent;
 }
 
 .spaces-upgrade-footer-copy{
@@ -16773,15 +16790,23 @@ body.is-upgrade-modal-open{
 }
 
 @media (max-width: 900px){
+    .spaces-upgrade-modal{
+        align-items: stretch;
+        padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+    }
+
     .spaces-upgrade-modal-dialog{
-        width: min(520px, calc(100vw - 16px));
-        gap: 16px;
+        width: min(560px, calc(100vw - 16px));
+        max-height: calc(100dvh - 16px);
+        margin: auto;
+        gap: 14px;
         padding: 16px;
+        border-radius: 22px;
     }
 
     .spaces-upgrade-modal-header{
         flex-wrap: wrap;
-        align-items: center;
+        align-items: flex-start;
     }
 
     .spaces-upgrade-billing{
@@ -16789,53 +16814,85 @@ body.is-upgrade-modal-open{
         margin-left: 0;
         width: 100%;
         justify-content: center;
+        flex-wrap: wrap;
     }
 
     .spaces-upgrade-modal-close{
         margin-left: auto;
     }
 
-    .spaces-upgrade-plans{
-        grid-template-columns: 1fr;
-        grid-template-rows: none;
-    }
-
-    .spaces-upgrade-plan{
-        display: flex;
-        flex-direction: column;
-        grid-row: auto;
-        grid-template-rows: none;
+    .spaces-upgrade-modal-heading{
+        flex: 1 1 auto;
+        padding-right: 8px;
     }
 
     .spaces-upgrade-modal-heading > h2{
-        font-size: 24px;
+        font-size: 22px;
+    }
+
+    .spaces-upgrade-modal-lead{
+        font-size: 13px;
+    }
+
+    .spaces-upgrade-plan{
+        padding: 18px;
+        border-radius: 20px;
     }
 
     .spaces-upgrade-price-new{
-        font-size: 32px;
+        font-size: 30px;
+    }
+
+    .spaces-upgrade-credits-amount > strong{
+        font-size: 24px;
     }
 }
 
 @media (max-width: 640px){
     .spaces-upgrade-modal-dialog{
-        width: calc(100vw - 12px);
-        max-height: calc(100dvh - 12px);
+        width: 100%;
+        max-width: none;
+        height: calc(100dvh - 16px);
+        max-height: calc(100dvh - 16px);
         padding: 14px;
-        border-radius: 22px;
+        border-radius: 20px;
+    }
+
+    .spaces-upgrade-billing-btn{
+        height: 34px;
+        padding: 0 12px;
+        font-size: 12px;
+    }
+
+    .spaces-upgrade-billing-save{
+        margin-left: 6px;
+        padding: 2px 6px;
+        font-size: 10px;
     }
 
     .spaces-upgrade-plan{
         padding: 16px;
-        border-radius: 20px;
+        gap: 12px;
+    }
+
+    .spaces-upgrade-plan.is-pro{
+        padding: 15px;
     }
 
     .spaces-upgrade-footer{
-        flex-direction: column;
-        align-items: flex-start;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
     }
 
     .spaces-upgrade-buy-credits{
         margin-left: 0;
+    }
+
+    .spaces-upgrade-orb.is-green,
+    .spaces-upgrade-orb.is-purple,
+    .spaces-upgrade-orb.is-green-soft{
+        filter: blur(80px);
     }
 }
 
