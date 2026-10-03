@@ -16734,19 +16734,14 @@ body.is-upgrade-modal-open{
     font: 400 14px/1.3 "Open Sans", Arial, sans-serif;
 }
 
-.spaces-upgrade-features > li.is-highlight{
-    font-weight: 600;
+.spaces-upgrade-features > li.is-highlight,
+.spaces-upgrade-features > li.is-highlight > p{
+    font-weight: 700;
 }
 
 .spaces-upgrade-features > li > p{
     margin: 0;
-}
-
-.spaces-upgrade-feature-sep{
-    height: 1px;
-    margin: 0;
-    background: rgba(20, 21, 19, .06);
-    list-style: none;
+    font-weight: inherit;
 }
 
 .spaces-upgrade-feature-icon{
