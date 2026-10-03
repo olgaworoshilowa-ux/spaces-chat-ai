@@ -16349,15 +16349,11 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-modal-close{
-    position: absolute;
-    z-index: 3;
-    top: max(16px, env(safe-area-inset-top));
-    right: max(16px, env(safe-area-inset-right));
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     border: 1px solid rgba(255, 255, 255, .9);
     border-radius: 999px;
@@ -16366,6 +16362,7 @@ body.is-upgrade-modal-open{
     -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 1px 2px rgba(20, 21, 19, .06);
     cursor: pointer;
+    flex: 0 0 auto;
 }
 
 .spaces-upgrade-modal-close:hover,
