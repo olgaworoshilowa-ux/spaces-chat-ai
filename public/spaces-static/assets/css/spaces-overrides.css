@@ -16700,6 +16700,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features-block{
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
     gap: 8px;
     margin-top: 4px;
     padding-top: 12px;
@@ -16715,6 +16716,8 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features{
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
+    justify-content: space-between;
     gap: 8px;
     margin: 0;
     padding: 0;
