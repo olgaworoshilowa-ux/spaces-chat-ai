@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-card-fields-2">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-card-fields-3">
 
         <title>Get Started Spaces</title>
 
@@ -4502,33 +4502,33 @@
                                     <span>Card</span>
                                 </button>
                                 <div class="spaces-checkout-card-fields" data-checkout-card-fields>
+                                    <div class="spaces-checkout-field-heading">
+                                        <span>Card information</span>
+                                        <span class="spaces-checkout-brands" aria-hidden="true">
+                                            <img src="./assets/images/spaces-v2/checkout/mastercard.svg" width="35" height="24" alt="">
+                                            <img src="./assets/images/spaces-v2/checkout/visa.svg" width="35" height="24" alt="">
+                                            <img src="./assets/images/spaces-v2/checkout/amex.svg" width="35" height="24" alt="">
+                                        </span>
+                                    </div>
                                     <div class="spaces-checkout-card-group">
                                         <div class="spaces-checkout-field is-card-number">
-                                            <span class="spaces-checkout-field-label">Card information</span>
-                                            <div class="spaces-checkout-field-control">
-                                                <input type="text" inputmode="numeric" placeholder="1424 1424 1424 1424" value="1424 1424 1424 1424" aria-label="Card number">
-                                                <span class="spaces-checkout-brands" aria-hidden="true">
-                                                    <img src="./assets/images/spaces-v2/checkout/mastercard.svg" width="35" height="24" alt="">
-                                                    <img src="./assets/images/spaces-v2/checkout/visa.svg" width="35" height="24" alt="">
-                                                    <img src="./assets/images/spaces-v2/checkout/amex.svg" width="35" height="24" alt="">
-                                                </span>
-                                            </div>
+                                            <input type="text" inputmode="numeric" placeholder="1234 1234 1234 1234" value="1424 1424 1424 1424" aria-label="Card number">
                                         </div>
                                         <div class="spaces-checkout-field-row">
                                             <div class="spaces-checkout-field">
-                                                <span class="spaces-checkout-field-label">Expiration date</span>
-                                                <input type="text" inputmode="numeric" placeholder="MM/YY" aria-label="Expiration date">
+                                                <input type="text" inputmode="numeric" placeholder="MM / YY" aria-label="Expiration date">
                                             </div>
                                             <div class="spaces-checkout-field">
-                                                <span class="spaces-checkout-field-label">CVC</span>
                                                 <input type="text" inputmode="numeric" placeholder="CVC" aria-label="CVC">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="spaces-checkout-field is-solo">
-                                        <span class="spaces-checkout-field-label">Cardholder name</span>
-                                        <input type="text" placeholder="Full name on the card" aria-label="Cardholder name">
-                                    </div>
+                                    <label class="spaces-checkout-field-block">
+                                        <span class="spaces-checkout-field-heading">Cardholder name</span>
+                                        <span class="spaces-checkout-field is-solo">
+                                            <input type="text" placeholder="Full name on the card" aria-label="Cardholder name">
+                                        </span>
+                                    </label>
                                 </div>
                                 <div class="spaces-checkout-divider"></div>
                                 <button type="button" class="spaces-checkout-pay-option" data-checkout-pay="apple" aria-pressed="false">
