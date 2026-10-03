@@ -17592,7 +17592,7 @@ body.is-checkout-modal-open{
 .spaces-checkout-close{
     position: absolute;
     z-index: 2;
-    top: calc(max(20px, env(safe-area-inset-top)) + 7px);
+    top: max(16px, env(safe-area-inset-top));
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -17618,7 +17618,7 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-close{
-    right: calc((100% - min(1080px, 100% - 48px)) / 2);
+    right: max(16px, env(safe-area-inset-right));
 }
 
 .spaces-checkout-back:hover,
