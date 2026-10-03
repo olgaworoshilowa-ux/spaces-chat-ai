@@ -16178,13 +16178,13 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-modal-dialog{
-    --upgrade-gap: 28px;
-    --upgrade-card-pad: 28px;
-    --upgrade-card-gap: 20px;
-    --upgrade-title: 36px;
-    --upgrade-price: 44px;
-    --upgrade-credits: 32px;
-    --upgrade-cta: 56px;
+    --upgrade-gap: 16px;
+    --upgrade-card-pad: 20px;
+    --upgrade-card-gap: 12px;
+    --upgrade-title: 28px;
+    --upgrade-price: 30px;
+    --upgrade-credits: 26px;
+    --upgrade-cta: 48px;
     --upgrade-col: min(1080px, calc(100% - 48px));
     position: relative;
     z-index: 1;
@@ -16196,7 +16196,11 @@ body.is-upgrade-modal-open{
     width: 100%;
     height: 100%;
     margin: 0;
-    padding: 0 max(28px, env(safe-area-inset-right)) 0 max(28px, env(safe-area-inset-left));
+    padding:
+        max(20px, env(safe-area-inset-top))
+        max(28px, env(safe-area-inset-right))
+        max(20px, env(safe-area-inset-bottom))
+        max(28px, env(safe-area-inset-left));
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -16208,13 +16212,6 @@ body.is-upgrade-modal-open{
     background: #f1f1ec;
     font-family: "Open Sans", system-ui, sans-serif;
     font-variant-numeric: tabular-nums;
-}
-
-.spaces-upgrade-modal-dialog::before,
-.spaces-upgrade-modal-dialog::after{
-    content: "";
-    flex: 1 0 28px;
-    width: 100%;
 }
 
 .spaces-upgrade-modal-orbs{
@@ -16305,7 +16302,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-modal-lead{
     margin: 0;
     color: #55585e;
-    font: 400 16px/1.35 "Open Sans", Arial, sans-serif;
+    font: 400 14px/1.35 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-billing{
@@ -16379,24 +16376,21 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-plans{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(7, auto);
-    column-gap: 24px;
-    align-items: stretch;
+    gap: 16px;
+    align-items: start;
     flex: 0 0 auto;
 }
 
 .spaces-upgrade-plan{
     position: relative;
-    display: grid;
-    grid-row: span 7;
-    grid-template-rows: subgrid;
-    row-gap: 20px;
-    align-content: start;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     min-width: 0;
     height: auto;
-    padding: 28px;
+    padding: 20px;
     border: 1px solid rgba(255, 255, 255, .95);
-    border-radius: 28px;
+    border-radius: 24px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .5);
     backdrop-filter: blur(28px) saturate(160%);
@@ -16427,7 +16421,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-plan h3{
     margin: 0;
     color: #141513;
-    font: 700 24px/1.15 "Open Sans", Arial, sans-serif;
+    font: 700 22px/1.15 "Open Sans", Arial, sans-serif;
     letter-spacing: -.01em;
 }
 
@@ -16439,23 +16433,23 @@ body.is-upgrade-modal-open{
     border-radius: 999px;
     background: #6b4fd1;
     color: #fff;
-    font: 600 11px/1 "Open Sans", Arial, sans-serif;
+    font: 600 12px/1 "Open Sans", Arial, sans-serif;
     white-space: nowrap;
 }
 
 .spaces-upgrade-plan-subtitle{
     margin: 0;
     color: #55585e;
-    font: 400 15px/1.35 "Open Sans", Arial, sans-serif;
+    font: 400 14px/1.35 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credits-box{
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 16px 18px;
+    gap: 8px;
+    padding: 12px 14px;
     border: 1px solid rgba(20, 21, 19, .06);
-    border-radius: 18px;
+    border-radius: 14px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .65);
     flex: 0 0 auto;
@@ -16465,7 +16459,7 @@ body.is-upgrade-modal-open{
     display: flex;
     align-items: baseline;
     gap: 8px;
-    min-height: 52px;
+    min-height: 0;
 }
 
 .spaces-upgrade-credits-amount > strong{
@@ -16476,13 +16470,13 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-credits-amount > span{
     color: #55585e;
-    font: 400 15px/1.2 "Open Sans", Arial, sans-serif;
+    font: 400 14px/1.2 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credits-copy{
     margin: 0;
     color: #55585e;
-    font: 400 15px/1.5 "Open Sans", Arial, sans-serif;
+    font: 400 14px/1.4 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-slider{
@@ -16546,7 +16540,7 @@ body.is-upgrade-modal-open{
     display: flex;
     justify-content: space-between;
     color: #8a8c90;
-    font: 400 11px/1.2 "Open Sans", Arial, sans-serif;
+    font: 400 14px/1.2 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-slider-labels > span{
@@ -16569,7 +16563,7 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-price-old{
     color: #8a8c90;
-    font: 600 20px/1.2 "Open Sans", Arial, sans-serif;
+    font: 600 16px/1.2 "Open Sans", Arial, sans-serif;
     text-decoration: line-through;
 }
 
@@ -16585,15 +16579,15 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-price-period{
     color: #55585e;
-    font: 400 12px/1.2 "Open Sans", Arial, sans-serif;
+    font: 400 14px/1.2 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-start-row{
     display: flex;
     align-items: center;
     gap: 10px;
-    min-height: 60px;
-    padding: 5px 12px;
+    min-height: 52px;
+    padding: 10px 14px;
     border: 1px solid rgba(20, 21, 19, .06);
     border-radius: 12px;
     box-sizing: border-box;
@@ -16610,12 +16604,12 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-start-copy > strong{
     color: #141513;
-    font: 600 13px/1.25 "Open Sans", Arial, sans-serif;
+    font: 600 15px/1.25 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-start-copy > span{
     color: #55585e;
-    font: 400 11px/1.25 "Open Sans", Arial, sans-serif;
+    font: 400 13px/1.3 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-start-icon{
@@ -16708,9 +16702,9 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features-block{
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 0;
-    padding-top: 20px;
+    gap: 8px;
+    margin-top: 4px;
+    padding-top: 12px;
     border-top: 1px solid rgba(20, 21, 19, .08);
 }
 
@@ -16723,7 +16717,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features{
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -16736,7 +16730,7 @@ body.is-upgrade-modal-open{
     gap: 8px;
     margin: 0;
     color: #141513;
-    font: 400 15px/1.3 "Open Sans", Arial, sans-serif;
+    font: 400 14px/1.3 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-features > li.is-highlight{
