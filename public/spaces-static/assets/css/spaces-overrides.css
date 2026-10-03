@@ -16478,10 +16478,6 @@ body.is-upgrade-modal-open{
     font: 400 14px/1.4 "Open Sans", Arial, sans-serif;
 }
 
-.spaces-upgrade-plan.is-premium .spaces-upgrade-credits-copy{
-    margin-top: auto;
-}
-
 .spaces-upgrade-slider{
     --upgrade-slider-progress: 0%;
     width: 100%;
@@ -16705,9 +16701,9 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features-block{
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 4px;
-    padding-top: 12px;
+    gap: 14px;
+    margin-top: 12px;
+    padding-top: 20px;
     border-top: 1px solid rgba(20, 21, 19, .08);
 }
 
@@ -16720,7 +16716,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features{
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -17978,8 +17974,8 @@ body.is-checkout-modal-open{
     gap: 8px;
     padding: 12px;
     border-radius: 10px;
-    background: rgba(107, 79, 209, .10);
-    color: #4b33b0;
+    background: #e7f6ea;
+    color: #1b7a32;
     font: 500 14px/16px "Open Sans", Arial, sans-serif;
 }
 
