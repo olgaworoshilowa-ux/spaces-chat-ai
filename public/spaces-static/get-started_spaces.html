@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=credits-copy-stable-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=usage-figma-1">
 
         <title>Get Started Spaces</title>
 
@@ -4359,88 +4359,58 @@
         <div class="spaces-usage-modal" data-usage-modal hidden>
             <div class="spaces-usage-modal-backdrop" data-usage-modal-close tabindex="-1" aria-hidden="true"></div>
             <div class="spaces-usage-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="spaces-usage-modal-title" data-usage-modal-dialog>
-                <div class="spaces-usage-modal-top">
-                    <div class="spaces-usage-modal-heading">
-                        <h2 id="spaces-usage-modal-title">Usage</h2>
-                        <p>See how your credits are used across Copilot and AI Studio.</p>
-                    </div>
-                    <button type="button" class="spaces-usage-modal-close" data-usage-modal-close aria-label="Close">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#141513" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
-                    </button>
-                </div>
-                <div class="spaces-usage-balance" data-usage-balance>
-                    <div class="spaces-usage-balance-row">
-                        <div>
-                            <span class="spaces-usage-balance-label">Credits left</span>
-                            <strong class="spaces-usage-balance-value"><span data-usage-left>50</span> <span class="spaces-usage-balance-total">/ <span data-usage-total>500</span></span></strong>
+                <button type="button" class="spaces-usage-modal-close" data-usage-modal-close aria-label="Close">
+                    <img src="./assets/images/spaces-v2/usage-close.svg" width="24" height="24" alt="" aria-hidden="true">
+                </button>
+                <div class="spaces-usage-modal-body">
+                    <h2 id="spaces-usage-modal-title" class="spaces-usage-modal-title">Copilot usage</h2>
+
+                    <section class="spaces-usage-card spaces-usage-card--plan" aria-label="Plan and credits">
+                        <div class="spaces-usage-plan-head">
+                            <div class="spaces-usage-plan-copy">
+                                <div class="spaces-usage-plan-title-row">
+                                    <p class="spaces-usage-plan-name">Planner5d</p>
+                                    <span class="spaces-usage-plan-badge" data-usage-plan>Free</span>
+                                </div>
+                                <p class="spaces-usage-plan-note">Subscription doesn’t include free credits</p>
+                            </div>
+                            <div class="spaces-usage-plan-actions">
+                                <button type="button" class="spaces-usage-btn is-outline" data-usage-buy-credits>Buy credits</button>
+                                <button type="button" class="spaces-usage-btn is-primary" data-usage-upgrade>Upgrade plan</button>
+                            </div>
                         </div>
-                        <span class="spaces-usage-plan-pill" data-usage-plan>Free plan</span>
-                    </div>
-                    <div class="spaces-usage-bar" aria-hidden="true">
-                        <span data-usage-bar style="width: 10%"></span>
-                    </div>
-                    <p class="spaces-usage-balance-note" data-usage-note>450 used · one-time credits don’t reset</p>
-                </div>
-                <div class="spaces-usage-section">
-                    <h3>Where credits go</h3>
-                    <ul class="spaces-usage-rates">
-                        <li>
-                            <span>Copilot answer</span>
-                            <strong>5 credits</strong>
-                        </li>
-                        <li>
-                            <span>AI Studio room look</span>
-                            <strong>25 credits</strong>
-                        </li>
-                        <li>
-                            <span>HD render</span>
-                            <strong>10 credits</strong>
-                        </li>
-                    </ul>
-                </div>
-                <div class="spaces-usage-section">
-                    <h3>Recent usage</h3>
-                    <ul class="spaces-usage-history" data-usage-history>
-                        <li>
-                            <div>
-                                <strong>AI Studio room look</strong>
-                                <span>Living room · today</span>
+                        <div class="spaces-usage-credits" data-usage-balance>
+                            <div class="spaces-usage-credits-row">
+                                <span class="spaces-usage-credits-label">Credits</span>
+                                <span class="spaces-usage-credits-value" data-usage-left>0</span>
                             </div>
-                            <strong>−25</strong>
-                        </li>
-                        <li>
-                            <div>
-                                <strong>Copilot answer</strong>
-                                <span>Layout tips · today</span>
+                            <div class="spaces-usage-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-usage-bar-wrap>
+                                <span data-usage-bar style="width: 0%"></span>
                             </div>
-                            <strong>−5</strong>
-                        </li>
-                        <li>
-                            <div>
-                                <strong>HD render</strong>
-                                <span>Kitchen · yesterday</span>
+                        </div>
+                    </section>
+
+                    <section class="spaces-usage-card spaces-usage-card--chart" aria-label="Usage chart">
+                        <h3 class="spaces-usage-card-title">Usage</h3>
+                        <div class="spaces-usage-chart" aria-hidden="true">
+                            <div class="spaces-usage-chart-plot"></div>
+                            <div class="spaces-usage-chart-baseline"></div>
+                            <div class="spaces-usage-chart-dates">
+                                <span>Jul 1</span>
+                                <span>Jul 30</span>
                             </div>
-                            <strong>−10</strong>
-                        </li>
-                        <li>
-                            <div>
-                                <strong>AI Studio room look</strong>
-                                <span>Bedroom · yesterday</span>
+                        </div>
+                        <div class="spaces-usage-stats">
+                            <div class="spaces-usage-stat">
+                                <span class="spaces-usage-stat-label">Last 30 days</span>
+                                <span class="spaces-usage-stat-value"><span data-usage-period-credits>0</span> credits</span>
                             </div>
-                            <strong>−25</strong>
-                        </li>
-                        <li>
-                            <div>
-                                <strong>Copilot answer</strong>
-                                <span>Furniture swap · 2 days ago</span>
+                            <div class="spaces-usage-stat">
+                                <span class="spaces-usage-stat-label">Messages sent</span>
+                                <span class="spaces-usage-stat-value" data-usage-messages>0</span>
                             </div>
-                            <strong>−5</strong>
-                        </li>
-                    </ul>
-                </div>
-                <div class="spaces-usage-actions">
-                    <button type="button" class="spaces-usage-btn is-secondary" data-usage-buy-credits>Buy credits</button>
-                    <button type="button" class="spaces-usage-btn is-primary" data-usage-upgrade>Upgrade</button>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
@@ -4657,7 +4627,7 @@
             </div>
         </div>
         <script src="./assets/js/spaces-upgrade-modal.js?v=credits-copy-stable-1"></script>
-        <script src="./assets/js/spaces-usage-modal.js?v=1"></script>
+        <script src="./assets/js/spaces-usage-modal.js?v=figma-1"></script>
         <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
         <script src="./assets/js/spaces-checkout-modal.js?v=trial-price-0-1"></script>
     </body>

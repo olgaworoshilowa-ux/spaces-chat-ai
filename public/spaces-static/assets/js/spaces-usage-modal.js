@@ -14,21 +14,19 @@
         });
     };
 
+    // Free-plan state from Figma: subscription includes 0 credits.
     const syncFromHeader = () => {
-        const countNode = document.querySelector('[data-header-credits-count]');
-        const left = Number(String(countNode?.textContent || '50').replace(/[^\d]/g, '')) || 50;
-        const total = Math.max(left, 500);
-        const used = Math.max(0, total - left);
-        const pct = total > 0 ? Math.max(0, Math.min(100, (left / total) * 100)) : 0;
-
         const leftEl = modal.querySelector('[data-usage-left]');
-        const totalEl = modal.querySelector('[data-usage-total]');
         const barEl = modal.querySelector('[data-usage-bar]');
-        const noteEl = modal.querySelector('[data-usage-note]');
-        if (leftEl) leftEl.textContent = String(left);
-        if (totalEl) totalEl.textContent = total.toLocaleString('en-US');
-        if (barEl) barEl.style.width = `${pct}%`;
-        if (noteEl) noteEl.textContent = `${used.toLocaleString('en-US')} used · one-time credits don’t reset`;
+        const barWrap = modal.querySelector('[data-usage-bar-wrap]');
+        const periodEl = modal.querySelector('[data-usage-period-credits]');
+        const messagesEl = modal.querySelector('[data-usage-messages]');
+
+        if (leftEl) leftEl.textContent = '0';
+        if (barEl) barEl.style.width = '0%';
+        if (barWrap) barWrap.setAttribute('aria-valuenow', '0');
+        if (periodEl) periodEl.textContent = '0';
+        if (messagesEl) messagesEl.textContent = '0';
     };
 
     const closeModal = ({ restoreFocus = true } = {}) => {
