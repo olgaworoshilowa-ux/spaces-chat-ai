@@ -16450,6 +16450,10 @@ body.is-upgrade-modal-open{
     font: 400 13px/1.55 "Open Sans", Arial, sans-serif;
 }
 
+.spaces-upgrade-credits-box.is-adjustable .spaces-upgrade-credits-copy{
+    min-height: calc(13px * 1.55 * 2);
+}
+
 .spaces-upgrade-slider{
     --upgrade-slider-progress: 0%;
     width: 100%;

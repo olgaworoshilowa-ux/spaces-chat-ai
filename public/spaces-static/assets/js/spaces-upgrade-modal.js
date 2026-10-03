@@ -94,7 +94,7 @@
         if (proCopy) {
             const looks = Math.round(tier.credits / 25);
             const answers = (tier.credits / 5).toLocaleString('en-US');
-            proCopy.textContent = `Enough for about ${looks} room looks or ${answers} Copilot replies a month.`;
+            proCopy.textContent = `About ${looks} room looks or ${answers} Copilot replies / month.`;
         }
         if (proOld) {
             proOld.hidden = !annual;
