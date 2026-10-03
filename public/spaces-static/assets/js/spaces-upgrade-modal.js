@@ -102,11 +102,7 @@
         }
         if (proPriceEl) proPriceEl.textContent = money(proPrice);
         if (proCta) proCta.textContent = trialOn ? 'Try free for 7 days' : 'Get Professional';
-        if (trialHint) {
-            trialHint.textContent = trialOn
-                ? 'Includes 50 credits to try'
-                : `Pay now, get all ${tier.label} credits`;
-        }
+        if (trialHint) trialHint.textContent = 'Includes 50 credits to try';
         if (proNote) {
             proNote.textContent = trialOn
                 ? `Free until ${trialEndDate()}, then ${proTotalShort}. Cancel anytime.`
