@@ -11,7 +11,26 @@
     const receiveList = modal?.querySelector('[data-checkout-receive]');
     const startSection = modal?.querySelector('[data-checkout-start-section]');
     const companyToggle = modal?.querySelector('[data-checkout-company-toggle]');
+    const planHeading = modal?.querySelector('[data-checkout-plan-heading]');
+    const creditsHeading = modal?.querySelector('[data-checkout-credits-heading]');
+    const dueBox = modal?.querySelector('[data-checkout-due-box]');
+    const remindNode = modal?.querySelector('[data-checkout-remind]');
+    const planNameNode = modal?.querySelector('[data-checkout-plan-name]');
+    const trialBadge = modal?.querySelector('[data-checkout-trial-badge]');
+    const planMeta = modal?.querySelector('[data-checkout-plan-meta]');
+    const dueToday = modal?.querySelector('[data-checkout-due-today]');
+    const fromLabel = modal?.querySelector('[data-checkout-from-label]');
+    const fromPrice = modal?.querySelector('[data-checkout-from-price]');
+    const monthRow = modal?.querySelector('[data-checkout-month-row]');
+    const monthEquiv = modal?.querySelector('[data-checkout-month-equiv]');
+    const artImg = modal?.querySelector('[data-checkout-summary-art]');
     if (!modal || !dialog) return;
+
+    const CHECK_ICON = `
+        <span class="spaces-checkout-receive-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#8EE07A" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg>
+        </span>
+    `;
 
     const DEFAULT_CREDITS_RECEIVE = [
         'One-time credits added to this account',
@@ -19,6 +38,11 @@
         'No subscription, no renewal',
         'Your paused task continues right away'
     ];
+
+    const ART = {
+        credits: './assets/images/spaces-v2/checkout/card-coins.png',
+        plan: './assets/images/spaces-v2/buy-credits/credit-card.png'
+    };
 
     let lastFocus = null;
     let returnTo = 'buy-credits';
@@ -35,12 +59,18 @@
     const money = value => `$${Number(value).toFixed(2)}`;
     const formatCredits = value => Number(value).toLocaleString('en-US');
 
+    const trialEndDate = () => {
+        const date = new Date();
+        date.setDate(date.getDate() + 7);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    };
+
     const renderReceive = items => {
         if (!receiveList) return;
         const list = Array.isArray(items) && items.length ? items : DEFAULT_CREDITS_RECEIVE;
         receiveList.innerHTML = list.map(text => `
             <li>
-                <img src="./assets/images/spaces-v2/checkout/check.svg" width="24" height="24" alt="" aria-hidden="true">
+                ${CHECK_ICON}
                 <span>${text}</span>
             </li>
         `).join('');
@@ -50,57 +80,83 @@
         const isPlan = currentPack.kind === 'plan';
         const trialAvailable = Boolean(currentPack.trialAvailable);
         const useTrial = trialAvailable && startMode === 'trial';
-        const period = currentPack.annual ? 'billed annually' : 'billed monthly';
+        const annual = Boolean(currentPack.annual);
         const credits = formatCredits(currentPack.credits || 0);
-        const price = money(currentPack.price);
+        const monthlyPrice = Number(currentPack.price || 0);
+        const yearlyTotal = monthlyPrice * 12;
+        const billingLabel = annual ? 'billed yearly' : 'billed monthly';
 
         if (!isPlan) {
             return {
                 isPlan: false,
                 trialAvailable: false,
+                useTrial: false,
                 price: money(currentPack.price),
                 label: `${formatCredits(currentPack.credits)} credits`,
                 summary: currentPack.summary || currentPack.copy || '',
                 intro: 'Credits are added to your balance as soon as the payment goes through',
                 cta: `Buy ${formatCredits(currentPack.credits)} credits`,
-                receive: currentPack.receive || DEFAULT_CREDITS_RECEIVE
+                receive: currentPack.receive || DEFAULT_CREDITS_RECEIVE,
+                planName: '',
+                planMeta: '',
+                dueToday: money(currentPack.price),
+                fromLabel: '',
+                fromPrice: '',
+                monthEquiv: '',
+                showMonthEquiv: false
             };
         }
+
+        const planMetaText = `${credits} AI credits a month · ${billingLabel}`;
 
         if (useTrial) {
             return {
                 isPlan: true,
                 trialAvailable: true,
+                useTrial: true,
                 price: '$0',
                 label: `${currentPack.name} · 7 days free`,
-                summary: `Then ${price}/month, ${period}. ${credits} credits/month for client-ready interiors.`,
+                summary: planMetaText,
                 intro: '7 days free. Your card is saved now — you won’t be charged until the trial ends.',
                 cta: 'Start 7-day free trial',
                 receive: [
-                    '7 days free to try Professional',
-                    `${credits} credits every month after the trial`,
-                    'Everything in Premium, plus more AI for client work',
-                    'Cancel anytime before the trial ends — no charge'
-                ]
+                    `50 AI credits to try, then ${credits} a month`,
+                    'More AI Copilot and AI Studio',
+                    'Unlimited 4K renders and your own 3D models',
+                    'Mood boards, 360° panoramas, branded profile'
+                ],
+                planName: currentPack.name || 'Professional',
+                planMeta: planMetaText,
+                dueToday: '$0.00',
+                fromLabel: `From ${trialEndDate()}`,
+                fromPrice: annual ? `${money(yearlyTotal)} / year` : `${money(monthlyPrice)} / month`,
+                monthEquiv: annual ? `${money(monthlyPrice)} a month` : '',
+                showMonthEquiv: annual
             };
         }
 
         return {
             isPlan: true,
             trialAvailable,
-            price,
-            label: `${currentPack.name} · ${period}`,
-            summary: currentPack.summary
-                || `${credits} credits/month. Your plan starts today.`,
-            intro: currentPack.intro
-                || 'Your plan starts as soon as the payment goes through',
-            cta: currentPack.cta || `Get ${currentPack.name || 'plan'}`,
-            receive: currentPack.receive || [
+            useTrial: false,
+            price: money(monthlyPrice),
+            label: `${currentPack.name} · ${billingLabel}`,
+            summary: planMetaText,
+            intro: 'Your plan starts as soon as the payment goes through',
+            cta: `Get ${currentPack.name || 'plan'}`,
+            receive: [
                 `${credits} credits every month`,
-                'Everything in Premium, plus more AI for client work',
-                'Unlimited 4K renders and custom 3D uploads',
-                'Cancel anytime'
-            ]
+                'More AI Copilot and AI Studio',
+                'Unlimited 4K renders and your own 3D models',
+                'Mood boards, 360° panoramas, branded profile'
+            ],
+            planName: currentPack.name || 'Professional',
+            planMeta: planMetaText,
+            dueToday: annual ? money(yearlyTotal) : money(monthlyPrice),
+            fromLabel: annual ? 'Billed yearly' : 'Billed monthly',
+            fromPrice: annual ? `${money(yearlyTotal)} / year` : `${money(monthlyPrice)} / month`,
+            monthEquiv: annual ? `${money(monthlyPrice)} a month` : '',
+            showMonthEquiv: annual
         };
     };
 
@@ -123,17 +179,34 @@
 
     const syncPack = () => {
         const display = getDisplayState();
+
         if (priceNode) priceNode.textContent = display.price;
         if (creditsLabel) creditsLabel.textContent = display.label;
         if (summaryCopy) summaryCopy.textContent = display.summary;
         if (introNode) introNode.textContent = display.intro;
         if (cta) cta.textContent = display.cta;
+        if (planNameNode) planNameNode.textContent = display.planName;
+        if (planMeta) planMeta.textContent = display.planMeta;
+        if (dueToday) dueToday.textContent = display.dueToday;
+        if (fromLabel) fromLabel.textContent = display.fromLabel;
+        if (fromPrice) fromPrice.textContent = display.fromPrice;
+        if (monthEquiv) monthEquiv.textContent = display.monthEquiv;
+
+        if (planHeading) planHeading.hidden = !display.isPlan;
+        if (creditsHeading) creditsHeading.hidden = display.isPlan;
+        if (dueBox) dueBox.hidden = !display.isPlan;
+        if (trialBadge) trialBadge.hidden = !display.useTrial;
+        if (monthRow) monthRow.hidden = !display.showMonthEquiv;
+        if (remindNode) remindNode.hidden = !display.useTrial;
+        if (artImg) artImg.src = display.isPlan ? ART.plan : ART.credits;
+
         renderReceive(display.receive);
         syncStartOptions();
+
         modal.classList.toggle('is-plan-checkout', display.isPlan);
         modal.classList.toggle('is-credits-checkout', !display.isPlan);
-        modal.classList.toggle('is-trial-start', Boolean(display.trialAvailable && startMode === 'trial'));
-        modal.classList.toggle('is-pay-now-start', Boolean(display.trialAvailable && startMode === 'now'));
+        modal.classList.toggle('is-trial-start', Boolean(display.useTrial));
+        modal.classList.toggle('is-pay-now-start', Boolean(display.isPlan && !display.useTrial));
     };
 
     const syncPayment = () => {
@@ -182,7 +255,9 @@
         const countNode = document.querySelector('[data-header-credits-count]');
         if (!countNode) return;
         const current = Number(String(countNode.textContent || '0').replace(/[^\d]/g, '')) || 0;
-        const add = Number(currentPack.credits || 0);
+        const add = currentPack.kind === 'plan' && startMode === 'trial'
+            ? 50
+            : Number(currentPack.credits || 0);
         const next = current + add;
         countNode.textContent = String(next);
         const trigger = document.querySelector('[data-header-credits]');
