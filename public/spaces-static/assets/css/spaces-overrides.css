@@ -17308,6 +17308,31 @@ body.is-checkout-modal-open{
     cursor: pointer;
 }
 
+.spaces-checkout-start .spaces-checkout-pay-option{
+    align-items: flex-start;
+}
+
+.spaces-checkout-start-copy{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.spaces-checkout-start-copy > strong{
+    color: #1c1c1c;
+    font: 600 16px/22px "Open Sans", Arial, sans-serif;
+}
+
+.spaces-checkout-start-copy > span{
+    color: #6b6b6b;
+    font: 400 13px/18px "Open Sans", Arial, sans-serif;
+}
+
+.spaces-checkout-section[data-checkout-start-section][hidden]{
+    display: none !important;
+}
+
 .spaces-checkout-apple{
     display: inline-flex;
     align-items: center;

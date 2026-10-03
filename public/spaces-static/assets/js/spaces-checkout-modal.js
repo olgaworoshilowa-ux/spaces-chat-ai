@@ -9,6 +9,7 @@
     const summaryCopy = modal?.querySelector('[data-checkout-summary-copy]');
     const introNode = modal?.querySelector('[data-checkout-intro]');
     const receiveList = modal?.querySelector('[data-checkout-receive]');
+    const startSection = modal?.querySelector('[data-checkout-start-section]');
     const companyToggle = modal?.querySelector('[data-checkout-company-toggle]');
     if (!modal || !dialog) return;
 
@@ -21,6 +22,7 @@
 
     let lastFocus = null;
     let returnTo = 'buy-credits';
+    let startMode = 'trial';
     let currentPack = {
         kind: 'credits',
         credits: 500,
@@ -44,29 +46,94 @@
         `).join('');
     };
 
-    const syncPack = () => {
+    const getDisplayState = () => {
         const isPlan = currentPack.kind === 'plan';
-        if (priceNode) priceNode.textContent = money(currentPack.price);
-        if (creditsLabel) {
-            creditsLabel.textContent = isPlan
-                ? (currentPack.label || currentPack.name || 'Plan')
-                : `${formatCredits(currentPack.credits)} credits`;
+        const trialAvailable = Boolean(currentPack.trialAvailable);
+        const useTrial = trialAvailable && startMode === 'trial';
+        const period = currentPack.annual ? 'billed annually' : 'billed monthly';
+        const credits = formatCredits(currentPack.credits || 0);
+        const price = money(currentPack.price);
+
+        if (!isPlan) {
+            return {
+                isPlan: false,
+                trialAvailable: false,
+                price: money(currentPack.price),
+                label: `${formatCredits(currentPack.credits)} credits`,
+                summary: currentPack.summary || currentPack.copy || '',
+                intro: 'Credits are added to your balance as soon as the payment goes through',
+                cta: `Buy ${formatCredits(currentPack.credits)} credits`,
+                receive: currentPack.receive || DEFAULT_CREDITS_RECEIVE
+            };
         }
-        if (summaryCopy) summaryCopy.textContent = currentPack.summary || currentPack.copy || '';
-        if (introNode) {
-            introNode.textContent = currentPack.intro
-                || (isPlan
-                    ? 'Your plan starts as soon as the payment goes through'
-                    : 'Credits are added to your balance as soon as the payment goes through');
+
+        if (useTrial) {
+            return {
+                isPlan: true,
+                trialAvailable: true,
+                price,
+                label: `${currentPack.name} · 7 days free, then ${period}`,
+                summary: `Then ${price}/${currentPack.annual ? 'month, billed annually' : 'month'}. ${credits} credits/month for client-ready interiors.`,
+                intro: '7 days free. Your card is saved now — you won’t be charged until the trial ends.',
+                cta: 'Start 7-day free trial',
+                receive: [
+                    '7 days free to try Professional',
+                    `${credits} credits every month after the trial`,
+                    'Everything in Premium, plus more AI for client work',
+                    'Cancel anytime before the trial ends — no charge'
+                ]
+            };
         }
-        if (cta) {
-            cta.textContent = isPlan
-                ? (currentPack.cta || `Get ${currentPack.name || 'plan'}`)
-                : `Buy ${formatCredits(currentPack.credits)} credits`;
-        }
-        renderReceive(currentPack.receive);
-        modal.classList.toggle('is-plan-checkout', isPlan);
-        modal.classList.toggle('is-credits-checkout', !isPlan);
+
+        return {
+            isPlan: true,
+            trialAvailable,
+            price,
+            label: `${currentPack.name} · ${period}`,
+            summary: currentPack.summary
+                || `${credits} credits/month. Your plan starts today.`,
+            intro: currentPack.intro
+                || 'Your plan starts as soon as the payment goes through',
+            cta: currentPack.cta || `Get ${currentPack.name || 'plan'}`,
+            receive: currentPack.receive || [
+                `${credits} credits every month`,
+                'Everything in Premium, plus more AI for client work',
+                'Unlimited 4K renders and custom 3D uploads',
+                'Cancel anytime'
+            ]
+        };
+    };
+
+    const syncStartOptions = () => {
+        const trialAvailable = Boolean(currentPack.trialAvailable);
+        if (startSection) startSection.hidden = !trialAvailable;
+        modal.querySelectorAll('[data-checkout-start-options] [data-checkout-start]').forEach(button => {
+            const mode = button.getAttribute('data-checkout-start');
+            const active = trialAvailable && mode === startMode;
+            button.classList.toggle('is-selected', active);
+            button.setAttribute('aria-pressed', String(active));
+            const radio = button.querySelector('[data-checkout-start-radio]');
+            if (radio) {
+                radio.src = active
+                    ? './assets/images/spaces-v2/checkout/radio-on.svg'
+                    : './assets/images/spaces-v2/checkout/radio-off.svg';
+            }
+        });
+    };
+
+    const syncPack = () => {
+        const display = getDisplayState();
+        if (priceNode) priceNode.textContent = display.price;
+        if (creditsLabel) creditsLabel.textContent = display.label;
+        if (summaryCopy) summaryCopy.textContent = display.summary;
+        if (introNode) introNode.textContent = display.intro;
+        if (cta) cta.textContent = display.cta;
+        renderReceive(display.receive);
+        syncStartOptions();
+        modal.classList.toggle('is-plan-checkout', display.isPlan);
+        modal.classList.toggle('is-credits-checkout', !display.isPlan);
+        modal.classList.toggle('is-trial-start', Boolean(display.trialAvailable && startMode === 'trial'));
+        modal.classList.toggle('is-pay-now-start', Boolean(display.trialAvailable && startMode === 'now'));
     };
 
     const syncPayment = () => {
@@ -97,6 +164,7 @@
         lastFocus = trigger || document.activeElement;
         if (pack) currentPack = pack;
         returnTo = options.returnTo || (currentPack.kind === 'plan' ? 'upgrade' : 'buy-credits');
+        startMode = currentPack.trialAvailable ? 'trial' : 'now';
         if (window.SpacesBuyCreditsModal?.close) {
             window.SpacesBuyCreditsModal.close({ restoreFocus: false });
         }
@@ -120,6 +188,14 @@
         const trigger = document.querySelector('[data-header-credits]');
         if (trigger) trigger.setAttribute('aria-label', `${next} credits left`);
     };
+
+    modal.querySelectorAll('[data-checkout-start-options] [data-checkout-start]').forEach(button => {
+        button.addEventListener('click', () => {
+            if (!currentPack.trialAvailable) return;
+            startMode = button.getAttribute('data-checkout-start') || 'trial';
+            syncPack();
+        });
+    });
 
     modal.querySelectorAll('[data-checkout-pay]').forEach(button => {
         button.addEventListener('click', () => {

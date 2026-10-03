@@ -133,21 +133,20 @@
             return {
                 kind: 'plan',
                 plan: 'pro',
-                trial: true,
+                trialAvailable: true,
+                annual,
                 name: 'Professional',
-                cta: 'Start 7-day free trial',
-                label: annual
-                    ? 'Professional · 7 days free, then billed annually'
-                    : 'Professional · 7 days free, then billed monthly',
+                cta: 'Get Pro',
+                label: `Professional · ${period}`,
                 price,
                 credits: tier.credits,
-                intro: '7 days free. Your card is saved now — you won’t be charged until the trial ends.',
-                summary: `Then ${money(price)}/${annual ? 'month, billed annually' : 'month'}. ${tier.credits.toLocaleString('en-US')} credits/month for client-ready interiors.`,
+                intro: 'Your plan starts as soon as the payment goes through',
+                summary: `${tier.credits.toLocaleString('en-US')} credits/month for client-ready interiors with more Copilot and AI Studio.`,
                 receive: [
-                    '7 days free to try Professional',
-                    `${tier.credits.toLocaleString('en-US')} credits every month after the trial`,
+                    `${tier.credits.toLocaleString('en-US')} credits every month`,
                     'Everything in Premium, plus more AI for client work',
-                    'Cancel anytime before the trial ends — no charge'
+                    'Unlimited 4K renders and custom 3D uploads',
+                    'Cancel anytime'
                 ]
             };
         }
