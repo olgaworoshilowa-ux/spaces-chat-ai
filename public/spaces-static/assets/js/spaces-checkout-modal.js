@@ -245,6 +245,7 @@
         countNode.textContent = String(next);
         const trigger = document.querySelector('[data-header-credits]');
         if (trigger) trigger.setAttribute('aria-label', `${next} credits left`);
+        window.SpacesHeaderCredits?.sync?.(next);
     };
 
     modal.querySelectorAll('[data-checkout-pay]').forEach(button => {

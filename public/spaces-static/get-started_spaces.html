@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-no-start-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-fixes-2">
 
         <title>Get Started Spaces</title>
 
@@ -2329,6 +2329,18 @@
                 const creditsWrap = document.querySelector('[data-header-credits-wrap]');
                 const creditsTrigger = creditsWrap?.querySelector('[data-header-credits]');
                 const creditsMenu = creditsWrap?.querySelector('[data-header-credits-menu]');
+                const creditsCount = creditsWrap?.querySelector('[data-header-credits-count]');
+
+                // Red badge when balance is 10 or lower.
+                const syncHeaderCreditsLow = (value) => {
+                    if (!creditsTrigger || !creditsCount) return;
+                    const left = Number(String(value ?? creditsCount.textContent ?? '0').replace(/[^\d]/g, '')) || 0;
+                    creditsCount.textContent = String(left);
+                    creditsTrigger.classList.toggle('is-low', left <= 10);
+                    creditsTrigger.setAttribute('aria-label', `${left} credits left`);
+                };
+                syncHeaderCreditsLow();
+                window.SpacesHeaderCredits = { sync: syncHeaderCreditsLow };
 
                 const closeCreditsMenu = () => {
                     if (!creditsMenu || !creditsTrigger) return;
@@ -4558,6 +4570,14 @@
                                     </span>
                                 </button>
                                 <div class="spaces-checkout-divider"></div>
+                                <button type="button" class="spaces-checkout-pay-option" data-checkout-pay="paypal" aria-pressed="false">
+                                    <img src="./assets/images/spaces-v2/checkout/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-checkout-pay-radio>
+                                    <span class="spaces-checkout-apple">
+                                        <img src="./assets/images/spaces-v2/checkout/paypal.svg" width="35" height="24" alt="" aria-hidden="true">
+                                        <span>PayPal</span>
+                                    </span>
+                                </button>
+                                <div class="spaces-checkout-divider"></div>
                                 <label class="spaces-checkout-save-row">
                                     <input type="checkbox" checked>
                                     <span>Save information for future payments</span>
@@ -4632,9 +4652,9 @@
                 </div>
             </div>
         </div>
-        <script src="./assets/js/spaces-upgrade-modal.js?v=credits-copy-stable-1"></script>
+        <script src="./assets/js/spaces-upgrade-modal.js?v=premium-annual-1"></script>
         <script src="./assets/js/spaces-usage-modal.js?v=figma-1"></script>
         <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
-        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-no-start-1"></script>
+        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-fixes-2"></script>
     </body>
 </html>

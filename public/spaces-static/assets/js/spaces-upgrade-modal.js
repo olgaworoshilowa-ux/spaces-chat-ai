@@ -182,6 +182,7 @@
             plan: 'premium',
             trialAvailable: false,
             trial: false,
+            annual,
             name: 'Premium',
             cta: 'Get Premium',
             label: `Premium · ${period}`,
