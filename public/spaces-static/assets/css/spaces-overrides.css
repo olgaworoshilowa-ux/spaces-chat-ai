@@ -17592,18 +17592,29 @@ body.is-checkout-modal-open{
 
 .spaces-checkout-back,
 .spaces-checkout-close{
+    position: absolute;
+    z-index: 2;
+    top: max(16px, env(safe-area-inset-top));
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     padding: 0;
     border: 1px solid #e4e4e0;
     border-radius: 999px;
     background: #fff;
     color: #141513;
     cursor: pointer;
-    flex: 0 0 auto;
+    box-shadow: 0 1px 2px rgba(20, 21, 19, .06);
+}
+
+.spaces-checkout-back{
+    left: max(16px, env(safe-area-inset-left));
+}
+
+.spaces-checkout-close{
+    right: max(16px, env(safe-area-inset-right));
 }
 
 .spaces-checkout-back:hover,
@@ -17829,13 +17840,14 @@ body.is-checkout-modal-open{
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 12px;
-    border: 1px solid #e1d8f7;
-    border-radius: 12px;
+    padding: 16px;
+    border: 1.5px solid #8b6fe0;
+    border-radius: 22px;
     background:
         radial-gradient(356px 390px at 100% 0%, rgba(139, 111, 224, .22) 0%, transparent 100%),
-        #fff;
+        rgba(237, 230, 252, .72);
     box-sizing: border-box;
+    box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(60, 40, 120, .06), 0 16px 40px rgba(80, 50, 160, .12);
 }
 
 .spaces-checkout-order-head{
@@ -17972,19 +17984,19 @@ body.is-checkout-modal-open{
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 48px;
+    height: clamp(40px, 4.8vh, 48px);
     border: 0;
-    border-radius: 12px;
-    background: #6b4fd1;
+    border-radius: 999px;
+    background: #141513;
     color: #fff;
-    font: 700 15px/1 "Open Sans", Arial, sans-serif;
+    font: 600 clamp(13px, 1.7vh, 15px)/1 "Open Sans", Arial, sans-serif;
     cursor: pointer;
 }
 
 .spaces-checkout-cta:hover,
 .spaces-checkout-cta:focus-visible{
     outline: 0;
-    background: #5b41be;
+    background: #000;
 }
 
 .spaces-checkout-legal{
