@@ -8,15 +8,15 @@
     if (!modal || !dialog) return;
 
     const CREDIT_TIERS = [
-        { credits: 3000, label: '3,000', monthly: 42.49, annual: 33.99 },
+        { credits: 3000, label: '3,000', monthly: 44.99, annual: 33.99 },
         { credits: 5000, label: '5,000', monthly: 62.49, annual: 49.99 },
         { credits: 8000, label: '8,000', monthly: 87.49, annual: 69.99 }
     ];
 
     const PREMIUM = {
         credits: 1000,
-        monthly: 15.99,
-        annual: 12.79
+        monthly: 19.99,
+        annual: 4.99
     };
 
     let annual = true;
@@ -25,7 +25,6 @@
     let lastFocus = null;
 
     const money = value => `$${Number(value).toFixed(2)}`;
-    const cents = (price, credits) => `${((price * 100) / credits).toFixed(2)}¢`;
 
     const trialEndDate = () => {
         const date = new Date();
@@ -62,19 +61,19 @@
         const tier = CREDIT_TIERS[proTier] || CREDIT_TIERS[0];
         const premPrice = annual ? PREMIUM.annual : PREMIUM.monthly;
         const proPrice = annual ? tier.annual : tier.monthly;
-        const proTotal = annual ? `${money(tier.annual * 12)} / year` : `${money(tier.monthly)} / month`;
+        const proTotalShort = annual ? `${money(tier.annual * 12)}/year` : `${money(tier.monthly)}/month`;
+        const proTotalBilled = annual
+            ? `${money(tier.annual * 12)} billed yearly`
+            : `${money(tier.monthly)} billed monthly`;
 
         const premiumOld = modal.querySelector('[data-upgrade-premium-old]');
         const premiumPriceEl = modal.querySelector('[data-upgrade-premium-price]');
         const premiumNote = modal.querySelector('[data-upgrade-premium-note]');
-        const premiumPer = modal.querySelector('[data-upgrade-premium-per-credit]');
         const proOld = modal.querySelector('[data-upgrade-pro-old]');
         const proPriceEl = modal.querySelector('[data-upgrade-pro-price]');
         const proNote = modal.querySelector('[data-upgrade-pro-note]');
-        const proPer = modal.querySelector('[data-upgrade-pro-per-credit]');
         const proCredits = modal.querySelector('[data-upgrade-pro-credits]');
-        const proLooks = modal.querySelector('[data-upgrade-pro-looks]');
-        const proAnswers = modal.querySelector('[data-upgrade-pro-answers]');
+        const proCopy = modal.querySelector('[data-upgrade-pro-copy]');
         const proCta = modal.querySelector('[data-upgrade-pro-cta]');
         const trialHint = modal.querySelector('[data-upgrade-trial-hint]');
 
@@ -85,39 +84,40 @@
             premiumOld.textContent = money(PREMIUM.monthly);
         }
         if (premiumPriceEl) premiumPriceEl.textContent = money(premPrice);
-        if (premiumPer) premiumPer.textContent = `${cents(premPrice, PREMIUM.credits)} per credit`;
         if (premiumNote) {
             premiumNote.textContent = annual
-                ? `Billed ${money(PREMIUM.annual * 12)} yearly · cancel anytime`
-                : `Billed ${money(PREMIUM.monthly)} monthly · cancel anytime`;
+                ? `${money(PREMIUM.annual * 12)} billed yearly. Cancel anytime.`
+                : `${money(PREMIUM.monthly)} billed monthly. Cancel anytime.`;
         }
 
         if (proCredits) proCredits.textContent = tier.label;
-        if (proLooks) proLooks.textContent = `≈ ${Math.round(tier.credits / 25)}`;
-        if (proAnswers) proAnswers.textContent = `≈ ${(tier.credits / 5).toLocaleString('en-US')}`;
+        if (proCopy) {
+            const looks = Math.round(tier.credits / 25);
+            const answers = (tier.credits / 5).toLocaleString('en-US');
+            proCopy.textContent = `Enough for about ${looks} room looks or ${answers} Copilot replies a month.`;
+        }
         if (proOld) {
             proOld.hidden = !annual;
             proOld.textContent = money(tier.monthly);
         }
         if (proPriceEl) proPriceEl.textContent = money(proPrice);
-        if (proPer) proPer.textContent = `${cents(proPrice, tier.credits)} per credit`;
-        if (proCta) proCta.textContent = trialOn ? 'Start free trial' : 'Get Pro';
+        if (proCta) proCta.textContent = trialOn ? 'Try free for 7 days' : 'Get Professional';
         if (trialHint) {
             trialHint.textContent = trialOn
-                ? '50 credits to try · full amount after'
-                : `Off · all ${tier.label} credits today`;
+                ? 'Includes 50 credits to try'
+                : `Pay now, get all ${tier.label} credits`;
         }
         if (proNote) {
             proNote.textContent = trialOn
-                ? `$0 today · then ${proTotal} from ${trialEndDate()}`
-                : `Billed ${proTotal} today · cancel anytime`;
+                ? `Free until ${trialEndDate()}, then ${proTotalShort}. Cancel anytime.`
+                : `${proTotalBilled}. Cancel anytime.`;
         }
 
         modal.classList.toggle('is-annual', annual);
         modal.classList.toggle('is-monthly', !annual);
         modal.classList.toggle('is-trial-on', trialOn);
 
-            modal.querySelectorAll('[data-upgrade-billing]').forEach(btn => {
+        modal.querySelectorAll('[data-upgrade-billing]').forEach(btn => {
             const isYearly = btn.getAttribute('data-upgrade-billing') === 'yearly';
             const active = isYearly ? annual : !annual;
             btn.classList.toggle('is-selected', active);
@@ -164,7 +164,7 @@
                 startMode: trialOn ? 'trial' : 'now',
                 annual,
                 name: 'Professional',
-                cta: trialOn ? 'Start free trial' : 'Get Pro',
+                cta: trialOn ? 'Try free for 7 days' : 'Get Professional',
                 label: `Professional · ${period}`,
                 price,
                 credits: tier.credits,
@@ -195,8 +195,8 @@
             summary: '1,000 credits/month for daily Copilot help and AI Studio room looks.',
             receive: [
                 '1,000 credits every month',
-                'Advanced Copilot and AI Designer',
-                'AI Studio looks and unlimited HD renders',
+                'Advanced AI Copilot and AI Studio',
+                'Unlimited HD renders',
                 annual ? 'Billed annually — cancel anytime' : 'Cancel anytime'
             ]
         };
@@ -238,6 +238,7 @@
 
     trialToggle?.addEventListener('click', event => {
         event.preventDefault();
+        event.stopPropagation();
         trialOn = !trialOn;
         syncPrices();
     });
