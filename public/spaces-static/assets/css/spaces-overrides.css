@@ -17682,10 +17682,6 @@ body.is-checkout-modal-open{
     pointer-events: none;
 }
 
-.spaces-checkout-express-btn[data-checkout-pay="apple"] > img{
-    height: 32px;
-}
-
 .spaces-checkout-or{
     display: flex;
     align-items: center;
