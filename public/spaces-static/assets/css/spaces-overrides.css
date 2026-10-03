@@ -16374,18 +16374,19 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-plans{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    column-gap: 16px;
+    row-gap: 12px;
     align-items: stretch;
     flex: 0 0 auto;
 }
 
 .spaces-upgrade-plan{
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 7;
     min-width: 0;
-    height: 100%;
+    height: auto;
     padding: 20px;
     border: 1px solid rgba(255, 255, 255, .95);
     border-radius: 24px;
@@ -16445,12 +16446,12 @@ body.is-upgrade-modal-open{
     display: flex;
     flex-direction: column;
     gap: 8px;
+    height: 100%;
     padding: 12px 14px;
     border: 1px solid rgba(20, 21, 19, .06);
     border-radius: 14px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .65);
-    flex: 0 0 auto;
 }
 
 .spaces-upgrade-credits-amount{
@@ -16700,7 +16701,6 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features-block{
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto;
     gap: 8px;
     margin-top: 4px;
     padding-top: 12px;
@@ -16716,13 +16716,18 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features{
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto;
-    justify-content: space-between;
     gap: 8px;
     margin: 0;
     padding: 0;
     list-style: none;
     min-height: 0;
+}
+
+.spaces-upgrade-features > li,
+.spaces-upgrade-features > li.is-highlight,
+.spaces-upgrade-features > li > p,
+.spaces-upgrade-features > li.is-highlight > p{
+    font-weight: 400;
 }
 
 .spaces-upgrade-features > li{
@@ -16731,17 +16736,20 @@ body.is-upgrade-modal-open{
     gap: 8px;
     margin: 0;
     color: #141513;
-    font: 400 14px/1.3 "Open Sans", Arial, sans-serif;
-}
-
-.spaces-upgrade-features > li.is-highlight,
-.spaces-upgrade-features > li.is-highlight > p{
-    font-weight: 700;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.3;
 }
 
 .spaces-upgrade-features > li > p{
     margin: 0;
-    font-weight: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: 400;
+    line-height: inherit;
 }
 
 .spaces-upgrade-feature-icon{
