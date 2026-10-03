@@ -3,27 +3,35 @@
 
     const modal = document.querySelector('[data-upgrade-modal]');
     const dialog = modal?.querySelector('[data-upgrade-modal-dialog]');
-    const toggle = modal?.querySelector('[data-upgrade-billing-toggle]');
     const range = modal?.querySelector('[data-upgrade-pro-range]');
+    const trialToggle = modal?.querySelector('[data-upgrade-trial-toggle]');
     if (!modal || !dialog) return;
 
     const CREDIT_TIERS = [
-        { credits: 3000, monthly: 44.99, annual: 33.99, save: 450 },
-        { credits: 5000, monthly: 64.99, annual: 49.99, save: 600 },
-        { credits: 8000, monthly: 94.99, annual: 72.99, save: 840 }
+        { credits: 3000, label: '3,000', monthly: 42.49, annual: 33.99 },
+        { credits: 5000, label: '5,000', monthly: 62.49, annual: 49.99 },
+        { credits: 8000, label: '8,000', monthly: 87.49, annual: 69.99 }
     ];
 
     const PREMIUM = {
-        monthly: 19.99,
-        annual: 4.99,
-        save: 390
+        credits: 1000,
+        monthly: 15.99,
+        annual: 12.79
     };
 
     let annual = true;
+    let trialOn = true;
     let proTier = 0;
     let lastFocus = null;
 
     const money = value => `$${Number(value).toFixed(2)}`;
+    const cents = (price, credits) => `${((price * 100) / credits).toFixed(2)}¢`;
+
+    const trialEndDate = () => {
+        const date = new Date();
+        date.setDate(date.getDate() + 7);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    };
 
     const syncSliderUi = () => {
         if (!range) return;
@@ -31,7 +39,7 @@
         const pct = max > 0 ? (proTier / max) * 100 : 0;
         range.value = String(proTier);
         range.style.setProperty('--upgrade-slider-progress', `${pct}%`);
-        range.setAttribute('aria-valuetext', `${(CREDIT_TIERS[proTier] || CREDIT_TIERS[0]).credits} credits`);
+        range.setAttribute('aria-valuetext', `${(CREDIT_TIERS[proTier] || CREDIT_TIERS[0]).label} credits`);
         const slider = range.closest('[data-upgrade-pro-slider]');
         slider?.style.setProperty('--upgrade-slider-progress', `${pct}%`);
         slider?.querySelectorAll('.spaces-upgrade-slider-labels > span').forEach((label, index) => {
@@ -45,61 +53,81 @@
         syncPrices();
     };
 
+    const setAnnual = (nextAnnual) => {
+        annual = Boolean(nextAnnual);
+        syncPrices();
+    };
+
     const syncPrices = () => {
-        const premiumOld = modal.querySelector('[data-upgrade-premium-old]');
-        const premiumPrice = modal.querySelector('[data-upgrade-premium-price]');
-        const premiumPeriod = modal.querySelector('[data-upgrade-premium-period]');
-        const premiumSave = modal.querySelector('[data-upgrade-premium-save]');
-        const proOld = modal.querySelector('[data-upgrade-pro-old]');
-        const proPrice = modal.querySelector('[data-upgrade-pro-price]');
-        const proPeriod = modal.querySelector('[data-upgrade-pro-period]');
-        const proSave = modal.querySelector('[data-upgrade-pro-save]');
-        const proCredits = modal.querySelector('[data-upgrade-pro-credits]');
         const tier = CREDIT_TIERS[proTier] || CREDIT_TIERS[0];
+        const premPrice = annual ? PREMIUM.annual : PREMIUM.monthly;
+        const proPrice = annual ? tier.annual : tier.monthly;
+        const proTotal = annual ? `${money(tier.annual * 12)} / year` : `${money(tier.monthly)} / month`;
+
+        const premiumOld = modal.querySelector('[data-upgrade-premium-old]');
+        const premiumPriceEl = modal.querySelector('[data-upgrade-premium-price]');
+        const premiumNote = modal.querySelector('[data-upgrade-premium-note]');
+        const premiumPer = modal.querySelector('[data-upgrade-premium-per-credit]');
+        const proOld = modal.querySelector('[data-upgrade-pro-old]');
+        const proPriceEl = modal.querySelector('[data-upgrade-pro-price]');
+        const proNote = modal.querySelector('[data-upgrade-pro-note]');
+        const proPer = modal.querySelector('[data-upgrade-pro-per-credit]');
+        const proCredits = modal.querySelector('[data-upgrade-pro-credits]');
+        const proLooks = modal.querySelector('[data-upgrade-pro-looks]');
+        const proAnswers = modal.querySelector('[data-upgrade-pro-answers]');
+        const proCta = modal.querySelector('[data-upgrade-pro-cta]');
+        const trialHint = modal.querySelector('[data-upgrade-trial-hint]');
 
         syncSliderUi();
-        if (proCredits) proCredits.textContent = tier.credits.toLocaleString('en-US');
 
-        if (annual) {
-            if (premiumOld) {
-                premiumOld.hidden = false;
-                premiumOld.textContent = money(PREMIUM.monthly);
-            }
-            if (premiumPrice) premiumPrice.textContent = money(PREMIUM.annual);
-            if (premiumPeriod) premiumPeriod.textContent = 'month/billed annually';
-            if (premiumSave) {
-                premiumSave.hidden = false;
-                premiumSave.innerHTML = `<span>Save $${PREMIUM.save}</span> compared to monthly`;
-            }
-            if (proOld) {
-                proOld.hidden = false;
-                proOld.textContent = money(tier.monthly);
-            }
-            if (proPrice) proPrice.textContent = money(tier.annual);
-            if (proPeriod) proPeriod.textContent = 'month/billed annually';
-            if (proSave) {
-                proSave.hidden = false;
-                proSave.innerHTML = `<span>Save $${tier.save}</span> compared to monthly`;
-            }
-        } else {
-            if (premiumOld) premiumOld.hidden = true;
-            if (premiumPrice) premiumPrice.textContent = money(PREMIUM.monthly);
-            if (premiumPeriod) premiumPeriod.textContent = 'month';
-            if (premiumSave) premiumSave.hidden = true;
-            if (proOld) proOld.hidden = true;
-            if (proPrice) proPrice.textContent = money(tier.monthly);
-            if (proPeriod) proPeriod.textContent = 'month';
-            if (proSave) proSave.hidden = true;
+        if (premiumOld) {
+            premiumOld.hidden = !annual;
+            premiumOld.textContent = money(PREMIUM.monthly);
+        }
+        if (premiumPriceEl) premiumPriceEl.textContent = money(premPrice);
+        if (premiumPer) premiumPer.textContent = `${cents(premPrice, PREMIUM.credits)} per credit`;
+        if (premiumNote) {
+            premiumNote.textContent = annual
+                ? `Billed ${money(PREMIUM.annual * 12)} yearly · cancel anytime`
+                : `Billed ${money(PREMIUM.monthly)} monthly · cancel anytime`;
+        }
+
+        if (proCredits) proCredits.textContent = tier.label;
+        if (proLooks) proLooks.textContent = `≈ ${Math.round(tier.credits / 25)}`;
+        if (proAnswers) proAnswers.textContent = `≈ ${(tier.credits / 5).toLocaleString('en-US')}`;
+        if (proOld) {
+            proOld.hidden = !annual;
+            proOld.textContent = money(tier.monthly);
+        }
+        if (proPriceEl) proPriceEl.textContent = money(proPrice);
+        if (proPer) proPer.textContent = `${cents(proPrice, tier.credits)} per credit`;
+        if (proCta) proCta.textContent = trialOn ? 'Start free trial' : 'Get Pro';
+        if (trialHint) {
+            trialHint.textContent = trialOn
+                ? '50 credits to try · full amount after'
+                : `Off · all ${tier.label} credits today`;
+        }
+        if (proNote) {
+            proNote.textContent = trialOn
+                ? `$0 today · then ${proTotal} from ${trialEndDate()}`
+                : `Billed ${proTotal} today · cancel anytime`;
         }
 
         modal.classList.toggle('is-annual', annual);
         modal.classList.toggle('is-monthly', !annual);
-        toggle?.classList.toggle('is-annual', annual);
-        toggle?.setAttribute('aria-pressed', String(annual));
-        toggle?.setAttribute(
-            'aria-label',
-            annual ? 'Annually billing, save 20%' : 'Monthly billing'
-        );
+        modal.classList.toggle('is-trial-on', trialOn);
+
+        modal.querySelectorAll('[data-upgrade-billing]').forEach(btn => {
+            const isYearly = btn.getAttribute('data-upgrade-billing') === 'yearly';
+            const active = isYearly ? annual : !annual;
+            btn.classList.toggle('is-active', active);
+            btn.setAttribute('aria-pressed', String(active));
+        });
+
+        if (trialToggle) {
+            trialToggle.classList.toggle('is-on', trialOn);
+            trialToggle.setAttribute('aria-checked', String(trialOn));
+        }
     };
 
     const closeModal = ({ restoreFocus = true } = {}) => {
@@ -116,7 +144,6 @@
         if (window.SpacesBuyCreditsModal?.close) window.SpacesBuyCreditsModal.close({ restoreFocus: false });
         modal.hidden = false;
         document.body.classList.add('is-upgrade-modal-open');
-        // Close header credits popover if open.
         const creditsMenu = document.querySelector('[data-header-credits-menu]');
         const creditsTrigger = document.querySelector('[data-header-credits]');
         if (creditsMenu) creditsMenu.hidden = true;
@@ -133,17 +160,20 @@
             return {
                 kind: 'plan',
                 plan: 'pro',
-                trialAvailable: true,
+                trialAvailable: trialOn,
+                startMode: trialOn ? 'trial' : 'now',
                 annual,
                 name: 'Professional',
-                cta: 'Get Pro',
+                cta: trialOn ? 'Start free trial' : 'Get Pro',
                 label: `Professional · ${period}`,
                 price,
                 credits: tier.credits,
-                intro: 'Your plan starts as soon as the payment goes through',
-                summary: `${tier.credits.toLocaleString('en-US')} credits/month for client-ready interiors with more Copilot and AI Studio.`,
+                intro: trialOn
+                    ? '7 days free. Your card is saved now — you won’t be charged until the trial ends.'
+                    : 'Your plan starts as soon as the payment goes through',
+                summary: `${tier.label} credits/month for client-ready interiors with more Copilot and AI Studio.`,
                 receive: [
-                    `${tier.credits.toLocaleString('en-US')} credits every month`,
+                    `${tier.label} credits every month`,
                     'Everything in Premium, plus more AI for client work',
                     'Unlimited 4K renders and custom 3D uploads',
                     'Cancel anytime'
@@ -154,12 +184,13 @@
         return {
             kind: 'plan',
             plan: 'premium',
+            trialAvailable: false,
             trial: false,
             name: 'Premium',
             cta: 'Get Premium',
             label: `Premium · ${period}`,
             price,
-            credits: 1000,
+            credits: PREMIUM.credits,
             intro: 'Your plan starts as soon as the payment goes through',
             summary: '1,000 credits/month for daily Copilot help and AI Studio room looks.',
             receive: [
@@ -197,9 +228,16 @@
         });
     });
 
-    toggle?.addEventListener('click', event => {
+    modal.querySelectorAll('[data-upgrade-billing]').forEach(button => {
+        button.addEventListener('click', event => {
+            event.preventDefault();
+            setAnnual(button.getAttribute('data-upgrade-billing') === 'yearly');
+        });
+    });
+
+    trialToggle?.addEventListener('click', event => {
         event.preventDefault();
-        annual = !annual;
+        trialOn = !trialOn;
         syncPrices();
     });
 
@@ -207,7 +245,6 @@
     range?.addEventListener('input', onRangeInput);
     range?.addEventListener('change', onRangeInput);
 
-    // Drag/click on the track even if the native thumb is hard to grab.
     const sliderRoot = range?.closest('[data-upgrade-pro-slider]');
     const tierFromClientX = clientX => {
         if (!range) return 0;
@@ -226,9 +263,7 @@
         range.setPointerCapture?.(event.pointerId);
         setProTier(tierFromClientX(event.clientX));
 
-        const onMove = moveEvent => {
-            setProTier(tierFromClientX(moveEvent.clientX));
-        };
+        const onMove = moveEvent => setProTier(tierFromClientX(moveEvent.clientX));
         const onUp = () => {
             range.releasePointerCapture?.(event.pointerId);
             window.removeEventListener('pointermove', onMove);
