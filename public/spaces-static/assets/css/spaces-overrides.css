@@ -17546,8 +17546,11 @@ body.is-checkout-modal-open{
 .spaces-checkout-dialog{
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
     width: min(864px, 100%);
     max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
     overflow: hidden;
     border-radius: 32px;
     box-sizing: border-box;
@@ -17559,7 +17562,11 @@ body.is-checkout-modal-open{
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(280px, 400px);
     align-items: stretch;
-    max-height: calc(100vh - 32px);
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
 }
 
 .spaces-checkout-form{
@@ -17568,8 +17575,13 @@ body.is-checkout-modal-open{
     gap: 14px;
     min-width: 0;
     min-height: 0;
+    height: 100%;
+    max-height: 100%;
     padding: 24px 20px 16px;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
 }
 
@@ -17907,11 +17919,17 @@ body.is-checkout-modal-open{
     display: flex;
     flex-direction: column;
     gap: 22px;
+    align-self: stretch;
+    min-width: 0;
     min-height: 0;
+    height: 100%;
+    max-height: 100%;
     margin: 16px 16px 16px 0;
     padding: 28px 36px 32px;
-    overflow: hidden;
+    overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     border-radius: 24px;
     box-sizing: border-box;
     background: #0f200c;
@@ -18170,14 +18188,29 @@ body.is-checkout-modal-open{
 @media (max-width: 900px){
     .spaces-checkout-main{
         grid-template-columns: 1fr;
-        overflow: auto;
+        grid-template-rows: auto minmax(0, 1fr);
+        overflow: hidden;
+    }
+
+    .spaces-checkout-form{
+        height: auto;
+        max-height: none;
+        overflow: visible;
     }
 
     .spaces-checkout-summary{
         order: -1;
+        height: auto;
+        max-height: none;
         margin: 16px;
-        min-height: 0;
         padding: 24px 20px 28px;
+        overflow: visible;
+    }
+
+    .spaces-checkout-main{
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
     }
 
     .spaces-checkout-summary-art > img{
