@@ -16,7 +16,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=upgrade-compact-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=upgrade-slider-fix-1">
 
         <title>Get Started Spaces</title>
 
@@ -4234,14 +4234,14 @@
                     <span class="spaces-upgrade-orb is-peach"></span>
                     <span class="spaces-upgrade-orb is-blue"></span>
                 </div>
-                <header class="spaces-upgrade-modal-header">
+                <div class="spaces-upgrade-modal-header">
                     <div class="spaces-upgrade-modal-heading">
                         <h2 id="spaces-upgrade-modal-title">Upgrade your plan</h2>
                         <p class="spaces-upgrade-modal-lead">More AI credits, sharper renders and pro tools for every room.</p>
                     </div>
                     <div class="spaces-upgrade-billing" role="group" aria-label="Billing period">
                         <button type="button" class="spaces-upgrade-billing-btn" data-upgrade-billing="monthly" aria-pressed="false">Monthly</button>
-                        <button type="button" class="spaces-upgrade-billing-btn is-active" data-upgrade-billing="yearly" aria-pressed="true">
+                        <button type="button" class="spaces-upgrade-billing-btn is-selected" data-upgrade-billing="yearly" aria-pressed="true">
                             Yearly
                             <span class="spaces-upgrade-billing-save">−20%</span>
                         </button>
@@ -4249,7 +4249,7 @@
                     <button type="button" class="spaces-upgrade-modal-close" data-upgrade-modal-close aria-label="Close">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17181A" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
                     </button>
-                </header>
+                </div>
                 <div class="spaces-upgrade-plans">
                     <article class="spaces-upgrade-plan is-premium" data-upgrade-plan="premium">
                         <div class="spaces-upgrade-plan-head">
@@ -4259,13 +4259,12 @@
                             <p class="spaces-upgrade-plan-subtitle">Design your own home faster with AI Copilot</p>
                         </div>
                         <div class="spaces-upgrade-credits-box">
-                            <div class="spaces-upgrade-credits-meta">
-                                <span>Credits per month</span>
+                            <div class="spaces-upgrade-credits-amount-row">
+                                <div class="spaces-upgrade-credits-amount">
+                                    <strong>1,000</strong>
+                                    <span>credits</span>
+                                </div>
                                 <span class="spaces-upgrade-per-credit" data-upgrade-premium-per-credit>1.28¢ per credit</span>
-                            </div>
-                            <div class="spaces-upgrade-credits-amount">
-                                <strong>1,000</strong>
-                                <span>credits</span>
                             </div>
                             <div class="spaces-upgrade-credit-stats">
                                 <div class="spaces-upgrade-credit-stat">
@@ -4333,23 +4332,20 @@
                             <p class="spaces-upgrade-plan-subtitle">Maximum AI for client-ready interiors</p>
                         </div>
                         <div class="spaces-upgrade-credits-box is-adjustable">
-                            <div class="spaces-upgrade-credits-meta">
-                                <span>Credits per month</span>
-                                <span class="spaces-upgrade-per-credit" data-upgrade-pro-per-credit>1.13¢ per credit</span>
-                            </div>
-                            <div class="spaces-upgrade-credits-controls">
+                            <div class="spaces-upgrade-credits-amount-row">
                                 <div class="spaces-upgrade-credits-amount">
                                     <strong data-upgrade-pro-credits>3,000</strong>
                                     <span>credits</span>
                                 </div>
-                                <div class="spaces-upgrade-slider" data-upgrade-pro-slider>
-                                    <label class="spaces-upgrade-sr-only" for="spaces-upgrade-pro-range">Credits per month</label>
-                                    <input id="spaces-upgrade-pro-range" type="range" min="0" max="2" step="1" value="0" aria-label="Monthly credits" data-upgrade-pro-range>
-                                    <div class="spaces-upgrade-slider-labels" aria-hidden="true">
-                                        <span>3,000</span>
-                                        <span>5,000</span>
-                                        <span>8,000</span>
-                                    </div>
+                                <span class="spaces-upgrade-per-credit" data-upgrade-pro-per-credit>1.13¢ per credit</span>
+                            </div>
+                            <div class="spaces-upgrade-slider" data-upgrade-pro-slider>
+                                <label class="spaces-upgrade-sr-only" for="spaces-upgrade-pro-range">Credits per month</label>
+                                <input id="spaces-upgrade-pro-range" type="range" min="0" max="2" step="1" value="0" aria-label="Monthly credits" data-upgrade-pro-range>
+                                <div class="spaces-upgrade-slider-labels" aria-hidden="true">
+                                    <span>3,000</span>
+                                    <span>5,000</span>
+                                    <span>8,000</span>
                                 </div>
                             </div>
                             <div class="spaces-upgrade-credit-stats">
@@ -4636,7 +4632,7 @@
                 </div>
             </div>
         </div>
-        <script src="./assets/js/spaces-upgrade-modal.js?v=upgrade-compact-1"></script>
+        <script src="./assets/js/spaces-upgrade-modal.js?v=upgrade-slider-fix-1"></script>
         <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
         <script src="./assets/js/spaces-checkout-modal.js?v=pro-start-choice-1"></script>
     </body>

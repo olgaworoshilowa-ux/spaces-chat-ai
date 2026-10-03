@@ -117,10 +117,10 @@
         modal.classList.toggle('is-monthly', !annual);
         modal.classList.toggle('is-trial-on', trialOn);
 
-        modal.querySelectorAll('[data-upgrade-billing]').forEach(btn => {
+            modal.querySelectorAll('[data-upgrade-billing]').forEach(btn => {
             const isYearly = btn.getAttribute('data-upgrade-billing') === 'yearly';
             const active = isYearly ? annual : !annual;
-            btn.classList.toggle('is-active', active);
+            btn.classList.toggle('is-selected', active);
             btn.setAttribute('aria-pressed', String(active));
         });
 
@@ -231,6 +231,7 @@
     modal.querySelectorAll('[data-upgrade-billing]').forEach(button => {
         button.addEventListener('click', event => {
             event.preventDefault();
+            event.stopPropagation();
             setAnnual(button.getAttribute('data-upgrade-billing') === 'yearly');
         });
     });
