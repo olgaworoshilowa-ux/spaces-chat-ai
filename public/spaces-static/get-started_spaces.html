@@ -10,13 +10,16 @@
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="theme-color" content="#ffffff">
         <link rel="shortcut icon" href="./assets/images/favicon.ico?ux=1.0.0" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
         
             <link rel="stylesheet" href="./assets/css/tokens.css">
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=upgrade-fit-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=pro-trial-checkout-2">
 
         <title>Get Started Spaces</title>
 
@@ -4502,159 +4505,134 @@
         <div class="spaces-checkout-modal" data-checkout-modal hidden>
             <div class="spaces-checkout-backdrop" data-checkout-close tabindex="-1" aria-hidden="true"></div>
             <div class="spaces-checkout-dialog" role="dialog" aria-modal="true" aria-labelledby="spaces-checkout-title" data-checkout-dialog>
-                <div class="spaces-checkout-main">
-                    <div class="spaces-checkout-form">
-                        <div class="spaces-checkout-intro">
-                            <div class="spaces-checkout-title-row">
-                                <button type="button" class="spaces-checkout-back" data-checkout-back aria-label="Back">
-                                    <img src="./assets/images/spaces-v2/checkout/chevron-left.svg" width="24" height="24" alt="" aria-hidden="true">
-                                </button>
-                                <h2 id="spaces-checkout-title">Complete your order</h2>
-                            </div>
-                            <p data-checkout-intro>Credits are added to your balance as soon as the payment goes through</p>
-                        </div>
-                        <div class="spaces-checkout-section">
-                            <p class="spaces-checkout-section-title">Contact information</p>
-                            <div class="spaces-checkout-card">
-                                <label class="visually-hidden" for="spaces-checkout-email">Email</label>
-                                <input id="spaces-checkout-email" class="spaces-checkout-email" type="email" value="iheartnowhere@gmail.com" autocomplete="email">
-                                <div class="spaces-checkout-divider"></div>
-                                <label class="spaces-checkout-toggle-row">
-                                    <button type="button" class="spaces-checkout-toggle" data-checkout-company-toggle aria-pressed="false" aria-label="Add company details"></button>
-                                    <span>Add company details</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="spaces-checkout-section">
-                            <p class="spaces-checkout-section-title">Payment method</p>
-                            <div class="spaces-checkout-card spaces-checkout-payment" data-checkout-payment>
-                                <button type="button" class="spaces-checkout-pay-option is-selected" data-checkout-pay="card" aria-pressed="true">
-                                    <img src="./assets/images/spaces-v2/checkout/radio-on.svg" width="24" height="24" alt="" aria-hidden="true" data-checkout-pay-radio>
-                                    <span>Card</span>
-                                </button>
-                                <div class="spaces-checkout-card-fields" data-checkout-card-fields>
-                                    <div class="spaces-checkout-field-heading">
-                                        <span>Card information</span>
-                                    </div>
-                                    <div class="spaces-checkout-card-group">
-                                        <div class="spaces-checkout-field is-card-number">
-                                            <input type="text" inputmode="numeric" placeholder="1234 1234 1234 1234" value="1424 1424 1424 1424" aria-label="Card number">
-                                            <span class="spaces-checkout-brands" aria-hidden="true">
-                                                <img src="./assets/images/spaces-v2/checkout/mastercard.svg" width="35" height="24" alt="">
-                                                <img src="./assets/images/spaces-v2/checkout/visa.svg" width="35" height="24" alt="">
-                                                <img src="./assets/images/spaces-v2/checkout/amex.svg" width="35" height="24" alt="">
-                                            </span>
-                                        </div>
-                                        <div class="spaces-checkout-field-row">
-                                            <div class="spaces-checkout-field">
-                                                <input type="text" inputmode="numeric" placeholder="MM / YY" aria-label="Expiration date">
-                                            </div>
-                                            <div class="spaces-checkout-field">
-                                                <input type="text" inputmode="numeric" placeholder="CVC" aria-label="CVC">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <label class="spaces-checkout-field-block">
-                                        <span class="spaces-checkout-field-heading">Cardholder name</span>
-                                        <span class="spaces-checkout-field is-solo">
-                                            <input type="text" placeholder="Full name on the card" aria-label="Cardholder name">
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="spaces-checkout-divider"></div>
-                                <button type="button" class="spaces-checkout-pay-option" data-checkout-pay="apple" aria-pressed="false">
-                                    <img src="./assets/images/spaces-v2/checkout/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-checkout-pay-radio>
-                                    <span class="spaces-checkout-apple">
-                                        <img src="./assets/images/spaces-v2/checkout/apple-pay.svg" width="35" height="24" alt="" aria-hidden="true">
-                                        <span>Apple Pay</span>
-                                    </span>
-                                </button>
-                                <div class="spaces-checkout-divider"></div>
-                                <button type="button" class="spaces-checkout-pay-option" data-checkout-pay="paypal" aria-pressed="false">
-                                    <img src="./assets/images/spaces-v2/checkout/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-checkout-pay-radio>
-                                    <span class="spaces-checkout-apple">
-                                        <img src="./assets/images/spaces-v2/checkout/paypal.svg" width="35" height="24" alt="" aria-hidden="true">
-                                        <span>PayPal</span>
-                                    </span>
-                                </button>
-                                <div class="spaces-checkout-divider"></div>
-                                <label class="spaces-checkout-save-row">
-                                    <input type="checkbox" checked>
-                                    <span>Save information for future payments</span>
-                                </label>
-                            </div>
-                        </div>
-                        <button type="button" class="spaces-checkout-cta" data-checkout-cta>Buy 500 credits</button>
-                        <p class="spaces-checkout-legal">Payment is encrypted. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
-                    </div>
-                    <aside class="spaces-checkout-summary">
+                <div class="spaces-checkout-shell">
+                    <div class="spaces-checkout-title-row">
+                        <button type="button" class="spaces-checkout-back" data-checkout-back aria-label="Back">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+                        </button>
+                        <h2 id="spaces-checkout-title">Checkout</h2>
                         <button type="button" class="spaces-checkout-close" data-checkout-close aria-label="Close">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
                         </button>
-                        <div class="spaces-checkout-summary-art" aria-hidden="true">
-                            <img src="./assets/images/spaces-v2/checkout/order-card.png" alt="" data-checkout-summary-art>
+                    </div>
+
+                    <div class="spaces-checkout-main">
+                        <div class="spaces-checkout-form">
+                            <div class="spaces-checkout-express" aria-label="Express payment methods">
+                                <button type="button" class="spaces-checkout-express-btn" data-checkout-pay="apple" aria-label="Pay with Apple Pay">
+                                    <img src="./assets/images/spaces-v2/checkout/apple-pay-mark.png" alt="" height="22">
+                                </button>
+                                <button type="button" class="spaces-checkout-express-btn" data-checkout-pay="google" aria-label="Pay with Google Pay">
+                                    <span>Google Pay</span>
+                                </button>
+                                <button type="button" class="spaces-checkout-express-btn is-paypal" data-checkout-pay="paypal" aria-label="Pay with PayPal">
+                                    <img src="./assets/images/spaces-v2/checkout/paypal-mark.png" alt="" height="20">
+                                </button>
+                            </div>
+
+                            <div class="spaces-checkout-or" aria-hidden="true">
+                                <span></span>
+                                <em>or pay with</em>
+                                <span></span>
+                            </div>
+
+                            <div class="spaces-checkout-card-block">
+                                <span class="spaces-checkout-label">Card information</span>
+                                <div class="spaces-checkout-card-fields" data-checkout-card-fields>
+                                    <div class="spaces-checkout-field is-card-number">
+                                        <label class="visually-hidden" for="spaces-checkout-card">Card number</label>
+                                        <input id="spaces-checkout-card" type="text" inputmode="numeric" placeholder="Card number" autocomplete="cc-number">
+                                        <img class="spaces-checkout-brands-strip" src="./assets/images/spaces-v2/checkout/card-brands.png" alt="Mastercard, Visa, American Express" width="117" height="28">
+                                    </div>
+                                    <div class="spaces-checkout-field-row">
+                                        <div class="spaces-checkout-field">
+                                            <label class="visually-hidden" for="spaces-checkout-exp">Expiry date</label>
+                                            <input id="spaces-checkout-exp" type="text" placeholder="MM / YY" autocomplete="cc-exp">
+                                        </div>
+                                        <div class="spaces-checkout-field is-cvc">
+                                            <label class="visually-hidden" for="spaces-checkout-cvc">Security code</label>
+                                            <input id="spaces-checkout-cvc" type="text" inputmode="numeric" placeholder="Security code" autocomplete="cc-csc">
+                                            <svg class="spaces-checkout-cvc-icon" width="22" height="17" viewBox="0 0 26 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="1" y="1" width="24" height="18" rx="3"></rect><path d="M1 6h24"></path><path d="M15 13h6" stroke-width="2"></path></svg>
+                                        </div>
+                                    </div>
+                                    <div class="spaces-checkout-field is-country">
+                                        <label class="visually-hidden" for="spaces-checkout-country">Country</label>
+                                        <select id="spaces-checkout-country" autocomplete="country-name">
+                                            <option>United States</option>
+                                            <option>United Kingdom</option>
+                                            <option>Germany</option>
+                                            <option>Georgia</option>
+                                        </select>
+                                        <svg class="spaces-checkout-select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="spaces-checkout-save" data-checkout-save aria-pressed="true">
+                                <span class="spaces-checkout-save-box" aria-hidden="true">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg>
+                                </span>
+                                <span>Save payment details for future purchases</span>
+                            </button>
                         </div>
-                        <div class="spaces-checkout-summary-body">
-                            <div class="spaces-checkout-plan-heading" data-checkout-plan-heading hidden>
-                                <p class="spaces-checkout-order-label">Your order</p>
-                                <div class="spaces-checkout-plan-title-row">
-                                    <span class="spaces-checkout-plan-name" data-checkout-plan-name>Professional</span>
-                                    <span class="spaces-checkout-trial-badge" data-checkout-trial-badge hidden>7-day free trial</span>
-                                </div>
-                                <p class="spaces-checkout-plan-meta" data-checkout-plan-meta>3,000 AI credits a month · billed yearly</p>
-                            </div>
 
-                            <div class="spaces-checkout-credits-heading" data-checkout-credits-heading>
-                                <p class="spaces-checkout-order-label">Your order</p>
-                                <div class="spaces-checkout-order-price-row">
-                                    <strong data-checkout-price>$27.99</strong>
-                                    <span data-checkout-credits-label>500 credits</span>
-                                </div>
-                                <p class="spaces-checkout-order-copy" data-checkout-summary-copy>Enough for one flat, room by room. One-time top-up, no renewal.</p>
-                            </div>
-
-                            <div class="spaces-checkout-due-box" data-checkout-due-box hidden>
-                                <div class="spaces-checkout-due-row">
-                                    <span>Due today</span>
-                                    <strong data-checkout-due-today>$0.00</strong>
-                                </div>
-                                <div class="spaces-checkout-due-divider" aria-hidden="true"></div>
-                                <div class="spaces-checkout-due-row is-muted">
-                                    <span data-checkout-from-label>From Oct 10</span>
-                                    <strong data-checkout-from-price>$407.88 / year</strong>
-                                </div>
-                                <div class="spaces-checkout-due-row is-equiv" data-checkout-month-row>
-                                    <span data-checkout-month-equiv>$33.99 a month</span>
-                                </div>
-                            </div>
-
-                            <div class="spaces-checkout-receive-block">
-                                <p class="spaces-checkout-receive-title">You receive</p>
-                                <ul class="spaces-checkout-receive-list" data-checkout-receive>
-                                    <li>
-                                        <span class="spaces-checkout-receive-check" aria-hidden="true">
-                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#8EE07A" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg>
+                        <aside class="spaces-checkout-summary">
+                            <div class="spaces-checkout-order-card">
+                                <div class="spaces-checkout-order-head">
+                                    <div class="spaces-checkout-order-title-row">
+                                        <span class="spaces-checkout-plan-name" data-checkout-plan-name>Professional</span>
+                                        <span class="spaces-checkout-credits-pill" data-checkout-credits-pill>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="#6B4FD1" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"></path></svg>
+                                            <span data-checkout-credits-label>3,000 credits</span>
                                         </span>
-                                        <span>One-time credits added to this account</span>
-                                    </li>
-                                </ul>
+                                    </div>
+                                    <p class="spaces-checkout-order-sub" data-checkout-summary-copy>Maximum AI for client-ready interiors</p>
+                                </div>
+                                <div class="spaces-checkout-order-lines">
+                                    <div class="spaces-checkout-line">
+                                        <span>Subtotal</span>
+                                        <span data-checkout-subtotal>$407.88</span>
+                                    </div>
+                                    <div class="spaces-checkout-line is-trial" data-checkout-trial-line>
+                                        <div class="spaces-checkout-trial-copy">
+                                            <div class="spaces-checkout-trial-row">
+                                                <span>Free trial</span>
+                                                <span class="spaces-checkout-trial-tag"><span>7 days free</span></span>
+                                            </div>
+                                            <span class="spaces-checkout-muted">Includes 50 credits to try</span>
+                                        </div>
+                                        <span class="spaces-checkout-discount" data-checkout-trial-discount>-$407.88</span>
+                                    </div>
+                                    <div class="spaces-checkout-line">
+                                        <span>Tax</span>
+                                        <span>$0.00</span>
+                                    </div>
+                                    <div class="spaces-checkout-line is-due">
+                                        <div class="spaces-checkout-due-copy">
+                                            <span class="spaces-checkout-due-label">Due today</span>
+                                            <span class="spaces-checkout-muted" data-checkout-from-label>Then $407.88/year from Oct 10</span>
+                                        </div>
+                                        <strong data-checkout-due-today>$0.00</strong>
+                                    </div>
+                                </div>
                             </div>
 
-                            <p class="spaces-checkout-remind" data-checkout-remind hidden>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                                </svg>
-                                <span>We’ll remind you by email 2 days before the trial ends.</span>
-                            </p>
-                        </div>
-                    </aside>
+                            <div class="spaces-checkout-save-banner" data-checkout-save-banner>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.25 4.42C6.25 3.08 7.33 2 8.67 2 10.04 2 11.26 2.68 12 3.72 12.74 2.68 13.96 2 15.33 2c1.34 0 2.42 1.08 2.42 2.42 0 .98-.35 1.88-.92 2.58h2.42C20.22 7 21 7.78 21 8.75v.75c0 .97-.78 1.75-1.75 1.75h-6.5V7h.92a2.58 2.58 0 0 0 2.58-2.58.92.92 0 0 0-.92-.92 2.58 2.58 0 0 0-2.58 2.58V7h-1.5v-.92A2.58 2.58 0 0 0 8.67 3.5a.92.92 0 0 0-.92.92A2.58 2.58 0 0 0 10.33 7h.92v4.25h-6.5C3.78 11.25 3 10.47 3 9.5v-.75C3 7.78 3.78 7 4.75 7h2.42a3.95 3.95 0 0 1-.92-2.58z"></path><path d="M12.75 12.75H20v6.5c0 .97-.78 1.75-1.75 1.75h-5.5z"></path><path d="M11.25 12.75H4v6.5c0 .97.78 1.75 1.75 1.75h5.5z"></path></svg>
+                                <span data-checkout-save-text>You save $132 a year with yearly billing</span>
+                            </div>
+
+                            <button type="button" class="spaces-checkout-cta" data-checkout-cta>Start free trial</button>
+                            <p class="spaces-checkout-legal" data-checkout-legal>You won’t be charged today. We’ll remind you 2 days before the trial ends. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+                        </aside>
+                    </div>
                 </div>
             </div>
         </div>
-        <script src="./assets/js/spaces-upgrade-modal.js?v=premium-annual-1"></script>
+
+        <script src="./assets/js/spaces-upgrade-modal.js?v=pro-trial-checkout-2"></script>
         <script src="./assets/js/spaces-usage-modal.js?v=figma-1"></script>
         <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
-        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-fixes-2"></script>
+        <script src="./assets/js/spaces-checkout-modal.js?v=pro-trial-checkout-2"></script>
     </body>
 </html>

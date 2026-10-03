@@ -160,20 +160,16 @@
                 startMode: trialOn ? 'trial' : 'now',
                 annual,
                 name: 'Professional',
-                cta: trialOn ? 'Try free for 7 days' : 'Get Professional',
+                cta: trialOn ? 'Start free trial' : 'Get Professional',
                 label: `Professional · ${period}`,
                 price,
+                monthlyPrice: tier.monthly,
                 credits: tier.credits,
+                tagline: 'Maximum AI for client-ready interiors',
                 intro: trialOn
                     ? '7 days free. Your card is saved now — you won’t be charged until the trial ends.'
                     : 'Your plan starts as soon as the payment goes through',
-                summary: `${tier.label} credits/month for client-ready interiors with more Copilot and AI Studio.`,
-                receive: [
-                    `${tier.label} credits every month`,
-                    'Everything in Premium, plus more AI for client work',
-                    'Unlimited 4K renders and custom 3D uploads',
-                    'Cancel anytime'
-                ]
+                summary: `${tier.label} credits/month for client-ready interiors with more Copilot and AI Studio.`
             };
         }
         const price = annual ? PREMIUM.annual : PREMIUM.monthly;
@@ -187,15 +183,11 @@
             cta: 'Get Premium',
             label: `Premium · ${period}`,
             price,
+            monthlyPrice: PREMIUM.monthly,
             credits: PREMIUM.credits,
+            tagline: 'Design faster with AI',
             intro: 'Your plan starts as soon as the payment goes through',
-            summary: '1,000 credits/month for daily Copilot help and AI Studio room looks.',
-            receive: [
-                '1,000 credits every month',
-                'Advanced AI Copilot and AI Studio',
-                'Unlimited HD renders',
-                annual ? 'Billed annually — cancel anytime' : 'Cancel anytime'
-            ]
+            summary: '1,000 credits/month for daily Copilot help and AI Studio room looks.'
         };
     };
 
