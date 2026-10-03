@@ -71,9 +71,9 @@
             return {
                 isPlan: true,
                 trialAvailable: true,
-                price,
-                label: `${currentPack.name} · 7 days free, then ${period}`,
-                summary: `Then ${price}/${currentPack.annual ? 'month, billed annually' : 'month'}. ${credits} credits/month for client-ready interiors.`,
+                price: '$0',
+                label: `${currentPack.name} · 7 days free`,
+                summary: `Then ${price}/month, ${period}. ${credits} credits/month for client-ready interiors.`,
                 intro: '7 days free. Your card is saved now — you won’t be charged until the trial ends.',
                 cta: 'Start 7-day free trial',
                 receive: [
