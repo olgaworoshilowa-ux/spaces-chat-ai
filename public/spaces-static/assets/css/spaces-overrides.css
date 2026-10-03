@@ -16162,14 +16162,14 @@ body.is-upgrade-modal-open{
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 28px;
-    width: min(1040px, calc(100vw - 24px));
+    gap: 16px;
+    width: min(960px, calc(100vw - 24px));
     max-height: calc(100vh - 24px);
     max-height: calc(100dvh - 24px);
-    padding: 28px;
+    padding: 20px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, .55);
-    border-radius: 28px;
+    border-radius: 24px;
     box-sizing: border-box;
     color: #17181a;
     background: #eceee8;
@@ -16191,37 +16191,37 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-orb.is-green{
-    width: 520px;
-    height: 520px;
-    left: -60px;
-    top: 140px;
+    width: 420px;
+    height: 420px;
+    left: -48px;
+    top: 120px;
     background: #b9e890;
     opacity: .85;
 }
 
 .spaces-upgrade-orb.is-purple{
-    width: 560px;
-    height: 560px;
-    right: -80px;
-    top: 100px;
+    width: 460px;
+    height: 460px;
+    right: -64px;
+    top: 80px;
     background: #c7b3f5;
     opacity: .9;
 }
 
 .spaces-upgrade-orb.is-peach{
-    width: 420px;
-    height: 420px;
-    left: 340px;
-    top: -160px;
+    width: 340px;
+    height: 340px;
+    left: 300px;
+    top: -140px;
     background: #ffd6b5;
     opacity: .8;
 }
 
 .spaces-upgrade-orb.is-blue{
-    width: 480px;
-    height: 360px;
-    left: 300px;
-    bottom: -140px;
+    width: 380px;
+    height: 280px;
+    left: 280px;
+    bottom: -120px;
     background: #a9d8f2;
     opacity: .7;
 }
@@ -16243,14 +16243,14 @@ body.is-upgrade-modal-open{
     z-index: 1;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     flex: 0 0 auto;
 }
 
 .spaces-upgrade-modal-heading{
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
     min-width: 0;
 }
 
@@ -16258,21 +16258,21 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-modal-heading > h2{
     margin: 0;
     color: #17181a;
-    font: 700 34px/1.15 "Open Sans", Arial, sans-serif;
-    letter-spacing: -.02em;
+    font: 700 22px/28px "Open Sans", Arial, sans-serif;
+    letter-spacing: -.3px;
 }
 
 .spaces-upgrade-modal-lead{
     margin: 0;
     color: #3f424a;
-    font: 400 16px/1.4 "Open Sans", Arial, sans-serif;
+    font: 400 13px/18px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-billing{
     margin-left: auto;
     display: flex;
-    gap: 4px;
-    padding: 4px;
+    gap: 2px;
+    padding: 3px;
     border: 1px solid rgba(255, 255, 255, .75);
     border-radius: 999px;
     background: rgba(255, 255, 255, .4);
@@ -16283,13 +16283,13 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-billing-btn{
     display: inline-flex;
     align-items: center;
-    height: 40px;
-    padding: 0 18px;
+    height: 32px;
+    padding: 0 14px;
     border: 0;
     border-radius: 999px;
     background: transparent;
     color: #3f424a;
-    font: 600 15px/1 "Open Sans", Arial, sans-serif;
+    font: 600 13px/1 "Open Sans", Arial, sans-serif;
     cursor: pointer;
 }
 
@@ -16301,19 +16301,19 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-billing-save{
     margin-left: 6px;
-    padding: 3px 8px;
+    padding: 2px 7px;
     border-radius: 999px;
     background: #2e7d32;
     color: #fff;
-    font: 700 12px/1 "Open Sans", Arial, sans-serif;
+    font: 700 11px/1 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-modal-close{
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     padding: 0;
     border: 1px solid rgba(255, 255, 255, .75);
     border-radius: 999px;
@@ -16330,12 +16330,17 @@ body.is-upgrade-modal-open{
     background: rgba(255, 255, 255, .65);
 }
 
+.spaces-upgrade-modal-close svg{
+    width: 16px;
+    height: 16px;
+}
+
 .spaces-upgrade-plans{
     position: relative;
     z-index: 1;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
+    gap: 16px;
     align-items: stretch;
     width: 100%;
     flex: 1 1 auto;
@@ -16350,66 +16355,67 @@ body.is-upgrade-modal-open{
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
     min-height: 0;
-    padding: 28px;
+    padding: 18px;
     border: 1px solid rgba(255, 255, 255, .8);
-    border-radius: 28px;
+    border-radius: 22px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .42);
     backdrop-filter: blur(28px) saturate(170%);
     -webkit-backdrop-filter: blur(28px) saturate(170%);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 24px 48px rgba(28, 34, 24, .08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 16px 32px rgba(28, 34, 24, .08);
 }
 
 .spaces-upgrade-plan.is-pro{
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 24px 48px rgba(40, 24, 80, .1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 16px 32px rgba(40, 24, 80, .1);
 }
 
 .spaces-upgrade-plan-head{
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
 }
 
 .spaces-upgrade-plan-title-row{
     display: flex;
     align-items: center;
-    gap: 10px;
-    min-height: 36px;
+    gap: 8px;
+    min-height: 28px;
 }
 
 .spaces-upgrade-plan h3{
     margin: 0;
     color: #17181a;
-    font: 700 26px/1.15 "Open Sans", Arial, sans-serif;
+    font: 700 20px/26px "Open Sans", Arial, sans-serif;
+    letter-spacing: -.2px;
 }
 
 .spaces-upgrade-badge{
     margin-left: auto;
     display: inline-flex;
     align-items: center;
-    padding: 6px 12px;
+    padding: 4px 10px;
     border-radius: 999px;
     background: #17181a;
     color: #fff;
-    font: 600 13px/1 "Open Sans", Arial, sans-serif;
+    font: 600 11px/1 "Open Sans", Arial, sans-serif;
     white-space: nowrap;
 }
 
 .spaces-upgrade-plan-subtitle{
     margin: 0;
     color: #3f424a;
-    font: 400 15px/1.4 "Open Sans", Arial, sans-serif;
+    font: 400 13px/18px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credits-box{
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 18px;
+    gap: 8px;
+    padding: 12px;
     border: 1px solid rgba(255, 255, 255, .85);
-    border-radius: 18px;
+    border-radius: 14px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .55);
 }
@@ -16419,86 +16425,80 @@ body.is-upgrade-modal-open{
     align-items: center;
     gap: 8px;
     color: #3f424a;
-    font: 400 15px/1.3 "Open Sans", Arial, sans-serif;
+    font: 400 12px/16px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-per-credit{
     margin-left: auto;
-    padding: 4px 10px;
+    padding: 3px 8px;
     border-radius: 999px;
     background: rgba(255, 255, 255, .8);
     color: #17181a;
-    font: 400 13px/1.2 "Open Sans", Arial, sans-serif;
+    font: 400 11px/1.2 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credits-amount{
     display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 52px;
+    align-items: baseline;
+    gap: 6px;
+    min-height: 0;
 }
 
 .spaces-upgrade-credits-amount > strong{
     color: #17181a;
-    font: 700 32px/1 "Open Sans", Arial, sans-serif;
-    letter-spacing: -.02em;
+    font: 700 24px/28px "Open Sans", Arial, sans-serif;
+    letter-spacing: -.3px;
 }
 
 .spaces-upgrade-credits-amount > span{
     color: #3f424a;
-    font: 400 16px/1.2 "Open Sans", Arial, sans-serif;
+    font: 400 13px/18px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credits-controls{
     display: flex;
-    align-items: center;
-    gap: 16px;
-    min-height: 52px;
-}
-
-.spaces-upgrade-credits-controls .spaces-upgrade-credits-amount{
-    flex: 0 0 auto;
-    min-height: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
 }
 
 .spaces-upgrade-credit-stats{
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .spaces-upgrade-credit-stat{
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: 10px 12px;
-    border-radius: 12px;
+    gap: 1px;
+    padding: 8px 10px;
+    border-radius: 10px;
     background: rgba(255, 255, 255, .7);
 }
 
 .spaces-upgrade-credit-stat > strong{
     color: #17181a;
-    font: 700 20px/1.2 "Open Sans", Arial, sans-serif;
+    font: 700 15px/20px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credit-stat > span{
     color: #3f424a;
-    font: 400 13px/1.3 "Open Sans", Arial, sans-serif;
+    font: 400 11px/14px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-slider{
     --upgrade-slider-progress: 0%;
-    flex: 1 1 auto;
-    min-width: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
     touch-action: none;
 }
 
 .spaces-upgrade-slider input[type="range"]{
     width: 100%;
-    height: 24px;
+    height: 20px;
     margin: 0;
     accent-color: #17181a;
     cursor: pointer;
@@ -16508,7 +16508,7 @@ body.is-upgrade-modal-open{
     display: flex;
     justify-content: space-between;
     color: #5c5f66;
-    font: 400 12px/1.2 "Open Sans", Arial, sans-serif;
+    font: 400 11px/14px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-slider-labels > span{
@@ -16524,13 +16524,13 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-price-row{
     display: flex;
     align-items: baseline;
-    gap: 8px;
-    min-height: 60px;
+    gap: 6px;
+    min-height: 36px;
 }
 
 .spaces-upgrade-price-old{
     color: #6b6e75;
-    font: 400 18px/1.2 "Open Sans", Arial, sans-serif;
+    font: 400 14px/18px "Open Sans", Arial, sans-serif;
     text-decoration: line-through;
 }
 
@@ -16540,23 +16540,23 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-price-new{
     color: #17181a;
-    font: 700 44px/1 "Open Sans", Arial, sans-serif;
-    letter-spacing: -.02em;
+    font: 700 30px/34px "Open Sans", Arial, sans-serif;
+    letter-spacing: -.4px;
 }
 
 .spaces-upgrade-price-period{
     color: #3f424a;
-    font: 400 15px/1.2 "Open Sans", Arial, sans-serif;
+    font: 400 13px/18px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-start-row{
     display: flex;
     align-items: center;
-    gap: 12px;
-    min-height: 60px;
-    padding: 8px 16px;
+    gap: 10px;
+    min-height: 48px;
+    padding: 8px 12px;
     border: 1px solid rgba(255, 255, 255, .85);
-    border-radius: 16px;
+    border-radius: 12px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .55);
 }
@@ -16568,23 +16568,25 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-start-row > svg{
     margin-left: auto;
     flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
 }
 
 .spaces-upgrade-start-copy{
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
     min-width: 0;
 }
 
 .spaces-upgrade-start-copy > strong{
     color: #17181a;
-    font: 600 15px/1.3 "Open Sans", Arial, sans-serif;
+    font: 600 13px/18px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-start-copy > span{
     color: #3f424a;
-    font: 400 13px/1.3 "Open Sans", Arial, sans-serif;
+    font: 400 11px/14px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-trial-switch{
@@ -16593,9 +16595,9 @@ body.is-upgrade-modal-open{
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 52px;
-    height: 32px;
-    padding: 3px;
+    width: 44px;
+    height: 26px;
+    padding: 2px;
     border: 0;
     border-radius: 999px;
     background: rgba(23, 24, 26, .22);
@@ -16608,8 +16610,8 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-trial-knob{
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
     border-radius: 999px;
     background: #fff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
@@ -16618,7 +16620,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-offer{
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .spaces-upgrade-plan-cta{
@@ -16626,12 +16628,12 @@ body.is-upgrade-modal-open{
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 56px;
-    padding: 0 20px;
+    height: 44px;
+    padding: 0 16px;
     border: 0;
     border-radius: 999px;
     box-sizing: border-box;
-    font: 600 17px/1 "Open Sans", Arial, sans-serif;
+    font: 600 14px/1 "Open Sans", Arial, sans-serif;
     cursor: pointer;
 }
 
@@ -16662,29 +16664,29 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-bill-note{
     margin: 0;
     color: #3f424a;
-    font: 400 13px/1.3 "Open Sans", Arial, sans-serif;
+    font: 400 11px/14px "Open Sans", Arial, sans-serif;
     text-align: center;
 }
 
 .spaces-upgrade-features-block{
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     margin-top: auto;
-    padding-top: 20px;
+    padding-top: 12px;
     border-top: 1px solid rgba(23, 24, 26, .1);
 }
 
 .spaces-upgrade-features-lead{
     margin: 0;
     color: #17181a;
-    font: 600 15px/1.3 "Open Sans", Arial, sans-serif;
+    font: 600 13px/18px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-features{
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 7px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -16693,14 +16695,16 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features > li{
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     margin: 0;
     color: #17181a;
-    font: 400 15px/1.3 "Open Sans", Arial, sans-serif;
+    font: 400 13px/18px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-features > li > svg{
-    flex: 0 0 18px;
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
 }
 
 .spaces-upgrade-features > li > p{
@@ -16715,9 +16719,9 @@ body.is-upgrade-modal-open{
     align-items: center;
     gap: 12px;
     width: 100%;
-    padding: 18px 24px;
+    padding: 12px 16px;
     border: 1px solid rgba(255, 255, 255, .8);
-    border-radius: 20px;
+    border-radius: 16px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .42);
     backdrop-filter: blur(28px) saturate(170%);
@@ -16736,18 +16740,18 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-footer-copy{
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
     min-width: 0;
 }
 
 .spaces-upgrade-footer-copy > strong{
     color: #17181a;
-    font: 600 16px/1.3 "Open Sans", Arial, sans-serif;
+    font: 600 13px/18px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-footer-copy > span{
     color: #3f424a;
-    font: 400 14px/1.3 "Open Sans", Arial, sans-serif;
+    font: 400 12px/16px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-buy-credits{
@@ -16755,21 +16759,23 @@ body.is-upgrade-modal-open{
     display: inline-flex;
     flex: 0 0 auto;
     align-items: center;
-    gap: 6px;
-    min-height: 44px;
+    gap: 4px;
+    min-height: 36px;
     color: #1f4d17;
-    font: 600 16px/1 "Open Sans", Arial, sans-serif;
+    font: 600 13px/1 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-buy-credits > svg{
     display: block;
+    width: 16px;
+    height: 16px;
 }
 
-@media (max-width: 980px){
+@media (max-width: 900px){
     .spaces-upgrade-modal-dialog{
-        width: min(720px, calc(100vw - 16px));
-        gap: 20px;
-        padding: 20px;
+        width: min(520px, calc(100vw - 16px));
+        gap: 14px;
+        padding: 16px;
     }
 
     .spaces-upgrade-modal-header{
@@ -16787,16 +16793,8 @@ body.is-upgrade-modal-open{
         margin-left: auto;
     }
 
-    .spaces-upgrade-modal-heading > h2{
-        font-size: 28px;
-    }
-
     .spaces-upgrade-plans{
         grid-template-columns: 1fr;
-    }
-
-    .spaces-upgrade-price-new{
-        font-size: 36px;
     }
 }
 
@@ -16804,19 +16802,13 @@ body.is-upgrade-modal-open{
     .spaces-upgrade-modal-dialog{
         width: calc(100vw - 12px);
         max-height: calc(100dvh - 12px);
-        padding: 16px;
-        border-radius: 22px;
+        padding: 14px;
+        border-radius: 20px;
     }
 
     .spaces-upgrade-plan{
-        padding: 20px;
-        border-radius: 22px;
-    }
-
-    .spaces-upgrade-credits-controls{
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
+        padding: 16px;
+        border-radius: 18px;
     }
 
     .spaces-upgrade-badge{
@@ -16830,15 +16822,11 @@ body.is-upgrade-modal-open{
     .spaces-upgrade-footer{
         flex-direction: column;
         align-items: flex-start;
-        padding: 16px;
+        padding: 14px;
     }
 
     .spaces-upgrade-buy-credits{
         margin-left: 0;
-    }
-
-    .spaces-upgrade-modal-heading > h2{
-        font-size: 24px;
     }
 }
 
