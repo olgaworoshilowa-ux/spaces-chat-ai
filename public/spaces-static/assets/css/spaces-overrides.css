@@ -16178,30 +16178,29 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-modal-dialog{
-    --upgrade-gap: clamp(8px, 1.2vh, 14px);
-    --upgrade-card-pad: clamp(12px, 1.6vh, 18px);
-    --upgrade-card-gap: clamp(6px, 1.1vh, 12px);
-    --upgrade-title: clamp(22px, 2.8vh, 28px);
-    --upgrade-price: clamp(26px, 3.6vh, 34px);
-    --upgrade-credits: clamp(20px, 2.8vh, 26px);
-    --upgrade-cta: clamp(40px, 4.8vh, 48px);
+    --upgrade-gap: 28px;
+    --upgrade-card-pad: 28px;
+    --upgrade-card-gap: 20px;
+    --upgrade-title: 36px;
+    --upgrade-price: 44px;
+    --upgrade-credits: 32px;
+    --upgrade-cta: 56px;
     --upgrade-col: min(1080px, calc(100% - 48px));
     position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--upgrade-gap);
     width: 100%;
     height: 100%;
     margin: 0;
-    padding:
-        max(10px, env(safe-area-inset-top))
-        max(24px, env(safe-area-inset-right))
-        max(10px, env(safe-area-inset-bottom))
-        max(24px, env(safe-area-inset-left));
-    overflow: hidden;
+    padding: 0 max(28px, env(safe-area-inset-right)) 0 max(28px, env(safe-area-inset-left));
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     border: 0;
     border-radius: 0;
     box-sizing: border-box;
@@ -16209,6 +16208,13 @@ body.is-upgrade-modal-open{
     background: #f1f1ec;
     font-family: "Open Sans", system-ui, sans-serif;
     font-variant-numeric: tabular-nums;
+}
+
+.spaces-upgrade-modal-dialog::before,
+.spaces-upgrade-modal-dialog::after{
+    content: "";
+    flex: 1 0 28px;
+    width: 100%;
 }
 
 .spaces-upgrade-modal-orbs{
@@ -16299,7 +16305,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-modal-lead{
     margin: 0;
     color: #55585e;
-    font: 400 clamp(12px, 1.5vh, 14px)/1.3 "Open Sans", Arial, sans-serif;
+    font: 400 16px/1.35 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-billing{
@@ -16373,35 +16379,35 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-plans{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(12px, 1.6vw, 20px);
+    grid-template-rows: repeat(7, auto);
+    column-gap: 24px;
     align-items: stretch;
-    flex: 0 1 auto;
-    min-height: 0;
-    max-height: min(640px, calc(100dvh - 150px));
+    flex: 0 0 auto;
 }
 
 .spaces-upgrade-plan{
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--upgrade-card-gap);
+    display: grid;
+    grid-row: span 7;
+    grid-template-rows: subgrid;
+    row-gap: 20px;
+    align-content: start;
     min-width: 0;
-    min-height: 0;
-    height: 100%;
-    padding: var(--upgrade-card-pad);
+    height: auto;
+    padding: 28px;
     border: 1px solid rgba(255, 255, 255, .95);
-    border-radius: 22px;
+    border-radius: 28px;
     box-sizing: border-box;
-    background: rgba(255, 255, 255, .62);
+    background: rgba(255, 255, 255, .5);
     backdrop-filter: blur(28px) saturate(160%);
     -webkit-backdrop-filter: blur(28px) saturate(160%);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, .9) inset, 0 8px 18px rgba(20, 21, 19, .06);
+    box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(20, 21, 19, .04), 0 16px 40px rgba(20, 21, 19, .06);
 }
 
 .spaces-upgrade-plan.is-pro{
     border: 1.5px solid #8b6fe0;
-    background: rgba(237, 230, 252, .78);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, .9) inset, 0 8px 18px rgba(20, 21, 19, .06);
+    background: rgba(237, 230, 252, .72);
+    box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(60, 40, 120, .06), 0 16px 40px rgba(20, 21, 19, .08);
 }
 
 .spaces-upgrade-plan-head{
@@ -16421,7 +16427,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-plan h3{
     margin: 0;
     color: #141513;
-    font: 700 clamp(17px, 2.2vh, 21px)/1.15 "Open Sans", Arial, sans-serif;
+    font: 700 24px/1.15 "Open Sans", Arial, sans-serif;
     letter-spacing: -.01em;
 }
 
@@ -16440,16 +16446,16 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-plan-subtitle{
     margin: 0;
     color: #55585e;
-    font: 400 clamp(12px, 1.45vh, 13px)/1.3 "Open Sans", Arial, sans-serif;
+    font: 400 15px/1.35 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credits-box{
     display: flex;
     flex-direction: column;
-    gap: clamp(4px, .8vh, 8px);
-    padding: clamp(8px, 1.2vh, 12px) 12px;
+    gap: 12px;
+    padding: 16px 18px;
     border: 1px solid rgba(20, 21, 19, .06);
-    border-radius: 14px;
+    border-radius: 18px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .65);
     flex: 0 0 auto;
@@ -16459,7 +16465,7 @@ body.is-upgrade-modal-open{
     display: flex;
     align-items: baseline;
     gap: 8px;
-    min-height: 0;
+    min-height: 52px;
 }
 
 .spaces-upgrade-credits-amount > strong{
@@ -16470,13 +16476,13 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-credits-amount > span{
     color: #55585e;
-    font: 400 13px/1.2 "Open Sans", Arial, sans-serif;
+    font: 400 15px/1.2 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-credits-copy{
     margin: 0;
     color: #55585e;
-    font: 400 clamp(11px, 1.4vh, 13px)/1.3 "Open Sans", Arial, sans-serif;
+    font: 400 15px/1.5 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-slider{
@@ -16563,7 +16569,7 @@ body.is-upgrade-modal-open{
 
 .spaces-upgrade-price-old{
     color: #8a8c90;
-    font: 600 clamp(13px, 1.6vh, 16px)/1.2 "Open Sans", Arial, sans-serif;
+    font: 600 20px/1.2 "Open Sans", Arial, sans-serif;
     text-decoration: line-through;
 }
 
@@ -16586,7 +16592,7 @@ body.is-upgrade-modal-open{
     display: flex;
     align-items: center;
     gap: 10px;
-    min-height: clamp(40px, 5vh, 50px);
+    min-height: 60px;
     padding: 5px 12px;
     border: 1px solid rgba(20, 21, 19, .06);
     border-radius: 12px;
@@ -16663,7 +16669,7 @@ body.is-upgrade-modal-open{
     border: 0;
     border-radius: 999px;
     box-sizing: border-box;
-    font: 600 clamp(13px, 1.7vh, 15px)/1 "Open Sans", Arial, sans-serif;
+    font: 600 16px/1 "Open Sans", Arial, sans-serif;
     cursor: pointer;
     flex: 0 0 auto;
 }
@@ -16692,9 +16698,9 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-bill-note{
-    margin: calc(var(--upgrade-card-gap) * -0.4) 0 0;
+    margin: -8px 0 0;
     color: #55585e;
-    font: 400 11px/1.25 "Open Sans", Arial, sans-serif;
+    font: 400 13px/1.35 "Open Sans", Arial, sans-serif;
     text-align: center;
     flex: 0 0 auto;
 }
@@ -16702,24 +16708,22 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-features-block{
     display: flex;
     flex-direction: column;
-    gap: clamp(4px, .8vh, 8px);
-    margin-top: auto;
-    padding-top: clamp(6px, 1vh, 12px);
+    gap: 12px;
+    margin-top: 0;
+    padding-top: 20px;
     border-top: 1px solid rgba(20, 21, 19, .08);
-    flex: 1 1 auto;
-    min-height: 0;
 }
 
 .spaces-upgrade-features-lead{
     margin: 0;
     color: #55585e;
-    font: 600 11px/1.25 "Open Sans", Arial, sans-serif;
+    font: 600 13px/1.25 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-features{
     display: flex;
     flex-direction: column;
-    gap: clamp(4px, .75vh, 7px);
+    gap: 12px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -16732,7 +16736,7 @@ body.is-upgrade-modal-open{
     gap: 8px;
     margin: 0;
     color: #141513;
-    font: 400 clamp(11px, 1.4vh, 13px)/1.25 "Open Sans", Arial, sans-serif;
+    font: 400 15px/1.3 "Open Sans", Arial, sans-serif;
 }
 
 .spaces-upgrade-features > li.is-highlight{
@@ -16751,12 +16755,12 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-feature-icon{
-    flex: 0 0 18px;
+    flex: 0 0 22px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     border-radius: 999px;
     background: rgba(47, 143, 58, .14);
     color: #1f6b29;
