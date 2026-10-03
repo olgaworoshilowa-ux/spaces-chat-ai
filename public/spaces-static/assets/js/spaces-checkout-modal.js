@@ -40,8 +40,8 @@
     ];
 
     const ART = {
-        credits: './assets/images/spaces-v2/checkout/card-coins.png',
-        plan: './assets/images/spaces-v2/buy-credits/credit-card.png'
+        credits: './assets/images/spaces-v2/checkout/order-card.png',
+        plan: './assets/images/spaces-v2/checkout/order-card.png'
     };
 
     let lastFocus = null;
