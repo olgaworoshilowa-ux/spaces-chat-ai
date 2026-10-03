@@ -7,21 +7,65 @@
     const priceNode = modal?.querySelector('[data-checkout-price]');
     const creditsLabel = modal?.querySelector('[data-checkout-credits-label]');
     const summaryCopy = modal?.querySelector('[data-checkout-summary-copy]');
+    const introNode = modal?.querySelector('[data-checkout-intro]');
+    const receiveList = modal?.querySelector('[data-checkout-receive]');
     const companyToggle = modal?.querySelector('[data-checkout-company-toggle]');
     if (!modal || !dialog) return;
 
+    const DEFAULT_CREDITS_RECEIVE = [
+        'One-time credits added to this account',
+        'Works in Copilot and everywhere in AI Studio',
+        'No subscription, no renewal',
+        'Your paused task continues right away'
+    ];
+
     let lastFocus = null;
-    let currentPack = { credits: 500, price: 27.99, summary: 'Enough for one flat, room by room. One-time top-up, no renewal.' };
+    let returnTo = 'buy-credits';
+    let currentPack = {
+        kind: 'credits',
+        credits: 500,
+        price: 27.99,
+        summary: 'Enough for one flat, room by room. One-time top-up, no renewal.',
+        receive: DEFAULT_CREDITS_RECEIVE
+    };
     let payment = 'card';
 
     const money = value => `$${Number(value).toFixed(2)}`;
     const formatCredits = value => Number(value).toLocaleString('en-US');
 
+    const renderReceive = items => {
+        if (!receiveList) return;
+        const list = Array.isArray(items) && items.length ? items : DEFAULT_CREDITS_RECEIVE;
+        receiveList.innerHTML = list.map(text => `
+            <li>
+                <img src="./assets/images/spaces-v2/checkout/check.svg" width="24" height="24" alt="" aria-hidden="true">
+                <span>${text}</span>
+            </li>
+        `).join('');
+    };
+
     const syncPack = () => {
+        const isPlan = currentPack.kind === 'plan';
         if (priceNode) priceNode.textContent = money(currentPack.price);
-        if (creditsLabel) creditsLabel.textContent = `${formatCredits(currentPack.credits)} credits`;
+        if (creditsLabel) {
+            creditsLabel.textContent = isPlan
+                ? (currentPack.label || currentPack.name || 'Plan')
+                : `${formatCredits(currentPack.credits)} credits`;
+        }
         if (summaryCopy) summaryCopy.textContent = currentPack.summary || currentPack.copy || '';
-        if (cta) cta.textContent = `Buy ${formatCredits(currentPack.credits)} credits`;
+        if (introNode) {
+            introNode.textContent = isPlan
+                ? 'Your plan starts as soon as the payment goes through'
+                : 'Credits are added to your balance as soon as the payment goes through';
+        }
+        if (cta) {
+            cta.textContent = isPlan
+                ? (currentPack.cta || `Get ${currentPack.name || 'plan'}`)
+                : `Buy ${formatCredits(currentPack.credits)} credits`;
+        }
+        renderReceive(currentPack.receive);
+        modal.classList.toggle('is-plan-checkout', isPlan);
+        modal.classList.toggle('is-credits-checkout', !isPlan);
     };
 
     const syncPayment = () => {
@@ -48,11 +92,15 @@
         if (restoreFocus) lastFocus = null;
     };
 
-    const openModal = (pack, trigger) => {
+    const openModal = (pack, trigger, options = {}) => {
         lastFocus = trigger || document.activeElement;
         if (pack) currentPack = pack;
+        returnTo = options.returnTo || (currentPack.kind === 'plan' ? 'upgrade' : 'buy-credits');
         if (window.SpacesBuyCreditsModal?.close) {
             window.SpacesBuyCreditsModal.close({ restoreFocus: false });
+        }
+        if (window.SpacesUpgradeModal?.close) {
+            window.SpacesUpgradeModal.close({ restoreFocus: false });
         }
         modal.hidden = false;
         document.body.classList.add('is-checkout-modal-open');
@@ -65,7 +113,8 @@
         const countNode = document.querySelector('[data-header-credits-count]');
         if (!countNode) return;
         const current = Number(String(countNode.textContent || '0').replace(/[^\d]/g, '')) || 0;
-        const next = current + Number(currentPack.credits || 0);
+        const add = Number(currentPack.credits || 0);
+        const next = current + add;
         countNode.textContent = String(next);
         const trigger = document.querySelector('[data-header-credits]');
         if (trigger) trigger.setAttribute('aria-label', `${next} credits left`);
@@ -87,6 +136,10 @@
     modal.querySelector('[data-checkout-back]')?.addEventListener('click', event => {
         event.preventDefault();
         closeModal({ restoreFocus: false });
+        if (returnTo === 'upgrade') {
+            window.SpacesUpgradeModal?.open(lastFocus);
+            return;
+        }
         window.SpacesBuyCreditsModal?.open(lastFocus);
     });
 

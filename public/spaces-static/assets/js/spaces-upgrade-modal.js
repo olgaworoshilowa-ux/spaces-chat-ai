@@ -102,16 +102,18 @@
         );
     };
 
-    const closeModal = () => {
+    const closeModal = ({ restoreFocus = true } = {}) => {
         if (modal.hidden) return;
         modal.hidden = true;
         document.body.classList.remove('is-upgrade-modal-open');
-        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-        lastFocus = null;
+        if (restoreFocus && lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+        if (restoreFocus) lastFocus = null;
     };
 
     const openModal = (trigger) => {
         lastFocus = trigger || document.activeElement;
+        if (window.SpacesCheckoutModal?.close) window.SpacesCheckoutModal.close({ restoreFocus: false });
+        if (window.SpacesBuyCreditsModal?.close) window.SpacesBuyCreditsModal.close({ restoreFocus: false });
         modal.hidden = false;
         document.body.classList.add('is-upgrade-modal-open');
         // Close header credits popover if open.
@@ -122,6 +124,58 @@
         syncPrices();
         modal.querySelector('[data-upgrade-modal-close]')?.focus();
     };
+
+    const buildCheckoutPack = (planKey) => {
+        const tier = CREDIT_TIERS[proTier] || CREDIT_TIERS[0];
+        const period = annual ? 'billed annually' : 'billed monthly';
+        if (planKey === 'pro') {
+            const price = annual ? tier.annual : tier.monthly;
+            return {
+                kind: 'plan',
+                plan: 'pro',
+                name: 'Professional',
+                cta: 'Get Pro',
+                label: `Professional · ${period}`,
+                price,
+                credits: tier.credits,
+                summary: `${tier.credits.toLocaleString('en-US')} credits/month for client-ready interiors with more Copilot and AI Studio.`,
+                receive: [
+                    `${tier.credits.toLocaleString('en-US')} credits every month`,
+                    'Everything in Premium, plus more AI for client work',
+                    'Unlimited 4K renders and custom 3D uploads',
+                    annual ? '7 days free, then billed annually' : 'Cancel anytime'
+                ]
+            };
+        }
+        const price = annual ? PREMIUM.annual : PREMIUM.monthly;
+        return {
+            kind: 'plan',
+            plan: 'premium',
+            name: 'Premium',
+            cta: 'Get Premium',
+            label: `Premium · ${period}`,
+            price,
+            credits: 1000,
+            summary: '1,000 credits/month for daily Copilot help and AI Studio room looks.',
+            receive: [
+                '1,000 credits every month',
+                'Advanced Copilot and AI Designer',
+                'AI Studio looks and unlimited HD renders',
+                annual ? 'Billed annually — cancel anytime' : 'Cancel anytime'
+            ]
+        };
+    };
+
+    modal.querySelectorAll('[data-upgrade-checkout]').forEach(button => {
+        button.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+            const planKey = button.getAttribute('data-upgrade-checkout') || 'premium';
+            const pack = buildCheckoutPack(planKey);
+            closeModal({ restoreFocus: false });
+            window.SpacesCheckoutModal?.open(pack, button, { returnTo: 'upgrade' });
+        });
+    });
 
     document.querySelectorAll('[data-upgrade-modal-open]').forEach(button => {
         button.addEventListener('click', event => {
