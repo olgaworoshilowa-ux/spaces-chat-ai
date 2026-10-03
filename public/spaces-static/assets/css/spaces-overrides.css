@@ -17677,49 +17677,13 @@ body.is-checkout-modal-open{
     background: #f2ba36;
 }
 
-.spaces-checkout-apple-mark,
-.spaces-checkout-gpay-mark,
-.spaces-checkout-paypal-mark{
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    max-width: 100%;
-    line-height: 1;
-    white-space: nowrap;
-}
-
-.spaces-checkout-apple-mark > svg,
-.spaces-checkout-gpay-mark > svg,
-.spaces-checkout-paypal-mark > svg{
+.spaces-checkout-express-btn > img{
     display: block;
-    flex: 0 0 auto;
-}
-
-.spaces-checkout-apple-mark{
-    gap: 4px;
-    color: #000;
-    font: 600 18px/1 -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-    letter-spacing: -.04em;
-}
-
-.spaces-checkout-gpay-mark{
-    color: #3c4043;
-    font: 500 16px/1 "Open Sans", Arial, sans-serif;
-    letter-spacing: -.02em;
-}
-
-.spaces-checkout-paypal-mark{
-    gap: 3px;
-    font: italic 700 16px/1 "Open Sans", Arial, sans-serif;
-    letter-spacing: -.03em;
-}
-
-.spaces-checkout-paypal-mark .is-dark{
-    color: #003087;
-}
-
-.spaces-checkout-paypal-mark .is-light{
-    color: #009cde;
+    width: auto;
+    height: 22px;
+    max-width: calc(100% - 8px);
+    object-fit: contain;
+    pointer-events: none;
 }
 
 .spaces-checkout-or{
