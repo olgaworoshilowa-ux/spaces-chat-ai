@@ -133,17 +133,21 @@
             return {
                 kind: 'plan',
                 plan: 'pro',
+                trial: true,
                 name: 'Professional',
-                cta: 'Get Pro',
-                label: `Professional · ${period}`,
+                cta: 'Start 7-day free trial',
+                label: annual
+                    ? 'Professional · 7 days free, then billed annually'
+                    : 'Professional · 7 days free, then billed monthly',
                 price,
                 credits: tier.credits,
-                summary: `${tier.credits.toLocaleString('en-US')} credits/month for client-ready interiors with more Copilot and AI Studio.`,
+                intro: '7 days free. Your card is saved now — you won’t be charged until the trial ends.',
+                summary: `Then ${money(price)}/${annual ? 'month, billed annually' : 'month'}. ${tier.credits.toLocaleString('en-US')} credits/month for client-ready interiors.`,
                 receive: [
-                    `${tier.credits.toLocaleString('en-US')} credits every month`,
+                    '7 days free to try Professional',
+                    `${tier.credits.toLocaleString('en-US')} credits every month after the trial`,
                     'Everything in Premium, plus more AI for client work',
-                    'Unlimited 4K renders and custom 3D uploads',
-                    annual ? '7 days free, then billed annually' : 'Cancel anytime'
+                    'Cancel anytime before the trial ends — no charge'
                 ]
             };
         }
@@ -151,11 +155,13 @@
         return {
             kind: 'plan',
             plan: 'premium',
+            trial: false,
             name: 'Premium',
             cta: 'Get Premium',
             label: `Premium · ${period}`,
             price,
             credits: 1000,
+            intro: 'Your plan starts as soon as the payment goes through',
             summary: '1,000 credits/month for daily Copilot help and AI Studio room looks.',
             receive: [
                 '1,000 credits every month',

@@ -54,9 +54,10 @@
         }
         if (summaryCopy) summaryCopy.textContent = currentPack.summary || currentPack.copy || '';
         if (introNode) {
-            introNode.textContent = isPlan
-                ? 'Your plan starts as soon as the payment goes through'
-                : 'Credits are added to your balance as soon as the payment goes through';
+            introNode.textContent = currentPack.intro
+                || (isPlan
+                    ? 'Your plan starts as soon as the payment goes through'
+                    : 'Credits are added to your balance as soon as the payment goes through');
         }
         if (cta) {
             cta.textContent = isPlan
