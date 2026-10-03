@@ -17864,6 +17864,22 @@ body.is-checkout-modal-open{
     box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(60, 40, 120, .06), 0 16px 40px rgba(80, 50, 160, .12);
 }
 
+.spaces-checkout-modal.is-premium .spaces-checkout-order-card{
+    border-color: #3d9a55;
+    background:
+        radial-gradient(356px 390px at 100% 0%, rgba(47, 143, 58, .28) 0%, transparent 100%),
+        rgba(226, 245, 230, .92);
+    box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(30, 90, 40, .06), 0 16px 40px rgba(47, 143, 58, .16);
+}
+
+.spaces-checkout-modal.is-premium .spaces-checkout-credits-pill{
+    background: rgba(47, 143, 58, .14);
+}
+
+.spaces-checkout-modal.is-premium .spaces-checkout-credits-pill svg{
+    fill: #2f8f3a;
+}
+
 .spaces-checkout-order-head{
     display: flex;
     flex-direction: column;

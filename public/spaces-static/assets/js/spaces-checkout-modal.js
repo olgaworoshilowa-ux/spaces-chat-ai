@@ -134,6 +134,8 @@
         modal.classList.toggle('is-credits-checkout', !display.isPlan);
         modal.classList.toggle('is-trial-start', display.useTrial);
         modal.classList.toggle('is-pay-now-start', display.isPlan && !display.useTrial);
+        modal.classList.toggle('is-premium', currentPack.plan === 'premium');
+        modal.classList.toggle('is-pro', currentPack.plan === 'pro');
     };
 
     const closeModal = ({ restoreFocus = true } = {}) => {
