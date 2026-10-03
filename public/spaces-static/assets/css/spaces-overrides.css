@@ -17350,20 +17350,36 @@ body.is-checkout-modal-open{
     display: none !important;
 }
 
-.spaces-checkout-field{
-    position: relative;
+.spaces-checkout-card-group{
     display: flex;
-    align-items: center;
-    min-height: 52px;
-    padding: 14px 16px;
+    flex-direction: column;
+    overflow: hidden;
     border: 1px solid rgba(0, 0, 0, .16);
     border-radius: 16px;
+    background: #fff;
+}
+
+.spaces-checkout-field{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    min-height: 0;
+    margin: 0;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 0;
     box-sizing: border-box;
     background: #fff;
 }
 
-.spaces-checkout-field.is-card-number{
-    border-radius: 16px 16px 0 0;
+.spaces-checkout-field.is-solo{
+    border: 1px solid rgba(0, 0, 0, .16);
+    border-radius: 16px;
+}
+
+.spaces-checkout-card-group > .spaces-checkout-field.is-card-number{
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
 }
 
 .spaces-checkout-field-row{
@@ -17373,48 +17389,54 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-field-row > .spaces-checkout-field:first-child{
-    border-radius: 0 0 0 16px;
-    border-right: 0;
-}
-
-.spaces-checkout-field-row > .spaces-checkout-field:last-child{
-    border-radius: 0 0 16px 0;
+    border-right: 1px solid rgba(0, 0, 0, .12);
 }
 
 .spaces-checkout-field-label{
-    position: absolute;
-    top: -9px;
-    left: 12px;
-    padding: 0 4px;
-    background: #fff;
+    position: static;
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: transparent;
     color: #747474;
     font: 400 12px/16px "Open Sans", Arial, sans-serif;
 }
 
-.spaces-checkout-field > input{
+.spaces-checkout-field-control{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.spaces-checkout-field > input,
+.spaces-checkout-field-control > input{
     width: 100%;
     min-width: 0;
     margin: 0;
     padding: 0;
     border: 0;
-    color: #393939;
-    font: 400 16px/24px "Open Sans", Arial, sans-serif;
+    color: #1c1c1c;
+    font: 400 16px/22px "Open Sans", Arial, sans-serif;
     background: transparent;
 }
 
-.spaces-checkout-field > input:focus{
+.spaces-checkout-field > input:focus,
+.spaces-checkout-field-control > input:focus{
     outline: 0;
 }
 
-.spaces-checkout-field > input::placeholder{
-    color: #747474;
+.spaces-checkout-field > input::placeholder,
+.spaces-checkout-field-control > input::placeholder{
+    color: #8a8a8a;
 }
 
 .spaces-checkout-brands{
     display: inline-flex;
+    flex: 0 0 auto;
     align-items: center;
     gap: 4px;
-    margin-left: 8px;
+    margin-left: 0;
 }
 
 .spaces-checkout-brands > img{
