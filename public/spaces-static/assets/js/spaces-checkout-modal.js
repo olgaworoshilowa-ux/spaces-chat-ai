@@ -9,7 +9,6 @@
     const summaryCopy = modal?.querySelector('[data-checkout-summary-copy]');
     const introNode = modal?.querySelector('[data-checkout-intro]');
     const receiveList = modal?.querySelector('[data-checkout-receive]');
-    const startSection = modal?.querySelector('[data-checkout-start-section]');
     const companyToggle = modal?.querySelector('[data-checkout-company-toggle]');
     const planHeading = modal?.querySelector('[data-checkout-plan-heading]');
     const creditsHeading = modal?.querySelector('[data-checkout-credits-heading]');
@@ -160,23 +159,6 @@
         };
     };
 
-    const syncStartOptions = () => {
-        const trialAvailable = Boolean(currentPack.trialAvailable);
-        if (startSection) startSection.hidden = !trialAvailable;
-        modal.querySelectorAll('[data-checkout-start-options] [data-checkout-start]').forEach(button => {
-            const mode = button.getAttribute('data-checkout-start');
-            const active = trialAvailable && mode === startMode;
-            button.classList.toggle('is-selected', active);
-            button.setAttribute('aria-pressed', String(active));
-            const radio = button.querySelector('[data-checkout-start-radio]');
-            if (radio) {
-                radio.src = active
-                    ? './assets/images/spaces-v2/checkout/radio-on.svg'
-                    : './assets/images/spaces-v2/checkout/radio-off.svg';
-            }
-        });
-    };
-
     const syncPack = () => {
         const display = getDisplayState();
 
@@ -201,7 +183,6 @@
         if (artImg) artImg.src = display.isPlan ? ART.plan : ART.credits;
 
         renderReceive(display.receive);
-        syncStartOptions();
 
         modal.classList.toggle('is-plan-checkout', display.isPlan);
         modal.classList.toggle('is-credits-checkout', !display.isPlan);
@@ -237,7 +218,9 @@
         lastFocus = trigger || document.activeElement;
         if (pack) currentPack = pack;
         returnTo = options.returnTo || (currentPack.kind === 'plan' ? 'upgrade' : 'buy-credits');
-        startMode = currentPack.trialAvailable ? 'trial' : 'now';
+        // Trial vs pay-now is chosen on the Upgrade modal switch.
+        startMode = currentPack.startMode
+            || (currentPack.trialAvailable ? 'trial' : 'now');
         if (window.SpacesBuyCreditsModal?.close) {
             window.SpacesBuyCreditsModal.close({ restoreFocus: false });
         }
@@ -263,14 +246,6 @@
         const trigger = document.querySelector('[data-header-credits]');
         if (trigger) trigger.setAttribute('aria-label', `${next} credits left`);
     };
-
-    modal.querySelectorAll('[data-checkout-start-options] [data-checkout-start]').forEach(button => {
-        button.addEventListener('click', () => {
-            if (!currentPack.trialAvailable) return;
-            startMode = button.getAttribute('data-checkout-start') || 'trial';
-            syncPack();
-        });
-    });
 
     modal.querySelectorAll('[data-checkout-pay]').forEach(button => {
         button.addEventListener('click', () => {
