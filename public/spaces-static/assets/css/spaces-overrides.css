@@ -18188,11 +18188,14 @@ body.is-checkout-modal-open{
 @media (max-width: 900px){
     .spaces-checkout-main{
         grid-template-columns: 1fr;
-        grid-template-rows: auto minmax(0, 1fr);
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
     }
 
-    .spaces-checkout-form{
+    .spaces-checkout-form,
+    .spaces-checkout-summary{
         height: auto;
         max-height: none;
         overflow: visible;
@@ -18200,17 +18203,8 @@ body.is-checkout-modal-open{
 
     .spaces-checkout-summary{
         order: -1;
-        height: auto;
-        max-height: none;
         margin: 16px;
         padding: 24px 20px 28px;
-        overflow: visible;
-    }
-
-    .spaces-checkout-main{
-        overflow-y: auto;
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
     }
 
     .spaces-checkout-summary-art > img{
