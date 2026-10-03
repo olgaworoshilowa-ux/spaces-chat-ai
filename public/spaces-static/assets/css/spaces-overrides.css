@@ -16345,6 +16345,10 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-modal-close{
+    position: absolute;
+    z-index: 3;
+    top: max(16px, env(safe-area-inset-top));
+    right: max(16px, env(safe-area-inset-right));
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -16353,17 +16357,17 @@ body.is-upgrade-modal-open{
     padding: 0;
     border: 1px solid rgba(255, 255, 255, .9);
     border-radius: 999px;
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 2px rgba(20, 21, 19, .06);
     cursor: pointer;
-    flex: 0 0 auto;
 }
 
 .spaces-upgrade-modal-close:hover,
 .spaces-upgrade-modal-close:focus-visible{
     outline: 0;
-    background: rgba(255, 255, 255, .75);
+    background: rgba(255, 255, 255, .9);
 }
 
 .spaces-upgrade-plans{
@@ -16851,10 +16855,6 @@ body.is-upgrade-modal-open{
         width: 100%;
         justify-content: center;
         flex-wrap: wrap;
-    }
-
-    .spaces-upgrade-modal-close{
-        margin-left: auto;
     }
 
     .spaces-upgrade-plans{
