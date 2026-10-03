@@ -16191,7 +16191,7 @@ body.is-upgrade-modal-open{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: safe center;
     gap: var(--upgrade-gap);
     width: 100%;
     height: 100%;
@@ -16199,7 +16199,7 @@ body.is-upgrade-modal-open{
     padding:
         max(20px, env(safe-area-inset-top))
         max(28px, env(safe-area-inset-right))
-        max(20px, env(safe-area-inset-bottom))
+        max(104px, env(safe-area-inset-bottom))
         max(28px, env(safe-area-inset-left));
     overflow-x: hidden;
     overflow-y: auto;
@@ -16776,10 +16776,17 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-footer{
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
     display: flex;
-    flex: 0 0 auto;
     align-items: center;
     gap: 16px;
+    width: var(--upgrade-col);
+    max-width: calc(100% - 56px);
+    margin: 0;
     min-height: 64px;
     padding: 12px 14px 12px 20px;
     border: 1px solid rgba(255, 255, 255, .95);
