@@ -19,7 +19,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-currency-fullwidth-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-currency-stripe-docs-1">
 
         <title>Get Started Spaces</title>
 
@@ -4504,6 +4504,33 @@
 
                     <div class="spaces-checkout-main">
                         <div class="spaces-checkout-form">
+                            <!-- Stripe docs: Currency Selector above Express Checkout Element -->
+                            <div class="spaces-checkout-currency" data-checkout-currency>
+                                <div class="spaces-checkout-toggle-group" role="radiogroup" aria-label="Choose currency">
+                                    <label class="spaces-checkout-toggle-item is-selected">
+                                        <input class="visually-hidden" type="radio" name="spaces-checkout-currency" value="gel" data-checkout-currency-option="gel" checked>
+                                        <span class="spaces-checkout-toggle-label">
+                                            <span class="spaces-checkout-toggle-flag" aria-hidden="true">
+                                                <img src="./assets/images/spaces-v2/checkout/flags/ge.svg?v=stripe4" width="16" height="16" alt="">
+                                            </span>
+                                            <span dir="ltr">GEL</span>
+                                        </span>
+                                    </label>
+                                    <label class="spaces-checkout-toggle-item">
+                                        <input class="visually-hidden" type="radio" name="spaces-checkout-currency" value="usd" data-checkout-currency-option="usd">
+                                        <span class="spaces-checkout-toggle-label">
+                                            <span class="spaces-checkout-toggle-flag" aria-hidden="true">
+                                                <img src="./assets/images/spaces-v2/checkout/flags/us.svg?v=stripe4" width="16" height="16" alt="">
+                                            </span>
+                                            <span dir="ltr">USD</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <p class="spaces-checkout-currency-rate" data-checkout-currency-rate dir="ltr">
+                                    <span data-checkout-currency-rate-text>1 USD = 2.7045 GEL</span> (incl. 2% conversion fee).
+                                </p>
+                            </div>
+
                             <div class="spaces-checkout-express" aria-label="Express payment methods">
                                 <button type="button" class="spaces-checkout-express-btn is-apple" data-checkout-pay="apple" aria-label="Pay with Apple Pay">
                                     <img src="./assets/images/spaces-v2/checkout/apple-pay-wordmark.svg?v=3" alt="" width="54" height="22">
@@ -4520,32 +4547,6 @@
                                 <span></span>
                                 <em>or pay with</em>
                                 <span></span>
-                            </div>
-
-                            <div class="spaces-checkout-currency" data-checkout-currency>
-                                <div class="spaces-checkout-toggle-group" role="radiogroup" aria-label="Choose currency">
-                                    <input class="visually-hidden" type="radio" name="spaces-checkout-currency" id="spaces-checkout-currency-gel" value="gel" data-checkout-currency-option="gel" checked>
-                                    <label for="spaces-checkout-currency-gel" class="spaces-checkout-toggle-item is-selected">
-                                        <span class="spaces-checkout-toggle-label">
-                                            <span class="spaces-checkout-toggle-flag">
-                                                <img src="./assets/images/spaces-v2/checkout/flags/ge.svg?v=stripe3" width="16" height="16" alt="GE">
-                                            </span>
-                                            <span dir="ltr">GEL</span>
-                                        </span>
-                                    </label>
-                                    <input class="visually-hidden" type="radio" name="spaces-checkout-currency" id="spaces-checkout-currency-usd" value="usd" data-checkout-currency-option="usd">
-                                    <label for="spaces-checkout-currency-usd" class="spaces-checkout-toggle-item">
-                                        <span class="spaces-checkout-toggle-label">
-                                            <span class="spaces-checkout-toggle-flag">
-                                                <img src="./assets/images/spaces-v2/checkout/flags/us.svg?v=stripe3" width="16" height="16" alt="US">
-                                            </span>
-                                            <span dir="ltr">USD</span>
-                                        </span>
-                                    </label>
-                                </div>
-                                <p class="spaces-checkout-currency-rate" data-checkout-currency-rate dir="ltr">
-                                    <span data-checkout-currency-rate-text>1 USD = 2.7045 GEL</span>. Charges will vary based on exchange rates.
-                                </p>
                             </div>
 
                             <div class="spaces-checkout-card-fields" data-checkout-card-fields>
@@ -4664,6 +4665,6 @@
         <script src="./assets/js/spaces-upgrade-modal.js?v=checkout-pro-trial-1"></script>
         <script src="./assets/js/spaces-usage-modal.js?v=figma-1"></script>
         <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
-        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-currency-light-1"></script>
+        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-currency-stripe-docs-1"></script>
     </body>
 </html>

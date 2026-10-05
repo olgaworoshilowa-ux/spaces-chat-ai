@@ -17803,8 +17803,18 @@ body.is-checkout-modal-open{
     min-width: 0;
 }
 
-/* Stripe Currency Selector — two full-width buttons (same size as express) */
+/*
+ * Stripe Currency Selector Element (light theme)
+ * Docs: https://docs.stripe.com/elements/currency-selector-element
+ * Two separate .ToggleItem buttons; selected uses colorPrimary (#0570de).
+ * Subscriptions show flag + code only (no amounts). Place above Express Checkout.
+ */
 .spaces-checkout-currency{
+    --stripe-primary: #0570de;
+    --stripe-text: #30313d;
+    --stripe-text-secondary: #6d6e78;
+    --stripe-border: #e6e6e6;
+    --stripe-bg: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -17816,50 +17826,43 @@ body.is-checkout-modal-open{
 .spaces-checkout-toggle-group{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 8px;
     width: 100%;
-    padding: 0;
-    border: 0;
-    background: transparent;
     box-sizing: border-box;
 }
 
 .spaces-checkout-toggle-item{
-    display: inline-flex;
+    position: relative;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
+    min-height: 44px;
     margin: 0;
-    min-height: 52px;
-    height: 52px;
-    padding: 8px 12px;
-    border: 1px solid #e6e6e6;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #30313d;
-    font: 500 16px/24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
+    padding: 10px 12px;
+    border: 1px solid var(--stripe-border);
+    border-radius: 6px;
+    background: var(--stripe-bg);
+    color: var(--stripe-text-secondary);
     cursor: pointer;
     box-sizing: border-box;
-    box-shadow: none;
     -webkit-font-smoothing: antialiased;
-    transition: border-color .12s ease, box-shadow .12s ease, color .12s ease;
+    transition: border-color .12s ease, color .12s ease, box-shadow .12s ease;
 }
 
 .spaces-checkout-toggle-item:hover{
     border-color: #c7c7c7;
-    color: #1a1b25;
+    color: var(--stripe-text);
 }
 
 .spaces-checkout-toggle-item.is-selected{
-    border-color: #0570de;
-    background: #ffffff;
-    color: #0570de;
-    box-shadow: 0 0 0 1px #0570de;
+    border-color: var(--stripe-primary);
+    color: var(--stripe-primary);
+    box-shadow: 0 0 0 1px var(--stripe-primary);
 }
 
-.spaces-checkout-toggle-group input:focus-visible + .spaces-checkout-toggle-item{
+.spaces-checkout-toggle-item:has(input:focus-visible){
     outline: 0;
-    border-color: #0570de;
     box-shadow: 0 0 0 3px rgba(5, 112, 222, .2);
 }
 
@@ -17868,14 +17871,12 @@ body.is-checkout-modal-open{
     align-items: center;
     justify-content: center;
     gap: 8px;
-    min-height: 20px;
+    font: 500 14px/20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
 }
 
 .spaces-checkout-toggle-flag{
     display: inline-flex;
     flex: 0 0 16px;
-    align-items: center;
-    justify-content: center;
     width: 16px;
     height: 16px;
     line-height: 0;
@@ -17889,8 +17890,7 @@ body.is-checkout-modal-open{
 
 .spaces-checkout-currency-rate{
     margin: 0;
-    max-width: 100%;
-    color: #6d6e78;
+    color: var(--stripe-text-secondary);
     font: 400 12px/16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
     -webkit-font-smoothing: antialiased;
 }

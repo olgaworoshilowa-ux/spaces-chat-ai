@@ -179,7 +179,7 @@
     const syncCurrencyToggle = () => {
         currencyInputs.forEach(input => {
             const code = input.value || 'gel';
-            const label = currencyRoot?.querySelector(`label[for="${input.id}"]`);
+            const label = input.closest('.spaces-checkout-toggle-item');
             const active = code === selectedCurrency;
             input.checked = active;
             label?.classList.toggle('is-selected', active);
