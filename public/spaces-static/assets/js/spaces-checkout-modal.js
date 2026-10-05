@@ -24,22 +24,20 @@
     const saveToggle = modal?.querySelector('[data-checkout-save]');
     const businessToggle = modal?.querySelector('[data-checkout-business]');
     const currencyRoot = modal?.querySelector('[data-checkout-currency]');
-    const currencyButtons = currencyRoot
+    const currencyInputs = currencyRoot
         ? Array.from(currencyRoot.querySelectorAll('[data-checkout-currency-option]'))
         : [];
     if (!modal || !dialog) return;
 
     const CURRENCIES = {
-        usd: { code: 'USD', symbol: '$', rate: 1, prefix: true },
-        eur: { code: 'EUR', symbol: '€', rate: 0.92, prefix: true },
-        gbp: { code: 'GBP', symbol: '£', rate: 0.79, prefix: true },
-        ils: { code: 'ILS', symbol: '₪', rate: 3.7, prefix: true }
+        gel: { code: 'GEL', symbol: '₾', rate: 2.72, prefix: false },
+        usd: { code: 'USD', symbol: '$', rate: 1, prefix: true }
     };
 
     let lastFocus = null;
     let returnTo = 'buy-credits';
     let startMode = 'trial';
-    let selectedCurrency = 'usd';
+    let selectedCurrency = currencyRoot?.querySelector('[data-checkout-currency-option]:checked')?.value || 'gel';
     let currentPack = {
         kind: 'credits',
         credits: 500,
@@ -52,7 +50,8 @@
     const money = (usdValue) => {
         const currency = CURRENCIES[selectedCurrency] || CURRENCIES.usd;
         const amount = convert(usdValue).toFixed(2);
-        return currency.prefix ? `${currency.symbol}${amount}` : `${amount} ${currency.symbol}`;
+        if (currency.prefix) return `${currency.symbol}${amount}`;
+        return `${amount} ${currency.code}`;
     };
 
     const formatCredits = value => Number(value).toLocaleString('en-US');
@@ -133,7 +132,7 @@
                 discountBadge: offPct > 0 ? `${offPct}% OFF` : '33% OFF',
                 discountAmount: discount > 0 ? `–${money(discount)}` : '',
                 afterTrial: money(billedTotal),
-                trialToday: `${(CURRENCIES[selectedCurrency] || CURRENCIES.usd).symbol}0 today`,
+                trialToday: selectedCurrency === 'usd' ? '$0 today' : `0.00 ${CURRENCIES[selectedCurrency].code} today`,
                 totalLabel: 'Due today',
                 dueToday: money(0),
                 fromLabel: annual
@@ -176,21 +175,12 @@
         };
     };
 
-    const formatSelectorAmount = (code, usdValue) => {
-        const currency = CURRENCIES[code] || CURRENCIES.usd;
-        const amount = (Number(usdValue) * currency.rate).toFixed(2);
-        if (code === 'usd') return amount;
-        return `${currency.symbol}${amount}`;
-    };
-
-    const syncCurrencyButtons = (selectorTotalUsd) => {
-        currencyButtons.forEach(button => {
-            const code = button.getAttribute('data-checkout-currency-option') || 'usd';
-            const active = code === selectedCurrency;
-            button.classList.toggle('is-active', active);
-            button.setAttribute('aria-pressed', String(active));
-            const amountNode = button.querySelector('[data-checkout-currency-amount]');
-            if (amountNode) amountNode.textContent = formatSelectorAmount(code, selectorTotalUsd);
+    const syncCurrencyToggle = () => {
+        currencyInputs.forEach(input => {
+            const label = currencyRoot?.querySelector(`label[for="${input.id}"]`);
+            const active = input.value === selectedCurrency;
+            input.checked = active;
+            label?.classList.toggle('is-active', active);
         });
     };
 
@@ -220,7 +210,7 @@
         if (trialLine) trialLine.hidden = !display.useTrial;
         if (cancelNote) cancelNote.hidden = !display.showCancel;
 
-        syncCurrencyButtons(display.selectorTotalUsd);
+        syncCurrencyToggle();
 
         modal.classList.toggle('is-plan-checkout', display.isPlan);
         modal.classList.toggle('is-credits-checkout', !display.isPlan);
@@ -279,10 +269,9 @@
     wireToggle(saveToggle);
     wireToggle(businessToggle);
 
-    currencyButtons.forEach(button => {
-        button.addEventListener('click', event => {
-            event.preventDefault();
-            selectedCurrency = button.getAttribute('data-checkout-currency-option') || 'usd';
+    currencyInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            selectedCurrency = input.value || 'gel';
             syncPack();
         });
     });

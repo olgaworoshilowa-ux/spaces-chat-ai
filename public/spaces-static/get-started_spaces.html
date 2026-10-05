@@ -19,7 +19,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-trial-spacing-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-currency-toggle-1">
 
         <title>Get Started Spaces</title>
 
@@ -4504,25 +4504,22 @@
 
                     <div class="spaces-checkout-main">
                         <div class="spaces-checkout-form">
-                            <div class="spaces-checkout-currency" data-checkout-currency role="radiogroup" aria-label="Choose currency">
-                                <p class="spaces-checkout-currency-label">Currency</p>
-                                <div class="spaces-checkout-currency-toggle">
-                                    <button type="button" class="spaces-checkout-currency-item is-active" data-checkout-currency-option="usd" aria-pressed="true">
-                                        <span data-checkout-currency-amount>59.88</span>
+                            <div class="spaces-checkout-currency" data-checkout-currency>
+                                <div class="spaces-checkout-currency-toggle" role="radiogroup" aria-label="Choose currency">
+                                    <input class="visually-hidden" type="radio" name="spaces-checkout-currency" id="spaces-checkout-currency-gel" value="gel" data-checkout-currency-option="gel" checked>
+                                    <label for="spaces-checkout-currency-gel" class="spaces-checkout-currency-item is-active">
+                                        <span class="spaces-checkout-currency-flag">
+                                            <img src="./assets/images/spaces-v2/checkout/flags/ge.svg?v=1" width="16" height="16" alt="" aria-hidden="true">
+                                        </span>
+                                        <span class="spaces-checkout-currency-code">GEL</span>
+                                    </label>
+                                    <input class="visually-hidden" type="radio" name="spaces-checkout-currency" id="spaces-checkout-currency-usd" value="usd" data-checkout-currency-option="usd">
+                                    <label for="spaces-checkout-currency-usd" class="spaces-checkout-currency-item">
+                                        <span class="spaces-checkout-currency-flag">
+                                            <img src="./assets/images/spaces-v2/checkout/flags/us.svg?v=1" width="16" height="16" alt="" aria-hidden="true">
+                                        </span>
                                         <span class="spaces-checkout-currency-code">USD</span>
-                                    </button>
-                                    <button type="button" class="spaces-checkout-currency-item" data-checkout-currency-option="eur" aria-pressed="false">
-                                        <span data-checkout-currency-amount>€55.09</span>
-                                        <span class="spaces-checkout-currency-code">EUR</span>
-                                    </button>
-                                    <button type="button" class="spaces-checkout-currency-item" data-checkout-currency-option="gbp" aria-pressed="false">
-                                        <span data-checkout-currency-amount>£47.31</span>
-                                        <span class="spaces-checkout-currency-code">GBP</span>
-                                    </button>
-                                    <button type="button" class="spaces-checkout-currency-item" data-checkout-currency-option="ils" aria-pressed="false">
-                                        <span data-checkout-currency-amount>₪221.56</span>
-                                        <span class="spaces-checkout-currency-code">ILS</span>
-                                    </button>
+                                    </label>
                                 </div>
                             </div>
 
@@ -4660,6 +4657,6 @@
         <script src="./assets/js/spaces-upgrade-modal.js?v=checkout-pro-trial-1"></script>
         <script src="./assets/js/spaces-usage-modal.js?v=figma-1"></script>
         <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
-        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-currency-1"></script>
+        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-currency-toggle-1"></script>
     </body>
 </html>
