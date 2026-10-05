@@ -18394,13 +18394,22 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-bill-note{
-    margin: -8px 0 0;
+    margin: -12px 0 0;
     color: #575757;
     font: 400 14px/20px "Open Sans", Arial, sans-serif;
 }
 
 .spaces-checkout-bill-note.is-cancel{
-    margin-top: -4px;
+    margin-top: -10px;
+}
+
+/* Trial: stick notes under their parent rows (Figma 247:12309) */
+.spaces-checkout-modal.is-trial-start .spaces-checkout-bill-note:not(.is-cancel){
+    margin-top: -16px;
+}
+
+.spaces-checkout-modal.is-trial-start .spaces-checkout-bill-note.is-cancel{
+    margin-top: -12px;
 }
 
 .spaces-checkout-modal:not(.is-trial-start) .spaces-checkout-bill-note:not(.is-cancel){
