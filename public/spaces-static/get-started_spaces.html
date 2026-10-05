@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-pe-card-2">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-tax-id-1">
 
         <title>Get Started Spaces</title>
 
@@ -4616,10 +4616,37 @@
                                     <span class="spaces-checkout-check-box" aria-hidden="true"></span>
                                     <span>Safe information for future payments</span>
                                 </button>
-                                <button type="button" class="spaces-checkout-check" data-checkout-business aria-pressed="false">
-                                    <span class="spaces-checkout-check-box" aria-hidden="true"></span>
-                                    <span>I’m buying as a business</span>
-                                </button>
+
+                                <div class="spaces-checkout-business" data-checkout-business-block>
+                                    <button type="button" class="spaces-checkout-check" data-checkout-business aria-pressed="false" aria-controls="spaces-checkout-tax-id" aria-expanded="false">
+                                        <span class="spaces-checkout-check-box" aria-hidden="true"></span>
+                                        <span>I’m buying as a business</span>
+                                    </button>
+
+                                    <div class="spaces-checkout-tax-id" id="spaces-checkout-tax-id" data-checkout-tax-id hidden>
+                                        <div class="spaces-checkout-field is-billing">
+                                            <label class="spaces-checkout-field-label" for="spaces-checkout-business-name">Business name</label>
+                                            <input id="spaces-checkout-business-name" type="text" placeholder="Business name" autocomplete="organization" data-checkout-business-name>
+                                        </div>
+                                        <div class="spaces-checkout-field is-billing is-country">
+                                            <label class="spaces-checkout-field-label" for="spaces-checkout-tax-type">Tax ID type</label>
+                                            <div class="spaces-checkout-select-wrap">
+                                                <select id="spaces-checkout-tax-type" data-checkout-tax-type>
+                                                    <option value="eu_vat">VAT</option>
+                                                    <option value="us_ein">EIN</option>
+                                                    <option value="gb_vat">GB VAT</option>
+                                                    <option value="ge_vat">GE VAT</option>
+                                                </select>
+                                                <img class="spaces-checkout-select-chevron" src="./assets/images/spaces-v2/checkout/select-chevron-figma.svg?v=figma244" width="16" height="16" alt="" aria-hidden="true">
+                                            </div>
+                                        </div>
+                                        <div class="spaces-checkout-field is-billing">
+                                            <label class="spaces-checkout-field-label" for="spaces-checkout-tax-value">Tax ID</label>
+                                            <input id="spaces-checkout-tax-value" type="text" placeholder="Tax ID" autocomplete="off" data-checkout-tax-value>
+                                        </div>
+                                        <p class="spaces-checkout-tax-id-hint" data-checkout-tax-hint>Used on invoices and for VAT refunds where available.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

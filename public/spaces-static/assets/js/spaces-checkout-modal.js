@@ -23,6 +23,10 @@
     const legalNode = modal?.querySelector('[data-checkout-legal]');
     const saveToggle = modal?.querySelector('[data-checkout-save]');
     const businessToggle = modal?.querySelector('[data-checkout-business]');
+    const taxIdPanel = modal?.querySelector('[data-checkout-tax-id]');
+    const taxTypeSelect = modal?.querySelector('[data-checkout-tax-type]');
+    const taxValueInput = modal?.querySelector('[data-checkout-tax-value]');
+    const countrySelect = modal?.querySelector('#spaces-checkout-country');
     const currencyRoot = modal?.querySelector('[data-checkout-currency]');
     const currencyInputs = currencyRoot
         ? Array.from(currencyRoot.querySelectorAll('[data-checkout-currency-option]'))
@@ -34,6 +38,14 @@
         usd: { code: 'USD', symbol: '$', rate: 1, prefix: true }
     };
     const currencyRateNode = currencyRoot?.querySelector('[data-checkout-currency-rate-text]');
+
+    const TAX_BY_COUNTRY = {
+        Israel: { type: 'eu_vat', placeholder: 'IL123456789', hint: 'Israeli VAT number' },
+        'United States': { type: 'us_ein', placeholder: '12-3456789', hint: 'US Employer Identification Number (EIN)' },
+        'United Kingdom': { type: 'gb_vat', placeholder: 'GB123456789', hint: 'United Kingdom VAT number' },
+        Germany: { type: 'eu_vat', placeholder: 'DE123456789', hint: 'German VAT number' },
+        Georgia: { type: 'ge_vat', placeholder: '123456789', hint: 'Georgian VAT number' }
+    };
 
     let lastFocus = null;
     let returnTo = 'buy-credits';
@@ -266,6 +278,26 @@
         window.SpacesHeaderCredits?.sync?.(next);
     };
 
+    const syncTaxIdForCountry = () => {
+        const country = countrySelect?.value || 'Israel';
+        const config = TAX_BY_COUNTRY[country] || TAX_BY_COUNTRY.Israel;
+        if (taxTypeSelect) taxTypeSelect.value = config.type;
+        if (taxValueInput) taxValueInput.placeholder = config.placeholder;
+        const hint = modal.querySelector('[data-checkout-tax-hint]');
+        if (hint) hint.textContent = `${config.hint}. Used on invoices and for VAT refunds where available.`;
+    };
+
+    const setBusinessOpen = (open) => {
+        if (!businessToggle) return;
+        businessToggle.setAttribute('aria-pressed', String(open));
+        businessToggle.setAttribute('aria-expanded', String(open));
+        if (taxIdPanel) taxIdPanel.hidden = !open;
+        if (open) {
+            syncTaxIdForCountry();
+            modal.querySelector('#spaces-checkout-business-name')?.focus();
+        }
+    };
+
     const wireToggle = (button) => {
         button?.addEventListener('click', () => {
             const pressed = button.getAttribute('aria-pressed') === 'true';
@@ -274,7 +306,15 @@
     };
 
     wireToggle(saveToggle);
-    wireToggle(businessToggle);
+
+    businessToggle?.addEventListener('click', () => {
+        const open = businessToggle.getAttribute('aria-pressed') !== 'true';
+        setBusinessOpen(open);
+    });
+
+    countrySelect?.addEventListener('change', () => {
+        if (businessToggle?.getAttribute('aria-pressed') === 'true') syncTaxIdForCountry();
+    });
 
     currencyInputs.forEach(input => {
         input.addEventListener('change', () => {
