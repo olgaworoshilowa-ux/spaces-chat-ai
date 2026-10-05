@@ -1164,8 +1164,27 @@
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu.grouped-dropdown-wrapper a{
     min-width: 0;
     margin: 0;
-    background-image: none;
+    background-image: none !important;
     background-position: 0 0;
+    background-size: 0;
+    background-repeat: no-repeat;
+}
+
+/* Kill base .grouped-dropdown-wrapper a:hover gray fill inside the billing card */
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu.grouped-dropdown-wrapper a.spaces-profile-menu-credits,
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu.grouped-dropdown-wrapper a.spaces-profile-menu-premium{
+    border-radius: 0;
+    background-color: transparent !important;
+}
+
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu.grouped-dropdown-wrapper a.spaces-profile-menu-credits:hover,
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu.grouped-dropdown-wrapper a.spaces-profile-menu-credits:focus-visible,
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu.grouped-dropdown-wrapper a.spaces-profile-menu-premium:hover,
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu.grouped-dropdown-wrapper a.spaces-profile-menu-premium:focus-visible{
+    color: inherit;
+    border-radius: 0;
+    background-color: transparent !important;
+    background-image: none !important;
 }
 
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu.grouped-dropdown-wrapper .header-main-dropdown > .spaces-profile-menu-identity{
@@ -1257,6 +1276,17 @@
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-credits:hover,
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-credits:focus-visible{
     outline: 0;
+    background-color: transparent !important;
+}
+
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-credits:hover .spaces-profile-menu-credits-title,
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-credits:focus-visible .spaces-profile-menu-credits-title{
+    color: #000;
+}
+
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-credits:hover .spaces-profile-menu-credits-meta,
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-credits:focus-visible .spaces-profile-menu-credits-meta{
+    color: #393939;
 }
 
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-credits-row{
@@ -1335,6 +1365,7 @@
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-premium:hover,
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-premium:focus-visible{
     outline: 0;
+    background-color: transparent !important;
 }
 
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-premium-label{
@@ -1369,6 +1400,7 @@
     background: #1aa73f;
 }
 
+.header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-premium-upgrade:hover,
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-premium:hover .spaces-profile-menu-premium-upgrade,
 .header-editor.header-spaces.header-spaces-v2 .header-item-user .spaces-profile-menu-premium:focus-visible .spaces-profile-menu-premium-upgrade{
     background: #07872f;
