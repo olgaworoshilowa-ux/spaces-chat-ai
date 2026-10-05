@@ -19,7 +19,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-currency-under-or-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-pe-card-1">
 
         <title>Get Started Spaces</title>
 
@@ -4548,51 +4548,63 @@
                                 </p>
                             </div>
 
-                            <div class="spaces-checkout-card-fields" data-checkout-card-fields>
-                                <div class="spaces-checkout-card-block" data-checkout-payment-element>
-                                    <div class="spaces-checkout-field is-floating is-card-number">
-                                        <label class="spaces-checkout-field-label" for="spaces-checkout-card">Card number</label>
-                                        <input id="spaces-checkout-card" type="text" inputmode="numeric" placeholder="1424 1424 1424 1424" autocomplete="cc-number">
+                            <div class="spaces-checkout-payment-element" data-checkout-card-fields>
+                                <div class="spaces-checkout-pm is-card is-open" data-checkout-method="card">
+                                    <div class="spaces-checkout-pm-head">
+                                        <span class="spaces-checkout-pm-radio" aria-hidden="true"></span>
+                                        <span class="spaces-checkout-pm-title">Card</span>
                                         <span class="spaces-checkout-brands" aria-hidden="true">
-                                            <img src="./assets/images/spaces-v2/checkout/brand-mastercard.svg?v=figma244" width="35" height="24" alt="">
-                                            <img src="./assets/images/spaces-v2/checkout/brand-visa.svg?v=figma244" width="35" height="24" alt="">
-                                            <img src="./assets/images/spaces-v2/checkout/brand-amex.svg?v=figma244" width="35" height="24" alt="">
+                                            <img src="./assets/images/spaces-v2/checkout/brand-mastercard.svg?v=figma244" width="32" height="20" alt="">
+                                            <img src="./assets/images/spaces-v2/checkout/brand-visa.svg?v=figma244" width="32" height="20" alt="">
+                                            <img src="./assets/images/spaces-v2/checkout/brand-amex.svg?v=figma244" width="32" height="20" alt="">
                                         </span>
                                     </div>
-                                    <div class="spaces-checkout-field-row">
-                                        <div class="spaces-checkout-field is-exp">
-                                            <label class="visually-hidden" for="spaces-checkout-exp">Expiration</label>
-                                            <input id="spaces-checkout-exp" type="text" placeholder="MM/YY" autocomplete="cc-exp">
+
+                                    <div class="spaces-checkout-pm-body">
+                                        <div class="spaces-checkout-card-block" data-checkout-payment-element>
+                                            <div class="spaces-checkout-field is-card-number">
+                                                <label class="visually-hidden" for="spaces-checkout-card">Card number</label>
+                                                <input id="spaces-checkout-card" type="text" inputmode="numeric" placeholder="1234 1234 1234 1234" autocomplete="cc-number">
+                                            </div>
+                                            <div class="spaces-checkout-field-row">
+                                                <div class="spaces-checkout-field is-exp">
+                                                    <label class="visually-hidden" for="spaces-checkout-exp">Expiration</label>
+                                                    <input id="spaces-checkout-exp" type="text" placeholder="MM / YY" autocomplete="cc-exp">
+                                                </div>
+                                                <div class="spaces-checkout-field is-cvc">
+                                                    <label class="visually-hidden" for="spaces-checkout-cvc">CVC</label>
+                                                    <input id="spaces-checkout-cvc" type="text" inputmode="numeric" placeholder="CVC" autocomplete="cc-csc">
+                                                    <svg class="spaces-checkout-cvc-icon" width="24" height="16" viewBox="0 0 24 16" fill="none" aria-hidden="true"><rect x=".75" y=".75" width="22.5" height="14.5" rx="2.25" stroke="#A3A4AD" stroke-width="1.5"/><path d="M.75 5h22.5" stroke="#A3A4AD" stroke-width="1.5"/><path d="M14 10h5" stroke="#A3A4AD" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="spaces-checkout-field is-cvc">
-                                            <label class="visually-hidden" for="spaces-checkout-cvc">CVC</label>
-                                            <input id="spaces-checkout-cvc" type="text" inputmode="numeric" placeholder="CVC" autocomplete="cc-csc">
+
+                                        <div class="spaces-checkout-field is-billing">
+                                            <label class="spaces-checkout-field-label" for="spaces-checkout-name">Cardholder name</label>
+                                            <input id="spaces-checkout-name" type="text" placeholder="Full name on card" autocomplete="cc-name">
+                                        </div>
+                                        <div class="spaces-checkout-field is-billing is-country">
+                                            <label class="spaces-checkout-field-label" for="spaces-checkout-country">Country or region</label>
+                                            <div class="spaces-checkout-select-wrap">
+                                                <select id="spaces-checkout-country" autocomplete="country-name">
+                                                    <option>Israel</option>
+                                                    <option>United States</option>
+                                                    <option>United Kingdom</option>
+                                                    <option>Germany</option>
+                                                    <option>Georgia</option>
+                                                </select>
+                                                <img class="spaces-checkout-select-chevron" src="./assets/images/spaces-v2/checkout/select-chevron-figma.svg?v=figma244" width="16" height="16" alt="" aria-hidden="true">
+                                            </div>
+                                        </div>
+                                        <div class="spaces-checkout-field is-billing">
+                                            <label class="spaces-checkout-field-label" for="spaces-checkout-address">Address</label>
+                                            <input id="spaces-checkout-address" type="text" placeholder="Address" autocomplete="street-address">
+                                        </div>
+                                        <div class="spaces-checkout-field is-billing">
+                                            <label class="spaces-checkout-field-label" for="spaces-checkout-email">Email</label>
+                                            <input id="spaces-checkout-email" type="email" placeholder="email@example.com" autocomplete="email">
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="spaces-checkout-field is-floating">
-                                    <label class="spaces-checkout-field-label" for="spaces-checkout-name">Full name</label>
-                                    <input id="spaces-checkout-name" type="text" placeholder="Full name on the card" autocomplete="cc-name">
-                                </div>
-                                <div class="spaces-checkout-field is-floating is-country">
-                                    <label class="spaces-checkout-field-label" for="spaces-checkout-country">Country</label>
-                                    <select id="spaces-checkout-country" autocomplete="country-name">
-                                        <option>Israel</option>
-                                        <option>United States</option>
-                                        <option>United Kingdom</option>
-                                        <option>Germany</option>
-                                        <option>Georgia</option>
-                                    </select>
-                                    <img class="spaces-checkout-select-chevron" src="./assets/images/spaces-v2/checkout/select-chevron-figma.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
-                                </div>
-                                <div class="spaces-checkout-field is-floating">
-                                    <label class="spaces-checkout-field-label" for="spaces-checkout-address">Address</label>
-                                    <input id="spaces-checkout-address" type="text" placeholder=" " autocomplete="street-address">
-                                </div>
-                                <div class="spaces-checkout-field is-floating">
-                                    <label class="spaces-checkout-field-label" for="spaces-checkout-email">Email</label>
-                                    <input id="spaces-checkout-email" type="email" placeholder=" " autocomplete="email">
                                 </div>
                             </div>
 

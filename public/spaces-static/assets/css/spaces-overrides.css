@@ -17970,32 +17970,98 @@ body.is-checkout-modal-open{
     font-style: normal;
 }
 
-/* Figma card payment panel — one white card, floating labels */
-.spaces-checkout-card-fields{
-    --pe-border: rgba(0, 0, 0, .16);
-    --pe-border-soft: #e9e9e9;
-    --pe-text: #1c1c1c;
-    --pe-muted: #747474;
-    --pe-focus: #1aa73f;
-    --pe-focus-ring: rgba(26, 167, 63, .2);
-    --pe-radius: 16px;
+/*
+ * Stripe Payment Element–inspired Card accordion (light theme)
+ * Docs: https://docs.stripe.com/payments/payment-element
+ */
+.spaces-checkout-payment-element{
+    --pe-border: #e6e6e6;
+    --pe-border-strong: #c7c7c7;
+    --pe-text: #30313d;
+    --pe-muted: #6d6e78;
+    --pe-placeholder: #a3a4ad;
+    --pe-focus: #0570de;
+    --pe-focus-ring: rgba(5, 112, 222, .2);
+    --pe-radius: 6px;
     --pe-bg: #fff;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    --pe-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
     min-width: 0;
-    padding: 20px;
-    border: 1px solid var(--pe-border-soft);
-    border-radius: var(--pe-radius);
-    background: var(--pe-bg);
-    box-shadow: 0 0 0 .5px rgba(0, 0, 0, .04), 0 2px 6px rgba(0, 0, 0, .1);
     box-sizing: border-box;
 }
 
-.spaces-checkout-card-block{
-    position: relative;
-    overflow: visible;
+.spaces-checkout-pm{
+    overflow: hidden;
     border: 1px solid var(--pe-border);
+    border-radius: var(--pe-radius);
+    background: var(--pe-bg);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .03), 0 3px 6px rgba(18, 42, 66, .02);
+}
+
+.spaces-checkout-pm-head{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 14px;
+    box-sizing: border-box;
+}
+
+.spaces-checkout-pm-radio{
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid #919191;
+    border-radius: 50%;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.spaces-checkout-pm.is-open .spaces-checkout-pm-radio{
+    border-color: var(--pe-focus);
+    box-shadow: inset 0 0 0 3.5px var(--pe-focus);
+}
+
+.spaces-checkout-pm-title{
+    flex: 1 1 auto;
+    min-width: 0;
+    color: var(--pe-text);
+    font: 500 14px/20px var(--pe-font);
+    -webkit-font-smoothing: antialiased;
+}
+
+.spaces-checkout-brands{
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    pointer-events: none;
+}
+
+.spaces-checkout-brands > img{
+    display: block;
+    width: 32px;
+    height: 20px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+    background: #fff;
+}
+
+.spaces-checkout-pm-body{
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+    padding: 0 14px 16px;
+    box-sizing: border-box;
+}
+
+.spaces-checkout-pm.is-open .spaces-checkout-pm-body{
+    display: flex;
+}
+
+.spaces-checkout-card-block{
+    overflow: hidden;
+    border: 1px solid var(--pe-border-strong);
     border-radius: var(--pe-radius);
     background: var(--pe-bg);
     transition: border-color .15s ease, box-shadow .15s ease;
@@ -18003,7 +18069,7 @@ body.is-checkout-modal-open{
 
 .spaces-checkout-card-block:focus-within{
     border-color: var(--pe-focus);
-    box-shadow: 0 0 0 3px var(--pe-focus-ring);
+    box-shadow: 0 0 0 1px var(--pe-focus), 0 0 0 4px var(--pe-focus-ring);
 }
 
 .spaces-checkout-field{
@@ -18013,67 +18079,23 @@ body.is-checkout-modal-open{
     min-width: 0;
     margin: 0;
     box-sizing: border-box;
-    background: transparent;
 }
 
-.spaces-checkout-field.is-floating{
-    min-height: 56px;
-    padding: 0;
-    border: 1px solid var(--pe-border);
-    border-radius: var(--pe-radius);
-    transition: border-color .15s ease, box-shadow .15s ease;
-}
-
-.spaces-checkout-field.is-floating:focus-within{
-    border-color: var(--pe-focus);
-    box-shadow: 0 0 0 3px var(--pe-focus-ring);
+.spaces-checkout-field.is-billing{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
 }
 
 .spaces-checkout-field-label{
-    position: absolute;
-    left: 12px;
-    top: -8px;
-    z-index: 2;
-    padding: 0 4px;
-    background: var(--pe-bg);
+    margin: 0;
     color: var(--pe-muted);
-    font: 400 12px/16px "Open Sans", Arial, sans-serif;
-    pointer-events: none;
+    font: 400 13px/16px var(--pe-font);
+    -webkit-font-smoothing: antialiased;
 }
 
 .spaces-checkout-card-block .spaces-checkout-field.is-card-number{
-    min-height: 56px;
-    border: 0;
     border-bottom: 1px solid var(--pe-border);
-    border-radius: var(--pe-radius) var(--pe-radius) 0 0;
-}
-
-.spaces-checkout-card-block .spaces-checkout-field.is-card-number:focus-within{
-    box-shadow: none;
-}
-
-.spaces-checkout-card-block .spaces-checkout-field.is-card-number > input{
-    padding-right: 128px;
-}
-
-.spaces-checkout-brands{
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-
-.spaces-checkout-brands > img{
-    display: block;
-    width: 35px;
-    height: 24px;
-    border-radius: 4px;
-    box-shadow: 0 0 0 1px #d9d9d9;
-    background: #fff;
 }
 
 .spaces-checkout-field-row{
@@ -18081,62 +18103,90 @@ body.is-checkout-modal-open{
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
-.spaces-checkout-field-row > .spaces-checkout-field{
-    min-height: 56px;
-}
-
 .spaces-checkout-field-row > .spaces-checkout-field.is-exp{
     border-right: 1px solid var(--pe-border);
 }
 
-.spaces-checkout-field-row > .spaces-checkout-field.is-exp > input{
-    border-radius: 0 0 0 var(--pe-radius);
+.spaces-checkout-field.is-cvc{
+    padding-right: 8px;
 }
 
-.spaces-checkout-field-row > .spaces-checkout-field.is-cvc > input{
-    border-radius: 0 0 var(--pe-radius) 0;
-}
-
-.spaces-checkout-field > input,
-.spaces-checkout-field > select{
+.spaces-checkout-card-block input{
     width: 100%;
     min-width: 0;
-    height: 56px;
+    height: 44px;
     margin: 0;
-    padding: 16px;
+    padding: 10px 12px;
     border: 0;
-    border-radius: inherit;
+    border-radius: 0;
     box-sizing: border-box;
     background: transparent;
     color: var(--pe-text);
-    font: 400 16px/24px "Open Sans", Arial, sans-serif;
-    appearance: none;
-    -webkit-appearance: none;
+    font: 400 16px/24px var(--pe-font);
+    -webkit-font-smoothing: antialiased;
 }
 
-.spaces-checkout-field > input:focus,
-.spaces-checkout-field > select:focus{
+.spaces-checkout-field.is-billing > input,
+.spaces-checkout-select-wrap > select{
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    margin: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--pe-border-strong);
+    border-radius: var(--pe-radius);
+    box-sizing: border-box;
+    background: var(--pe-bg);
+    color: var(--pe-text);
+    font: 400 16px/24px var(--pe-font);
+    appearance: none;
+    -webkit-appearance: none;
+    -webkit-font-smoothing: antialiased;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.spaces-checkout-field.is-billing > input:focus,
+.spaces-checkout-select-wrap > select:focus{
+    outline: 0;
+    border-color: var(--pe-focus);
+    box-shadow: 0 0 0 1px var(--pe-focus), 0 0 0 4px var(--pe-focus-ring);
+}
+
+.spaces-checkout-card-block input:focus{
     outline: 0;
 }
 
-.spaces-checkout-field > input::placeholder{
-    color: var(--pe-muted);
+.spaces-checkout-card-block input::placeholder,
+.spaces-checkout-field.is-billing > input::placeholder{
+    color: var(--pe-placeholder);
+}
+
+.spaces-checkout-cvc-icon{
+    flex: 0 0 auto;
+    margin-right: 4px;
+    opacity: .9;
+}
+
+.spaces-checkout-select-wrap{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.spaces-checkout-select-wrap > select{
+    padding-right: 36px;
+    cursor: pointer;
 }
 
 .spaces-checkout-select-chevron{
     position: absolute;
-    right: 15px;
+    right: 12px;
     top: 50%;
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     transform: translateY(-50%);
     pointer-events: none;
-    opacity: .75;
-}
-
-.spaces-checkout-field.is-country > select{
-    padding-right: 44px;
-    cursor: pointer;
+    opacity: .65;
 }
 
 .spaces-checkout-checks{
