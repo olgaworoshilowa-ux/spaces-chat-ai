@@ -17803,7 +17803,7 @@ body.is-checkout-modal-open{
     min-width: 0;
 }
 
-/* Stripe Currency Selector — light theme ToggleGroup (after “or pay with”) */
+/* Stripe Currency Selector — two separate light ToggleItem buttons */
 .spaces-checkout-currency{
     display: flex;
     flex-direction: column;
@@ -17816,11 +17816,10 @@ body.is-checkout-modal-open{
 .spaces-checkout-toggle-group{
     display: inline-flex;
     align-items: stretch;
-    gap: 0;
-    padding: 2px;
+    gap: 8px;
+    padding: 0;
     border: 0;
-    border-radius: 5px;
-    background: #e8e8ed;
+    background: transparent;
     box-sizing: border-box;
 }
 
@@ -17829,30 +17828,37 @@ body.is-checkout-modal-open{
     align-items: center;
     justify-content: center;
     margin: 0;
-    padding: 6px 12px;
-    border: 0;
-    border-radius: 4px;
-    background: transparent;
+    min-width: 84px;
+    min-height: 40px;
+    padding: 8px 14px;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    background: #ffffff;
     color: #30313d;
     font: 500 14px/18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
     cursor: pointer;
     box-sizing: border-box;
+    box-shadow: none;
     -webkit-font-smoothing: antialiased;
+    transition: border-color .12s ease, box-shadow .12s ease, color .12s ease;
 }
 
 .spaces-checkout-toggle-item:hover{
+    border-color: #c7c7c7;
     color: #1a1b25;
 }
 
 .spaces-checkout-toggle-item.is-selected{
+    border-color: #0570de;
     background: #ffffff;
-    color: #30313d;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .03), 0 3px 6px rgba(18, 42, 66, .02);
+    color: #0570de;
+    box-shadow: 0 0 0 1px #0570de;
 }
 
 .spaces-checkout-toggle-group input:focus-visible + .spaces-checkout-toggle-item{
     outline: 0;
-    box-shadow: 0 0 0 2px rgba(26, 167, 63, .28), 0 1px 1px rgba(0, 0, 0, .03);
+    border-color: #0570de;
+    box-shadow: 0 0 0 3px rgba(5, 112, 222, .2);
 }
 
 .spaces-checkout-toggle-label{
