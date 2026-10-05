@@ -17803,18 +17803,23 @@ body.is-checkout-modal-open{
     min-width: 0;
 }
 
-/* Stripe Currency Selector Element — ToggleItem with flag + amount + code */
+/* Stripe Currency Selector Element — after “or pay with” */
 .spaces-checkout-currency{
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
     width: 100%;
     min-width: 0;
 }
 
 .spaces-checkout-currency-toggle{
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    width: 100%;
+    display: inline-flex;
+    align-items: stretch;
+    gap: 0;
+    padding: 3px;
+    border-radius: 6px;
+    background: #f1f1f3;
     box-sizing: border-box;
 }
 
@@ -17822,64 +17827,67 @@ body.is-checkout-modal-open{
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    min-height: 48px;
-    padding: 10px 14px;
-    border: 1px solid #d4d4d8;
-    border-radius: 8px;
-    background: #fff;
+    gap: 8px;
+    min-width: 76px;
+    min-height: 34px;
+    padding: 7px 14px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
     color: #30313d;
     cursor: pointer;
     box-sizing: border-box;
-    transition: border-color .12s ease, box-shadow .12s ease, color .12s ease, background .12s ease;
+    transition: background .12s ease, box-shadow .12s ease, color .12s ease;
 }
 
 .spaces-checkout-currency-item:hover{
-    border-color: #a1a1aa;
+    color: #1a1b25;
 }
 
 .spaces-checkout-currency-item.is-active{
-    border-color: #1aa73f;
-    color: #07872f;
-    background: rgba(26, 167, 63, .04);
-    box-shadow: 0 0 0 1px #1aa73f;
+    background: #fff;
+    color: #1a1b25;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .03), 0 1px 3px rgba(0, 0, 0, .1);
 }
 
 .spaces-checkout-currency-toggle input:focus-visible + .spaces-checkout-currency-item{
     outline: 0;
-    box-shadow: 0 0 0 3px rgba(26, 167, 63, .22);
+    box-shadow: 0 0 0 2px rgba(26, 167, 63, .28), 0 1px 3px rgba(0, 0, 0, .1);
 }
 
 .spaces-checkout-currency-flag{
     display: inline-flex;
-    flex: 0 0 20px;
-    width: 20px;
-    height: 20px;
+    flex: 0 0 16px;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    overflow: hidden;
 }
 
 .spaces-checkout-currency-flag > img{
     display: block;
-    width: 20px;
-    height: 20px;
-}
-
-.spaces-checkout-currency-copy{
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-    min-width: 0;
-    font: 600 15px/20px "Open Sans", Arial, sans-serif;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
+    width: 16px;
+    height: 16px;
+    object-fit: cover;
 }
 
 .spaces-checkout-currency-code{
-    color: #71717a;
-    font: 600 13px/18px "Open Sans", Arial, sans-serif;
+    color: inherit;
+    font: 500 14px/18px "Open Sans", Arial, sans-serif;
 }
 
-.spaces-checkout-currency-item.is-active .spaces-checkout-currency-code{
-    color: #07872f;
+.spaces-checkout-currency-rate{
+    margin: 0;
+    max-width: 100%;
+    color: #6d6e78;
+    font: 400 12px/16px "Open Sans", Arial, sans-serif;
+}
+
+.spaces-checkout-currency-rate > [data-checkout-currency-rate-text]{
+    font-weight: 500;
+    color: #6d6e78;
 }
 
 .spaces-checkout-express{

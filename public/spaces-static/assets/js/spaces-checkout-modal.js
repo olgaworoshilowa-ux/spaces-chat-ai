@@ -30,9 +30,10 @@
     if (!modal || !dialog) return;
 
     const CURRENCIES = {
-        gel: { code: 'GEL', symbol: '₾', rate: 2.72, prefix: false },
+        gel: { code: 'GEL', symbol: '₾', rate: 2.7045, prefix: false },
         usd: { code: 'USD', symbol: '$', rate: 1, prefix: true }
     };
+    const currencyRateNode = currencyRoot?.querySelector('[data-checkout-currency-rate-text]');
 
     let lastFocus = null;
     let returnTo = 'buy-credits';
@@ -175,21 +176,19 @@
         };
     };
 
-    const formatToggleAmount = (code, usdValue) => {
-        const currency = CURRENCIES[code] || CURRENCIES.usd;
-        return (Number(usdValue) * currency.rate).toFixed(2);
-    };
-
-    const syncCurrencyToggle = (selectorTotalUsd) => {
+    const syncCurrencyToggle = () => {
         currencyInputs.forEach(input => {
             const code = input.value || 'gel';
             const label = currencyRoot?.querySelector(`label[for="${input.id}"]`);
             const active = code === selectedCurrency;
             input.checked = active;
             label?.classList.toggle('is-active', active);
-            const amountNode = label?.querySelector('[data-checkout-currency-amount]');
-            if (amountNode) amountNode.textContent = formatToggleAmount(code, selectorTotalUsd);
         });
+        if (currencyRateNode) {
+            currencyRateNode.textContent = selectedCurrency === 'usd'
+                ? `1 GEL = ${(1 / CURRENCIES.gel.rate).toFixed(4)} USD`
+                : `1 USD = ${CURRENCIES.gel.rate} GEL`;
+        }
     };
 
     const syncPack = () => {
@@ -218,7 +217,7 @@
         if (trialLine) trialLine.hidden = !display.useTrial;
         if (cancelNote) cancelNote.hidden = !display.showCancel;
 
-        syncCurrencyToggle(display.selectorTotalUsd);
+        syncCurrencyToggle();
 
         modal.classList.toggle('is-plan-checkout', display.isPlan);
         modal.classList.toggle('is-credits-checkout', !display.isPlan);
