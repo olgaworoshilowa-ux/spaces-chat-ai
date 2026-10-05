@@ -8,15 +8,16 @@
     if (!modal || !dialog) return;
 
     const CREDIT_TIERS = [
-        { credits: 3000, label: '3,000', monthly: 44.99, annual: 33.99 },
-        { credits: 5000, label: '5,000', monthly: 62.49, annual: 49.99 },
-        { credits: 8000, label: '8,000', monthly: 87.49, annual: 69.99 }
+        { credits: 3000, label: '3,000', monthly: 49.99, annual: 33.33, annualTotal: 400.88 },
+        { credits: 5000, label: '5,000', monthly: 69.99, annual: 46.66, annualTotal: 559.92 },
+        { credits: 8000, label: '8,000', monthly: 99.99, annual: 66.66, annualTotal: 799.92 }
     ];
 
     const PREMIUM = {
         credits: 1000,
         monthly: 19.99,
-        annual: 4.99
+        annual: 4.99,
+        annualTotal: 59.88
     };
 
     let annual = true;
@@ -61,9 +62,10 @@
         const tier = CREDIT_TIERS[proTier] || CREDIT_TIERS[0];
         const premPrice = annual ? PREMIUM.annual : PREMIUM.monthly;
         const proPrice = annual ? tier.annual : tier.monthly;
-        const proTotalShort = annual ? `${money(tier.annual * 12)}/year` : `${money(tier.monthly)}/month`;
+        const proYearTotal = money(tier.annualTotal != null ? tier.annualTotal : tier.annual * 12);
+        const proTotalShort = annual ? `${proYearTotal}/year` : `${money(tier.monthly)}/month`;
         const proTotalBilled = annual
-            ? `${money(tier.annual * 12)} billed yearly`
+            ? `${proYearTotal} billed yearly`
             : `${money(tier.monthly)} billed monthly`;
 
         const premiumOld = modal.querySelector('[data-upgrade-premium-old]');
@@ -86,27 +88,27 @@
         if (premiumPriceEl) premiumPriceEl.textContent = money(premPrice);
         if (premiumNote) {
             premiumNote.textContent = annual
-                ? `${money(PREMIUM.annual * 12)} billed yearly. Cancel anytime.`
-                : `${money(PREMIUM.monthly)} billed monthly. Cancel anytime.`;
+                ? `${money(PREMIUM.annualTotal)} billed yearly`
+                : `${money(PREMIUM.monthly)} billed monthly`;
         }
 
         if (proCredits) proCredits.textContent = tier.label;
         if (proCopy) {
             const looks = Math.round(tier.credits / 25);
             const answers = (tier.credits / 5).toLocaleString('en-US');
-            proCopy.textContent = `About ${looks} room looks or ${answers} Copilot replies a month.`;
+            proCopy.textContent = `About ${looks} room looks or ${answers} Copilot replies a month`;
         }
         if (proOld) {
             proOld.hidden = !annual;
             proOld.textContent = money(tier.monthly);
         }
         if (proPriceEl) proPriceEl.textContent = money(proPrice);
-        if (proCta) proCta.textContent = trialOn ? 'Try free for 7 days' : 'Get Professional';
+        if (proCta) proCta.textContent = trialOn ? 'Try Pro for 7 days' : 'Get Professional';
         if (trialHint) trialHint.textContent = 'Includes 50 credits to try';
         if (proNote) {
             proNote.textContent = trialOn
-                ? `Free until ${trialEndDate()}, then ${proTotalShort}. Cancel anytime.`
-                : `${proTotalBilled}. Cancel anytime.`;
+                ? `Free until ${trialEndDate()}, then ${proTotalShort}`
+                : proTotalBilled;
         }
 
         modal.classList.toggle('is-annual', annual);

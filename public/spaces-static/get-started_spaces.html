@@ -19,7 +19,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=profile-icons-fonts-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=upgrade-figma244-1">
 
         <title>Get Started Spaces</title>
 
@@ -4215,17 +4215,12 @@
         <script src="./assets/js/spaces-history-navigation.js?v=all-chats-page-1"></script>
         <script src="./assets/js/spaces-global-search.js?v=suggest-new-chat-1"></script>
 
-        <div class="spaces-upgrade-modal is-annual" data-upgrade-modal hidden>
+        <div class="spaces-upgrade-modal is-annual is-trial-on" data-upgrade-modal hidden>
             <div class="spaces-upgrade-modal-backdrop" data-upgrade-modal-close tabindex="-1" aria-hidden="true"></div>
             <div class="spaces-upgrade-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="spaces-upgrade-modal-title" data-upgrade-modal-dialog>
                 <button type="button" class="spaces-upgrade-modal-close" data-upgrade-modal-close aria-label="Close">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#141513" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+                    <img src="./assets/images/spaces-v2/upgrade/close.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
                 </button>
-                <div class="spaces-upgrade-modal-orbs" aria-hidden="true">
-                    <span class="spaces-upgrade-orb is-green"></span>
-                    <span class="spaces-upgrade-orb is-purple"></span>
-                    <span class="spaces-upgrade-orb is-green-soft"></span>
-                </div>
                 <div class="spaces-upgrade-modal-header">
                     <div class="spaces-upgrade-modal-heading">
                         <h2 id="spaces-upgrade-modal-title">Upgrade your plan</h2>
@@ -4234,113 +4229,130 @@
                     <div class="spaces-upgrade-billing" role="group" aria-label="Billing period">
                         <button type="button" class="spaces-upgrade-billing-btn" data-upgrade-billing="monthly" aria-pressed="false">Monthly</button>
                         <button type="button" class="spaces-upgrade-billing-btn is-selected" data-upgrade-billing="yearly" aria-pressed="true">
-                            Yearly
-                            <span class="spaces-upgrade-billing-save">Save 75%</span>
+                            Annual
+                            <span class="spaces-upgrade-billing-save">Save 33%</span>
                         </button>
                     </div>
                 </div>
                 <div class="spaces-upgrade-plans">
                     <article class="spaces-upgrade-plan is-premium" data-upgrade-plan="premium">
+                        <div class="spaces-upgrade-plan-glow" aria-hidden="true">
+                            <span class="spaces-upgrade-plan-orb is-lime"></span>
+                            <span class="spaces-upgrade-plan-orb is-mint"></span>
+                        </div>
                         <div class="spaces-upgrade-plan-head">
-                            <div class="spaces-upgrade-plan-title-row">
-                                <h3>Premium</h3>
-                            </div>
+                            <h3>Premium</h3>
                             <p class="spaces-upgrade-plan-subtitle">Design faster with AI</p>
                         </div>
-                        <div class="spaces-upgrade-credits-box">
-                            <div class="spaces-upgrade-credits-amount">
-                                <strong>1,000</strong>
-                                <span>credits / month</span>
+                        <div class="spaces-upgrade-credits-stack">
+                            <div class="spaces-upgrade-credits-box">
+                                <div class="spaces-upgrade-credits-title">
+                                    <img src="./assets/images/spaces-v2/upgrade/sparkle-green.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                                    <strong>1,000 credits every month</strong>
+                                </div>
+                                <p class="spaces-upgrade-credits-copy">About 120 room looks or 600 Copilot replies a month</p>
+                                <div class="spaces-upgrade-fixed-pill">
+                                    <img src="./assets/images/spaces-v2/upgrade/check-fixed.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                                    <span>Fixed amount of credits</span>
+                                </div>
                             </div>
-                            <p class="spaces-upgrade-credits-copy">About 40 room looks or 200 Copilot replies a month.</p>
+                            <span class="spaces-upgrade-credits-notch" aria-hidden="true">
+                                <img src="./assets/images/spaces-v2/upgrade/notch-green.svg?v=figma244" width="24" height="8" alt="">
+                            </span>
+                            <div class="spaces-upgrade-start-row">
+                                <div class="spaces-upgrade-start-copy">
+                                    <strong>Instant access</strong>
+                                    <span>All 1,000 credits right away</span>
+                                </div>
+                                <span class="spaces-upgrade-start-icon" aria-hidden="true">
+                                    <img src="./assets/images/spaces-v2/upgrade/flash.svg?v=figma244" width="24" height="24" alt="">
+                                </span>
+                            </div>
                         </div>
                         <div class="spaces-upgrade-price-row">
                             <span class="spaces-upgrade-price-old" data-upgrade-premium-old>$19.99</span>
                             <strong class="spaces-upgrade-price-new" data-upgrade-premium-price>$4.99</strong>
                             <span class="spaces-upgrade-price-period">/ month</span>
                         </div>
-                        <div class="spaces-upgrade-start-row">
-                            <div class="spaces-upgrade-start-copy">
-                                <strong>Instant access</strong>
-                                <span>All 1,000 credits right away</span>
-                            </div>
-                            <span class="spaces-upgrade-start-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3L5 14h6l-1 7 8-11h-6l1-7z"></path></svg></span>
-                        </div>
                         <button type="button" class="spaces-upgrade-plan-cta is-premium" data-upgrade-checkout="premium">Get Premium</button>
-                        <p class="spaces-upgrade-bill-note" data-upgrade-premium-note>$59.88 billed yearly. Cancel anytime.</p>
+                        <p class="spaces-upgrade-bill-note" data-upgrade-premium-note>$59.88 billed yearly</p>
                         <div class="spaces-upgrade-features-block">
-                            <p class="spaces-upgrade-features-lead">Everything in Free, plus</p>
+                            <p class="spaces-upgrade-features-lead">Everything in Free plus:</p>
                             <ul class="spaces-upgrade-features">
-                                <li class="is-highlight"><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>Advanced AI Copilot for every room</p></li>
-                                <li class="is-highlight"><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>AI Studio room looks in seconds</p></li>
-                                <li class="is-highlight"><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>1,000 AI credits every month</p></li>
-                                <li><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>8,000+ furniture items</p></li>
-                                <li><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>Unlimited HD renders</p></li>
-                                <li><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>Floor plan to 3D</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Advanced AI Copilot for every room</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>AI Studio room looks in seconds</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>1,000 AI credits every month</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>8,000+ furniture items</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Unlimited HD renders</p></li>
                             </ul>
                         </div>
                     </article>
                     <article class="spaces-upgrade-plan is-pro" data-upgrade-plan="pro">
+                        <div class="spaces-upgrade-plan-glow" aria-hidden="true">
+                            <span class="spaces-upgrade-plan-orb is-lilac"></span>
+                            <span class="spaces-upgrade-plan-orb is-sky"></span>
+                        </div>
                         <div class="spaces-upgrade-plan-head">
-                            <div class="spaces-upgrade-plan-title-row">
-                                <h3>Professional</h3>
-                                <span class="spaces-upgrade-badge">Best value</span>
-                            </div>
+                            <h3>Professional</h3>
                             <p class="spaces-upgrade-plan-subtitle">Maximum AI for client-ready interiors</p>
                         </div>
-                        <div class="spaces-upgrade-credits-box is-adjustable">
-                            <div class="spaces-upgrade-credits-amount">
-                                <strong data-upgrade-pro-credits>3,000</strong>
-                                <span>credits / month</span>
-                            </div>
-                            <p class="spaces-upgrade-credits-copy" data-upgrade-pro-copy>About 120 room looks or 600 Copilot replies a month.</p>
-                            <div class="spaces-upgrade-slider" data-upgrade-pro-slider>
-                                <label class="spaces-upgrade-sr-only" for="spaces-upgrade-pro-range">Credits per month</label>
-                                <input id="spaces-upgrade-pro-range" type="range" min="0" max="2" step="1" value="0" aria-label="Monthly credits" data-upgrade-pro-range>
-                                <div class="spaces-upgrade-slider-labels" aria-hidden="true">
-                                    <span>3,000</span>
-                                    <span>5,000</span>
-                                    <span>8,000</span>
+                        <div class="spaces-upgrade-credits-stack">
+                            <div class="spaces-upgrade-credits-box is-adjustable">
+                                <div class="spaces-upgrade-credits-title">
+                                    <img src="./assets/images/spaces-v2/upgrade/sparkle-purple.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                                    <strong><span data-upgrade-pro-credits>3,000</span> credits every month</strong>
                                 </div>
+                                <p class="spaces-upgrade-credits-copy" data-upgrade-pro-copy>About 120 room looks or 600 Copilot replies a month</p>
+                                <div class="spaces-upgrade-slider" data-upgrade-pro-slider>
+                                    <label class="spaces-upgrade-sr-only" for="spaces-upgrade-pro-range">Credits per month</label>
+                                    <input id="spaces-upgrade-pro-range" type="range" min="0" max="2" step="1" value="0" aria-label="Monthly credits" data-upgrade-pro-range>
+                                    <div class="spaces-upgrade-slider-labels" aria-hidden="true">
+                                        <span>3,000</span>
+                                        <span>5,000</span>
+                                        <span>8,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="spaces-upgrade-credits-notch" aria-hidden="true">
+                                <img src="./assets/images/spaces-v2/upgrade/notch-purple.svg?v=figma244" width="24" height="8" alt="">
+                            </span>
+                            <div class="spaces-upgrade-start-row is-trial">
+                                <div class="spaces-upgrade-start-copy">
+                                    <strong>7-day free trial</strong>
+                                    <span data-upgrade-trial-hint>Includes 50 credits to try</span>
+                                </div>
+                                <button type="button" class="spaces-upgrade-trial-switch is-on" role="switch" aria-checked="true" aria-label="7-day free trial" data-upgrade-trial-toggle>
+                                    <span class="spaces-upgrade-trial-knob" aria-hidden="true"></span>
+                                </button>
                             </div>
                         </div>
                         <div class="spaces-upgrade-price-row">
-                            <span class="spaces-upgrade-price-old" data-upgrade-pro-old>$44.99</span>
-                            <strong class="spaces-upgrade-price-new" data-upgrade-pro-price>$33.99</strong>
+                            <span class="spaces-upgrade-price-old" data-upgrade-pro-old>$49.99</span>
+                            <strong class="spaces-upgrade-price-new" data-upgrade-pro-price>$33.33</strong>
                             <span class="spaces-upgrade-price-period">/ month</span>
                         </div>
-                        <div class="spaces-upgrade-start-row is-trial">
-                            <div class="spaces-upgrade-start-copy">
-                                <strong>7-day free trial</strong>
-                                <span data-upgrade-trial-hint>Includes 50 credits to try</span>
-                            </div>
-                            <button type="button" class="spaces-upgrade-trial-switch is-on" role="switch" aria-checked="true" aria-label="7-day free trial" data-upgrade-trial-toggle>
-                                <span class="spaces-upgrade-trial-knob" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                        <button type="button" class="spaces-upgrade-plan-cta is-pro" data-upgrade-checkout="pro" data-upgrade-pro-cta>Try free for 7 days</button>
-                        <p class="spaces-upgrade-bill-note" data-upgrade-pro-note>Free until Oct 10, then $407.88/year. Cancel anytime.</p>
+                        <button type="button" class="spaces-upgrade-plan-cta is-pro" data-upgrade-checkout="pro" data-upgrade-pro-cta>Try Pro for 7 days</button>
+                        <p class="spaces-upgrade-bill-note" data-upgrade-pro-note>Free until Oct 10, then $400.88/year</p>
                         <div class="spaces-upgrade-features-block">
-                            <p class="spaces-upgrade-features-lead">Everything in Premium, plus</p>
+                            <p class="spaces-upgrade-features-lead">Everything in Premium plus:</p>
                             <ul class="spaces-upgrade-features">
-                                <li class="is-highlight"><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>Up to 8,000 AI credits a month</p></li>
-                                <li class="is-highlight"><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>More AI Copilot and AI Studio for client work</p></li>
-                                <li><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>Unlimited 4K renders</p></li>
-                                <li><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>Upload your own 3D models</p></li>
-                                <li><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>Mood boards and 360° panoramas</p></li>
-                                <li><span class="spaces-upgrade-feature-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><p>Branded profile</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Up to 8,000 AI credits a month</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>AI Studio for client work</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Unlimited custom textures</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Unlimited 4K renders</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Branded profile</p></li>
                             </ul>
                         </div>
                     </article>
                 </div>
                 <button type="button" class="spaces-upgrade-footer" data-buy-credits-open>
                     <span class="spaces-upgrade-footer-copy">
-                        <strong>Just need a few credits?</strong>
-                        <span>Buy a one-time pack, no subscription.</span>
+                        <strong>Don’t want to upgrade right away? Buy credits instead</strong>
+                        <span>Buy one-time subscription pack</span>
                     </span>
                     <span class="spaces-upgrade-buy-credits">
                         <span>Buy credits</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                        <img src="./assets/images/spaces-v2/upgrade/arrow-right.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
                     </span>
                 </button>
             </div>
@@ -4606,20 +4618,7 @@
             </div>
         </div>
 
-        <style>
-            .spaces-upgrade-plans{display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;column-gap:16px !important;row-gap:12px !important;flex:0 0 auto !important}
-            .spaces-upgrade-plan{display:grid !important;grid-template-rows:subgrid !important;grid-row:span 7 !important;height:auto !important}
-            .spaces-upgrade-credits-box{height:100% !important}
-            .spaces-upgrade-features{flex:0 0 auto !important;justify-content:flex-start !important;gap:10px !important}
-            .spaces-upgrade-features > li,
-            .spaces-upgrade-features > li.is-highlight,
-            .spaces-upgrade-features > li > p,
-            .spaces-upgrade-features > li.is-highlight > p{font-weight:400 !important;font-family:"Open Sans",Arial,sans-serif !important}
-            @media (max-width:980px){
-                .spaces-upgrade-plans{grid-template-columns:1fr !important;grid-template-rows:none !important;flex:0 0 auto !important}
-            }
-        </style>
-        <script src="./assets/js/spaces-upgrade-modal.js?v=upgrade-center-1"></script>
+        <script src="./assets/js/spaces-upgrade-modal.js?v=figma244-1"></script>
         <script src="./assets/js/spaces-usage-modal.js?v=figma-1"></script>
         <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
         <script src="./assets/js/spaces-checkout-modal.js?v=premium-green-1"></script>
