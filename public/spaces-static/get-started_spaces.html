@@ -19,7 +19,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=upgrade-center-float-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=profile-menu-figma-1">
 
         <title>Get Started Spaces</title>
 
@@ -378,30 +378,13 @@
         </section>
         </div>
         </div>
-                <div class="header-account-cluster">
-                <div class="header-credits" data-header-credits-wrap>
-                    <button type="button" class="header-credits-button" aria-label="50 credits left" aria-expanded="false" aria-haspopup="dialog" aria-controls="header-credits-menu" data-header-credits>
-                        <img src="./assets/images/spaces-v2/home-composer/mark-sparkles-outline.svg?v=4" width="16" height="16" alt="" aria-hidden="true">
-                        <span data-header-credits-count>50</span>
-                    </button>
-                    <div id="header-credits-menu" class="header-credits-menu" role="dialog" aria-label="Credits" hidden data-header-credits-menu>
-                        <div class="header-credits-menu-row is-plan">
-                            <div class="header-credits-menu-plan">
-                                <strong>Free plan</strong>
-                                <span>50 credits one-time</span>
-                            </div>
-                        </div>
-                        <div class="header-credits-menu-row">
-                            <span class="header-credits-menu-upsell">Need extra credits?</span>
-                            <button type="button" class="header-credits-menu-upgrade" data-upgrade-modal-open>Upgrade</button>
-                        </div>
-                    </div>
-                </div>
+                <div class="header-account-cluster" data-header-credits-wrap>
                 <div class="header-item header-item-user header-item-dropdown" data-header-dropdown>
-            <button type="button" class="header-button" aria-label="Profile" aria-expanded="false" data-header-dropdown-trigger>
+            <button type="button" class="header-account-pill" aria-label="Profile, 50 credits left" aria-expanded="false" data-header-dropdown-trigger data-header-credits>
+                <img class="header-account-pill-spark" src="./assets/images/spaces-v2/profile-menu/credits-spark.svg" width="20" height="20" alt="" aria-hidden="true">
+                <span class="header-account-pill-credits" data-header-credits-count>50</span>
                 <span class="header-avatar-letter" aria-hidden="true">D</span>
             </button>
-            <span class="tooltip">Profile</span>
             <div class="header-main-dropdown-wrapper grouped-dropdown-wrapper spaces-profile-menu">
                 <div class="header-main-dropdown spaces-profile-menu-panel" role="menu" aria-label="Profile menu">
                     <div class="spaces-profile-menu-identity">
@@ -416,36 +399,42 @@
                             <span class="spaces-profile-menu-credits-row">
                                 <span class="spaces-profile-menu-credits-title">Credits</span>
                                 <span class="spaces-profile-menu-credits-meta">
-                                    50 left
-                                    <img src="./assets/images/spaces-v2/profile-menu/chevron-right.svg" width="16" height="16" alt="" aria-hidden="true">
+                                    <span data-profile-credits-count>50</span>
+                                    <img src="./assets/images/spaces-v2/profile-menu/chevron-right-figma.svg" width="16" height="16" alt="" aria-hidden="true">
                                 </span>
                             </span>
                             <span class="spaces-profile-menu-credits-bar" aria-hidden="true">
-                                <span style="width: 10%"></span>
+                                <span style="width: 6px"></span>
                             </span>
+                            <span class="spaces-profile-menu-credits-hint">One-time credit pack, it doesn’t renew</span>
                         </a>
+                        <div class="spaces-profile-menu-billing-divider" aria-hidden="true"></div>
                         <a href="" class="spaces-profile-menu-premium" role="menuitem" data-upgrade-modal-open>
                             <span class="spaces-profile-menu-premium-label">
-                                <img src="./assets/images/header/header-icon-crown.svg" width="16" height="16" alt="" aria-hidden="true">
-                                <span>Go Premium</span>
+                                <img src="./assets/images/spaces-v2/profile-menu/crown-green.svg" width="24" height="24" alt="" aria-hidden="true">
+                                <span>Try Pro for free</span>
                             </span>
-                            <span class="spaces-profile-menu-premium-upgrade">Upgrade</span>
+                            <span class="spaces-profile-menu-premium-upgrade">See plans</span>
                         </a>
                     </div>
                     <div class="spaces-profile-menu-group">
                         <a href="" class="spaces-profile-menu-item" role="menuitem">
-                            <img src="./assets/images/spaces-v2/profile-menu/my-profile.svg" width="20" height="20" alt="" aria-hidden="true">
+                            <img src="./assets/images/spaces-v2/profile-menu/my-profile.svg" width="24" height="24" alt="" aria-hidden="true">
                             <span>View profile</span>
                         </a>
                         <a href="" class="spaces-profile-menu-item" role="menuitem">
-                            <img src="./assets/images/spaces-v2/profile-menu/settings.svg" width="20" height="20" alt="" aria-hidden="true">
-                            <span>Account settings</span>
+                            <img src="./assets/images/spaces-v2/profile-menu/design-school.svg" width="24" height="24" alt="" aria-hidden="true">
+                            <span>Design school</span>
+                        </a>
+                        <a href="" class="spaces-profile-menu-item" role="menuitem">
+                            <img src="./assets/images/spaces-v2/profile-menu/settings.svg" width="24" height="24" alt="" aria-hidden="true">
+                            <span>Account Settings</span>
                         </a>
                     </div>
                     <div class="spaces-profile-menu-group is-signout">
                         <a href="" class="spaces-profile-menu-item" role="menuitem">
-                            <img src="./assets/images/spaces-v2/profile-menu/logout.svg" width="20" height="20" alt="" aria-hidden="true">
-                            <span>Log out</span>
+                            <img src="./assets/images/spaces-v2/profile-menu/logout.svg" width="24" height="24" alt="" aria-hidden="true">
+                            <span>Log Out</span>
                         </a>
                     </div>
                 </div>
@@ -2331,32 +2320,26 @@
                 const dropdowns = [...document.querySelectorAll('[data-header-dropdown]')];
                 const creditsWrap = document.querySelector('[data-header-credits-wrap]');
                 const creditsTrigger = creditsWrap?.querySelector('[data-header-credits]');
-                const creditsMenu = creditsWrap?.querySelector('[data-header-credits-menu]');
                 const creditsCount = creditsWrap?.querySelector('[data-header-credits-count]');
+                const profileCreditsCount = document.querySelector('[data-profile-credits-count]');
 
-                // Red badge when balance is 10 or lower.
+                // Keep header + menu credit numbers in sync.
                 const syncHeaderCreditsLow = (value) => {
-                    if (!creditsTrigger || !creditsCount) return;
+                    if (!creditsCount) return;
                     const left = Number(String(value ?? creditsCount.textContent ?? '0').replace(/[^\d]/g, '')) || 0;
                     creditsCount.textContent = String(left);
-                    creditsTrigger.classList.toggle('is-low', left <= 10);
-                    creditsTrigger.setAttribute('aria-label', `${left} credits left`);
+                    if (profileCreditsCount) profileCreditsCount.textContent = String(left);
+                    creditsTrigger?.classList.toggle('is-low', left <= 10);
+                    creditsTrigger?.setAttribute('aria-label', `Profile, ${left} credits left`);
                 };
                 syncHeaderCreditsLow();
                 window.SpacesHeaderCredits = { sync: syncHeaderCreditsLow };
-
-                const closeCreditsMenu = () => {
-                    if (!creditsMenu || !creditsTrigger) return;
-                    creditsMenu.hidden = true;
-                    creditsTrigger.setAttribute('aria-expanded', 'false');
-                };
 
                 const closeDropdowns = () => {
                     dropdowns.forEach(dropdown => {
                         dropdown.classList.remove('is-open');
                         dropdown.querySelector('[data-header-dropdown-trigger]')?.setAttribute('aria-expanded', 'false');
                     });
-                    closeCreditsMenu();
                 };
 
                 dropdowns.forEach(dropdown => {
@@ -2370,18 +2353,8 @@
                     });
                 });
 
-                creditsTrigger?.addEventListener('click', event => {
-                    event.stopPropagation();
-                    const shouldOpen = Boolean(creditsMenu?.hidden);
-                    closeDropdowns();
-                    if (!creditsMenu) return;
-                    creditsMenu.hidden = !shouldOpen;
-                    creditsTrigger.setAttribute('aria-expanded', String(shouldOpen));
-                });
-
                 document.addEventListener('click', event => {
-                    if (!dropdowns.some(dropdown => dropdown.contains(event.target))
-                        && !creditsWrap?.contains(event.target)) {
+                    if (!dropdowns.some(dropdown => dropdown.contains(event.target))) {
                         closeDropdowns();
                     }
                 });
