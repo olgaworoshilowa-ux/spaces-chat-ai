@@ -19,7 +19,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-figma244-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-stripe-fields-1">
 
         <title>Get Started Spaces</title>
 
@@ -4520,45 +4520,65 @@
                             </div>
 
                             <div class="spaces-checkout-card-fields" data-checkout-card-fields>
-                                <div class="spaces-checkout-field is-card-number is-floating">
-                                    <span class="spaces-checkout-float-label">Card number</span>
-                                    <input id="spaces-checkout-card" type="text" inputmode="numeric" placeholder="1424 1424 1424 1424" autocomplete="cc-number" aria-label="Card number">
-                                    <span class="spaces-checkout-brands" aria-hidden="true">
-                                        <img src="./assets/images/spaces-v2/checkout/brand-mastercard.svg?v=figma244" width="35" height="24" alt="">
-                                        <img src="./assets/images/spaces-v2/checkout/brand-visa.svg?v=figma244" width="35" height="24" alt="">
-                                        <img src="./assets/images/spaces-v2/checkout/brand-amex.svg?v=figma244" width="35" height="24" alt="">
-                                    </span>
-                                </div>
-                                <div class="spaces-checkout-field-row">
-                                    <div class="spaces-checkout-field is-floating is-exp">
-                                        <input id="spaces-checkout-exp" type="text" placeholder="MM/YY" autocomplete="cc-exp" aria-label="Expiry date">
+                                <div class="spaces-checkout-payment-element" data-checkout-payment-element>
+                                    <div class="spaces-checkout-field is-card-number">
+                                        <label class="spaces-checkout-field-label" for="spaces-checkout-card">Card number</label>
+                                        <div class="spaces-checkout-field-control">
+                                            <input id="spaces-checkout-card" type="text" inputmode="numeric" placeholder="1234 1234 1234 1234" autocomplete="cc-number">
+                                            <span class="spaces-checkout-brands" aria-hidden="true">
+                                                <img src="./assets/images/spaces-v2/checkout/brand-mastercard.svg?v=figma244" width="32" height="20" alt="">
+                                                <img src="./assets/images/spaces-v2/checkout/brand-visa.svg?v=figma244" width="32" height="20" alt="">
+                                                <img src="./assets/images/spaces-v2/checkout/brand-amex.svg?v=figma244" width="32" height="20" alt="">
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="spaces-checkout-field is-floating is-cvc">
-                                        <input id="spaces-checkout-cvc" type="text" inputmode="numeric" placeholder="CVC" autocomplete="cc-csc" aria-label="Security code">
+                                    <div class="spaces-checkout-field-row">
+                                        <div class="spaces-checkout-field is-exp">
+                                            <label class="spaces-checkout-field-label" for="spaces-checkout-exp">Expiration</label>
+                                            <div class="spaces-checkout-field-control">
+                                                <input id="spaces-checkout-exp" type="text" placeholder="MM / YY" autocomplete="cc-exp">
+                                            </div>
+                                        </div>
+                                        <div class="spaces-checkout-field is-cvc">
+                                            <label class="spaces-checkout-field-label" for="spaces-checkout-cvc">CVC</label>
+                                            <div class="spaces-checkout-field-control">
+                                                <input id="spaces-checkout-cvc" type="text" inputmode="numeric" placeholder="CVC" autocomplete="cc-csc">
+                                                <svg class="spaces-checkout-cvc-icon" width="24" height="16" viewBox="0 0 24 16" fill="none" aria-hidden="true"><rect x=".75" y=".75" width="22.5" height="14.5" rx="2.25" stroke="#A3A4AD" stroke-width="1.5"/><path d="M.75 5h22.5" stroke="#A3A4AD" stroke-width="1.5"/><path d="M14 10h5" stroke="#A3A4AD" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="spaces-checkout-field is-floating">
-                                    <span class="spaces-checkout-float-label">Full name</span>
-                                    <input id="spaces-checkout-name" type="text" placeholder="Full name on the card" autocomplete="cc-name" aria-label="Full name on the card">
+
+                                <div class="spaces-checkout-field is-billing">
+                                    <label class="spaces-checkout-field-label" for="spaces-checkout-name">Cardholder name</label>
+                                    <div class="spaces-checkout-field-control is-solo">
+                                        <input id="spaces-checkout-name" type="text" placeholder="Full name on card" autocomplete="cc-name">
+                                    </div>
                                 </div>
-                                <div class="spaces-checkout-field is-floating is-country">
-                                    <span class="spaces-checkout-float-label">Country</span>
-                                    <select id="spaces-checkout-country" autocomplete="country-name" aria-label="Country">
-                                        <option>Israel</option>
-                                        <option>United States</option>
-                                        <option>United Kingdom</option>
-                                        <option>Germany</option>
-                                        <option>Georgia</option>
-                                    </select>
-                                    <img class="spaces-checkout-select-chevron" src="./assets/images/spaces-v2/checkout/select-chevron-figma.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                                <div class="spaces-checkout-field is-billing is-country">
+                                    <label class="spaces-checkout-field-label" for="spaces-checkout-country">Country or region</label>
+                                    <div class="spaces-checkout-field-control is-solo">
+                                        <select id="spaces-checkout-country" autocomplete="country-name">
+                                            <option>Israel</option>
+                                            <option>United States</option>
+                                            <option>United Kingdom</option>
+                                            <option>Germany</option>
+                                            <option>Georgia</option>
+                                        </select>
+                                        <img class="spaces-checkout-select-chevron" src="./assets/images/spaces-v2/checkout/select-chevron-figma.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true">
+                                    </div>
                                 </div>
-                                <div class="spaces-checkout-field is-floating">
-                                    <span class="spaces-checkout-float-label">Address</span>
-                                    <input id="spaces-checkout-address" type="text" placeholder=" " autocomplete="street-address" aria-label="Address">
+                                <div class="spaces-checkout-field is-billing">
+                                    <label class="spaces-checkout-field-label" for="spaces-checkout-address">Address</label>
+                                    <div class="spaces-checkout-field-control is-solo">
+                                        <input id="spaces-checkout-address" type="text" placeholder="Address" autocomplete="street-address">
+                                    </div>
                                 </div>
-                                <div class="spaces-checkout-field is-floating">
-                                    <span class="spaces-checkout-float-label">Email</span>
-                                    <input id="spaces-checkout-email" type="email" placeholder=" " autocomplete="email" aria-label="Email">
+                                <div class="spaces-checkout-field is-billing">
+                                    <label class="spaces-checkout-field-label" for="spaces-checkout-email">Email</label>
+                                    <div class="spaces-checkout-field-control is-solo">
+                                        <input id="spaces-checkout-email" type="email" placeholder="email@example.com" autocomplete="email">
+                                    </div>
                                 </div>
                             </div>
 

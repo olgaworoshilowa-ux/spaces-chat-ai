@@ -17869,32 +17869,88 @@ body.is-checkout-modal-open{
     font-style: normal;
 }
 
+/* Stripe Payment Element–inspired card form (styled) */
 .spaces-checkout-card-fields{
+    --stripe-border: #e6e6e6;
+    --stripe-border-strong: #c7c7c7;
+    --stripe-text: #30313d;
+    --stripe-muted: #6d6e78;
+    --stripe-placeholder: #a3a4ad;
+    --stripe-focus: #1aa73f;
+    --stripe-focus-ring: rgba(26, 167, 63, .22);
+    --stripe-radius: 8px;
+    --stripe-bg: #fff;
     display: flex;
     flex-direction: column;
-    gap: 0;
-    padding: 18px 19px 20px;
-    border: 1px solid #e9e9e9;
-    border-radius: 16px;
-    background: #fff;
-    box-shadow: 0 0 0 .5px rgba(0, 0, 0, .04), 0 2px 6px rgba(0, 0, 0, .1);
+    gap: 14px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
     box-sizing: border-box;
+}
+
+.spaces-checkout-payment-element{
+    overflow: hidden;
+    border: 1px solid var(--stripe-border-strong);
+    border-radius: var(--stripe-radius);
+    background: var(--stripe-bg);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .03), 0 2px 4px rgba(0, 0, 0, .02);
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.spaces-checkout-payment-element:focus-within{
+    border-color: var(--stripe-focus);
+    box-shadow: 0 0 0 3px var(--stripe-focus-ring);
 }
 
 .spaces-checkout-field{
     position: relative;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
     min-width: 0;
-    min-height: 56px;
     margin: 0;
-    border: 1px solid rgba(0, 0, 0, .16);
+    border: 0;
     box-sizing: border-box;
-    background: #fff;
+    background: transparent;
+}
+
+.spaces-checkout-field-label{
+    display: none;
+    margin: 0 0 6px;
+    color: var(--stripe-muted);
+    font: 400 13px/16px "Open Sans", Arial, sans-serif;
+}
+
+.spaces-checkout-field.is-billing .spaces-checkout-field-label{
+    display: block;
+}
+
+.spaces-checkout-field-control{
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    background: var(--stripe-bg);
+}
+
+.spaces-checkout-field-control.is-solo{
+    min-height: 44px;
+    border: 1px solid var(--stripe-border-strong);
+    border-radius: var(--stripe-radius);
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.spaces-checkout-field-control.is-solo:focus-within{
+    border-color: var(--stripe-focus);
+    box-shadow: 0 0 0 3px var(--stripe-focus-ring);
 }
 
 .spaces-checkout-field.is-card-number{
-    border-radius: 16px 16px 0 0;
+    border-bottom: 1px solid var(--stripe-border);
 }
 
 .spaces-checkout-field-row{
@@ -17903,91 +17959,75 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-field-row > .spaces-checkout-field.is-exp{
-    border-top: 0;
-    border-right: 0;
-    border-radius: 0 0 0 16px;
+    border-right: 1px solid var(--stripe-border);
 }
 
-.spaces-checkout-field-row > .spaces-checkout-field.is-cvc{
-    border-top: 0;
-    border-radius: 0 0 16px 0;
-}
-
-.spaces-checkout-card-fields > .spaces-checkout-field:not(.is-card-number){
-    margin-top: 20px;
-    border-radius: 16px;
-}
-
-.spaces-checkout-float-label{
-    position: absolute;
-    top: -9px;
-    left: 11px;
-    z-index: 1;
-    padding: 0 4px;
-    background: #fff;
-    color: #747474;
-    font: 400 12px/16px "Open Sans", Arial, sans-serif;
-    pointer-events: none;
-}
-
-.spaces-checkout-field > input,
-.spaces-checkout-field > select{
+.spaces-checkout-field-control > input,
+.spaces-checkout-field-control > select{
     width: 100%;
     min-width: 0;
-    height: 54px;
+    height: 44px;
     margin: 0;
-    padding: 16px;
+    padding: 10px 12px;
     border: 0;
     border-radius: inherit;
     box-sizing: border-box;
     background: transparent;
-    color: #1c1c1c;
+    color: var(--stripe-text);
     font: 400 16px/24px "Open Sans", Arial, sans-serif;
     appearance: none;
     -webkit-appearance: none;
 }
 
-.spaces-checkout-field > input:focus,
-.spaces-checkout-field > select:focus{
+.spaces-checkout-field-control > input:focus,
+.spaces-checkout-field-control > select:focus{
     outline: 0;
 }
 
-.spaces-checkout-field > input::placeholder{
-    color: #747474;
+.spaces-checkout-field-control > input::placeholder{
+    color: var(--stripe-placeholder);
 }
 
 .spaces-checkout-brands{
-    position: absolute;
-    top: 50%;
-    right: 12px;
     display: inline-flex;
-    gap: 6px;
-    transform: translateY(-50%);
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 4px;
+    margin-right: 10px;
     pointer-events: none;
 }
 
 .spaces-checkout-brands > img{
     display: block;
-    width: 35px;
-    height: 24px;
+    width: 32px;
+    height: 20px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .06);
 }
 
-.spaces-checkout-field.is-card-number > input{
-    padding-right: 130px;
+.spaces-checkout-field.is-card-number .spaces-checkout-field-control > input{
+    padding-right: 8px;
+}
+
+.spaces-checkout-cvc-icon{
+    flex: 0 0 auto;
+    margin-right: 12px;
+    opacity: .85;
 }
 
 .spaces-checkout-select-chevron{
     position: absolute;
-    right: 15px;
+    right: 10px;
     top: 50%;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     transform: translateY(-50%);
     pointer-events: none;
+    opacity: .7;
 }
 
-.spaces-checkout-field.is-country > select{
-    padding-right: 44px;
+.spaces-checkout-field.is-country .spaces-checkout-field-control > select{
+    padding-right: 36px;
     cursor: pointer;
 }
 
