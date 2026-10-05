@@ -5,17 +5,20 @@
     const dialog = modal?.querySelector('[data-checkout-dialog]');
     const cta = modal?.querySelector('[data-checkout-cta]');
     const planNameNode = modal?.querySelector('[data-checkout-plan-name]');
-    const creditsLabel = modal?.querySelector('[data-checkout-credits-label]');
     const summaryCopy = modal?.querySelector('[data-checkout-summary-copy]');
     const subtotalNode = modal?.querySelector('[data-checkout-subtotal]');
+    const discountLine = modal?.querySelector('[data-checkout-discount-line]');
+    const discountLabel = modal?.querySelector('[data-checkout-discount-label]');
+    const discountBadge = modal?.querySelector('[data-checkout-discount-badge]');
+    const discountAmount = modal?.querySelector('[data-checkout-discount-amount]');
     const trialLine = modal?.querySelector('[data-checkout-trial-line]');
     const trialDiscount = modal?.querySelector('[data-checkout-trial-discount]');
-    const fromLabel = modal?.querySelector('[data-checkout-from-label]');
+    const totalLabel = modal?.querySelector('[data-checkout-total-label]');
     const dueToday = modal?.querySelector('[data-checkout-due-today]');
-    const saveBanner = modal?.querySelector('[data-checkout-save-banner]');
-    const saveText = modal?.querySelector('[data-checkout-save-text]');
+    const fromLabel = modal?.querySelector('[data-checkout-from-label]');
     const legalNode = modal?.querySelector('[data-checkout-legal]');
     const saveToggle = modal?.querySelector('[data-checkout-save]');
+    const businessToggle = modal?.querySelector('[data-checkout-business]');
     if (!modal || !dialog) return;
 
     let lastFocus = null;
@@ -29,6 +32,7 @@
     };
 
     const money = value => `$${Number(value).toFixed(2)}`;
+    const moneyPlain = value => Number(value).toFixed(2);
     const formatCredits = value => Number(value).toLocaleString('en-US');
 
     const trialEndDate = () => {
@@ -37,10 +41,7 @@
         return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     };
 
-    const yearlySave = (monthly, annualMonthly) => {
-        const save = (Number(monthly) - Number(annualMonthly)) * 12;
-        return Math.max(0, Math.round(save));
-    };
+    const legalEncrypted = 'Payment is encrypted. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.';
 
     const getDisplayState = () => {
         const isPlan = currentPack.kind === 'plan';
@@ -48,24 +49,31 @@
         const useTrial = Boolean(currentPack.trialAvailable) && startMode === 'trial';
         const credits = formatCredits(currentPack.credits || 0);
         const unitPrice = Number(currentPack.price || 0);
-        const subtotal = isPlan && annual ? unitPrice * 12 : unitPrice;
         const monthlyList = Number(currentPack.monthlyPrice || currentPack.price || 0);
+        const billedTotal = isPlan && annual ? unitPrice * 12 : unitPrice;
+        const listTotal = isPlan && annual ? monthlyList * 12 : monthlyList;
+        const discount = Math.max(0, listTotal - billedTotal);
+        const offPct = monthlyList > 0
+            ? Math.round((1 - unitPrice / monthlyList) * 100)
+            : 0;
 
         if (!isPlan) {
             return {
                 isPlan: false,
                 useTrial: false,
-                showSaveBanner: false,
+                showDiscount: false,
                 planName: `${credits} credits`,
-                creditsLabel: `${credits} credits`,
                 summary: currentPack.summary || 'One-time top-up, no renewal.',
-                subtotal: money(subtotal),
+                subtotal: money(billedTotal),
+                discountLabel: '',
+                discountBadge: '',
+                discountAmount: '',
                 trialDiscount: '',
+                totalLabel: 'Total',
+                dueToday: money(billedTotal),
                 fromLabel: 'One-time payment · credits don’t expire',
-                dueToday: money(subtotal),
-                saveText: '',
                 cta: `Buy ${credits} credits`,
-                legal: 'Payment is encrypted. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.'
+                legal: legalEncrypted
             };
         }
 
@@ -73,20 +81,20 @@
             return {
                 isPlan: true,
                 useTrial: true,
-                showSaveBanner: annual,
+                showDiscount: false,
                 planName: currentPack.name || 'Professional',
-                creditsLabel: `${credits} credits`,
                 summary: currentPack.tagline || 'Maximum AI for client-ready interiors',
-                subtotal: money(subtotal),
-                trialDiscount: `-${money(subtotal)}`,
-                fromLabel: annual
-                    ? `Then ${money(subtotal)}/year from ${trialEndDate()}`
-                    : `Then ${money(unitPrice)}/month from ${trialEndDate()}`,
+                subtotal: money(billedTotal),
+                discountLabel: '',
+                discountBadge: '',
+                discountAmount: '',
+                trialDiscount: `–${money(billedTotal)}`,
+                totalLabel: 'Due today',
                 dueToday: '$0.00',
-                saveText: annual
-                    ? `You save $${yearlySave(monthlyList, unitPrice)} a year with yearly billing`
-                    : '',
-                cta: 'Start free trial',
+                fromLabel: annual
+                    ? `Free until ${trialEndDate()}, then ${money(billedTotal)}/year`
+                    : `Free until ${trialEndDate()}, then ${money(unitPrice)}/month`,
+                cta: 'Try Pro for 7 days',
                 legal: 'You won’t be charged today. We’ll remind you 2 days before the trial ends. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.'
             };
         }
@@ -94,41 +102,43 @@
         return {
             isPlan: true,
             useTrial: false,
-            showSaveBanner: annual,
+            showDiscount: annual && discount > 0,
             planName: currentPack.name || 'Professional',
-            creditsLabel: `${credits} credits`,
             summary: currentPack.tagline
                 || (currentPack.plan === 'premium'
                     ? 'Design faster with AI'
                     : 'Maximum AI for client-ready interiors'),
-            subtotal: money(subtotal),
+            subtotal: money(annual ? listTotal : billedTotal),
+            discountLabel: 'Annual discount',
+            discountBadge: offPct > 0 ? `${offPct}% OFF` : '33% OFF',
+            discountAmount: discount > 0 ? `–$${moneyPlain(discount).replace(/\.00$/, '')}` : '',
             trialDiscount: '',
+            totalLabel: 'Total',
+            dueToday: money(billedTotal),
             fromLabel: annual
                 ? `Billed yearly · ${money(unitPrice)} a month`
                 : 'Billed monthly',
-            dueToday: money(subtotal),
-            saveText: annual
-                ? `You save $${yearlySave(monthlyList, unitPrice)} a year with yearly billing`
-                : '',
             cta: currentPack.cta || `Get ${currentPack.name || 'plan'}`,
-            legal: 'By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.'
+            legal: legalEncrypted
         };
     };
 
     const syncPack = () => {
         const display = getDisplayState();
         if (planNameNode) planNameNode.textContent = display.planName;
-        if (creditsLabel) creditsLabel.textContent = display.creditsLabel;
         if (summaryCopy) summaryCopy.textContent = display.summary;
         if (subtotalNode) subtotalNode.textContent = display.subtotal;
+        if (discountLabel) discountLabel.textContent = display.discountLabel;
+        if (discountBadge) discountBadge.textContent = display.discountBadge;
+        if (discountAmount) discountAmount.textContent = display.discountAmount;
         if (trialDiscount) trialDiscount.textContent = display.trialDiscount;
+        if (totalLabel) totalLabel.textContent = display.totalLabel;
         if (fromLabel) fromLabel.textContent = display.fromLabel;
         if (dueToday) dueToday.textContent = display.dueToday;
-        if (saveText) saveText.textContent = display.saveText;
         if (cta) cta.textContent = display.cta;
         if (legalNode) legalNode.innerHTML = display.legal;
+        if (discountLine) discountLine.hidden = !display.showDiscount;
         if (trialLine) trialLine.hidden = !display.useTrial;
-        if (saveBanner) saveBanner.hidden = !display.showSaveBanner;
 
         modal.classList.toggle('is-plan-checkout', display.isPlan);
         modal.classList.toggle('is-credits-checkout', !display.isPlan);
@@ -176,10 +186,15 @@
         window.SpacesHeaderCredits?.sync?.(next);
     };
 
-    saveToggle?.addEventListener('click', () => {
-        const pressed = saveToggle.getAttribute('aria-pressed') === 'true';
-        saveToggle.setAttribute('aria-pressed', String(!pressed));
-    });
+    const wireToggle = (button) => {
+        button?.addEventListener('click', () => {
+            const pressed = button.getAttribute('aria-pressed') === 'true';
+            button.setAttribute('aria-pressed', String(!pressed));
+        });
+    };
+
+    wireToggle(saveToggle);
+    wireToggle(businessToggle);
 
     modal.querySelector('[data-checkout-back]')?.addEventListener('click', event => {
         event.preventDefault();
