@@ -175,12 +175,20 @@
         };
     };
 
-    const syncCurrencyToggle = () => {
+    const formatToggleAmount = (code, usdValue) => {
+        const currency = CURRENCIES[code] || CURRENCIES.usd;
+        return (Number(usdValue) * currency.rate).toFixed(2);
+    };
+
+    const syncCurrencyToggle = (selectorTotalUsd) => {
         currencyInputs.forEach(input => {
+            const code = input.value || 'gel';
             const label = currencyRoot?.querySelector(`label[for="${input.id}"]`);
-            const active = input.value === selectedCurrency;
+            const active = code === selectedCurrency;
             input.checked = active;
             label?.classList.toggle('is-active', active);
+            const amountNode = label?.querySelector('[data-checkout-currency-amount]');
+            if (amountNode) amountNode.textContent = formatToggleAmount(code, selectorTotalUsd);
         });
     };
 
@@ -210,7 +218,7 @@
         if (trialLine) trialLine.hidden = !display.useTrial;
         if (cancelNote) cancelNote.hidden = !display.showCancel;
 
-        syncCurrencyToggle();
+        syncCurrencyToggle(display.selectorTotalUsd);
 
         modal.classList.toggle('is-plan-checkout', display.isPlan);
         modal.classList.toggle('is-credits-checkout', !display.isPlan);

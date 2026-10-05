@@ -17803,20 +17803,18 @@ body.is-checkout-modal-open{
     min-width: 0;
 }
 
-/* Stripe Currency Selector Element (ToggleItem + flag + code) */
+/* Stripe Currency Selector Element — ToggleItem with flag + amount + code */
 .spaces-checkout-currency{
     display: flex;
+    width: 100%;
     min-width: 0;
 }
 
 .spaces-checkout-currency-toggle{
-    display: inline-flex;
-    align-items: stretch;
-    gap: 0;
-    padding: 2px;
-    border: 1px solid rgba(0, 0, 0, .1);
-    border-radius: 8px;
-    background: #f6f6f6;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -17824,57 +17822,64 @@ body.is-checkout-modal-open{
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    min-width: 72px;
-    min-height: 36px;
-    padding: 8px 14px;
-    border: 0;
-    border-radius: 6px;
-    background: transparent;
+    gap: 10px;
+    min-height: 48px;
+    padding: 10px 14px;
+    border: 1px solid #d4d4d8;
+    border-radius: 8px;
+    background: #fff;
     color: #30313d;
-    font: 500 14px/18px "Open Sans", Arial, sans-serif;
     cursor: pointer;
     box-sizing: border-box;
-    transition: background .12s ease, box-shadow .12s ease, color .12s ease;
+    transition: border-color .12s ease, box-shadow .12s ease, color .12s ease, background .12s ease;
 }
 
 .spaces-checkout-currency-item:hover{
-    color: #1c1c1c;
+    border-color: #a1a1aa;
 }
 
-.spaces-checkout-currency-toggle:focus-within .spaces-checkout-currency-item.is-active,
 .spaces-checkout-currency-item.is-active{
-    background: #fff;
-    color: #1c1c1c;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .04), 0 1px 3px rgba(0, 0, 0, .08);
+    border-color: #1aa73f;
+    color: #07872f;
+    background: rgba(26, 167, 63, .04);
+    box-shadow: 0 0 0 1px #1aa73f;
 }
 
 .spaces-checkout-currency-toggle input:focus-visible + .spaces-checkout-currency-item{
     outline: 0;
-    box-shadow: 0 0 0 2px rgba(26, 167, 63, .28), 0 1px 3px rgba(0, 0, 0, .08);
+    box-shadow: 0 0 0 3px rgba(26, 167, 63, .22);
 }
 
 .spaces-checkout-currency-flag{
     display: inline-flex;
-    flex: 0 0 16px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
 }
 
 .spaces-checkout-currency-flag > img{
     display: block;
-    width: 16px;
-    height: 16px;
-    object-fit: cover;
+    width: 20px;
+    height: 20px;
+}
+
+.spaces-checkout-currency-copy{
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+    font: 600 15px/20px "Open Sans", Arial, sans-serif;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
 }
 
 .spaces-checkout-currency-code{
-    color: inherit;
-    font: 500 14px/18px "Open Sans", Arial, sans-serif;
-    letter-spacing: .01em;
+    color: #71717a;
+    font: 600 13px/18px "Open Sans", Arial, sans-serif;
+}
+
+.spaces-checkout-currency-item.is-active .spaces-checkout-currency-code{
+    color: #07872f;
 }
 
 .spaces-checkout-express{
