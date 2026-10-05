@@ -182,7 +182,7 @@
             const label = currencyRoot?.querySelector(`label[for="${input.id}"]`);
             const active = code === selectedCurrency;
             input.checked = active;
-            label?.classList.toggle('is-active', active);
+            label?.classList.toggle('is-selected', active);
         });
         if (currencyRateNode) {
             currencyRateNode.textContent = selectedCurrency === 'usd'
