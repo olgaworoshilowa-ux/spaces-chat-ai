@@ -17807,7 +17807,7 @@ body.is-checkout-modal-open{
  * Stripe Currency Selector Element (light theme)
  * Docs: https://docs.stripe.com/elements/currency-selector-element
  * Two separate .ToggleItem buttons; selected uses colorPrimary (#0570de).
- * Subscriptions show flag + code only (no amounts). Place above Express Checkout.
+ * Subscriptions show flag + code only (no amounts).
  */
 .spaces-checkout-currency{
     --stripe-primary: #0570de;

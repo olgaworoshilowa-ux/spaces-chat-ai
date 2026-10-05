@@ -19,7 +19,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-currency-stripe-docs-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-currency-under-or-1">
 
         <title>Get Started Spaces</title>
 
@@ -4504,7 +4504,24 @@
 
                     <div class="spaces-checkout-main">
                         <div class="spaces-checkout-form">
-                            <!-- Stripe docs: Currency Selector above Express Checkout Element -->
+                            <div class="spaces-checkout-express" aria-label="Express payment methods">
+                                <button type="button" class="spaces-checkout-express-btn is-apple" data-checkout-pay="apple" aria-label="Pay with Apple Pay">
+                                    <img src="./assets/images/spaces-v2/checkout/apple-pay-wordmark.svg?v=3" alt="" width="54" height="22">
+                                </button>
+                                <button type="button" class="spaces-checkout-express-btn is-google" data-checkout-pay="google" aria-label="Pay with Google Pay">
+                                    <img src="./assets/images/spaces-v2/checkout/google-pay-wordmark.svg?v=3" alt="" width="58" height="24">
+                                </button>
+                                <button type="button" class="spaces-checkout-express-btn is-paypal" data-checkout-pay="paypal" aria-label="Pay with PayPal">
+                                    <img src="./assets/images/spaces-v2/checkout/paypal-logo-figma.svg?v=figma244" alt="" width="100" height="28">
+                                </button>
+                            </div>
+
+                            <div class="spaces-checkout-or" aria-hidden="true">
+                                <span></span>
+                                <em>or pay with</em>
+                                <span></span>
+                            </div>
+
                             <div class="spaces-checkout-currency" data-checkout-currency>
                                 <div class="spaces-checkout-toggle-group" role="radiogroup" aria-label="Choose currency">
                                     <label class="spaces-checkout-toggle-item is-selected">
@@ -4529,24 +4546,6 @@
                                 <p class="spaces-checkout-currency-rate" data-checkout-currency-rate dir="ltr">
                                     <span data-checkout-currency-rate-text>1 USD = 2.7045 GEL</span> (incl. 2% conversion fee).
                                 </p>
-                            </div>
-
-                            <div class="spaces-checkout-express" aria-label="Express payment methods">
-                                <button type="button" class="spaces-checkout-express-btn is-apple" data-checkout-pay="apple" aria-label="Pay with Apple Pay">
-                                    <img src="./assets/images/spaces-v2/checkout/apple-pay-wordmark.svg?v=3" alt="" width="54" height="22">
-                                </button>
-                                <button type="button" class="spaces-checkout-express-btn is-google" data-checkout-pay="google" aria-label="Pay with Google Pay">
-                                    <img src="./assets/images/spaces-v2/checkout/google-pay-wordmark.svg?v=3" alt="" width="58" height="24">
-                                </button>
-                                <button type="button" class="spaces-checkout-express-btn is-paypal" data-checkout-pay="paypal" aria-label="Pay with PayPal">
-                                    <img src="./assets/images/spaces-v2/checkout/paypal-logo-figma.svg?v=figma244" alt="" width="100" height="28">
-                                </button>
-                            </div>
-
-                            <div class="spaces-checkout-or" aria-hidden="true">
-                                <span></span>
-                                <em>or pay with</em>
-                                <span></span>
                             </div>
 
                             <div class="spaces-checkout-card-fields" data-checkout-card-fields>
