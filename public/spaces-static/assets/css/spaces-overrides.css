@@ -16215,6 +16215,7 @@ body.is-upgrade-modal-open{
 .spaces-upgrade-modal-dialog{
     --upgrade-col: 774px;
     --upgrade-card: 376px;
+    --upgrade-footer-space: 122px;
     position: relative;
     z-index: 1;
     display: flex;
@@ -16228,7 +16229,7 @@ body.is-upgrade-modal-open{
     padding:
         max(40px, env(safe-area-inset-top))
         max(40px, env(safe-area-inset-right))
-        max(32px, env(safe-area-inset-bottom))
+        calc(var(--upgrade-footer-space) + env(safe-area-inset-bottom, 0px))
         max(40px, env(safe-area-inset-left));
     overflow-x: hidden;
     overflow-y: auto;
@@ -16256,8 +16257,7 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-modal-header,
-.spaces-upgrade-plans,
-.spaces-upgrade-footer{
+.spaces-upgrade-plans{
     position: relative;
     z-index: 1;
     width: var(--upgrade-col);
@@ -16426,20 +16426,31 @@ body.is-upgrade-modal-open{
     min-height: 840px;
     height: auto;
     padding: 32px 20px 24px;
-    border: .5px solid #e8e8e8;
+    border: .5px solid rgba(232, 232, 232, .9);
     border-radius: 24px;
     box-sizing: border-box;
     overflow: hidden;
-    background: rgba(255, 255, 255, .08);
+    isolation: isolate;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, .72) 0%, rgba(255, 255, 255, .48) 100%);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow:
+        0 0 0 .5px rgba(255, 255, 255, .65) inset,
+        0 1px 0 rgba(255, 255, 255, .8) inset,
+        0 8px 28px rgba(0, 0, 0, .04);
 }
 
 .spaces-upgrade-plan.is-pro{
-    border: 1px solid #e8e8e8;
+    border: 1px solid rgba(232, 232, 232, .95);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, .74) 0%, rgba(248, 244, 255, .5) 100%);
 }
 
 .spaces-upgrade-plan-glow{
     position: absolute;
     inset: 0;
+    z-index: 0;
     overflow: hidden;
     pointer-events: none;
 }
@@ -16448,7 +16459,7 @@ body.is-upgrade-modal-open{
     position: absolute;
     border-radius: 178px;
     filter: blur(42.8px);
-    opacity: .2;
+    opacity: .34;
 }
 
 .spaces-upgrade-plan-orb.is-lime{
@@ -16475,7 +16486,7 @@ body.is-upgrade-modal-open{
     left: 4px;
     top: -100px;
     background: #d3aaff;
-    opacity: .3;
+    opacity: .42;
     transform: rotate(-56deg);
 }
 
@@ -16485,8 +16496,18 @@ body.is-upgrade-modal-open{
     left: -22px;
     top: 100px;
     background: #aad0ff;
-    opacity: .3;
+    opacity: .42;
     transform: rotate(-56deg);
+}
+
+.spaces-upgrade-plan::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: rgba(255, 255, 255, .22);
+    pointer-events: none;
 }
 
 .spaces-upgrade-plan-head,
@@ -16885,34 +16906,40 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-upgrade-footer{
-    position: relative;
-    z-index: 1;
-    left: auto;
-    bottom: auto;
-    transform: none;
+    position: fixed;
+    z-index: 1210;
+    left: 50%;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 16px;
     width: var(--upgrade-col);
-    max-width: 100%;
-    margin: 8px auto 0;
+    max-width: calc(100% - 48px);
+    margin: 0;
     min-height: 90px;
     padding: 20px 24px;
-    border: 1px solid #e8e8e8;
+    border: 1px solid rgba(232, 232, 232, .95);
     border-radius: 32px;
-    background: #fff;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, .82);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
     color: inherit;
     text-align: left;
     cursor: pointer;
-    box-shadow: none;
+    box-shadow:
+        0 0 0 .5px rgba(255, 255, 255, .7) inset,
+        0 8px 28px rgba(0, 0, 0, .08);
+}
+
+.spaces-upgrade-modal[hidden] .spaces-upgrade-footer{
+    display: none;
 }
 
 .spaces-upgrade-footer:hover,
 .spaces-upgrade-footer:focus-visible{
     outline: 0;
-    background: #fafafa;
+    background: rgba(255, 255, 255, .92);
 }
 
 .spaces-upgrade-footer-copy{
@@ -16961,7 +16988,7 @@ body.is-upgrade-modal-open{
         padding:
             max(24px, env(safe-area-inset-top))
             max(16px, env(safe-area-inset-right))
-            max(24px, env(safe-area-inset-bottom))
+            calc(var(--upgrade-footer-space) + env(safe-area-inset-bottom, 0px))
             max(16px, env(safe-area-inset-left));
     }
 
@@ -16974,9 +17001,13 @@ body.is-upgrade-modal-open{
     }
 
     .spaces-upgrade-modal-header,
-    .spaces-upgrade-plans,
-    .spaces-upgrade-footer{
+    .spaces-upgrade-plans{
         width: 100%;
+    }
+
+    .spaces-upgrade-footer{
+        width: calc(100% - 32px);
+        max-width: 480px;
     }
 
     .spaces-upgrade-modal-heading > h2{
