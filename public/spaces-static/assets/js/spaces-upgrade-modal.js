@@ -8,7 +8,7 @@
     if (!modal || !dialog) return;
 
     const CREDIT_TIERS = [
-        { credits: 3000, label: '3,000', monthly: 49.99, annual: 33.33, annualTotal: 400.88 },
+        { credits: 3000, label: '3,000', monthly: 49.99, annual: 33.33, annualTotal: 399.96 },
         { credits: 5000, label: '5,000', monthly: 69.99, annual: 46.66, annualTotal: 559.92 },
         { credits: 8000, label: '8,000', monthly: 99.99, annual: 66.66, annualTotal: 799.92 }
     ];

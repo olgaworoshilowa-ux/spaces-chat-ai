@@ -19,7 +19,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-stripe-fields-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-pro-trial-1">
 
         <title>Get Started Spaces</title>
 
@@ -4601,7 +4601,10 @@
                                     <span class="spaces-checkout-order-orb is-b"></span>
                                 </div>
                                 <div class="spaces-checkout-order-head">
-                                    <strong class="spaces-checkout-plan-name" data-checkout-plan-name>Premium</strong>
+                                    <div class="spaces-checkout-order-title-row">
+                                        <strong class="spaces-checkout-plan-name" data-checkout-plan-name>Premium</strong>
+                                        <span class="spaces-checkout-trial-pill" data-checkout-trial-pill hidden>+ 7 days for free</span>
+                                    </div>
                                     <p class="spaces-checkout-order-sub" data-checkout-summary-copy>Design faster with AI</p>
                                 </div>
                                 <div class="spaces-checkout-order-lines">
@@ -4616,18 +4619,23 @@
                                         </span>
                                         <span data-checkout-discount-amount>–$180</span>
                                     </div>
-                                    <div class="spaces-checkout-line is-trial" data-checkout-trial-line hidden>
-                                        <span class="spaces-checkout-discount-label">
-                                            <span>Free trial</span>
-                                            <span class="spaces-checkout-discount-badge is-trial">7 days free</span>
+                                    <div class="spaces-checkout-line is-after-trial" data-checkout-after-trial-line hidden>
+                                        <span>Total after trial</span>
+                                        <span data-checkout-after-trial>$399.96</span>
+                                    </div>
+                                    <p class="spaces-checkout-bill-note" data-checkout-from-label>Billed yearly · $4.99 a month</p>
+                                    <div class="spaces-checkout-line is-trial-highlight" data-checkout-trial-line hidden>
+                                        <span class="spaces-checkout-trial-mark">
+                                            <img src="./assets/images/spaces-v2/checkout/trial-highlight.svg?v=figma247-2" width="96" height="24" alt="" aria-hidden="true">
+                                            <em>7 day trial</em>
                                         </span>
-                                        <span data-checkout-trial-discount>–$0.00</span>
+                                        <span data-checkout-trial-today>$0 today</span>
                                     </div>
                                     <div class="spaces-checkout-line is-total">
                                         <span data-checkout-total-label>Total</span>
                                         <strong data-checkout-due-today>$59.88</strong>
                                     </div>
-                                    <p class="spaces-checkout-bill-note" data-checkout-from-label>Billed yearly · $4.99 a month</p>
+                                    <p class="spaces-checkout-bill-note is-cancel" data-checkout-cancel-note hidden>Cancel anytime before 10 Oct, 2026</p>
                                 </div>
                             </div>
 
@@ -4639,9 +4647,9 @@
             </div>
         </div>
 
-        <script src="./assets/js/spaces-upgrade-modal.js?v=figma244-1"></script>
+        <script src="./assets/js/spaces-upgrade-modal.js?v=checkout-pro-trial-1"></script>
         <script src="./assets/js/spaces-usage-modal.js?v=figma-1"></script>
         <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
-        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-figma244-1"></script>
+        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-pro-trial-1"></script>
     </body>
 </html>

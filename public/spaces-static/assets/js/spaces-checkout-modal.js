@@ -5,17 +5,21 @@
     const dialog = modal?.querySelector('[data-checkout-dialog]');
     const cta = modal?.querySelector('[data-checkout-cta]');
     const planNameNode = modal?.querySelector('[data-checkout-plan-name]');
+    const trialPill = modal?.querySelector('[data-checkout-trial-pill]');
     const summaryCopy = modal?.querySelector('[data-checkout-summary-copy]');
     const subtotalNode = modal?.querySelector('[data-checkout-subtotal]');
     const discountLine = modal?.querySelector('[data-checkout-discount-line]');
     const discountLabel = modal?.querySelector('[data-checkout-discount-label]');
     const discountBadge = modal?.querySelector('[data-checkout-discount-badge]');
     const discountAmount = modal?.querySelector('[data-checkout-discount-amount]');
+    const afterTrialLine = modal?.querySelector('[data-checkout-after-trial-line]');
+    const afterTrialNode = modal?.querySelector('[data-checkout-after-trial]');
     const trialLine = modal?.querySelector('[data-checkout-trial-line]');
-    const trialDiscount = modal?.querySelector('[data-checkout-trial-discount]');
+    const trialToday = modal?.querySelector('[data-checkout-trial-today]');
     const totalLabel = modal?.querySelector('[data-checkout-total-label]');
     const dueToday = modal?.querySelector('[data-checkout-due-today]');
     const fromLabel = modal?.querySelector('[data-checkout-from-label]');
+    const cancelNote = modal?.querySelector('[data-checkout-cancel-note]');
     const legalNode = modal?.querySelector('[data-checkout-legal]');
     const saveToggle = modal?.querySelector('[data-checkout-save]');
     const businessToggle = modal?.querySelector('[data-checkout-business]');
@@ -32,14 +36,23 @@
     };
 
     const money = value => `$${Number(value).toFixed(2)}`;
-    const moneyPlain = value => Number(value).toFixed(2);
+    const moneyPlain = value => {
+        const n = Number(value);
+        return Number.isInteger(n) ? String(n) : n.toFixed(2);
+    };
     const formatCredits = value => Number(value).toLocaleString('en-US');
 
     const trialEndDate = () => {
         const date = new Date();
         date.setDate(date.getDate() + 7);
-        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        return date;
     };
+
+    const formatTrialDate = (date) => date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+    }).replace(/ ([A-Za-z]{3}) /, ' $1, ');
 
     const legalEncrypted = 'Payment is encrypted. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.';
 
@@ -56,22 +69,29 @@
         const offPct = monthlyList > 0
             ? Math.round((1 - unitPrice / monthlyList) * 100)
             : 0;
+        const end = trialEndDate();
+        const endLabel = formatTrialDate(end);
 
         if (!isPlan) {
             return {
                 isPlan: false,
                 useTrial: false,
                 showDiscount: false,
+                showAfterTrial: false,
+                showTrialPill: false,
+                showCancel: false,
                 planName: `${credits} credits`,
                 summary: currentPack.summary || 'One-time top-up, no renewal.',
                 subtotal: money(billedTotal),
                 discountLabel: '',
                 discountBadge: '',
                 discountAmount: '',
-                trialDiscount: '',
+                afterTrial: '',
+                trialToday: '',
                 totalLabel: 'Total',
                 dueToday: money(billedTotal),
                 fromLabel: 'One-time payment · credits don’t expire',
+                cancelLabel: '',
                 cta: `Buy ${credits} credits`,
                 legal: legalEncrypted
             };
@@ -81,21 +101,26 @@
             return {
                 isPlan: true,
                 useTrial: true,
-                showDiscount: false,
+                showDiscount: annual && discount > 0,
+                showAfterTrial: true,
+                showTrialPill: true,
+                showCancel: true,
                 planName: currentPack.name || 'Professional',
                 summary: currentPack.tagline || 'Maximum AI for client-ready interiors',
-                subtotal: money(billedTotal),
-                discountLabel: '',
-                discountBadge: '',
-                discountAmount: '',
-                trialDiscount: `–${money(billedTotal)}`,
+                subtotal: money(annual ? listTotal : billedTotal),
+                discountLabel: 'Annual discount',
+                discountBadge: offPct > 0 ? `${offPct}% OFF` : '33% OFF',
+                discountAmount: discount > 0 ? `–$${moneyPlain(discount)}` : '',
+                afterTrial: money(billedTotal),
+                trialToday: '$0 today',
                 totalLabel: 'Due today',
                 dueToday: '$0.00',
                 fromLabel: annual
-                    ? `Free until ${trialEndDate()}, then ${money(billedTotal)}/year`
-                    : `Free until ${trialEndDate()}, then ${money(unitPrice)}/month`,
-                cta: 'Try Pro for 7 days',
-                legal: 'You won’t be charged today. We’ll remind you 2 days before the trial ends. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.'
+                    ? `From ${endLabel}, billed yearly · ${money(unitPrice)} a month`
+                    : `From ${endLabel}, billed monthly`,
+                cancelLabel: `Cancel anytime before ${endLabel}`,
+                cta: 'Start trial',
+                legal: `Payment is encrypted. After the trial, ${money(billedTotal)} is charged ${annual ? 'yearly' : 'monthly'} until you cancel. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.`
             };
         }
 
@@ -103,6 +128,9 @@
             isPlan: true,
             useTrial: false,
             showDiscount: annual && discount > 0,
+            showAfterTrial: false,
+            showTrialPill: false,
+            showCancel: false,
             planName: currentPack.name || 'Professional',
             summary: currentPack.tagline
                 || (currentPack.plan === 'premium'
@@ -111,13 +139,15 @@
             subtotal: money(annual ? listTotal : billedTotal),
             discountLabel: 'Annual discount',
             discountBadge: offPct > 0 ? `${offPct}% OFF` : '33% OFF',
-            discountAmount: discount > 0 ? `–$${moneyPlain(discount).replace(/\.00$/, '')}` : '',
-            trialDiscount: '',
+            discountAmount: discount > 0 ? `–$${moneyPlain(discount)}` : '',
+            afterTrial: '',
+            trialToday: '',
             totalLabel: 'Total',
             dueToday: money(billedTotal),
             fromLabel: annual
                 ? `Billed yearly · ${money(unitPrice)} a month`
                 : 'Billed monthly',
+            cancelLabel: '',
             cta: currentPack.cta || `Get ${currentPack.name || 'plan'}`,
             legal: legalEncrypted
         };
@@ -129,16 +159,25 @@
         if (summaryCopy) summaryCopy.textContent = display.summary;
         if (subtotalNode) subtotalNode.textContent = display.subtotal;
         if (discountLabel) discountLabel.textContent = display.discountLabel;
-        if (discountBadge) discountBadge.textContent = display.discountBadge;
+        if (discountBadge) {
+            discountBadge.textContent = display.discountBadge;
+            discountBadge.classList.toggle('is-dark', display.useTrial && currentPack.plan === 'pro');
+        }
         if (discountAmount) discountAmount.textContent = display.discountAmount;
-        if (trialDiscount) trialDiscount.textContent = display.trialDiscount;
+        if (afterTrialNode) afterTrialNode.textContent = display.afterTrial;
+        if (trialToday) trialToday.textContent = display.trialToday;
         if (totalLabel) totalLabel.textContent = display.totalLabel;
         if (fromLabel) fromLabel.textContent = display.fromLabel;
+        if (cancelNote) cancelNote.textContent = display.cancelLabel;
         if (dueToday) dueToday.textContent = display.dueToday;
         if (cta) cta.textContent = display.cta;
         if (legalNode) legalNode.innerHTML = display.legal;
+
+        if (trialPill) trialPill.hidden = !display.showTrialPill;
         if (discountLine) discountLine.hidden = !display.showDiscount;
+        if (afterTrialLine) afterTrialLine.hidden = !display.showAfterTrial;
         if (trialLine) trialLine.hidden = !display.useTrial;
+        if (cancelNote) cancelNote.hidden = !display.showCancel;
 
         modal.classList.toggle('is-plan-checkout', display.isPlan);
         modal.classList.toggle('is-credits-checkout', !display.isPlan);
