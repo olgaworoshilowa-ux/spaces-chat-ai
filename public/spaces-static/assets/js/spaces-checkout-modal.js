@@ -23,11 +23,23 @@
     const legalNode = modal?.querySelector('[data-checkout-legal]');
     const saveToggle = modal?.querySelector('[data-checkout-save]');
     const businessToggle = modal?.querySelector('[data-checkout-business]');
+    const currencyRoot = modal?.querySelector('[data-checkout-currency]');
+    const currencyButtons = currencyRoot
+        ? Array.from(currencyRoot.querySelectorAll('[data-checkout-currency-option]'))
+        : [];
     if (!modal || !dialog) return;
+
+    const CURRENCIES = {
+        usd: { code: 'USD', symbol: '$', rate: 1, prefix: true },
+        eur: { code: 'EUR', symbol: '€', rate: 0.92, prefix: true },
+        gbp: { code: 'GBP', symbol: '£', rate: 0.79, prefix: true },
+        ils: { code: 'ILS', symbol: '₪', rate: 3.7, prefix: true }
+    };
 
     let lastFocus = null;
     let returnTo = 'buy-credits';
     let startMode = 'trial';
+    let selectedCurrency = 'usd';
     let currentPack = {
         kind: 'credits',
         credits: 500,
@@ -35,11 +47,14 @@
         summary: 'Enough for one flat, room by room. One-time top-up, no renewal.'
     };
 
-    const money = value => `$${Number(value).toFixed(2)}`;
-    const moneyPlain = value => {
-        const n = Number(value);
-        return Number.isInteger(n) ? String(n) : n.toFixed(2);
+    const convert = (usdValue) => Number(usdValue) * (CURRENCIES[selectedCurrency]?.rate || 1);
+
+    const money = (usdValue) => {
+        const currency = CURRENCIES[selectedCurrency] || CURRENCIES.usd;
+        const amount = convert(usdValue).toFixed(2);
+        return currency.prefix ? `${currency.symbol}${amount}` : `${amount} ${currency.symbol}`;
     };
+
     const formatCredits = value => Number(value).toLocaleString('en-US');
 
     const trialEndDate = () => {
@@ -56,15 +71,20 @@
 
     const legalEncrypted = 'Payment is encrypted. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.';
 
-    const getDisplayState = () => {
+    const getUsdTotals = () => {
         const isPlan = currentPack.kind === 'plan';
         const annual = Boolean(currentPack.annual);
-        const useTrial = Boolean(currentPack.trialAvailable) && startMode === 'trial';
-        const credits = formatCredits(currentPack.credits || 0);
         const unitPrice = Number(currentPack.price || 0);
         const monthlyList = Number(currentPack.monthlyPrice || currentPack.price || 0);
         const billedTotal = isPlan && annual ? unitPrice * 12 : unitPrice;
         const listTotal = isPlan && annual ? monthlyList * 12 : monthlyList;
+        return { isPlan, annual, unitPrice, monthlyList, billedTotal, listTotal };
+    };
+
+    const getDisplayState = () => {
+        const { isPlan, annual, unitPrice, monthlyList, billedTotal, listTotal } = getUsdTotals();
+        const useTrial = Boolean(currentPack.trialAvailable) && startMode === 'trial';
+        const credits = formatCredits(currentPack.credits || 0);
         const discount = Math.max(0, listTotal - billedTotal);
         const offPct = monthlyList > 0
             ? Math.round((1 - unitPrice / monthlyList) * 100)
@@ -93,7 +113,8 @@
                 fromLabel: 'One-time payment · credits don’t expire',
                 cancelLabel: '',
                 cta: `Buy ${credits} credits`,
-                legal: legalEncrypted
+                legal: legalEncrypted,
+                selectorTotalUsd: billedTotal
             };
         }
 
@@ -110,17 +131,18 @@
                 subtotal: money(annual ? listTotal : billedTotal),
                 discountLabel: 'Annual discount',
                 discountBadge: offPct > 0 ? `${offPct}% OFF` : '33% OFF',
-                discountAmount: discount > 0 ? `–$${moneyPlain(discount)}` : '',
+                discountAmount: discount > 0 ? `–${money(discount)}` : '',
                 afterTrial: money(billedTotal),
-                trialToday: '$0 today',
+                trialToday: `${(CURRENCIES[selectedCurrency] || CURRENCIES.usd).symbol}0 today`,
                 totalLabel: 'Due today',
-                dueToday: '$0.00',
+                dueToday: money(0),
                 fromLabel: annual
                     ? `From ${endLabel}, billed yearly · ${money(unitPrice)} a month`
                     : `From ${endLabel}, billed monthly`,
                 cancelLabel: `Cancel anytime before ${endLabel}`,
                 cta: 'Start trial',
-                legal: `Payment is encrypted. After the trial, ${money(billedTotal)} is charged ${annual ? 'yearly' : 'monthly'} until you cancel. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.`
+                legal: `Payment is encrypted. After the trial, ${money(billedTotal)} is charged ${annual ? 'yearly' : 'monthly'} until you cancel. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.`,
+                selectorTotalUsd: billedTotal
             };
         }
 
@@ -139,7 +161,7 @@
             subtotal: money(annual ? listTotal : billedTotal),
             discountLabel: 'Annual discount',
             discountBadge: offPct > 0 ? `${offPct}% OFF` : '33% OFF',
-            discountAmount: discount > 0 ? `–$${moneyPlain(discount)}` : '',
+            discountAmount: discount > 0 ? `–${money(discount)}` : '',
             afterTrial: '',
             trialToday: '',
             totalLabel: 'Total',
@@ -149,8 +171,27 @@
                 : 'Billed monthly',
             cancelLabel: '',
             cta: currentPack.cta || `Get ${currentPack.name || 'plan'}`,
-            legal: legalEncrypted
+            legal: legalEncrypted,
+            selectorTotalUsd: billedTotal
         };
+    };
+
+    const formatSelectorAmount = (code, usdValue) => {
+        const currency = CURRENCIES[code] || CURRENCIES.usd;
+        const amount = (Number(usdValue) * currency.rate).toFixed(2);
+        if (code === 'usd') return amount;
+        return `${currency.symbol}${amount}`;
+    };
+
+    const syncCurrencyButtons = (selectorTotalUsd) => {
+        currencyButtons.forEach(button => {
+            const code = button.getAttribute('data-checkout-currency-option') || 'usd';
+            const active = code === selectedCurrency;
+            button.classList.toggle('is-active', active);
+            button.setAttribute('aria-pressed', String(active));
+            const amountNode = button.querySelector('[data-checkout-currency-amount]');
+            if (amountNode) amountNode.textContent = formatSelectorAmount(code, selectorTotalUsd);
+        });
     };
 
     const syncPack = () => {
@@ -179,12 +220,15 @@
         if (trialLine) trialLine.hidden = !display.useTrial;
         if (cancelNote) cancelNote.hidden = !display.showCancel;
 
+        syncCurrencyButtons(display.selectorTotalUsd);
+
         modal.classList.toggle('is-plan-checkout', display.isPlan);
         modal.classList.toggle('is-credits-checkout', !display.isPlan);
         modal.classList.toggle('is-trial-start', display.useTrial);
         modal.classList.toggle('is-pay-now-start', display.isPlan && !display.useTrial);
         modal.classList.toggle('is-premium', currentPack.plan === 'premium');
         modal.classList.toggle('is-pro', currentPack.plan === 'pro');
+        modal.dataset.checkoutCurrency = selectedCurrency;
     };
 
     const closeModal = ({ restoreFocus = true } = {}) => {
@@ -234,6 +278,14 @@
 
     wireToggle(saveToggle);
     wireToggle(businessToggle);
+
+    currencyButtons.forEach(button => {
+        button.addEventListener('click', event => {
+            event.preventDefault();
+            selectedCurrency = button.getAttribute('data-checkout-currency-option') || 'usd';
+            syncPack();
+        });
+    });
 
     modal.querySelector('[data-checkout-back]')?.addEventListener('click', event => {
         event.preventDefault();

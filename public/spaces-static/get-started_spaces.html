@@ -19,7 +19,7 @@
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-pro-trial-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-currency-1">
 
         <title>Get Started Spaces</title>
 
@@ -4504,9 +4504,34 @@
 
                     <div class="spaces-checkout-main">
                         <div class="spaces-checkout-form">
+                            <div class="spaces-checkout-currency" data-checkout-currency role="radiogroup" aria-label="Choose currency">
+                                <p class="spaces-checkout-currency-label">Currency</p>
+                                <div class="spaces-checkout-currency-toggle">
+                                    <button type="button" class="spaces-checkout-currency-item is-active" data-checkout-currency-option="usd" aria-pressed="true">
+                                        <span data-checkout-currency-amount>59.88</span>
+                                        <span class="spaces-checkout-currency-code">USD</span>
+                                    </button>
+                                    <button type="button" class="spaces-checkout-currency-item" data-checkout-currency-option="eur" aria-pressed="false">
+                                        <span data-checkout-currency-amount>€55.09</span>
+                                        <span class="spaces-checkout-currency-code">EUR</span>
+                                    </button>
+                                    <button type="button" class="spaces-checkout-currency-item" data-checkout-currency-option="gbp" aria-pressed="false">
+                                        <span data-checkout-currency-amount>£47.31</span>
+                                        <span class="spaces-checkout-currency-code">GBP</span>
+                                    </button>
+                                    <button type="button" class="spaces-checkout-currency-item" data-checkout-currency-option="ils" aria-pressed="false">
+                                        <span data-checkout-currency-amount>₪221.56</span>
+                                        <span class="spaces-checkout-currency-code">ILS</span>
+                                    </button>
+                                </div>
+                            </div>
+
                             <div class="spaces-checkout-express" aria-label="Express payment methods">
                                 <button type="button" class="spaces-checkout-express-btn is-apple" data-checkout-pay="apple" aria-label="Pay with Apple Pay">
                                     <img src="./assets/images/spaces-v2/checkout/apple-pay-wordmark.svg?v=3" alt="" width="54" height="22">
+                                </button>
+                                <button type="button" class="spaces-checkout-express-btn is-google" data-checkout-pay="google" aria-label="Pay with Google Pay">
+                                    <img src="./assets/images/spaces-v2/checkout/google-pay-wordmark.svg?v=3" alt="" width="58" height="24">
                                 </button>
                                 <button type="button" class="spaces-checkout-express-btn is-paypal" data-checkout-pay="paypal" aria-label="Pay with PayPal">
                                     <img src="./assets/images/spaces-v2/checkout/paypal-logo-figma.svg?v=figma244" alt="" width="100" height="28">
@@ -4644,6 +4669,6 @@
         <script src="./assets/js/spaces-upgrade-modal.js?v=checkout-pro-trial-1"></script>
         <script src="./assets/js/spaces-usage-modal.js?v=figma-1"></script>
         <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
-        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-pro-trial-1"></script>
+        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-currency-1"></script>
     </body>
 </html>
