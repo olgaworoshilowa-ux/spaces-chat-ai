@@ -17937,8 +17937,8 @@ body.is-checkout-modal-open{
     font-style: normal;
 }
 
-/* Stripe Payment Element–inspired: Card as one payment method */
-.spaces-checkout-payment{
+/* Figma card payment panel — one white card, floating labels */
+.spaces-checkout-card-fields{
     --pe-border: rgba(0, 0, 0, .16);
     --pe-border-soft: #e9e9e9;
     --pe-text: #1c1c1c;
@@ -17949,12 +17949,9 @@ body.is-checkout-modal-open{
     --pe-bg: #fff;
     display: flex;
     flex-direction: column;
+    gap: 20px;
     min-width: 0;
-    box-sizing: border-box;
-}
-
-.spaces-checkout-method{
-    overflow: hidden;
+    padding: 20px;
     border: 1px solid var(--pe-border-soft);
     border-radius: var(--pe-radius);
     background: var(--pe-bg);
@@ -17962,79 +17959,9 @@ body.is-checkout-modal-open{
     box-sizing: border-box;
 }
 
-.spaces-checkout-method-head{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    min-height: 52px;
-    padding: 14px 16px;
-    border: 0;
-    background: transparent;
-    color: var(--pe-text);
-    cursor: pointer;
-    box-sizing: border-box;
-    text-align: left;
-}
-
-.spaces-checkout-method-head:focus-visible{
-    outline: 0;
-    box-shadow: inset 0 0 0 2px var(--pe-focus);
-}
-
-.spaces-checkout-method-radio{
-    flex: 0 0 18px;
-    width: 18px;
-    height: 18px;
-    border: 2px solid #919191;
-    border-radius: 50%;
-    box-sizing: border-box;
-    background: #fff;
-}
-
-.spaces-checkout-method.is-open .spaces-checkout-method-radio{
-    border-color: var(--pe-focus);
-    box-shadow: inset 0 0 0 4px var(--pe-focus);
-}
-
-.spaces-checkout-method-title{
-    flex: 1 1 auto;
-    min-width: 0;
-    font: 600 16px/24px "Open Sans", Arial, sans-serif;
-}
-
-.spaces-checkout-brands{
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    gap: 6px;
-    margin-left: auto;
-    pointer-events: none;
-}
-
-.spaces-checkout-brands > img{
-    display: block;
-    width: 35px;
-    height: 24px;
-    border-radius: 4px;
-    box-shadow: 0 0 0 1px #d9d9d9;
-    background: #fff;
-}
-
-.spaces-checkout-method-panel{
-    display: none;
-    flex-direction: column;
-    gap: 20px;
-    padding: 4px 16px 20px;
-    box-sizing: border-box;
-}
-
-.spaces-checkout-method.is-open .spaces-checkout-method-panel{
-    display: flex;
-}
-
 .spaces-checkout-card-block{
-    overflow: hidden;
+    position: relative;
+    overflow: visible;
     border: 1px solid var(--pe-border);
     border-radius: var(--pe-radius);
     background: var(--pe-bg);
@@ -18073,7 +18000,7 @@ body.is-checkout-modal-open{
     position: absolute;
     left: 12px;
     top: -8px;
-    z-index: 1;
+    z-index: 2;
     padding: 0 4px;
     background: var(--pe-bg);
     color: var(--pe-muted);
@@ -18092,8 +18019,28 @@ body.is-checkout-modal-open{
     box-shadow: none;
 }
 
-.spaces-checkout-card-block .spaces-checkout-field-label{
-    left: 11px;
+.spaces-checkout-card-block .spaces-checkout-field.is-card-number > input{
+    padding-right: 128px;
+}
+
+.spaces-checkout-brands{
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.spaces-checkout-brands > img{
+    display: block;
+    width: 35px;
+    height: 24px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px #d9d9d9;
+    background: #fff;
 }
 
 .spaces-checkout-field-row{
@@ -18107,6 +18054,14 @@ body.is-checkout-modal-open{
 
 .spaces-checkout-field-row > .spaces-checkout-field.is-exp{
     border-right: 1px solid var(--pe-border);
+}
+
+.spaces-checkout-field-row > .spaces-checkout-field.is-exp > input{
+    border-radius: 0 0 0 var(--pe-radius);
+}
+
+.spaces-checkout-field-row > .spaces-checkout-field.is-cvc > input{
+    border-radius: 0 0 var(--pe-radius) 0;
 }
 
 .spaces-checkout-field > input,
