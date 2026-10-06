@@ -18278,25 +18278,8 @@ body.is-checkout-modal-open{
     align-self: start;
     min-width: 0;
     width: 100%;
-    max-height: calc(100dvh - max(96px, calc(env(safe-area-inset-top) + 72px)) - max(24px, env(safe-area-inset-bottom)));
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
     box-sizing: border-box;
-}
-
-.spaces-checkout-summary::-webkit-scrollbar{
-    width: 6px;
-}
-
-.spaces-checkout-summary::-webkit-scrollbar-thumb{
-    border-radius: 100px;
-    background: rgba(0, 0, 0, .18);
-}
-
-.spaces-checkout-summary::-webkit-scrollbar-track{
-    background: transparent;
 }
 
 .spaces-checkout-order-card{
@@ -18631,9 +18614,6 @@ body.is-checkout-modal-open{
         top: auto;
         z-index: auto;
         order: -1;
-        max-height: none;
-        overflow: visible;
-        padding-right: 0;
     }
 
     .spaces-checkout-title{
