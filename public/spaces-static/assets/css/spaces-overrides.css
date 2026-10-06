@@ -17717,11 +17717,10 @@ body.is-checkout-modal-open{
     justify-content: flex-start;
     width: 100%;
     height: 100%;
+    min-height: 0;
     margin: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
     border: 0;
     border-radius: 0;
     box-sizing: border-box;
@@ -17733,9 +17732,12 @@ body.is-checkout-modal-open{
 .spaces-checkout-shell{
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
     gap: 40px;
     width: min(776px, calc(100% - 64px));
     max-width: 100%;
+    min-height: 0;
+    height: 100%;
     margin: 0 auto;
     padding:
         max(110px, calc(env(safe-area-inset-top) + 72px))
@@ -17743,6 +17745,7 @@ body.is-checkout-modal-open{
         max(40px, env(safe-area-inset-bottom))
         max(24px, env(safe-area-inset-left));
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .spaces-checkout-title{
@@ -17792,8 +17795,11 @@ body.is-checkout-modal-open{
     justify-content: space-between;
     column-gap: 48px;
     row-gap: 32px;
-    align-items: start;
+    align-items: stretch;
+    flex: 1 1 auto;
     width: 100%;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .spaces-checkout-form{
@@ -17801,6 +17807,13 @@ body.is-checkout-modal-open{
     flex-direction: column;
     gap: 20px;
     min-width: 0;
+    min-height: 0;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 4px;
 }
 
 /*
@@ -18269,13 +18282,13 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-summary{
-    position: sticky;
-    top: max(24px, env(safe-area-inset-top));
     display: flex;
     flex-direction: column;
     gap: 20px;
     min-width: 0;
-    max-height: calc(100vh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -18285,15 +18298,18 @@ body.is-checkout-modal-open{
     scrollbar-gutter: stable;
 }
 
+.spaces-checkout-form::-webkit-scrollbar,
 .spaces-checkout-summary::-webkit-scrollbar{
     width: 6px;
 }
 
+.spaces-checkout-form::-webkit-scrollbar-thumb,
 .spaces-checkout-summary::-webkit-scrollbar-thumb{
     border-radius: 100px;
     background: rgba(0, 0, 0, .18);
 }
 
+.spaces-checkout-form::-webkit-scrollbar-track,
 .spaces-checkout-summary::-webkit-scrollbar-track{
     background: transparent;
 }
@@ -18583,10 +18599,19 @@ body.is-checkout-modal-open{
 }
 
 @media (max-width: 900px){
+    .spaces-checkout-dialog{
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .spaces-checkout-shell{
         width: min(520px, calc(100% - 32px));
+        height: auto;
+        min-height: 100%;
         padding-top: max(96px, calc(env(safe-area-inset-top) + 64px));
         gap: 28px;
+        overflow: visible;
     }
 
     .spaces-checkout-back,
@@ -18612,14 +18637,21 @@ body.is-checkout-modal-open{
 
     .spaces-checkout-main{
         grid-template-columns: 1fr;
+        flex: none;
+        min-height: 0;
+        overflow: visible;
     }
 
+    .spaces-checkout-form,
     .spaces-checkout-summary{
-        position: static;
-        order: -1;
+        height: auto;
         max-height: none;
         overflow: visible;
         padding-right: 0;
+    }
+
+    .spaces-checkout-summary{
+        order: -1;
     }
 
     .spaces-checkout-title{
