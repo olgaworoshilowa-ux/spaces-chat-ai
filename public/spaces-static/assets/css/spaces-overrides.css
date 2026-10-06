@@ -17803,6 +17803,7 @@ body.is-checkout-modal-open{
     flex-direction: column;
     gap: 20px;
     min-width: 0;
+    overflow: visible;
 }
 
 /*
@@ -18290,18 +18291,15 @@ body.is-checkout-modal-open{
     scrollbar-gutter: stable;
 }
 
-.spaces-checkout-form::-webkit-scrollbar,
 .spaces-checkout-summary::-webkit-scrollbar{
     width: 6px;
 }
 
-.spaces-checkout-form::-webkit-scrollbar-thumb,
 .spaces-checkout-summary::-webkit-scrollbar-thumb{
     border-radius: 100px;
     background: rgba(0, 0, 0, .18);
 }
 
-.spaces-checkout-form::-webkit-scrollbar-track,
 .spaces-checkout-summary::-webkit-scrollbar-track{
     background: transparent;
 }
