@@ -17924,12 +17924,9 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-express-btn.is-apple,
-.spaces-checkout-express-btn.is-google{
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
-}
-
+.spaces-checkout-express-btn.is-google,
 .spaces-checkout-express-btn.is-paypal{
-    background: #ffc43a;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
 }
 
 .spaces-checkout-express-btn:hover,
