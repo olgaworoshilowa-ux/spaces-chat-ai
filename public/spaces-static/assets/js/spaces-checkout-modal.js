@@ -18,6 +18,9 @@
     const trialToday = modal?.querySelector('[data-checkout-trial-today]');
     const totalLabel = modal?.querySelector('[data-checkout-total-label]');
     const dueToday = modal?.querySelector('[data-checkout-due-today]');
+    const vatLine = modal?.querySelector('[data-checkout-vat-line]');
+    const vatLabel = modal?.querySelector('[data-checkout-vat-label]');
+    const vatAmount = modal?.querySelector('[data-checkout-vat-amount]');
     const fromLabel = modal?.querySelector('[data-checkout-from-label]');
     const cancelNote = modal?.querySelector('[data-checkout-cancel-note]');
     const legalNode = modal?.querySelector('[data-checkout-legal]');
@@ -40,11 +43,11 @@
     const currencyRateNode = currencyRoot?.querySelector('[data-checkout-currency-rate-text]');
 
     const TAX_BY_COUNTRY = {
-        Israel: { type: 'eu_vat', placeholder: 'IL123456789', hint: 'Israeli VAT number' },
-        'United States': { type: 'us_ein', placeholder: '12-3456789', hint: 'US Employer Identification Number (EIN)' },
-        'United Kingdom': { type: 'gb_vat', placeholder: 'GB123456789', hint: 'United Kingdom VAT number' },
-        Germany: { type: 'eu_vat', placeholder: 'DE123456789', hint: 'German VAT number' },
-        Georgia: { type: 'ge_vat', placeholder: '123456789', hint: 'Georgian VAT number' }
+        Israel: { type: 'eu_vat', rate: 0.18, label: 'VAT 18%', placeholder: 'IL123456789', hint: 'Israeli VAT number' },
+        'United States': { type: 'us_ein', rate: 0, label: 'Tax', placeholder: '12-3456789', hint: 'US Employer Identification Number (EIN)' },
+        'United Kingdom': { type: 'gb_vat', rate: 0.2, label: 'VAT 20%', placeholder: 'GB123456789', hint: 'United Kingdom VAT number' },
+        Germany: { type: 'eu_vat', rate: 0.19, label: 'VAT 19%', placeholder: 'DE123456789', hint: 'German VAT number' },
+        Georgia: { type: 'ge_vat', rate: 0.18, label: 'VAT 18%', placeholder: '123456789', hint: 'Georgian VAT number' }
     };
 
     let lastFocus = null;
@@ -96,6 +99,10 @@
     const getDisplayState = () => {
         const { isPlan, annual, unitPrice, monthlyList, billedTotal, listTotal } = getUsdTotals();
         const useTrial = Boolean(currentPack.trialAvailable) && startMode === 'trial';
+        const asBusiness = businessToggle?.getAttribute('aria-pressed') === 'true';
+        const taxConfig = TAX_BY_COUNTRY[countrySelect?.value || 'Israel'] || TAX_BY_COUNTRY.Israel;
+        const vatUsd = asBusiness ? billedTotal * taxConfig.rate : 0;
+        const dueUsd = billedTotal + vatUsd;
         const credits = formatCredits(currentPack.credits || 0);
         const discount = Math.max(0, listTotal - billedTotal);
         const offPct = monthlyList > 0
@@ -120,13 +127,16 @@
                 discountAmount: '',
                 afterTrial: '',
                 trialToday: '',
+                showVat: asBusiness,
+                vatLabel: taxConfig.label,
+                vatAmount: money(vatUsd),
                 totalLabel: 'Total',
-                dueToday: money(billedTotal),
+                dueToday: money(dueUsd),
                 fromLabel: 'One-time payment · credits don’t expire',
                 cancelLabel: '',
                 cta: `Buy ${credits} credits`,
                 legal: legalEncrypted,
-                selectorTotalUsd: billedTotal
+                selectorTotalUsd: dueUsd
             };
         }
 
@@ -144,8 +154,11 @@
                 discountLabel: 'Annual discount',
                 discountBadge: offPct > 0 ? `${offPct}% OFF` : '33% OFF',
                 discountAmount: discount > 0 ? `–${money(discount)}` : '',
-                afterTrial: money(billedTotal),
+                afterTrial: money(dueUsd),
                 trialToday: selectedCurrency === 'usd' ? '$0 today' : `0.00 ${CURRENCIES[selectedCurrency].code} today`,
+                showVat: asBusiness,
+                vatLabel: taxConfig.label,
+                vatAmount: money(vatUsd),
                 totalLabel: 'Due today',
                 dueToday: money(0),
                 fromLabel: annual
@@ -153,8 +166,8 @@
                     : `From ${endLabel}, billed monthly`,
                 cancelLabel: `Cancel anytime before ${endLabel}`,
                 cta: 'Start trial',
-                legal: `Payment is encrypted. After the trial, ${money(billedTotal)} is charged ${annual ? 'yearly' : 'monthly'} until you cancel. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.`,
-                selectorTotalUsd: billedTotal
+                legal: `Payment is encrypted. After the trial, ${money(dueUsd)} is charged ${annual ? 'yearly' : 'monthly'} until you cancel. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.`,
+                selectorTotalUsd: dueUsd
             };
         }
 
@@ -176,15 +189,18 @@
             discountAmount: discount > 0 ? `–${money(discount)}` : '',
             afterTrial: '',
             trialToday: '',
+            showVat: asBusiness,
+            vatLabel: taxConfig.label,
+            vatAmount: money(vatUsd),
             totalLabel: 'Total',
-            dueToday: money(billedTotal),
+            dueToday: money(dueUsd),
             fromLabel: annual
                 ? `Billed yearly · ${money(unitPrice)} a month`
                 : 'Billed monthly',
             cancelLabel: '',
             cta: currentPack.cta || `Get ${currentPack.name || 'plan'}`,
             legal: legalEncrypted,
-            selectorTotalUsd: billedTotal
+            selectorTotalUsd: dueUsd
         };
     };
 
@@ -214,6 +230,8 @@
             discountBadge.classList.toggle('is-dark', display.useTrial && currentPack.plan === 'pro');
         }
         if (discountAmount) discountAmount.textContent = display.discountAmount;
+        if (vatLabel) vatLabel.textContent = display.vatLabel || 'VAT';
+        if (vatAmount) vatAmount.textContent = display.vatAmount || money(0);
         if (afterTrialNode) afterTrialNode.textContent = display.afterTrial;
         if (trialToday) trialToday.textContent = display.trialToday;
         if (totalLabel) totalLabel.textContent = display.totalLabel;
@@ -225,6 +243,7 @@
 
         if (trialPill) trialPill.hidden = !display.showTrialPill;
         if (discountLine) discountLine.hidden = !display.showDiscount;
+        if (vatLine) vatLine.hidden = !display.showVat;
         if (afterTrialLine) afterTrialLine.hidden = !display.showAfterTrial;
         if (trialLine) trialLine.hidden = !display.useTrial;
         if (cancelNote) cancelNote.hidden = !display.showCancel;
@@ -296,6 +315,7 @@
             syncTaxIdForCountry();
             modal.querySelector('#spaces-checkout-business-name')?.focus();
         }
+        syncPack();
     };
 
     const wireToggle = (button) => {
@@ -313,7 +333,10 @@
     });
 
     countrySelect?.addEventListener('change', () => {
-        if (businessToggle?.getAttribute('aria-pressed') === 'true') syncTaxIdForCountry();
+        if (businessToggle?.getAttribute('aria-pressed') === 'true') {
+            syncTaxIdForCountry();
+            syncPack();
+        }
     });
 
     currencyInputs.forEach(input => {

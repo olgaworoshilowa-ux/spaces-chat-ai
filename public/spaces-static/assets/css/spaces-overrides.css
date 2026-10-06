@@ -18430,6 +18430,7 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-line.is-discount[hidden],
+.spaces-checkout-line.is-vat[hidden],
 .spaces-checkout-line.is-after-trial[hidden],
 .spaces-checkout-line.is-trial-highlight[hidden],
 .spaces-checkout-bill-note[hidden]{
@@ -18495,13 +18496,13 @@ body.is-checkout-modal-open{
     margin-top: -12px;
 }
 
-.spaces-checkout-modal:not(.is-trial-start) .spaces-checkout-bill-note:not(.is-cancel){
-    order: 10;
-    margin-top: -4px;
-}
-
 .spaces-checkout-modal:not(.is-trial-start) .spaces-checkout-line.is-total{
     order: 5;
+}
+
+.spaces-checkout-modal:not(.is-trial-start) .spaces-checkout-bill-note:not(.is-cancel){
+    order: 6;
+    margin-top: -12px;
 }
 
 .spaces-checkout-modal.is-trial-start .spaces-checkout-legal{
