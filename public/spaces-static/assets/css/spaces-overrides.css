@@ -17723,6 +17723,7 @@ body.is-checkout-modal-open{
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+    scroll-padding-bottom: max(96px, calc(env(safe-area-inset-bottom) + 56px));
     border: 0;
     border-radius: 0;
     box-sizing: border-box;
@@ -17742,7 +17743,7 @@ body.is-checkout-modal-open{
     padding:
         max(110px, calc(env(safe-area-inset-top) + 72px))
         max(24px, env(safe-area-inset-right))
-        max(40px, env(safe-area-inset-bottom))
+        max(96px, calc(env(safe-area-inset-bottom) + 56px))
         max(24px, env(safe-area-inset-left));
     box-sizing: border-box;
 }
