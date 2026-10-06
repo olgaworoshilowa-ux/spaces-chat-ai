@@ -16379,8 +16379,8 @@ body.is-upgrade-modal-open{
 }
 
 .spaces-checkout-close{
-    position: absolute;
-    z-index: 3;
+    position: fixed;
+    z-index: 5;
     top: max(40px, env(safe-area-inset-top));
     right: max(40px, env(safe-area-inset-right));
     display: inline-flex;
@@ -17755,8 +17755,8 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-back{
-    position: absolute;
-    z-index: 3;
+    position: fixed;
+    z-index: 5;
     top: max(40px, env(safe-area-inset-top));
     left: max(40px, env(safe-area-inset-left));
     display: inline-flex;
