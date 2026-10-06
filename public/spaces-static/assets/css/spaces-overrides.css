@@ -18438,13 +18438,24 @@ body.is-checkout-modal-open{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     color: #1c1c1c;
     font: 400 16px/24px "Open Sans", Arial, sans-serif;
 }
 
+.spaces-checkout-line > :first-child{
+    min-width: 0;
+}
+
+.spaces-checkout-line > :last-child{
+    flex: 0 0 auto;
+    white-space: nowrap;
+    text-align: right;
+}
+
 .spaces-checkout-discount-label{
     display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
     min-width: 0;

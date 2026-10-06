@@ -67,7 +67,7 @@
         const currency = CURRENCIES[selectedCurrency] || CURRENCIES.usd;
         const amount = convert(usdValue).toFixed(2);
         if (currency.prefix) return `${currency.symbol}${amount}`;
-        return `${amount} ${currency.code}`;
+        return `${amount}\u00A0${currency.code}`;
     };
 
     const formatCredits = value => Number(value).toLocaleString('en-US');
