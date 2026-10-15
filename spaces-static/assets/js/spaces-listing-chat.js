@@ -24,6 +24,13 @@
     ];
     const DEFAULT_DESCRIPTION =
         'A quiet, light-filled home — four bedrooms, a south garden, and a kitchen that actually gets used.';
+    const listingPhoto = (file) => {
+        const here = window.location.pathname || '';
+        const base = here.includes('/spaces-chat-ai/')
+            ? '/spaces-chat-ai/listings-final/photos'
+            : '/listings-final/photos';
+        return `${base}/${file}`;
+    };
     const defaultPlaceholder = placeholder?.innerHTML || '';
     let listingNeedsSpace = false;
     let listingStep = 'idle';
@@ -42,6 +49,7 @@
     let listingFromTemplate = false;
     let furnishStyle = '';
     let furnishBudget = '';
+    let furnishRoomSize = '';
     let furnishPlanId = '';
     let furnishPlanTitle = '';
     let furnishPlanIsNew = false;
@@ -60,6 +68,12 @@
         { id: 'minimal', label: 'Minimal' },
         { id: 'japandi', label: 'Japandi' },
         { id: 'classic', label: 'Classic' }
+    ];
+    const roomSizeOptions = [
+        { id: 'small', label: 'Small · 3×4 m' },
+        { id: 'medium', label: 'Medium · 4×5 m' },
+        { id: 'large', label: 'Large · 5×7 m' },
+        { id: 'open', label: 'Open · 7×9 m' }
     ];
     const budgetOptions = [
         { id: 'under-2k', label: 'Under $2,000' },
@@ -151,12 +165,19 @@
 
     const scrollThread = () => {
         const node = thread();
-        if (!node) return;
-        node.scrollTop = node.scrollHeight;
+        const hero = home?.querySelector('.spaces-home-composer-hero');
         if (isPanelSurface()) {
             const body = panel?.querySelector('.spaces-copilot-panel-body');
             if (body) body.scrollTop = body.scrollHeight;
+            return;
         }
+        if (hero && home?.classList.contains('is-centered-chat')) {
+            const threadNode = home.querySelector('[data-home-thread]');
+            const scroller = threadNode && !threadNode.hidden ? threadNode : hero;
+            scroller.scrollTop = scroller.scrollHeight;
+            return;
+        }
+        if (node) node.scrollTop = node.scrollHeight;
     };
 
     const syncDock = () => {
@@ -331,7 +352,7 @@
         window.SpacesAiChats?.syncFromListing?.();
     };
 
-    const createWidget = ({ index, title, subtitle, multi, withContinue, otherLabel, otherPlaceholder, onPick, onSkip, onClose, onBack, showOther = true, showSkip = true, showProgress = Boolean(index), progressTotal }) => {
+    const createWidget = ({ index, title, subtitle, multi, withContinue, otherLabel, otherPlaceholder, onPick, onSkip, onClose, onBack, showOther = true, showSkip = true, showProgress = Boolean(index), progressTotal, isLast = false }) => {
         const widget = document.createElement('div');
         widget.className = 'spaces-home-widget';
         if (multi) widget.classList.add('is-multi');
@@ -440,15 +461,21 @@
         if (showSkip !== false) actions.append(skip);
 
         let submit = null;
-        if (multi || withContinue) {
+        if (multi || withContinue || isLast) {
             submit = document.createElement('button');
             submit.type = 'button';
             submit.className = 'spaces-home-widget-continue';
-            submit.textContent = 'Continue';
-            submit.disabled = true;
+            submit.textContent = isLast ? 'Done' : 'Continue';
+            // Multi / Continue start disabled until the user picks something.
+            // Last single-choice step: Done is always available (same finish path as Skip).
+            submit.disabled = Boolean(multi || withContinue);
             submit.addEventListener('click', event => {
                 event.preventDefault();
                 event.stopPropagation();
+                if (isLast && !multi && !withContinue) {
+                    onSkip(widget);
+                    return;
+                }
                 onPick(widget, {
                     other: other?.querySelector('.spaces-home-widget-other-input')?.value.trim() || ''
                 });
@@ -506,6 +533,10 @@
             ? listingInclude
             : ['photos', 'floor-plan', 'tour', 'branding', 'deal'];
         if (listingPhotos.length && !include.includes('photos')) include.push('photos');
+        if (!listingSpaceTitle) {
+            listingSpaceTitle = scopedSpaceTitle() || 'My Home';
+        }
+        window.SpacesAiChats?.syncFromListing?.();
         window.SpacesListingStudio?.open({
             copilot: false,
             photos: listingPhotos.length || (include.includes('photos') ? 8 : 0),
@@ -518,7 +549,9 @@
             spaceTitle: listingSpaceTitle,
             spaceIsNew: listingSpaceIsNew,
             description: listingDescription || DEFAULT_DESCRIPTION,
-            mode: options.mode === 'preview' ? 'preview' : 'edit'
+            mode: options.mode === 'preview' ? 'preview' : 'edit',
+            // Listing editor owns Chat (collapsed Listing details). No Spaces duplicate.
+            withChat: false
         });
     };
 
@@ -624,15 +657,15 @@
         if (isTemplate) card.classList.add('is-template');
         card.innerHTML = `
             <div class="spaces-home-listing-card-media">
-                <figure class="is-hero"><img src="../listings-final/photos/villa.jpg" alt=""></figure>
-                <figure class="is-top"><img src="../listings-final/photos/facade.jpg" alt=""></figure>
-                <figure class="is-bottom"><img src="../listings-final/photos/kitchen.jpg" alt=""></figure>
+                <figure class="is-hero"><img src="${listingPhoto('villa.jpg')}" alt=""></figure>
+                <figure class="is-top"><img src="${listingPhoto('facade.jpg')}" alt=""></figure>
+                <figure class="is-bottom"><img src="${listingPhoto('kitchen.jpg')}" alt=""></figure>
             </div>
             <div class="spaces-home-listing-card-body">
                 ${isTemplate ? '<p class="spaces-home-listing-card-template">This is a template</p>' : ''}
                 <p class="spaces-home-listing-card-deal"></p>
-                <h2>23 Ann Politkovskaya Street</h2>
-                <p class="spaces-home-listing-card-meta">23 Ann Politkovskaya Street, Dublin · ${listingDeal === 'For rent' ? '$4,000' : '$1,250,000'}</p>
+                <h2>13 Abbey Road</h2>
+                <p class="spaces-home-listing-card-meta">13 Abbey Road, Dublin · ${listingDeal === 'For rent' ? '$4,000' : '$1,250,000'}</p>
                 <p class="spaces-home-listing-card-copy"></p>
                 ${listingSourceUrl ? `<a class="spaces-home-listing-card-source" href="${escapeAttr(listingSourceUrl)}" target="_blank" rel="noopener noreferrer">From ${escapeAttr(listingSourceSite || 'existing listing')}</a>` : ''}
                 <div class="spaces-home-listing-card-actions">
@@ -713,6 +746,10 @@
             finishFurnishPlan(widget, { skipped: true });
             return;
         }
+        if (listingStep === 'furnish-size') {
+            finishFurnishSize(widget, { skipped: true });
+            return;
+        }
         if (listingStep === 'furnish-style') {
             finishFurnishStyle(widget, { skipped: true });
             return;
@@ -722,6 +759,18 @@
             return;
         }
         skipToTemplate(widget);
+    };
+
+    const dismissQuestionnaire = widget => {
+        if (widget) widget.remove();
+        const node = dock();
+        if (node && !node.querySelector('.spaces-home-widget:not(.is-complete)')) {
+            node.hidden = true;
+        }
+        if (listingStep && listingStep !== 'idle' && listingStep !== 'generic') {
+            listingStep = 'followup';
+        }
+        window.SpacesAiChats?.syncFromListing?.();
     };
 
     const furnishProjectTitle = () => {
@@ -778,7 +827,7 @@
             widget,
             furnishPlanIsNew ? `Create new · ${furnishPlanTitle}` : furnishPlanTitle
         );
-        window.setTimeout(appendFurnishStyleWidget, 180);
+        window.setTimeout(appendFurnishSizeWidget, 180);
     };
 
     const appendFurnishPlanWidget = ({ restore } = {}) => {
@@ -791,7 +840,7 @@
         const room = furnishRoomLabel();
         const { widget, list, other, submit } = createWidget({
             index: 1,
-            progressTotal: 3,
+            progressTotal: 4,
             title: 'Where to add a living room',
             subtitle: `Pick a floor plan in ${furnishProjectTitle()}, or create a new one for this ${room}.`,
             withContinue: true,
@@ -799,7 +848,7 @@
             otherPlaceholder: 'Name your new floor plan',
             onPick: (node, extra = {}) => finishFurnishPlan(node, { createNew: true, other: extra.other }),
             onSkip: node => finishFurnishPlan(node, { skipped: true }),
-            onClose: skipAll,
+            onClose: dismissQuestionnaire,
             showSkip: true
         });
 
@@ -813,14 +862,14 @@
             const badge = document.createElement('span');
             badge.className = 'spaces-home-widget-plan-thumb';
             badge.setAttribute('aria-hidden', 'true');
-            if (plan.previewUrl) {
-                const img = document.createElement('img');
-                img.src = plan.previewUrl;
-                img.alt = '';
-                badge.append(img);
-            } else {
-                badge.textContent = 'P';
-            }
+            const img = document.createElement('img');
+            img.src = plan.previewUrl || FURNISH_PLAN_IMAGE;
+            img.alt = '';
+            img.onerror = () => {
+                img.onerror = null;
+                img.src = FURNISH_PLAN_IMAGE;
+            };
+            badge.append(img);
             const title = document.createElement('span');
             title.className = 'spaces-home-widget-option-title';
             title.textContent = plan.title || 'Floor plan';
@@ -857,20 +906,71 @@
         showWidget(widget);
     };
 
+    const appendFurnishSizeWidget = ({ restore } = {}) => {
+        listingStep = 'furnish-size';
+        if (!restore) furnishRoomSize = '';
+        const room = furnishRoomLabel();
+        const { widget, list, other } = createWidget({
+            index: 2,
+            progressTotal: 4,
+            title: 'Sizes of your room',
+            subtitle: `How big is the ${room}? I’ll fit the furniture to this size.`,
+            showOther: true,
+            otherLabel: 'Your size',
+            otherPlaceholder: 'Type your size, e.g. 4.2 × 5.8 m',
+            onPick: (node, extra = {}) => finishFurnishSize(node, extra),
+            onSkip: node => finishFurnishSize(node, { skipped: true }),
+            onClose: dismissQuestionnaire,
+            onBack: goBackToPrevious
+        });
+        list.append(...roomSizeOptions.map((option, index) => optionButton(option, index + 1, () => {
+            furnishRoomSize = option.label;
+            finishFurnishSize(widget);
+        })));
+        if (other) {
+            const badge = other.querySelector('.spaces-home-widget-index');
+            if (badge) {
+                badge.classList.remove('is-icon');
+                badge.textContent = String(roomSizeOptions.length + 1);
+            }
+            list.append(other);
+        }
+        if (restore && furnishRoomSize) {
+            [...list.querySelectorAll('.spaces-home-widget-option')].forEach(button => {
+                const selected = button.querySelector('.spaces-home-widget-option-title')?.textContent === furnishRoomSize;
+                button.classList.toggle('is-selected', selected);
+                button.setAttribute('aria-pressed', String(selected));
+            });
+        }
+        showWidget(widget);
+    };
+
+    const finishFurnishSize = (widget, extra = {}) => {
+        if (listingStep !== 'furnish-size') return;
+        if (extra.skipped && !furnishRoomSize) furnishRoomSize = 'Medium · 4×5 m';
+        if (extra.other) furnishRoomSize = String(extra.other).trim() || furnishRoomSize;
+        if (!furnishRoomSize) {
+            appendMessage('assistant', 'Pick a size, or type one like 4 × 5 m.');
+            return;
+        }
+        settleWidget(widget, furnishRoomSize);
+        window.setTimeout(appendFurnishStyleWidget, 180);
+    };
+
     const appendFurnishStyleWidget = ({ restore } = {}) => {
         listingStep = 'furnish-style';
         if (!restore) furnishStyle = '';
         const room = furnishRoomLabel();
         const planLabel = furnishPlanTitle || furnishProjectTitle();
         const { widget, list } = createWidget({
-            index: 2,
-            progressTotal: 3,
-            title: '2. Choose a style',
+            index: 3,
+            progressTotal: 4,
+            title: '3. Choose a style',
             subtitle: `I’ll plan the ${room} in ${planLabel} in this look.`,
             showOther: false,
             onPick: finishFurnishStyle,
             onSkip: node => finishFurnishStyle(node, { skipped: true }),
-            onClose: skipAll,
+            onClose: dismissQuestionnaire,
             onBack: goBackToPrevious
         });
         list.append(...styleOptions.map((option, index) => optionButton(option, index + 1, () => {
@@ -903,14 +1003,15 @@
         listingStep = 'furnish-budget';
         if (!restore) furnishBudget = '';
         const { widget, list } = createWidget({
-            index: 3,
-            progressTotal: 3,
-            title: '3. Choose a budget',
+            index: 4,
+            progressTotal: 4,
+            title: '4. Choose a budget',
             subtitle: 'I’ll keep the pieces in this range.',
             showOther: false,
+            isLast: true,
             onPick: finishFurnishBudget,
             onSkip: node => finishFurnishBudget(node, { skipped: true }),
-            onClose: skipAll,
+            onClose: dismissQuestionnaire,
             onBack: goBackToPrevious
         });
         list.append(...budgetOptions.map((option, index) => optionButton(option, index + 1, () => {
@@ -1012,16 +1113,24 @@
         );
         const card = document.createElement('article');
         card.className = 'spaces-home-listing-card spaces-home-plan-card';
+        const styleLabel = furnishStyle || 'Style';
+        const budgetLabel = furnishBudget || 'Budget';
         card.innerHTML = `
             <div class="spaces-home-plan-card-media">
-                <img src="${FURNISH_PLAN_IMAGE}" alt="${roomTitle} floor plan">
+                <img src="${FURNISH_PLAN_IMAGE}" alt="${escapeAttr(roomTitle)} floor plan">
+                <span class="spaces-home-plan-card-badge">Floor plan</span>
             </div>
-            <div class="spaces-home-listing-card-body">
-                <p class="spaces-home-listing-card-deal">Floor plan</p>
-                <h2>${roomTitle} · ${project}</h2>
-                <p class="spaces-home-listing-card-meta">${furnishStyle} · ${furnishBudget}</p>
+            <div class="spaces-home-listing-card-body spaces-home-plan-card-body">
+                <p class="spaces-home-plan-card-kicker">${escapeAttr(roomTitle)}</p>
+                <h2>${escapeAttr(project)}</h2>
+                <p class="spaces-home-listing-card-copy">A ${escapeAttr(styleLabel.toLowerCase())} layout on this floor plan, kept inside ${escapeAttr(budgetLabel)}.</p>
+                <div class="spaces-home-plan-card-chips">
+                    <span>${escapeAttr(furnishRoomSize || 'Room size')}</span>
+                    <span>${escapeAttr(styleLabel)}</span>
+                    <span>${escapeAttr(budgetLabel)}</span>
+                </div>
                 <div class="spaces-home-listing-card-actions">
-                    <button type="button" class="spaces-home-listing-link" data-furnish-action="edit">Edit in editor</button>
+                    <button type="button" class="spaces-home-listing-link" data-furnish-action="edit">Open in editor</button>
                 </div>
             </div>
         `;
@@ -1043,7 +1152,7 @@
         prepareOpen();
         const project = furnishPlanTitle || furnishProjectTitle() || scopedSpaceTitle() || 'My Awesome project';
         if (window.SpacesFloorPlanStudio?.open) {
-            window.SpacesFloorPlanStudio.open({ project });
+            window.SpacesFloorPlanStudio.open({ project, withChat: true });
             return;
         }
         const spaceButton = window.SpacesSidebarNavigation?.getSelectedSpace?.()
@@ -1063,6 +1172,7 @@
         listingStep = 'furnish-plan';
         furnishStyle = '';
         furnishBudget = '';
+        furnishRoomSize = '';
         furnishPlanId = '';
         furnishPlanTitle = '';
         furnishPlanIsNew = false;
@@ -1221,7 +1331,7 @@
             otherPlaceholder: 'Name your new space',
             onPick: (node, extra = {}) => finishSpace(node, { createNew: true, other: extra.other }),
             onSkip: skipSpace,
-            onClose: skipAll,
+            onClose: dismissQuestionnaire,
             onBack: goBackToPrevious,
             showSkip: false
         });
@@ -1286,7 +1396,7 @@
             otherPlaceholder: 'https://…',
             onPick: finishLink,
             onSkip: skipLink,
-            onClose: skipAll
+            onClose: dismissQuestionnaire
         });
         widget.classList.add('is-link-only');
         const field = other.querySelector('.spaces-home-widget-other-input');
@@ -1308,12 +1418,13 @@
         const { widget, list, other } = createWidget({
             index: listingNeedsSpace ? 5 : 4,
             title: 'Is this listing for sale or for rent?',
+            isLast: true,
             onPick: finishDeal,
             onSkip: widgetNode => {
                 listingDeal = listingDeal || 'For sale';
                 finishDeal(widgetNode);
             },
-            onClose: skipAll,
+            onClose: dismissQuestionnaire,
             onBack: goBackToPrevious
         });
         const buttons = dealOptions.map((option, index) => optionButton(option, index + 1, () => {
@@ -1340,7 +1451,7 @@
             showOther: false,
             onPick: finishDescription,
             onSkip: skipDescription,
-            onClose: skipAll,
+            onClose: dismissQuestionnaire,
             onBack: goBackToPrevious
         });
         const fieldWrap = document.createElement('label');
@@ -1392,7 +1503,7 @@
             showOther: false,
             onPick: () => finishPhotos(widget),
             onSkip: widgetNode => finishPhotos(widgetNode, { skipped: true }),
-            onClose: skipAll,
+            onClose: dismissQuestionnaire,
             onBack: goBackToPrevious
         });
 
@@ -1556,7 +1667,8 @@
         else if (step === 'space') listingStep = 'link';
         else if (step === 'description') listingStep = 'photos';
         else if (step === 'deal') listingStep = 'description';
-        else if (step === 'furnish-style') listingStep = 'furnish-plan';
+        else if (step === 'furnish-size') listingStep = 'furnish-plan';
+        else if (step === 'furnish-style') listingStep = 'furnish-size';
         else if (step === 'furnish-budget') listingStep = 'furnish-style';
         if (reopened) {
             window.SpacesAiChats?.syncFromListing?.();
@@ -1569,7 +1681,8 @@
         } else if (step === 'space') appendLinkWidget({ restore: true });
         else if (step === 'description') appendPhotosWidget({ restore: true });
         else if (step === 'deal') appendDescriptionWidget({ restore: true });
-        else if (step === 'furnish-style') appendFurnishPlanWidget({ restore: true });
+        else if (step === 'furnish-size') appendFurnishPlanWidget({ restore: true });
+        else if (step === 'furnish-style') appendFurnishSizeWidget({ restore: true });
         else if (step === 'furnish-budget') appendFurnishStyleWidget({ restore: true });
     };
 
@@ -1645,6 +1758,7 @@
         listingNeedsSpace,
         furnishStyle,
         furnishBudget,
+        furnishRoomSize,
         furnishPlanId,
         furnishPlanTitle,
         furnishPlanIsNew,
@@ -1673,6 +1787,7 @@
         listingNeedsSpace = snapshot.listingNeedsSpace === true || snapshot.listingStep === 'space';
         furnishStyle = snapshot.furnishStyle || '';
         furnishBudget = snapshot.furnishBudget || '';
+        furnishRoomSize = snapshot.furnishRoomSize || '';
         furnishPlanId = snapshot.furnishPlanId || '';
         furnishPlanTitle = snapshot.furnishPlanTitle || '';
         furnishPlanIsNew = snapshot.furnishPlanIsNew === true;
@@ -1703,6 +1818,8 @@
             window.setTimeout(() => appendDealWidget({ restore: true }), 0);
         } else if (listingStep === 'furnish-plan') {
             window.setTimeout(() => appendFurnishPlanWidget({ restore: true }), 0);
+        } else if (listingStep === 'furnish-size') {
+            window.setTimeout(() => appendFurnishSizeWidget({ restore: true }), 0);
         } else if (listingStep === 'furnish-style' || listingStep === 'furnish') {
             window.setTimeout(() => appendFurnishStyleWidget({ restore: true }), 0);
         } else if (listingStep === 'furnish-budget') {
@@ -1743,6 +1860,7 @@
         listingNeedsSpace = false;
         furnishStyle = '';
         furnishBudget = '';
+        furnishRoomSize = '';
         furnishPlanId = '';
         furnishPlanTitle = '';
         furnishPlanIsNew = false;
@@ -1892,7 +2010,13 @@
         const widget = activeWidget();
         if (listingStep === 'furnish-plan') {
             if (widget) finishFurnishPlan(widget, { createNew: true, other: value });
-            else window.setTimeout(appendFurnishStyleWidget, 180);
+            else window.setTimeout(appendFurnishSizeWidget, 180);
+            return true;
+        }
+        if (listingStep === 'furnish-size') {
+            if (value) furnishRoomSize = value;
+            if (widget && furnishRoomSize) finishFurnishSize(widget, { other: value });
+            else appendMessage('assistant', 'Pick a size in the card, or type one like 4 × 5 m.');
             return true;
         }
         if (listingStep === 'furnish-style') {
@@ -2024,5 +2148,194 @@
         });
     }
 
-    window.SpacesListingChat = { start, startFurnish, send, startGeneric, end, isActive, serialize, restore, prepareOpen, expandToHome, openDraft: openListingDraft, openFloorPlan: openFloorPlanEditor };
+    const listingDetails = home.querySelector('[data-listing-details]');
+    const listingDetailsToggle = listingDetails?.querySelector('[data-listing-details-toggle]');
+    const listingDetailsBody = listingDetails?.querySelector('[data-listing-details-body]');
+    const listingDetailsBrief = listingDetails?.querySelector('[data-listing-details-brief]');
+
+    const briefValue = (has, setLabel) => (has ? setLabel : 'Skipped');
+
+    const listingDetailsTitle = listingDetails?.querySelector('.spaces-listing-details-title');
+    const listingDetailsKicker = listingDetails?.querySelectorAll('.listing-details-kicker');
+
+    const styleLabel = () => styleOptions.find(o => o.id === furnishStyle)?.label || '';
+    const budgetLabel = () => budgetOptions.find(o => o.id === furnishBudget)?.label || '';
+
+    const syncListingDetails = (mode = 'listing') => {
+        if (!listingDetails) return;
+        const isPlan = mode === 'plan';
+        if (listingDetailsTitle) {
+            listingDetailsTitle.textContent = isPlan ? 'Plan details' : 'Listing details';
+        }
+        if (listingDetailsKicker?.[0]) {
+            listingDetailsKicker[0].textContent = isPlan ? 'Collected for this plan' : 'Collected for this draft';
+        }
+        if (listingDetailsKicker?.[1]) {
+            listingDetailsKicker[1].textContent = isPlan ? 'Draft plan' : 'Draft listing';
+        }
+
+        if (isPlan) {
+            const project = furnishPlanTitle || furnishProjectTitle() || scopedSpaceTitle() || 'New Project 1';
+            const style = styleLabel() || 'Skipped';
+            const budget = budgetLabel() || 'Skipped';
+            const plan = furnishPlanTitle || (furnishPlanIsNew ? 'New floor plan' : 'Skipped');
+            const thumb = listingDetails.querySelector('[data-listing-details-thumb]');
+            if (thumb) thumb.src = FURNISH_PLAN_IMAGE;
+            const subtitle = listingDetails.querySelector('[data-listing-details-subtitle]');
+            if (subtitle) subtitle.textContent = `${style === 'Skipped' ? 'Living room' : style} · ${project}`;
+            const dealEl = listingDetails.querySelector('[data-listing-details-deal]');
+            if (dealEl) dealEl.textContent = 'Living room';
+            const heading = listingDetails.querySelector('[data-listing-details-heading]');
+            if (heading) heading.textContent = project;
+            const meta = listingDetails.querySelector('[data-listing-details-meta]');
+            if (meta) meta.textContent = [plan !== 'Skipped' ? plan : null, style !== 'Skipped' ? style : null, budget !== 'Skipped' ? budget : null].filter(Boolean).join(' · ') || 'Floor plan · Style · Budget';
+            const copyEl = listingDetails.querySelector('[data-listing-details-copy]');
+            if (copyEl) {
+                copyEl.textContent = 'A couple of details before I plan the living room. Pick a floor plan, choose a style and budget — then open the editor to place furniture.';
+            }
+            listingDetails.querySelectorAll('[data-listing-details-photo]').forEach((img, index) => {
+                img.src = index === 0 ? FURNISH_PLAN_IMAGE : listingPhoto(index === 1 ? 'living.jpg' : 'lounge.jpg');
+            });
+            if (listingDetailsBrief) {
+                const rows = [
+                    { label: 'Floor plan', hint: 'Where to add the living room', value: plan },
+                    { label: 'Room size', hint: 'Sizes of your room', value: furnishRoomSize || 'Skipped' },
+                    { label: 'Style', hint: 'Look and feel', value: style },
+                    { label: 'Budget', hint: 'Spend range', value: budget },
+                    { label: 'Project', hint: 'Space for this plan', value: project }
+                ];
+                listingDetailsBrief.innerHTML = rows.map(row => `
+                    <li class="listing-details-brief-row">
+                        <div class="listing-details-brief-copy">
+                            <p class="listing-details-brief-label">${row.label}</p>
+                            <p class="listing-details-brief-hint">${row.hint}</p>
+                        </div>
+                        <span class="listing-details-brief-value ${row.value === 'Skipped' ? 'is-muted' : 'is-set'}">${row.value}</span>
+                    </li>
+                `).join('');
+            }
+            const editBtn = listingDetails.querySelector('[data-listing-details-edit]');
+            const previewBtn = listingDetails.querySelector('[data-listing-details-preview]');
+            const actions = listingDetails.querySelector('.listing-details-card-actions');
+            if (editBtn) editBtn.textContent = 'Open in editor';
+            if (previewBtn) previewBtn.hidden = true;
+            if (actions) actions.hidden = true;
+            return;
+        }
+
+        const deal = listingDeal || 'For sale';
+        const title = listingSpaceTitle || scopedSpaceTitle() || '13 Abbey Road';
+        const address = `${title}, Dublin`;
+        const price = deal === 'For rent' ? '$4,000' : '$1,250,000';
+        const copy = listingDescription.trim() || DEFAULT_DESCRIPTION
+            + (listingDescription.trim() ? '' : ' The living room opens straight onto the terrace, so summer evenings don’t need a plan. Built in 2019, BER B2, and finished with the kind of detail you don’t have to explain to a buyer.');
+        const photos = [
+            listingPhotos[0] || listingPhoto('villa.jpg'),
+            listingPhotos[1] || listingPhoto('facade.jpg'),
+            listingPhotos[2] || listingPhoto('kitchen.jpg')
+        ];
+        const thumb = listingDetails.querySelector('[data-listing-details-thumb]');
+        if (thumb) thumb.src = listingPhotos[0] || listingPhoto('pool.jpg');
+        const subtitle = listingDetails.querySelector('[data-listing-details-subtitle]');
+        if (subtitle) subtitle.textContent = `${deal} · ${address}`;
+        const dealEl = listingDetails.querySelector('[data-listing-details-deal]');
+        if (dealEl) dealEl.textContent = deal;
+        const heading = listingDetails.querySelector('[data-listing-details-heading]');
+        if (heading) heading.textContent = title;
+        const meta = listingDetails.querySelector('[data-listing-details-meta]');
+        if (meta) meta.textContent = `${address} · ${price}`;
+        const copyEl = listingDetails.querySelector('[data-listing-details-copy]');
+        if (copyEl) copyEl.textContent = copy;
+        listingDetails.querySelectorAll('[data-listing-details-photo]').forEach(img => {
+            const index = Number(img.getAttribute('data-listing-details-photo') || 0);
+            img.src = photos[index] || photos[0];
+        });
+        if (listingDetailsBrief) {
+            const rows = [
+                { label: 'Listing link', hint: 'Zillow, Realtor, Daft or similar', value: briefValue(Boolean(listingSourceUrl), listingSourceSite || 'Added') },
+                { label: 'Photos', hint: 'Shots for the page', value: briefValue(listingPhotos.length > 0 || listingInclude.includes('photos'), listingPhotos.length ? `${listingPhotos.length} photos` : 'Ready') },
+                { label: 'Description', hint: 'Short note about the home', value: briefValue(Boolean(listingDescription.trim()), 'Added') },
+                { label: 'Deal type', hint: 'Sale or rent', value: briefValue(Boolean(listingDeal), deal) }
+            ];
+            listingDetailsBrief.innerHTML = rows.map(row => `
+                <li class="listing-details-brief-row">
+                    <div class="listing-details-brief-copy">
+                        <p class="listing-details-brief-label">${row.label}</p>
+                        <p class="listing-details-brief-hint">${row.hint}</p>
+                    </div>
+                    <span class="listing-details-brief-value ${row.value === 'Skipped' ? 'is-muted' : 'is-set'}">${row.value}</span>
+                </li>
+            `).join('');
+        }
+        const editBtn = listingDetails.querySelector('[data-listing-details-edit]');
+        const previewBtn = listingDetails.querySelector('[data-listing-details-preview]');
+        const actions = listingDetails.querySelector('.listing-details-card-actions');
+        if (editBtn) editBtn.textContent = 'Edit';
+        if (previewBtn) previewBtn.hidden = false;
+        if (actions) actions.hidden = false;
+    };
+
+    let detailsMode = 'listing';
+
+    const showListingDetails = (options = {}) => {
+        // Listing split chat keeps the normal thread — no details accordion.
+        if (options.mode !== 'plan') {
+            hideListingDetails();
+            return;
+        }
+        if (!listingDetails) return;
+        detailsMode = 'plan';
+        syncListingDetails('plan');
+        listingDetails.dataset.detailsMode = 'plan';
+        listingDetails.hidden = false;
+        listingDetails.removeAttribute('hidden');
+        // Collapsed by default — only the Plan details header shows.
+        listingDetails.classList.remove('is-open');
+        if (listingDetailsToggle) listingDetailsToggle.setAttribute('aria-expanded', 'false');
+        if (listingDetailsBody) {
+            listingDetailsBody.hidden = true;
+            listingDetailsBody.setAttribute('hidden', '');
+        }
+        homeThread.hidden = true;
+        homeThread.setAttribute('hidden', '');
+        home.classList.add('is-listing-details-open');
+        document.body.classList.add('is-listing-details-open');
+    };
+
+    const hideListingDetails = () => {
+        if (!listingDetails) return;
+        listingDetails.hidden = true;
+        listingDetails.setAttribute('hidden', '');
+        listingDetails.classList.remove('is-open');
+        homeThread.hidden = false;
+        homeThread.removeAttribute('hidden');
+        home.classList.remove('is-listing-details-open');
+        document.body.classList.remove('is-listing-details-open');
+        listingDetails.dataset.detailsMode = '';
+        detailsMode = 'listing';
+    };
+
+    listingDetailsToggle?.addEventListener('click', () => {
+        const open = listingDetailsToggle.getAttribute('aria-expanded') !== 'true';
+        listingDetailsToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        listingDetails?.classList.toggle('is-open', open);
+        if (listingDetailsBody) {
+            listingDetailsBody.hidden = !open;
+            if (open) listingDetailsBody.removeAttribute('hidden');
+            else listingDetailsBody.setAttribute('hidden', '');
+        }
+    });
+
+    listingDetails?.querySelector('[data-listing-details-edit]')?.addEventListener('click', () => {
+        if (detailsMode === 'plan') {
+            openFloorPlanEditor();
+            return;
+        }
+        openListingDraft({ mode: 'edit' });
+    });
+    listingDetails?.querySelector('[data-listing-details-preview]')?.addEventListener('click', () => {
+        openListingDraft({ mode: 'preview' });
+    });
+
+    window.SpacesListingChat = { start, startFurnish, send, startGeneric, end, isActive, serialize, restore, prepareOpen, expandToHome, openDraft: openListingDraft, openFloorPlan: openFloorPlanEditor, showListingDetails, hideListingDetails, syncListingDetails };
 })();

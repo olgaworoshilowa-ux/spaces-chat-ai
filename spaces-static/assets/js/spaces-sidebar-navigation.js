@@ -6,6 +6,7 @@
     const homeButton = document.querySelector('[data-home-page-trigger]');
     const allSpacesButton = document.querySelector('[data-all-spaces-trigger]');
     const sharedSpacesButton = document.querySelector('[data-shared-spaces-trigger]');
+    const recentsButton = document.querySelector('[data-recents-trigger]');
     const directoryStorageKey = 'planner5d-spaces-v2-spaces-directory';
     const homeLogo = document.querySelector('.header-logo');
 
@@ -29,6 +30,8 @@
         allSpacesButton?.removeAttribute('aria-current');
         sharedSpacesButton?.classList.remove('is-active');
         sharedSpacesButton?.removeAttribute('aria-current');
+        recentsButton?.classList.remove('is-active');
+        recentsButton?.removeAttribute('aria-current');
         document.querySelector('[data-ai-chats-all]')?.classList.remove('is-active');
         document.querySelector('[data-ai-chats-all]')?.removeAttribute('aria-current');
         getSpaceButtons().forEach(button => {
@@ -210,6 +213,18 @@
         applyDirectorySelection('shared', options);
     };
 
+    const applyRecentsSelection = (options = {}) => {
+        document.dispatchEvent(new CustomEvent('spaces-navigation-start'));
+        const navigation = window.SpacesPrototypeNavigation;
+        clearHomeSurface();
+        navigation?.showAllSpaces({ filter: 'files' });
+        navigation?.closeCollection?.({ restoreScroll: false });
+        clearActiveItems();
+        setActiveItem(recentsButton);
+        saveDirectory('all');
+        if (options.history) document.dispatchEvent(new CustomEvent('spaces-history-navigate'));
+    };
+
     const applyAiChatsSelection = (options = {}) => {
         document.dispatchEvent(new CustomEvent('spaces-navigation-start'));
         saveDirectory('');
@@ -285,6 +300,11 @@
     sharedSpacesButton?.addEventListener('click', event => {
         event.preventDefault();
         applySharedSpacesSelection({ history: true });
+    }, true);
+
+    recentsButton?.addEventListener('click', event => {
+        event.preventDefault();
+        applyRecentsSelection({ history: true });
     }, true);
 
     homeLogo?.addEventListener('click', event => {
@@ -365,6 +385,7 @@
         selectHome: applyHomeSelection,
         selectAllSpaces: applyAllSpacesSelection,
         selectSharedSpaces: applySharedSpacesSelection,
+        selectRecents: applyRecentsSelection,
         selectAiChats: applyAiChatsSelection,
         selectGlobalSearch: applyGlobalSearchSelection,
         getSelectedSpace: getSavedSpace,

@@ -5,13 +5,19 @@
     const headerSearch = document.querySelector('[data-header-search]');
     const headerSearchControl = document.querySelector('[data-header-search-control]');
     const headerPopover = document.querySelector('[data-header-search-popover]');
+    const headerFiles = document.querySelector('[data-header-search-files]');
     const headerCategories = document.querySelector('[data-header-search-categories]');
     const headerResults = document.querySelector('[data-header-search-results]');
     const headerEmpty = document.querySelector('[data-header-search-empty]');
-    const headerAllResults = document.querySelector('[data-header-search-all]');
+    const headerClear = document.querySelector('[data-header-search-clear]');
+    const headerHotkey = document.querySelector('[data-header-search-hotkey]');
     const headerAsk = document.querySelector('[data-header-search-ask]');
     const headerAskLabel = document.querySelector('[data-header-search-ask-label]');
     const headerCopilotHeading = document.querySelector('[data-header-search-copilot-heading]');
+    const headerFooter = document.querySelector('[data-header-search-footer]');
+    const headerRecent = document.querySelector('[data-header-search-recent]');
+    const headerRecentList = document.querySelector('[data-header-search-recent-list]');
+    const headerFilesHeading = document.querySelector('[data-header-search-files-heading]');
     const headerSuggestionItems = [...document.querySelectorAll('[data-header-search-suggestions] li')];
     const home = document.querySelector('[data-home-page]');
     const homeSearch = home?.querySelector('[data-home-search]');
@@ -20,7 +26,9 @@
     const resultViews = [globalPage, homeResults].filter(Boolean);
     const fallbackPreview = './assets/images/spaces-v2/collection-preview.png';
     const moreIcon = './assets/images/spaces-v2/list-more.svg';
-    const resultLimit = 5;
+    const resultLimit = 6;
+    const recentLimit = 3;
+    const idlePromptLimit = 2;
     const fileTypeDefinitions = [
         { label: 'Floor Plans', aliases: ['floor plans', 'floor plan', 'projects', 'project', 'plans'] },
         { label: 'Renders', aliases: ['renders', 'render'] },
@@ -32,7 +40,7 @@
         { label: 'Generated with AI', aliases: ['generated with ai', 'generated', 'ai generated'] },
     ];
 
-    if (!mainContent || !headerSearch || !headerSearchControl || !headerPopover || !headerCategories || !headerResults || !headerEmpty || !headerAllResults || !headerAsk || !headerAskLabel || !headerCopilotHeading || !home || !homeSearch || !globalPage || !homeResults || !window.SpacesAccountData?.load) return;
+    if (!mainContent || !headerSearch || !headerSearchControl || !headerPopover || !headerFiles || !headerCategories || !headerResults || !headerEmpty || !headerClear || !headerAsk || !headerAskLabel || !headerCopilotHeading || !headerRecent || !headerRecentList || !home || !homeSearch || !globalPage || !homeResults || !window.SpacesAccountData?.load) return;
 
     const normalize = value => String(value || '').trim().toLowerCase();
     const normalizeType = value => normalize(value).replaceAll('°', '');
@@ -41,6 +49,12 @@
     const compactDate = item => {
         const date = new Date(dateValue(item));
         if (Number.isNaN(date.getTime())) return 'Recently';
+        const now = new Date();
+        const startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        const startYesterday = startToday - 86400000;
+        const time = date.getTime();
+        if (time >= startToday) return 'Today';
+        if (time >= startYesterday) return 'Yesterday';
         return new Intl.DateTimeFormat('en', { day: 'numeric', month: 'short' }).format(date);
     };
     const typeDefinitionFor = type => fileTypeDefinitions.find(definition => normalizeType(definition.label) === normalizeType(type));
@@ -49,6 +63,24 @@
         return [type, ...(definition?.aliases || [])].map(normalize);
     };
     const typeKey = type => normalizeType(type);
+    const escapeHtml = value => String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;');
+
+    const highlightMatch = (text, query) => {
+        const raw = String(text || '');
+        const needle = String(query || '').trim();
+        if (!needle) return escapeHtml(raw);
+        const lower = raw.toLowerCase();
+        const index = lower.indexOf(needle.toLowerCase());
+        if (index < 0) return escapeHtml(raw);
+        const before = escapeHtml(raw.slice(0, index));
+        const match = escapeHtml(raw.slice(index, index + needle.length));
+        const after = escapeHtml(raw.slice(index + needle.length));
+        return `${before}<mark>${match}</mark>${after}`;
+    };
 
     const preview = (source, alt) => {
         const image = document.createElement('img');
@@ -118,6 +150,14 @@
     let activeGlobalType = 'all';
     let activeGlobalQuery = '';
     let latestHeaderRequest = 0;
+    let activeOptionIndex = -1;
+    let debounceTimer = 0;
+
+    const isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.platform || navigator.userAgent || '');
+    if (headerHotkey) {
+        headerHotkey.innerHTML = isMac ? '<span>⌘</span> K' : '<span>Ctrl</span> K';
+    }
+
     const account = () => {
         if (!accountPromise) accountPromise = window.SpacesAccountData.load();
         return accountPromise;
@@ -179,7 +219,7 @@
         return row;
     };
 
-    const createCompactResult = (file, space) => {
+    const createCompactResult = (file, space, query) => {
         const result = document.createElement('button');
         const thumbnail = document.createElement('span');
         const content = document.createElement('span');
@@ -190,13 +230,15 @@
         result.type = 'button';
         result.className = 'spaces-header-search-result';
         result.dataset.headerSearchResult = '';
-        result.setAttribute('role', 'listitem');
+        result.dataset.searchOption = 'result';
+        result.id = `header-search-result-${file.id || Math.random().toString(36).slice(2, 8)}`;
+        result.setAttribute('role', 'option');
         result.setAttribute('aria-label', `${file.title}, ${file.type || 'Unknown'}, ${space?.title || 'Unknown space'}`);
         thumbnail.className = 'spaces-header-search-result-thumbnail';
         thumbnail.append(preview(file.previewUrl, ''));
         content.className = 'spaces-header-search-result-content';
         title.className = 'spaces-header-search-result-title';
-        title.textContent = file.title;
+        title.innerHTML = highlightMatch(file.title, query);
         meta.className = 'spaces-header-search-result-meta';
         meta.textContent = `${file.type || 'Unknown'} · ${space?.title || 'Unknown space'}`;
         updated.className = 'spaces-header-search-result-date';
@@ -208,12 +250,72 @@
         return result;
     };
 
+    const collectRecentItems = data => {
+        const spaces = (data?.spaces || []).map(space => ({
+            kind: 'space',
+            id: space.id,
+            title: space.title || 'Untitled space',
+            previewUrl: space.previewUrl,
+            cdate: space.cdate,
+            udate: space.udate || space.cdate
+        }));
+        const files = (data?.files || []).map(file => ({
+            kind: 'file',
+            id: file.id,
+            title: file.title || 'Untitled file',
+            previewUrl: file.previewUrl,
+            cdate: file.cdate,
+            udate: file.udate || file.cdate
+        }));
+        return [...spaces, ...files]
+            .sort((first, second) => timestamp(second) - timestamp(first))
+            .slice(0, recentLimit);
+    };
+
+    const createRecentItem = item => {
+        const result = document.createElement('button');
+        const thumbnail = document.createElement('span');
+        const content = document.createElement('span');
+        const title = document.createElement('span');
+        const updated = document.createElement('time');
+
+        result.type = 'button';
+        result.className = 'spaces-header-search-result spaces-header-search-recent-item';
+        result.dataset.headerSearchRecent = '';
+        result.dataset.searchOption = 'recent';
+        result.id = `header-search-recent-${item.kind}-${item.id || Math.random().toString(36).slice(2, 8)}`;
+        result.setAttribute('role', 'option');
+        result.setAttribute('aria-label', item.title);
+        thumbnail.className = 'spaces-header-search-result-thumbnail';
+        thumbnail.append(preview(item.previewUrl, ''));
+        content.className = 'spaces-header-search-result-content';
+        title.className = 'spaces-header-search-result-title';
+        title.textContent = item.title;
+        updated.className = 'spaces-header-search-result-date';
+        updated.dateTime = dateValue(item);
+        updated.textContent = compactDate(item);
+        content.append(title);
+        result.append(thumbnail, content, updated);
+        result.addEventListener('click', () => {
+            void openFullResults(item.title);
+        });
+        return result;
+    };
+
+    const renderRecentItems = async () => {
+        const data = await account();
+        const items = collectRecentItems(data);
+        headerRecentList.replaceChildren(...items.map(createRecentItem));
+        headerRecent.hidden = items.length === 0;
+    };
+
     const collectMatches = (data, value) => {
         const query = normalize(value);
         const spacesById = new Map(data.spaces.map(space => [String(space.id), space]));
         const matches = [...data.files]
             .sort((first, second) => timestamp(second) - timestamp(first))
             .filter(file => {
+                if (!query) return false;
                 const space = spacesById.get(String(file.spaceId));
                 const searchable = `${file.title} ${file.type} ${typeSearchTerms(file.type).join(' ')} ${space?.title} ${space?.address}`;
                 return normalize(searchable).includes(query);
@@ -287,9 +389,6 @@
     };
 
     const renderHeaderCategories = matches => {
-        // Categories describe the current result set. The query has already been
-        // matched against file names and type aliases in collectMatches(), so
-        // filtering once more by the type label hides valid result categories.
         const visibleTypes = matchingTypes(matches);
         headerCategories.hidden = visibleTypes.length === 0;
         headerCategories.replaceChildren(...visibleTypes.map(type => {
@@ -306,54 +405,154 @@
         }));
     };
 
-    const askCopilot = (text, options = {}) => {
+    const askCopilot = (text) => {
         const value = String(text || '').trim();
         if (!value) return;
         closeHeaderPopover();
         headerSearch.value = '';
-        if (options.send) {
-            window.SpacesCopilotPanel?.open?.();
-            window.SpacesCopilotPanel?.send?.(value);
+        syncClearButton();
+        // Always open a full new centered chat from header search prompts / Ask.
+        window.SpacesAiChats?.startNew?.();
+        window.setTimeout(() => {
+            if (window.SpacesListingChat?.send?.(value)) return;
+            window.SpacesListingChat?.startGeneric?.(value, { surface: 'home' });
+        }, 0);
+    };
+
+    const getSelectableOptions = () => {
+        const options = [];
+        if (headerAsk && !headerAsk.hidden) options.push(headerAsk);
+        headerSuggestionItems.forEach(item => {
+            if (item.hidden) return;
+            const button = item.querySelector('[data-header-search-suggestion]');
+            if (button) options.push(button);
+        });
+        if (!headerRecent.hidden) {
+            headerRecentList.querySelectorAll('[data-header-search-recent]').forEach(button => options.push(button));
+        }
+        headerResults.querySelectorAll('[data-header-search-result]').forEach(button => options.push(button));
+        return options;
+    };
+
+    const setActiveOption = index => {
+        const options = getSelectableOptions();
+        options.forEach(option => option.classList.remove('is-active'));
+        if (!options.length) {
+            activeOptionIndex = -1;
+            headerSearch.removeAttribute('aria-activedescendant');
             return;
         }
-        window.SpacesCopilotPanel?.ask?.(value);
+        activeOptionIndex = ((index % options.length) + options.length) % options.length;
+        const active = options[activeOptionIndex];
+        active.classList.add('is-active');
+        if (!active.id) active.id = `header-search-option-${activeOptionIndex}`;
+        headerSearch.setAttribute('aria-activedescendant', active.id);
+        active.scrollIntoView({ block: 'nearest' });
+    };
+
+    const activateOption = option => {
+        if (!option) return;
+        if (option === headerAsk) {
+            askCopilot(headerSearch.value);
+            return;
+        }
+        if (option.dataset.headerSearchSuggestion) {
+            askCopilot(option.dataset.headerSearchSuggestion);
+            return;
+        }
+        if (option.dataset.headerSearchRecent !== undefined) {
+            option.click();
+            return;
+        }
+        if (option.dataset.headerSearchResult !== undefined) {
+            void openFullResults(headerSearch.value);
+        }
+    };
+
+    const syncClearButton = () => {
+        const hasValue = Boolean(headerSearch.value.trim());
+        headerClear.hidden = !hasValue;
     };
 
     const renderCopilotSuggestions = value => {
         const query = normalize(value);
+        const isRealtor = document.body.classList.contains('is-personalization-realtor');
         headerAsk.hidden = !query;
         headerAskLabel.textContent = query ? `Ask Copilot “${String(value).trim()}”` : 'Ask Copilot';
-        let visibleCount = 0;
+        if (headerFooter) headerFooter.hidden = true;
+
+        let idleShown = 0;
         headerSuggestionItems.forEach(item => {
+            const isExtra = item.hasAttribute('data-header-search-suggestion-extra');
+            const isHomeOwnerOnly = item.hasAttribute('data-personalization-home-owner-only');
+            const isRealtorOnly = item.hasAttribute('data-personalization-realtor-only');
+            const personaMismatch = (isHomeOwnerOnly && isRealtor) || (isRealtorOnly && !isRealtor);
+
+            if (isExtra || personaMismatch) {
+                item.hidden = true;
+                return;
+            }
+
             const suggestion = item.querySelector('[data-header-search-suggestion]');
             const text = normalize(suggestion?.dataset.headerSearchSuggestion || suggestion?.textContent);
-            const matchesQuery = !query || text.includes(query);
-            item.hidden = !matchesQuery;
-            if (matchesQuery) visibleCount += 1;
+
+            if (!query) {
+                if (idleShown >= idlePromptLimit) {
+                    item.hidden = true;
+                    return;
+                }
+                item.hidden = false;
+                idleShown += 1;
+                return;
+            }
+
+            item.hidden = !text.includes(query);
         });
-        headerCopilotHeading.hidden = Boolean(query) || visibleCount === 0;
+
+        const visibleCount = headerSuggestionItems.filter(item => !item.hidden).length;
+
+        headerCopilotHeading.hidden = visibleCount === 0;
+        headerCopilotHeading.textContent = query ? 'Matching prompts' : 'Ask Copilot';
     };
 
     const renderHeaderPopover = async value => {
         const requestId = ++latestHeaderRequest;
         const query = String(value || '').trim();
+        syncClearButton();
         renderCopilotSuggestions(query);
+
         if (!query) {
+            headerFiles.hidden = true;
             headerCategories.hidden = true;
             headerCategories.replaceChildren();
             headerResults.replaceChildren();
             headerEmpty.hidden = true;
-            headerAllResults.hidden = true;
+            if (headerFilesHeading) headerFilesHeading.hidden = true;
+            await renderRecentItems();
+            if (requestId !== latestHeaderRequest) return;
+            setActiveOption(-1);
             return;
         }
+
+        headerRecent.hidden = true;
+        headerRecentList.replaceChildren();
+
         const data = await account();
         if (requestId !== latestHeaderRequest) return;
         const { matches, spacesById } = collectMatches(data, value);
+        headerFiles.hidden = false;
+        if (headerFilesHeading) {
+            headerFilesHeading.hidden = false;
+            headerFilesHeading.textContent = matches.length
+                ? `Files · ${matches.length}`
+                : 'Files';
+        }
         renderHeaderCategories(matches);
-        headerResults.replaceChildren(...matches.slice(0, resultLimit).map(file => createCompactResult(file, spacesById.get(String(file.spaceId)))));
+        headerResults.replaceChildren(...matches.slice(0, resultLimit).map(file => (
+            createCompactResult(file, spacesById.get(String(file.spaceId)), query)
+        )));
         headerEmpty.hidden = matches.length !== 0;
-        headerAllResults.hidden = false;
-        headerAllResults.textContent = `All search results${matches.length ? ` (${matches.length})` : ''}`;
+        setActiveOption(query ? 0 : -1);
     };
 
     const openHeaderPopover = async value => {
@@ -365,6 +564,9 @@
     const closeHeaderPopover = () => {
         headerPopover.hidden = true;
         headerSearch.setAttribute('aria-expanded', 'false');
+        headerSearch.removeAttribute('aria-activedescendant');
+        activeOptionIndex = -1;
+        getSelectableOptions().forEach(option => option.classList.remove('is-active'));
     };
 
     const closeHeaderResults = () => {
@@ -383,6 +585,13 @@
         await renderFullResults(query);
     };
 
+    const scheduleHeaderRender = value => {
+        window.clearTimeout(debounceTimer);
+        debounceTimer = window.setTimeout(() => {
+            void openHeaderPopover(value);
+        }, 90);
+    };
+
     headerSearch.addEventListener('focus', () => {
         if (!globalPage.hidden) return;
         void openHeaderPopover(headerSearch.value);
@@ -390,6 +599,7 @@
 
     headerSearch.addEventListener('input', async () => {
         const query = headerSearch.value;
+        syncClearButton();
         if (!query.trim()) {
             activeGlobalType = 'all';
             if (!globalPage.hidden) closeHeaderResults();
@@ -403,39 +613,91 @@
             return;
         }
 
-        await openHeaderPopover(query);
+        scheduleHeaderRender(query);
     });
 
     headerSearch.addEventListener('keydown', event => {
-        if (event.key === 'Enter' && headerSearch.value.trim()) {
+        const options = getSelectableOptions();
+        if (event.key === 'ArrowDown') {
+            if (headerPopover.hidden) void openHeaderPopover(headerSearch.value);
             event.preventDefault();
-            askCopilot(headerSearch.value, { send: true });
+            setActiveOption(activeOptionIndex < 0 ? 0 : activeOptionIndex + 1);
+            return;
+        }
+        if (event.key === 'ArrowUp') {
+            if (headerPopover.hidden) return;
+            event.preventDefault();
+            setActiveOption(activeOptionIndex < 0 ? options.length - 1 : activeOptionIndex - 1);
+            return;
+        }
+        if (event.key === 'Enter') {
+            const query = headerSearch.value.trim();
+            if (!query && activeOptionIndex < 0) return;
+            event.preventDefault();
+            if (activeOptionIndex >= 0 && options[activeOptionIndex]) {
+                activateOption(options[activeOptionIndex]);
+                return;
+            }
+            askCopilot(query);
+            return;
         }
         if (event.key === 'Escape') {
-            closeHeaderPopover();
+            if (!headerPopover.hidden) {
+                event.preventDefault();
+                closeHeaderPopover();
+                return;
+            }
+            if (headerSearch.value) {
+                event.preventDefault();
+                headerSearch.value = '';
+                syncClearButton();
+                void openHeaderPopover('');
+                return;
+            }
             headerSearch.blur();
         }
     });
 
+    headerClear.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        headerSearch.value = '';
+        syncClearButton();
+        headerSearch.focus();
+        activeGlobalType = 'all';
+        if (!globalPage.hidden) closeHeaderResults();
+        void openHeaderPopover('');
+    });
+
     headerAsk.addEventListener('click', () => {
-        const query = headerSearch.value.trim();
-        askCopilot(query, { send: true });
+        askCopilot(headerSearch.value.trim());
     });
 
     headerSuggestionItems.forEach(item => {
         const button = item.querySelector('[data-header-search-suggestion]');
-        button?.addEventListener('click', () => {
+        if (!button) return;
+        button.dataset.searchOption = 'suggestion';
+        button.setAttribute('role', 'option');
+        button.addEventListener('click', () => {
             askCopilot(button.dataset.headerSearchSuggestion || button.textContent.trim());
         });
     });
 
-    headerAllResults.addEventListener('click', () => {
-        activeGlobalType = 'all';
-        void openFullResults(headerSearch.value);
-    });
+    headerAsk.dataset.searchOption = 'ask';
+    headerAsk.setAttribute('role', 'option');
 
     document.addEventListener('pointerdown', event => {
         if (!headerSearchControl.contains(event.target)) closeHeaderPopover();
+    });
+
+    document.addEventListener('keydown', event => {
+        const key = event.key?.toLowerCase();
+        if (!(event.metaKey || event.ctrlKey) || key !== 'k') return;
+        if (event.target?.closest('textarea, [contenteditable="true"]')) return;
+        event.preventDefault();
+        headerSearch.focus();
+        headerSearch.select();
+        void openHeaderPopover(headerSearch.value);
     });
 
     homeSearch.addEventListener('input', async () => {
@@ -449,16 +711,23 @@
     document.addEventListener('spaces-account-profile-ready', event => {
         if (!event.detail?.account) return;
         accountPromise = Promise.resolve(event.detail.account);
-        if (!headerPopover.hidden && headerSearch.value.trim()) void renderHeaderPopover(headerSearch.value);
+        if (!headerPopover.hidden) void renderHeaderPopover(headerSearch.value);
         if (!globalPage.hidden && headerSearch.value.trim()) void renderFullResults(headerSearch.value);
         if (!homeResults.hidden && homeSearch.value.trim()) void renderHomeResults(homeSearch.value);
+    });
+
+    document.addEventListener('spaces-personalization-changed', () => {
+        if (!headerPopover.hidden) void renderHeaderPopover(headerSearch.value);
     });
 
     document.addEventListener('spaces-navigation-start', () => {
         closeHeaderResults();
         headerSearch.value = '';
+        syncClearButton();
         home.classList.remove('is-searching');
         homeResults.hidden = true;
         homeSearch.value = '';
     });
+
+    syncClearButton();
 })();

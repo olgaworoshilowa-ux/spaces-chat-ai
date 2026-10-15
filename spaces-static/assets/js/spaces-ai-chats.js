@@ -3,9 +3,10 @@
 
     const STORAGE_KEY = 'planner5d-spaces-v2-ai-chats';
     const SIDEBAR_LIMIT = 3;
-    const ALL_CHATS_MIN = 1;
+    const ALL_CHATS_MIN = 3;
     const section = document.querySelector('[data-ai-chats-section]');
     const list = section?.querySelector('[data-ai-chats-list]');
+    const sidebarEmpty = section?.querySelector('[data-ai-chats-empty]');
     const allButton = section?.querySelector('[data-ai-chats-all]');
     const newWrap = section?.querySelector('[data-ai-chats-new-wrap]');
     const newButton = section?.querySelector('[data-ai-chats-new]');
@@ -40,7 +41,7 @@
     const artifactPreviewImage = document.querySelector('[data-home-artifact-preview-image]');
     const artifactPreviewClose = document.querySelector('[data-home-artifact-preview-close]');
     const homeThread = document.querySelector('[data-home-thread]');
-    const bubbleIcon = './assets/images/sidebar/layout-aa/ai-chat-bubble.svg';
+    const bubbleIcon = './assets/images/sidebar/layout-aa/ai-chat-bubble.svg?v=figma-1';
     const moreIcon = './assets/images/sidebar/more.svg';
 
     if (!section || !list) return;
@@ -225,11 +226,42 @@
     };
 
     const chatMatchesSpaceFilter = (chat, filterId = pageSpaceFilter) => {
-        if (!filterId || filterId === 'all') return true;
-        return spaceFilterValue(chatSpace(chat)) === String(filterId);
+        const selected = String(filterId || 'all');
+        if (!selected || selected === 'all') return true;
+        const space = chatSpace(chat);
+        if (selected === NONE_FILTER) return !space;
+        if (!space) return false;
+        if (spaceFilterValue(space) === selected) return true;
+        const byId = knownSpaces.find(item => String(item.id) === selected);
+        if (byId && chatSpaceTitle(chat)) {
+            return chatSpaceTitle(chat).toLowerCase() === String(byId.title || '').toLowerCase();
+        }
+        if (selected.startsWith('title:')) {
+            return chatSpaceTitle(chat).toLowerCase() === selected.slice(6).toLowerCase();
+        }
+        return false;
     };
 
     const filteredChats = () => chats.filter(chat => chatMatchesSpaceFilter(chat));
+
+    const syncSidebarEmpty = () => {
+        if (!section || !list) return;
+        let emptyNode = section.querySelector('[data-ai-chats-empty]');
+        if (!emptyNode) {
+            emptyNode = document.createElement('p');
+            emptyNode.className = 'spaces-ai-chats-empty';
+            emptyNode.setAttribute('data-ai-chats-empty', '');
+            list.insertAdjacentElement('afterend', emptyNode);
+        }
+        const matchedCount = filteredChats().length;
+        const showEmpty = chats.length > 0 && matchedCount === 0;
+        emptyNode.textContent = pageSpaceFilter !== 'all'
+            ? 'No chats in this space'
+            : 'No chats yet';
+        emptyNode.hidden = !showEmpty;
+        emptyNode.setAttribute('aria-hidden', showEmpty ? 'false' : 'true');
+        section.classList.toggle('is-space-filter-empty', showEmpty);
+    };
 
     const spaceFilterOptions = () => {
         const seen = new Set();
@@ -314,7 +346,12 @@
     const applySpaceFilter = (value, { persist = true, renderLists = true } = {}) => {
         pageSpaceFilter = String(value || 'all');
         const options = spaceFilterOptions();
-        if (!options.some(option => optionFilterId(option) === pageSpaceFilter)) {
+        const hasSpaceOptions = options.some(option => {
+            const id = optionFilterId(option);
+            return id !== 'all' && id !== NONE_FILTER;
+        });
+        // Only reset unknown filters after spaces have loaded.
+        if (hasSpaceOptions && !options.some(option => optionFilterId(option) === pageSpaceFilter)) {
             pageSpaceFilter = 'all';
         }
         if (persist) persistSpaceFilter(pageSpaceFilter);
@@ -328,6 +365,7 @@
         });
         renderSpaceFilterMenu();
         if (renderLists) render();
+        else syncSidebarEmpty();
     };
 
     const fillFilterMenu = menu => {
@@ -463,6 +501,176 @@
         if (!artifactsMenu || artifactsMenu.hidden) return;
         artifactsMenu.hidden = true;
         artifactsButton?.setAttribute('aria-expanded', 'false');
+        artifactsRoot?.classList.remove('is-active');
+    };
+
+    const historyButton = document.querySelector('[data-editor-chat-history]');
+    const historyMenu = document.querySelector('[data-editor-chat-history-menu]');
+    const historyWrap = document.querySelector('[data-editor-chat-history-wrap]');
+
+    const closeEditorHistory = () => {
+        if (!historyMenu) return;
+        historyMenu.hidden = true;
+        historyButton?.setAttribute('aria-expanded', 'false');
+        historyWrap?.classList.remove('is-active');
+    };
+
+    const markFloorPlanContext = () => {
+        if (!currentId) return;
+        const chat = chats.find(item => item.id === currentId);
+        if (!chat) return;
+        // Keep listing drafts out of floor-plan history — don't mutate them into furnish chats.
+        if (/^listing\s*:/i.test(String(chat.title || ''))) return;
+        const step = String(chat.snapshot?.listingStep || '');
+        if (step && step !== 'generic' && !/^furnish/.test(step)) return;
+        chat.snapshot = {
+            ...(chat.snapshot || {}),
+            listingStep: chat.snapshot?.listingStep?.startsWith?.('furnish')
+                ? chat.snapshot.listingStep
+                : (chat.snapshot?.listingStep === 'furnish-ready' ? chat.snapshot.listingStep : 'furnish-ready'),
+            furnishPlanId: chat.snapshot?.furnishPlanId || window.SpacesListingChat?.serialize?.()?.furnishPlanId || '',
+            furnishPlanTitle: chat.snapshot?.furnishPlanTitle || window.SpacesListingChat?.serialize?.()?.furnishPlanTitle || chat.title || 'Floor plan'
+        };
+        writeStore();
+        render();
+    };
+
+    const historyGroupLabel = timestamp => {
+        const date = new Date(Number(timestamp) || Date.now());
+        if (Number.isNaN(date.getTime())) return 'Older';
+        const now = new Date();
+        const startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        const diffDays = Math.round((startToday - startDate) / 86400000);
+        if (diffDays <= 0) return 'Today';
+        if (diffDays === 1) return 'Yesterday';
+        if (diffDays < 7) return 'Previous 7 days';
+        return 'Older';
+    };
+
+    const isFloorPlanChat = chat => {
+        const title = String(chat?.title || '');
+        if (/^listing\s*:/i.test(title)) return false;
+        const step = String(chat?.snapshot?.listingStep || '');
+        // Listing studio steps (photos, deal, etc.) are not floor-plan chats.
+        if (step && step !== 'generic' && !/^furnish/.test(step)) return false;
+        if (/^furnish/.test(step)) return true;
+        if (chat?.snapshot?.furnishPlanId || chat?.snapshot?.furnishPlanTitle) return true;
+        const text = `${title} ${chat?.prompt || ''} ${chat?.snapshot?.title || ''}`;
+        return /floor plan|furnish|plan a |bedroom\s*·/i.test(text);
+    };
+
+    const editorHistoryChats = () => {
+        const snapshot = window.SpacesListingChat?.serialize?.() || {};
+        const floorOpen = document.body.classList.contains('is-floor-plan-with-chat');
+        const listingOpen = document.body.classList.contains('is-listing-with-chat');
+        const planId = String(snapshot.furnishPlanId || '');
+        const planTitle = String(snapshot.furnishPlanTitle || '').trim().toLowerCase();
+        const spaceId = String(snapshot.listingSpaceId || snapshot.contextSpaceId || '');
+        return chats.filter(chat => {
+            const chatPlan = String(chat.snapshot?.furnishPlanId || '');
+            const chatPlanTitle = String(chat.snapshot?.furnishPlanTitle || '').trim().toLowerCase();
+            const chatSpace = String(chat.spaceId || chat.snapshot?.listingSpaceId || chat.snapshot?.contextSpaceId || '');
+            if (floorOpen) {
+                // Only chats for this floor-plan flow — never listing drafts.
+                if (!isFloorPlanChat(chat)) return false;
+                if (planId) return chatPlan === planId || (chat.id === currentId && isFloorPlanChat(chat));
+                if (planTitle) return chatPlanTitle === planTitle || (chat.id === currentId && isFloorPlanChat(chat));
+                if (spaceId) return (!chatSpace || chatSpace === spaceId) && isFloorPlanChat(chat);
+                return true;
+            }
+            if (listingOpen) {
+                if (!isListingChat(chat.snapshot) && !/^listing\s*:/i.test(String(chat?.title || ''))) return false;
+                if (chat.id === currentId) return true;
+                return !spaceId || chatSpace === spaceId;
+            }
+            return true;
+        });
+    };
+
+    const groupedEditorHistory = () => {
+        const groups = [];
+        editorHistoryChats().forEach(chat => {
+            const label = historyGroupLabel(chat.updatedAt);
+            const last = groups[groups.length - 1];
+            if (last && last.label === label) {
+                last.items.push(chat);
+                return;
+            }
+            groups.push({ label, items: [chat] });
+        });
+        return groups;
+    };
+
+    const openChatFromEditorHistory = id => {
+        closeEditorHistory();
+        const chat = chats.find(item => item.id === id);
+        if (!chat) return;
+        if (document.body.classList.contains('is-editor-with-chat')) {
+            if (currentId && currentId !== id) captureCurrent();
+            currentId = chat.id;
+            window.SpacesListingChat?.restore?.(chat.snapshot);
+            setActiveChat(chat.id);
+            return;
+        }
+        openChat(id);
+    };
+
+    const renderEditorHistory = () => {
+        if (!historyMenu) return;
+        const groups = groupedEditorHistory();
+        const body = document.createElement('div');
+        body.className = 'spaces-editor-history-body';
+        if (!groups.length) {
+            const empty = document.createElement('p');
+            empty.className = 'spaces-editor-history-empty';
+            empty.textContent = 'No conversations yet';
+            body.append(empty);
+        } else {
+            groups.forEach(group => {
+                const heading = document.createElement('p');
+                heading.className = 'spaces-editor-history-heading';
+                heading.textContent = group.label;
+                body.append(heading);
+                group.items.forEach(chat => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'spaces-editor-history-item';
+                    if (chat.id === currentId) button.classList.add('is-current');
+                    const mark = document.createElement('span');
+                    mark.className = 'spaces-editor-history-check';
+                    mark.setAttribute('aria-hidden', 'true');
+                    mark.textContent = chat.id === currentId ? '✓' : '';
+                    const title = document.createElement('span');
+                    title.className = 'spaces-editor-history-title';
+                    title.textContent = chat.title || 'New chat';
+                    button.append(mark, title);
+                    button.addEventListener('click', event => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        openChatFromEditorHistory(chat.id);
+                    });
+                    body.append(button);
+                });
+            });
+        }
+        historyMenu.replaceChildren(body);
+    };
+
+    const toggleEditorHistory = () => {
+        if (!historyMenu || !historyButton) return;
+        closeChatMenu();
+        closeArtifactsMenu();
+        closeMenus();
+        const willOpen = historyMenu.hidden;
+        if (!willOpen) {
+            closeEditorHistory();
+            return;
+        }
+        renderEditorHistory();
+        historyMenu.hidden = false;
+        historyButton.setAttribute('aria-expanded', 'true');
+        historyWrap?.classList.add('is-active');
     };
 
     const closeArtifactPreview = () => {
@@ -523,32 +731,27 @@
             || Boolean(homeThread?.querySelector('.spaces-home-listing-card'));
         if (listingReady && snapshot?.listingStep !== 'furnish-ready') {
             const spaceTitle = snapshot?.listingSpaceTitle || snapshot?.contextSpaceTitle || '';
+            // Listing Figma: page icon badge shows "1" for the draft output.
             add({
                 id: 'listing-draft',
                 kind: 'listing',
                 title: spaceTitle ? `Listing: ${spaceTitle}` : 'Listing draft',
-                type: 'Listing',
-                previewUrl: '../listings-final/photos/villa.jpg'
+                type: 'Floor plan',
+                previewUrl: (window.location.pathname || '').includes('/spaces-chat-ai/')
+                    ? '/spaces-chat-ai/listings-final/photos/villa.jpg'
+                    : '/listings-final/photos/villa.jpg'
             });
-            const include = snapshot?.listingInclude || [];
-            if (include.includes('floor-plan')) {
+            // Keep badge at "1" — ignore stale floor-plan/tour leftovers from older sessions.
+            (window.SpacesHomeComposer?.getAttachments?.() || []).forEach(file => {
                 add({
-                    id: 'listing-floor-plan',
+                    id: `file-${file.id}`,
                     kind: 'file',
-                    title: 'Floor plan',
-                    type: 'Floor plan',
-                    previewUrl: './assets/images/spaces-v2/inside-section-file.webp'
+                    title: file.title || 'File',
+                    type: file.type || 'File',
+                    previewUrl: file.previewUrl || ''
                 });
-            }
-            if (include.includes('tour')) {
-                add({
-                    id: 'listing-tour',
-                    kind: 'file',
-                    title: 'Home tour',
-                    type: '360° walkthrough',
-                    previewUrl: './assets/images/spaces-v2/collection-preview.png'
-                });
-            }
+            });
+            return items;
         }
 
         if (snapshot?.listingStep === 'furnish-ready' || homeThread?.querySelector('.spaces-home-plan-card')) {
@@ -620,51 +823,131 @@
         const items = collectArtifacts();
         persistArtifacts(items);
         if (artifactsRoot) artifactsRoot.hidden = false;
+
+        const isUpload = item => item.kind === 'file' && String(item.id || '').startsWith('file-');
+        const outputs = items.filter(item => !isUpload(item));
+        const uploads = items.filter(isUpload);
+        const empty = outputs.length === 0 && uploads.length === 0;
+
         if (artifactsCount) {
-            artifactsCount.textContent = String(items.length);
-            artifactsCount.hidden = items.length === 0;
+            artifactsCount.textContent = String(outputs.length || uploads.length);
+            artifactsCount.hidden = empty;
         }
-        artifactsButton.setAttribute('aria-label', items.length
-            ? `Outputs, ${items.length}`
-            : 'Outputs');
-        if (!items.length) {
+
+        artifactsButton.classList.toggle('is-empty', empty);
+        artifactsButton.classList.remove('is-locked');
+        artifactsButton.toggleAttribute('disabled', empty);
+        artifactsButton.setAttribute('aria-disabled', empty ? 'true' : 'false');
+        artifactsButton.setAttribute('aria-label', empty
+            ? 'Outputs, none yet'
+            : `Outputs, ${outputs.length || items.length}`);
+
+        if (empty) {
             artifactsMenu.replaceChildren();
             closeArtifactsMenu();
             return;
         }
-        const heading = document.createElement('p');
-        heading.className = 'spaces-home-chat-artifacts-heading';
-        heading.textContent = 'Outputs';
-        artifactsMenu.replaceChildren(heading, ...items.map(item => {
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.setAttribute('role', 'menuitem');
-            button.className = 'spaces-home-chat-artifacts-item';
-            const thumb = document.createElement('span');
-            thumb.className = 'spaces-home-chat-artifacts-thumb';
+
+        const header = document.createElement('div');
+        header.className = 'spaces-home-chat-artifacts-panel-header';
+        const title = document.createElement('p');
+        title.className = 'spaces-home-chat-artifacts-panel-title';
+        title.textContent = 'Outputs';
+        const closeBtn = document.createElement('button');
+        closeBtn.type = 'button';
+        closeBtn.className = 'spaces-home-chat-artifacts-panel-close';
+        closeBtn.setAttribute('aria-label', 'Close');
+        closeBtn.innerHTML = '<img src="./assets/images/spaces-v2/centered-chat/close-x.svg?v=1" width="20" height="20" alt="" aria-hidden="true">';
+        closeBtn.addEventListener('pointerdown', event => {
+            event.preventDefault();
+            event.stopPropagation();
+            closeArtifactsMenu();
+        });
+        closeBtn.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+            closeArtifactsMenu();
+        });
+        header.append(title, closeBtn);
+
+        const body = document.createElement('div');
+        body.className = 'spaces-home-chat-artifacts-panel-body';
+
+        outputs.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'spaces-home-chat-artifacts-card';
+            const media = document.createElement('div');
+            media.className = 'spaces-home-chat-artifacts-card-media';
             if (item.previewUrl) {
                 const image = document.createElement('img');
                 image.src = item.previewUrl;
                 image.alt = '';
-                thumb.append(image);
+                media.append(image);
             }
-            const copy = document.createElement('span');
-            copy.className = 'spaces-home-chat-artifacts-copy';
-            const title = document.createElement('span');
-            title.className = 'spaces-home-chat-artifacts-title';
-            title.textContent = item.title;
-            const meta = document.createElement('span');
-            meta.className = 'spaces-home-chat-artifacts-meta';
-            meta.textContent = 'Made with AI';
-            copy.append(title, meta);
-            button.append(thumb, copy);
-            button.addEventListener('click', event => {
-                event.preventDefault();
-                event.stopPropagation();
-                openArtifact(item);
-            });
-            return button;
-        }));
+            const cardTitle = document.createElement('p');
+            cardTitle.className = 'spaces-home-chat-artifacts-card-title';
+            cardTitle.textContent = item.title || 'Artifact';
+            const cardMeta = document.createElement('p');
+            cardMeta.className = 'spaces-home-chat-artifacts-card-meta';
+            cardMeta.textContent = item.type || 'Artifact';
+            card.append(media, cardTitle, cardMeta);
+            body.append(card);
+        });
+
+        const sources = document.createElement('div');
+        sources.className = 'spaces-home-chat-artifacts-sources';
+        const sourcesHead = document.createElement('div');
+        sourcesHead.className = 'spaces-home-chat-artifacts-sources-head';
+        const sourcesLabel = document.createElement('span');
+        sourcesLabel.className = 'spaces-home-chat-artifacts-sources-label';
+        sourcesLabel.textContent = 'Sources';
+        const sourcesAdd = document.createElement('button');
+        sourcesAdd.type = 'button';
+        sourcesAdd.className = 'spaces-home-chat-artifacts-sources-add';
+        sourcesAdd.setAttribute('aria-label', 'Add source');
+        sourcesAdd.title = 'Add source';
+        sourcesAdd.innerHTML = '<img src="./assets/images/spaces-v2/centered-chat/plus-add.svg" width="20" height="20" alt="" aria-hidden="true">';
+        sourcesAdd.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+            // Visual only for now — sources picker not wired.
+        });
+        sourcesHead.append(sourcesLabel, sourcesAdd);
+        sources.append(sourcesHead);
+
+        if (uploads.length) {
+            const sessionList = document.createElement('div');
+            sessionList.className = 'spaces-home-chat-artifacts-session-list';
+            const first = uploads[0];
+            const extra = uploads.length - 1;
+            const row = document.createElement('div');
+            row.className = 'spaces-home-chat-artifacts-session-row';
+            const icon = document.createElement('img');
+            icon.className = 'spaces-home-chat-artifacts-session-icon';
+            icon.src = './assets/images/spaces-v2/home-composer/attach.svg';
+            icon.width = 20;
+            icon.height = 20;
+            icon.alt = '';
+            const label = document.createElement('span');
+            label.className = 'spaces-home-chat-artifacts-session-label';
+            label.textContent = 'Uploads';
+            const name = document.createElement('span');
+            name.className = 'spaces-home-chat-artifacts-session-name';
+            name.textContent = first.title || 'File';
+            row.append(icon, label, name);
+            if (extra > 0) {
+                const more = document.createElement('span');
+                more.className = 'spaces-home-chat-artifacts-session-more';
+                more.textContent = `+${extra}`;
+                row.append(more);
+            }
+            sessionList.append(row);
+            sources.append(sessionList);
+        }
+
+        body.append(sources);
+        artifactsMenu.replaceChildren(header, body);
+        artifactsMenu.classList.add('is-preview-panel');
     };
 
     const isCenteredChat = () => document.querySelector('[data-home-page]')?.classList.contains('is-centered-chat');
@@ -723,7 +1006,9 @@
     const syncChatHeader = () => {
         if (!chatTitleNode) return;
         const chat = chats.find(item => item.id === currentId);
-        if (chat?.title) {
+        if (document.body.classList.contains('is-floor-plan-with-chat')) {
+            chatTitleNode.textContent = 'New chat';
+        } else if (chat?.title) {
             chatTitleNode.textContent = chat.title;
         } else {
             const fromThread = document.querySelector('[data-home-thread] .spaces-home-message.is-user p')?.textContent?.trim();
@@ -1001,12 +1286,16 @@
                 allButton.removeAttribute('aria-current');
             }
             list.replaceChildren();
+            section.classList.remove('is-space-filter-empty');
+            if (sidebarEmpty) sidebarEmpty.hidden = true;
+            syncSidebarEmpty();
             renderAllPage();
             renderContinue();
             return;
         }
 
-        list.replaceChildren(...visibleChats().map(chat => {
+        const matchedChats = filteredChats();
+        const rows = matchedChats.slice(0, SIDEBAR_LIMIT).map(chat => {
             const item = document.createElement('li');
             item.className = 'spaces-ai-chats-row';
             if (chat.id === currentId) item.classList.add('is-active');
@@ -1036,7 +1325,9 @@
             item.append(button);
             attachChatActions(item, chat);
             return item;
-        }));
+        });
+        list.replaceChildren(...rows);
+        syncSidebarEmpty();
 
         if (allButton) {
             const showAllChats = chats.length >= ALL_CHATS_MIN;
@@ -1053,16 +1344,30 @@
     };
 
     const renderAllPage = () => {
-        if (!pageList) return;
-        pageList.replaceChildren();
-        const visible = filteredChats();
-        if (pageEmpty) {
-            pageEmpty.hidden = visible.length > 0;
-            pageEmpty.textContent = chats.length === 0
+        renderChatGroupsInto(pageList, pageEmpty, { filtered: true });
+    };
+
+    const renderChatGroupsInto = (target, emptyNode, options = {}) => {
+        if (!target) return 0;
+        target.replaceChildren();
+        const source = options.filtered === false ? chats : filteredChats();
+        if (emptyNode) {
+            emptyNode.hidden = source.length > 0;
+            emptyNode.textContent = chats.length === 0
                 ? 'No chats yet.'
-                : 'No chats in this space.';
+                : (options.filtered === false ? 'No chats yet.' : 'No chats in this space.');
         }
-        chatsByDate().forEach(group => {
+        const groups = [];
+        source.forEach(chat => {
+            const label = formatChatDate(chat.updatedAt);
+            const last = groups[groups.length - 1];
+            if (last && last.label === label) {
+                last.items.push(chat);
+                return;
+            }
+            groups.push({ label, items: [chat] });
+        });
+        groups.forEach(group => {
             const section = document.createElement('section');
             section.className = 'spaces-ai-chats-page-group';
             const heading = document.createElement('h2');
@@ -1108,9 +1413,112 @@
                 rows.append(item);
             });
             section.append(heading, rows);
-            pageList.append(section);
+            target.append(section);
         });
+        return source.length;
     };
+
+    const formatModified = timestamp => {
+        const date = new Date(Number(timestamp) || Date.now());
+        if (Number.isNaN(date.getTime())) return '—';
+        const todayLabel = formatChatDate(timestamp);
+        if (todayLabel === 'Today') {
+            return new Intl.DateTimeFormat('en', { hour: 'numeric', minute: '2-digit' }).format(date);
+        }
+        if (todayLabel === 'Yesterday') return 'Yesterday';
+        return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+    };
+
+    const renderChatTableInto = (target, emptyNode, options = {}) => {
+        if (!target) return 0;
+        target.replaceChildren();
+        const filterId = options.spaceFilter ?? 'all';
+        const filterTitle = options.spaceTitle || '';
+        const source = chats.filter(chat => {
+            if (!filterId || filterId === 'all') return true;
+            const space = chatSpace(chat);
+            if (filterId === NONE_FILTER) return !space;
+            if (chatMatchesSpaceFilter(chat, filterId)) return true;
+            if (filterTitle && space?.title === filterTitle) return true;
+            if (String(filterId).startsWith('title:') && space?.title === String(filterId).slice(6)) return true;
+            return false;
+        });
+        if (emptyNode) {
+            emptyNode.hidden = source.length > 0;
+            emptyNode.textContent = filterId && filterId !== 'all'
+                ? 'No chats in this space.'
+                : 'No chats yet.';
+        }
+        if (!source.length) return 0;
+
+        const table = document.createElement('div');
+        table.className = 'spaces-recents-chats-table';
+        table.setAttribute('role', 'table');
+        table.setAttribute('aria-label', 'Recent chats');
+
+        const head = document.createElement('div');
+        head.className = 'spaces-recents-chats-row is-head';
+        head.setAttribute('role', 'row');
+        head.innerHTML = `
+            <span class="spaces-recents-chats-heading is-name" role="columnheader">Chat name</span>
+            <span class="spaces-recents-chats-heading is-space" role="columnheader">Space</span>
+            <span class="spaces-recents-chats-heading is-date" role="columnheader">Last activity</span>
+            <span class="spaces-recents-chats-heading is-actions" role="columnheader"><span class="visually-hidden">Actions</span></span>
+        `;
+        table.append(head);
+
+        const body = document.createElement('ul');
+        body.className = 'spaces-recents-chats-list';
+        body.setAttribute('role', 'rowgroup');
+
+        source.forEach(chat => {
+            const item = document.createElement('li');
+            const button = document.createElement('button');
+            const icon = document.createElement('img');
+            const copy = document.createElement('span');
+            const title = document.createElement('span');
+            const space = chatSpace(chat);
+            const spaceTitle = space?.title || '';
+            item.className = 'spaces-ai-chats-page-row spaces-recents-chats-row';
+            item.dataset.aiChatPage = chat.id;
+            item.setAttribute('role', 'row');
+            if (chat.id === openMenuId) item.classList.add('is-menu-open');
+            button.type = 'button';
+            button.className = 'spaces-ai-chats-page-item spaces-recents-chats-item';
+            button.dataset.aiChatItem = chat.id;
+            button.setAttribute('aria-label', spaceTitle ? `Open ${chat.title} in ${spaceTitle}` : `Open ${chat.title}`);
+            icon.src = bubbleIcon;
+            icon.width = 20;
+            icon.height = 20;
+            icon.alt = '';
+            icon.setAttribute('aria-hidden', 'true');
+            copy.className = 'spaces-ai-chats-page-item-copy spaces-recents-chats-name';
+            title.className = 'spaces-ai-chats-page-item-title';
+            title.textContent = chat.title || 'New chat';
+            copy.append(title);
+            const spaceCell = document.createElement('span');
+            spaceCell.className = 'spaces-recents-chats-space';
+            spaceCell.append(spaceBadge(space));
+            const meta = document.createElement('span');
+            meta.className = 'spaces-ai-chats-page-item-meta spaces-recents-chats-date';
+            meta.textContent = formatModified(chat.updatedAt);
+            button.append(icon, copy, spaceCell, meta);
+            button.addEventListener('click', event => {
+                event.preventDefault();
+                closeMenus();
+                openChat(chat.id);
+            });
+            item.append(button);
+            attachChatActions(item, chat);
+            body.append(item);
+        });
+
+        table.append(body);
+        target.append(table);
+        return source.length;
+    };
+
+    const renderListInto = (target, emptyNode, options) => renderChatTableInto(target, emptyNode, options);
 
     const applySnapshotMeta = (chat, snapshot) => {
         if (!chat || !snapshot) return;
@@ -1276,6 +1684,7 @@
         writeStore();
         render();
         setActiveChat(currentId);
+        renderArtifacts();
     };
 
     newButton?.addEventListener('click', event => {
@@ -1316,6 +1725,12 @@
     pageFilterMenu?.addEventListener('click', event => event.stopPropagation());
     sidebarFilterMenu?.addEventListener('click', event => event.stopPropagation());
 
+    historyButton?.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleEditorHistory();
+    });
+
     chatMenuButton?.addEventListener('click', event => {
         event.preventDefault();
         event.stopPropagation();
@@ -1340,11 +1755,12 @@
         closeChatMenu();
         if (!artifactsMenu) return;
         renderArtifacts();
-        if (!collectArtifacts().length) return;
+        if (artifactsButton.disabled || artifactsButton.classList.contains('is-empty')) return;
         const willOpen = artifactsMenu.hidden;
         if (willOpen) {
             artifactsMenu.hidden = false;
             artifactsButton.setAttribute('aria-expanded', 'true');
+            artifactsRoot?.classList.add('is-active');
             return;
         }
         closeArtifactsMenu();
@@ -1366,9 +1782,22 @@
     document.addEventListener('click', event => {
         if (!event.target.closest('.spaces-home-chat-header')) closeChatMenu();
         if (!event.target.closest('[data-home-chat-artifacts]')) closeArtifactsMenu();
+        if (!event.target.closest('[data-editor-chat-history-wrap]')) closeEditorHistory();
         if (event.target.closest('.spaces-ai-chats-row, .spaces-ai-chats-page-row, .spaces-ai-chats-page-filter-wrap, .spaces-ai-chats-heading-filter-wrap, .spaces-ai-chats-heading-filter-menu, .spaces-ai-chats-page-filter-menu')) return;
         closeMenus();
         closeSpaceFilterMenu();
+    });
+
+    // Close history on any outside pointer (chat body, editor chrome, etc.)
+    document.addEventListener('pointerdown', event => {
+        if (!historyMenu || historyMenu.hidden) return;
+        if (event.target.closest('[data-editor-chat-history-wrap]')) return;
+        closeEditorHistory();
+    }, true);
+
+    // Clicks inside the floor-plan iframe don't bubble — window blur fires instead.
+    window.addEventListener('blur', () => {
+        closeEditorHistory();
     });
 
     document.addEventListener('keydown', event => {
@@ -1377,6 +1806,7 @@
             closeChatMenu();
             closeArtifactsMenu();
             closeArtifactPreview();
+            closeEditorHistory();
             closeSpaceFilterMenu();
         }
         if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== 'n') return;
@@ -1401,24 +1831,22 @@
 
     document.addEventListener('spaces-account-profile-ready', event => {
         knownSpaces = event.detail?.account?.spaces || [];
-        if (isAllChatsPage()) renderAllPage();
+        applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: true });
         renderContinue();
-        applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: false });
     });
 
     if (window.SpacesAccountData?.load) {
         window.SpacesAccountData.load().then(account => {
             knownSpaces = account?.spaces || [];
-            if (isAllChatsPage()) renderAllPage();
+            applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: true });
             renderContinue();
-            applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: false });
         }).catch(() => {});
     }
 
     chats = readStore();
     pageSpaceFilter = readSpaceFilter();
-    render();
-    applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: false });
+    applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: true });
+    renderArtifacts();
 
     window.SpacesAiChats = {
         captureCurrent,
@@ -1430,6 +1858,10 @@
         markIdle,
         open: openChat,
         render,
-        renderAllPage
+        renderAllPage,
+        renderListInto,
+        toggleEditorHistory,
+        closeEditorHistory,
+        markFloorPlanContext
     };
 })();

@@ -81,10 +81,63 @@
 
     activeSurface = surfaces[0];
 
+    const TRY_PLACEHOLDERS = [
+        'Try “Turn the spare room into a home office”',
+        'Try “Make the kitchen feel bigger”',
+        'Try “Furnish the bedroom in Scandi style”',
+        'Try “Render the terrace at sunset”',
+        'Try “What’s the total floor area?”',
+        'Try “Find a sofa that fits this wall”'
+    ];
+    let tryPlaceholderIndex = 0;
+    let tryPlaceholderTimer = 0;
+
     const normalize = value => String(value || '').trim().toLowerCase();
 
     const forEachSurface = fn => {
         surfaces.forEach(surface => fn(surface));
+    };
+
+    const setTryPlaceholder = (surface, index, animate) => {
+        const node = surface?.placeholder?.querySelector('[data-home-composer-placeholder-rotate]');
+        if (!node) return;
+        const next = TRY_PLACEHOLDERS[index % TRY_PLACEHOLDERS.length];
+        if (!animate) {
+            node.textContent = next;
+            node.classList.remove('is-fading');
+            return;
+        }
+        node.classList.add('is-fading');
+        window.setTimeout(() => {
+            node.textContent = next;
+            node.classList.remove('is-fading');
+        }, 220);
+    };
+
+    const homeHasCenteredChat = () => Boolean(
+        document.querySelector('.spaces-home.is-centered-chat')
+    );
+
+    const startTryPlaceholderRotation = () => {
+        const rotating = surfaces.filter(surface =>
+            surface.placeholder?.querySelector('[data-home-composer-placeholder-rotate]')
+        );
+        if (!rotating.length) return;
+        rotating.forEach(surface => setTryPlaceholder(surface, tryPlaceholderIndex, false));
+        window.clearInterval(tryPlaceholderTimer);
+        tryPlaceholderTimer = window.setInterval(() => {
+            // Home chat mode uses a static placeholder — never rotate there.
+            if (homeHasCenteredChat()) return;
+            const active = rotating.filter(surface =>
+                !surface.placeholder?.hidden
+                && !surface.input.value.trim()
+                && !attachments.length
+                && !surface.form?.closest('.spaces-home.is-centered-chat')
+            );
+            if (!active.length) return;
+            tryPlaceholderIndex = (tryPlaceholderIndex + 1) % TRY_PLACEHOLDERS.length;
+            active.forEach(surface => setTryPlaceholder(surface, tryPlaceholderIndex, true));
+        }, 3200);
     };
 
     const syncPlaceholder = surface => {
@@ -567,12 +620,10 @@
         newLabel.textContent = 'New space';
         newSpace.append(newLabel);
 
+        // Prototype: looks active, but click does nothing yet.
         newSpace.addEventListener('click', event => {
             event.preventDefault();
             event.stopPropagation();
-            createNewSpace();
-            closeScopeMenu();
-            surface.input.focus();
         });
         nodes.push(newSpace);
 
@@ -832,6 +883,7 @@
     }
 
     forEachSurface(syncPlaceholder);
+    startTryPlaceholderRotation();
 
     if (home) {
         new MutationObserver(syncScopeLock).observe(home, { attributes: true, attributeFilter: ['class'] });

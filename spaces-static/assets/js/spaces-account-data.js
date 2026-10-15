@@ -178,14 +178,14 @@
     const withPresentation = (file, owner) => ({
         ...file,
         owner,
-        previewUrl: previewUrl(file.hash, file.type, file.previewNumber),
+        previewUrl: file.previewUrl || previewUrl(file.hash, file.type, file.previewNumber),
         updated: readableDate(file.udate || file.cdate)
     });
 
     const loadDemoAccount = (config = accountConfigs.many) => {
         const allSpaces = [
-            { id: 'demo-river-house', title: 'My Home', address: '120 River Road, Portland, OR', cdate: '2026-07-24 09:00:00', udate: '2026-07-24 09:00:00', active: true, initial: 'M', avatarColor: '#6BA6F5', previewUrl: './assets/images/spaces/card-image-1.webp' },
-            { id: 'demo-apartment', title: 'Apartment', address: '45 Green Street, New York, NY', cdate: '2026-07-23 12:00:00', udate: '2026-07-23 12:00:00', initial: 'A', avatarColor: '#ffb290', previewUrl: './assets/images/spaces-v2/collection-preview.png' },
+            { id: 'demo-river-house', title: 'My Home', address: '120 River Road, Portland, OR', cdate: '2026-09-24 09:00:00', udate: '2026-09-24 11:00:00', active: true, initial: 'M', avatarColor: '#6BA6F5', previewUrl: './assets/images/spaces/card-image-1.webp' },
+            { id: 'demo-apartment', title: 'Apartment', address: '45 Green Street, New York, NY', cdate: '2026-09-23 12:00:00', udate: '2026-09-23 12:00:00', initial: 'A', avatarColor: '#ffb290', previewUrl: './assets/images/spaces-v2/collection-preview.png' },
             { id: 'demo-white-house', title: 'The White House', address: '1600 Pennsylvania Avenue, Washington, DC', cdate: '2026-07-22 12:00:00', udate: '2026-07-22 12:00:00', initial: 'T', avatarColor: '#dcb4f8', previewUrl: './assets/images/spaces-v2/inside-section-file.webp' },
             { id: 'demo-smith-residence', title: 'Smith Residence', address: '8 Maple Avenue, Austin, TX', cdate: '2026-07-21 12:00:00', udate: '2026-07-21 12:00:00', initial: 'S', avatarColor: '#fedc69', previewUrl: './assets/images/spaces/card-image-1.webp' },
             { id: 'demo-country-cottage', title: 'Country Cottage', address: '71 Meadow Lane, Aspen, CO', cdate: '2026-07-20 12:00:00', udate: '2026-07-20 12:00:00', initial: 'C', avatarColor: '#dedede', previewUrl: './assets/images/spaces-v2/collection-preview.png' },
@@ -199,10 +199,10 @@
         const spaces = allSpaces.slice(0, spaceCount);
         const spaceIds = new Set(spaces.map(space => String(space.id)));
         const files = [
-            { id: 'demo-river-plan', type: 'Floor Plans', title: 'River house floor plan', spaceId: 'demo-river-house', folderId: '0', cdate: '2026-07-24 09:30:00', udate: '2026-07-24 09:30:00', previewUrl: './assets/images/spaces-v2/inside-section-file.webp', generatedWithAi: true },
-            { id: 'demo-river-render', type: 'Renders', title: 'Living room render', projectTitle: 'River house floor plan', resolution: '4K', spaceId: 'demo-river-house', folderId: '0', cdate: '2026-07-24 09:20:00', udate: '2026-07-24 09:20:00', previewUrl: './assets/images/spaces/card-image-1.webp' },
-            { id: 'demo-river-doc', type: 'Documents', title: 'River house renovation notes', spaceId: 'demo-river-house', folderId: 'demo-documents', cdate: '2026-07-24 08:45:00', udate: '2026-07-24 08:45:00', previewUrl: '' },
-            { id: 'demo-apartment-plan', type: 'Floor Plans', title: 'Apartment layout', spaceId: 'demo-apartment', folderId: '0', cdate: '2026-07-23 16:10:00', udate: '2026-07-23 16:10:00', previewUrl: './assets/images/spaces-v2/collection-preview.png' },
+            { id: 'demo-river-plan', type: 'Floor Plans', title: 'River house floor plan', spaceId: 'demo-river-house', folderId: '0', cdate: '2026-09-24 09:30:00', udate: '2026-09-24 10:30:00', previewUrl: './assets/images/spaces-v2/inside-section-file.webp', generatedWithAi: true },
+            { id: 'demo-river-render', type: 'Renders', title: 'Living room render', projectTitle: 'River house floor plan', resolution: '4K', spaceId: 'demo-river-house', folderId: '0', cdate: '2026-09-24 09:20:00', udate: '2026-09-24 09:20:00', previewUrl: './assets/images/spaces/card-image-1.webp' },
+            { id: 'demo-river-doc', type: 'Documents', title: 'River house renovation notes', spaceId: 'demo-river-house', folderId: 'demo-documents', cdate: '2026-09-23 08:45:00', udate: '2026-09-23 08:45:00', previewUrl: '' },
+            { id: 'demo-apartment-plan', type: 'Floor Plans', title: 'Apartment layout', spaceId: 'demo-apartment', folderId: '0', cdate: '2026-09-23 16:10:00', udate: '2026-09-23 16:10:00', previewUrl: './assets/images/spaces-v2/collection-preview.png' },
             { id: 'demo-apartment-render', type: 'Renders', title: 'Apartment kitchen render', projectTitle: 'Apartment layout', resolution: 'FHD', spaceId: 'demo-apartment', folderId: '0', cdate: '2026-07-23 15:40:00', udate: '2026-07-23 15:40:00', previewUrl: './assets/images/spaces/card-image-1.webp' },
             { id: 'demo-white-plan', type: 'Floor Plans', title: 'White House concept', spaceId: 'demo-white-house', folderId: '0', cdate: '2026-07-22 14:15:00', udate: '2026-07-22 14:15:00', previewUrl: './assets/images/spaces-v2/inside-section-file.webp' },
             { id: 'demo-smith-plan', type: 'Floor Plans', title: 'Smith Residence plan', spaceId: 'demo-smith-residence', folderId: '0', cdate: '2026-07-21 10:30:00', udate: '2026-07-21 10:30:00', previewUrl: './assets/images/spaces-v2/collection-preview.png' },

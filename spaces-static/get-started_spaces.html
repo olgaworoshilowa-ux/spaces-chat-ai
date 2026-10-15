@@ -10,13 +10,19 @@
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="theme-color" content="#ffffff">
         <link rel="shortcut icon" href="./assets/images/favicon.ico?ux=1.0.0" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
         
             <link rel="stylesheet" href="./assets/css/tokens.css">
             <link rel="stylesheet" href="./assets/css/core.css">
     <link rel="stylesheet" href="./assets/css/tool.css">
     <link rel="stylesheet" href="./assets/css/spaces.css">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=centered-chat-figma-1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=ai-chats-empty-2">
 
         <title>Get Started Spaces</title>
 
@@ -53,72 +59,102 @@
         <div class="header-search-control" data-header-search-control>
             <label class="header-search">
                 <img src="./assets/images/sidebar/layout-aa/search.svg" alt="" aria-hidden="true">
-                <input type="search" data-header-search aria-label="Search everything" placeholder="Search everything" aria-controls="header-search-popover" aria-expanded="false" autocomplete="off">
+                <input type="search" data-header-search aria-label="Search anything or ask AI" placeholder="Search anything or ask AI" aria-controls="header-search-popover" aria-expanded="false" aria-autocomplete="list" aria-activedescendant="" autocomplete="off" spellcheck="false">
+                <button type="button" class="spaces-header-search-clear" data-header-search-clear hidden aria-label="Clear search">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                        <path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <span class="spaces-header-search-hotkey spaces-ai-chats-shortcut" data-header-search-hotkey aria-hidden="true"><span>⌘</span> K</span>
             </label>
-            <section id="header-search-popover" class="spaces-header-search-popover" data-header-search-popover aria-label="Search suggestions" hidden>
+            <section id="header-search-popover" class="spaces-header-search-popover" data-header-search-popover aria-label="Search" hidden>
                 <div class="spaces-header-search-copilot" data-header-search-copilot>
-                    <button type="button" class="spaces-header-search-ask" data-header-search-ask hidden>
+                    <button type="button" class="spaces-header-search-ask" id="header-search-ask" data-header-search-ask hidden>
                         <span class="spaces-header-search-ask-icon" aria-hidden="true">
-                            <img src="./assets/images/spaces-v2/home-composer/sparkle.svg" width="16" height="16" alt="">
+                            <img src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg" width="16" height="16" alt="">
                         </span>
-                        <span data-header-search-ask-label>Ask Copilot</span>
+                        <span class="spaces-header-search-ask-copy">
+                            <span data-header-search-ask-label>Ask Copilot</span>
+                            <span class="spaces-header-search-ask-hint" data-header-search-ask-hint aria-label="Press Enter">
+                                <img src="./assets/images/spaces-v2/enter.svg" width="14" height="14" alt="" aria-hidden="true">
+                            </span>
+                        </span>
                     </button>
-                    <p class="spaces-header-search-copilot-heading" data-header-search-copilot-heading>Ask Copilot</p>
-                    <ul class="spaces-header-search-suggestions" role="list" data-header-search-suggestions>
+                    <p class="spaces-header-search-section-label" data-header-search-copilot-heading>Ask Copilot</p>
+                    <ul class="spaces-header-search-suggestions" role="listbox" data-header-search-suggestions>
                         <li data-personalization-home-owner-only>
                             <button type="button" class="spaces-header-search-suggestion" data-header-search-suggestion="Create a floor plan from my image">
-                                <span class="spaces-header-search-suggestion-icon is-lilac">
-                                    <img src="./assets/images/spaces-v2/home-composer/floor-plan.svg" width="16" height="16" alt="" aria-hidden="true">
+                                <span class="spaces-header-search-suggestion-icon" aria-hidden="true">
+                                    <img src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg" width="16" height="16" alt="">
                                 </span>
                                 <span>Create a floor plan from my image</span>
                             </button>
                         </li>
                         <li data-personalization-home-owner-only>
                             <button type="button" class="spaces-header-search-suggestion" data-header-search-suggestion="Furnish the bedroom in the New Project 4">
-                                <span class="spaces-header-search-suggestion-icon is-orange">
-                                    <img src="./assets/images/spaces-v2/home-composer/sofa.svg" width="16" height="16" alt="" aria-hidden="true">
+                                <span class="spaces-header-search-suggestion-icon" aria-hidden="true">
+                                    <img src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg" width="16" height="16" alt="">
                                 </span>
                                 <span>Furnish the bedroom in the New Project 4</span>
                             </button>
                         </li>
-                        <li data-personalization-home-owner-only>
+                        <li data-personalization-home-owner-only hidden data-header-search-suggestion-extra>
                             <button type="button" class="spaces-header-search-suggestion" data-header-search-suggestion="Check the floor plans without lightning">
-                                <span class="spaces-header-search-suggestion-icon is-gray">
-                                    <img src="./assets/images/spaces-v2/home-composer/lamp.svg" width="16" height="16" alt="" aria-hidden="true">
+                                <span class="spaces-header-search-suggestion-icon" aria-hidden="true">
+                                    <img src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg" width="16" height="16" alt="">
                                 </span>
                                 <span>Check the floor plans without lightning</span>
                             </button>
                         </li>
                         <li data-personalization-realtor-only>
                             <button type="button" class="spaces-header-search-suggestion" data-header-search-suggestion="Turn this home into a listing">
-                                <span class="spaces-header-search-suggestion-icon is-lilac">
-                                    <img src="./assets/images/spaces-v2/home-composer/floor-plan.svg" width="16" height="16" alt="" aria-hidden="true">
+                                <span class="spaces-header-search-suggestion-icon" aria-hidden="true">
+                                    <img src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg" width="16" height="16" alt="">
                                 </span>
                                 <span>Turn this home into a listing</span>
                             </button>
                         </li>
                         <li data-personalization-realtor-only>
                             <button type="button" class="spaces-header-search-suggestion" data-header-search-suggestion="Stage the living room for buyers">
-                                <span class="spaces-header-search-suggestion-icon is-orange">
-                                    <img src="./assets/images/spaces-v2/home-composer/sofa.svg" width="16" height="16" alt="" aria-hidden="true">
+                                <span class="spaces-header-search-suggestion-icon" aria-hidden="true">
+                                    <img src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg" width="16" height="16" alt="">
                                 </span>
                                 <span>Stage the living room for buyers</span>
                             </button>
                         </li>
-                        <li data-personalization-realtor-only>
+                        <li data-personalization-realtor-only hidden data-header-search-suggestion-extra>
                             <button type="button" class="spaces-header-search-suggestion" data-header-search-suggestion="Create a home tour">
-                                <span class="spaces-header-search-suggestion-icon is-gray">
-                                    <img src="./assets/images/spaces-v2/home-composer/lamp.svg" width="16" height="16" alt="" aria-hidden="true">
+                                <span class="spaces-header-search-suggestion-icon" aria-hidden="true">
+                                    <img src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg" width="16" height="16" alt="">
                                 </span>
                                 <span>Create a home tour</span>
                             </button>
                         </li>
                     </ul>
                 </div>
-                <div class="spaces-header-search-categories" data-header-search-categories hidden></div>
-                <div class="spaces-header-search-results" data-header-search-results role="list"></div>
-                <p class="spaces-header-search-empty" data-header-search-empty hidden>No files found.</p>
-                <button type="button" class="spaces-header-search-all" data-header-search-all hidden>All search results</button>
+                <div class="spaces-header-search-recent" data-header-search-recent>
+                    <p class="spaces-header-search-section-label" data-header-search-recent-heading>Last opened</p>
+                    <div class="spaces-header-search-recent-list" data-header-search-recent-list role="listbox"></div>
+                </div>
+                <div class="spaces-header-search-files" data-header-search-files hidden>
+                    <div class="spaces-header-search-files-head">
+                        <p class="spaces-header-search-section-label" data-header-search-files-heading>Files</p>
+                        <div class="spaces-header-search-categories" data-header-search-categories hidden></div>
+                    </div>
+                    <div class="spaces-header-search-results" data-header-search-results role="listbox"></div>
+                    <div class="spaces-header-search-empty" data-header-search-empty hidden>
+                        <img class="spaces-header-search-empty-icon" src="./assets/images/spaces-v2/search-nothing-found.png?v=empty-icon-2" width="48" height="48" alt="" aria-hidden="true">
+                        <div class="spaces-header-search-empty-copy">
+                            <p class="spaces-header-search-empty-title">Nothing found</p>
+                            <p class="spaces-header-search-empty-subtitle">Try searching for something else</p>
+                        </div>
+                    </div>
+                </div>
+                <footer class="spaces-header-search-footer" data-header-search-footer hidden>
+                    <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+                    <span><kbd>↵</kbd> ask or open</span>
+                    <span><kbd>esc</kbd> close</span>
+                </footer>
             </section>
         </div>
     </div>
@@ -191,9 +227,11 @@
                     <div role="group" aria-label="AI">
                         <button type="button" data-personalization-option="home-owner" aria-pressed="true">Home owner</button>
                         <button type="button" data-personalization-option="realtor" aria-pressed="false">Realtor</button>
+                        <button type="button" data-personalization-option="interior-designer" aria-pressed="false">Interior designer</button>
+                        <button type="button" data-personalization-option="contractor" aria-pressed="false">Contractor</button>
                     </div>
                 </div>
-                <div class="spaces-profile-sidebar-variants">
+                <div class="spaces-profile-sidebar-variants" hidden data-chat-ui-variants>
                     <p>Chat UI</p>
                     <div role="group" aria-label="Chat UI">
                         <button type="button" data-chat-ui-option="option2" aria-pressed="true">Option 1</button>
@@ -203,12 +241,13 @@
                 <div class="spaces-profile-sidebar-variants">
                     <p>Chat placement</p>
                     <div role="group" aria-label="Chat placement">
-                        <button type="button" data-new-chat-placement-option data-new-chat-placement="option1" aria-pressed="true">Off</button>
+                        <button type="button" data-new-chat-placement-option data-new-chat-placement="option1" aria-pressed="false" hidden>Off</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option2" aria-pressed="false" hidden>Option 2</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option3" aria-pressed="false" hidden>Option 3</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option4" aria-pressed="false" hidden>Option 4</button>
-                        <button type="button" data-new-chat-placement-option data-new-chat-placement="option5" aria-pressed="false">Option 5</button>
+                        <button type="button" data-new-chat-placement-option data-new-chat-placement="option5" aria-pressed="true">Option 5</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option5-3" aria-pressed="false">Option 5.3</button>
+                        <button type="button" data-new-chat-placement-option data-new-chat-placement="option5-4" aria-pressed="false">Option 5.4</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option5-1" aria-pressed="false" hidden>Option 5.1</button>
                         <button type="button" data-new-chat-placement-option data-new-chat-placement="option5-2" aria-pressed="false" hidden>Option 5.2</button>
                     </div>
@@ -219,9 +258,9 @@
                     <p class="spaces-profile-option4-hint" data-option5-placement-hint>
                         <button type="button" data-inline-copilot-customize>Customize suggestions</button>
                     </p>
-                    <p class="spaces-profile-option4-hint" data-option53-placement-hint>
-                        Option 5.3: Spaces Home with a gray outline sparkle (not the listing editor chat).
-                        <button type="button" data-inline-copilot-customize>Customize suggestions</button>
+                    <p class="spaces-profile-option4-hint" data-option53-placement-hint hidden></p>
+                    <p class="spaces-profile-option4-hint" data-option54-placement-hint>
+                        Option 5.4: Space page — tools under chat, tighter header grouping.
                     </p>
                     <p class="spaces-profile-option4-hint" data-option51-placement-hint>
                         Option 5.1: My Home and Copilot each sit on their own white card.
@@ -233,10 +272,24 @@
                     </p>
                 </div>
                 <div class="spaces-profile-sidebar-variants">
+                    <p>Role placement</p>
+                    <div role="group" aria-label="Role placement">
+                        <button type="button" data-role-placement-option data-role-placement="option1" aria-pressed="true">Option 1</button>
+                        <button type="button" data-role-placement-option data-role-placement="option2" aria-pressed="false">Option 2</button>
+                    </div>
+                </div>
+                <div class="spaces-profile-sidebar-variants">
                     <p>New chat placement</p>
                     <div role="group" aria-label="New chat placement">
                         <button type="button" data-new-chat-entry-option data-new-chat-entry="separate" aria-pressed="true">Separate</button>
                         <button type="button" data-new-chat-entry-option data-new-chat-entry="combined" aria-pressed="false">Combined</button>
+                    </div>
+                </div>
+                <div class="spaces-profile-sidebar-variants">
+                    <p>Turn on onboarding</p>
+                    <div role="group" aria-label="Turn on onboarding">
+                        <button type="button" data-onboarding-option="on" aria-pressed="false">On</button>
+                        <button type="button" data-onboarding-option="off" aria-pressed="true">Off</button>
                     </div>
                 </div>
             </div>
@@ -328,52 +381,71 @@
         </section>
         </div>
         </div>
+                <div class="header-account-cluster" data-header-credits-wrap>
                 <div class="header-item header-item-user header-item-dropdown" data-header-dropdown>
-            <button type="button" class="header-button" aria-label="Profile" aria-expanded="false" data-header-dropdown-trigger>
+            <button type="button" class="header-account-pill" aria-label="Profile, 50 credits left" aria-expanded="false" data-header-dropdown-trigger data-header-credits>
+                <img class="header-account-pill-spark" src="./assets/images/spaces-v2/profile-menu/credits-spark.svg" width="20" height="20" alt="" aria-hidden="true">
+                <span class="header-account-pill-credits" data-header-credits-count>50</span>
                 <span class="header-avatar-letter" aria-hidden="true">D</span>
-                <span class="header-spaces-username-badge">Free</span>
             </button>
-            <span class="tooltip">Profile</span>
             <div class="header-main-dropdown-wrapper grouped-dropdown-wrapper spaces-profile-menu">
                 <div class="header-main-dropdown spaces-profile-menu-panel" role="menu" aria-label="Profile menu">
-                    <div class="spaces-profile-menu-group">
-                        <a href="" class="spaces-profile-menu-item" role="menuitem">
-                            <img src="./assets/images/spaces-v2/profile-menu/my-profile.svg" width="24" height="24" alt="" aria-hidden="true">
-                            <span>My profile</span>
+                    <div class="spaces-profile-menu-identity">
+                        <span class="spaces-profile-menu-identity-avatar" aria-hidden="true">D</span>
+                        <div class="spaces-profile-menu-identity-copy">
+                            <span class="spaces-profile-menu-identity-name">Demo</span>
+                            <span class="spaces-profile-menu-identity-plan">Free plan</span>
+                        </div>
+                    </div>
+                    <div class="spaces-profile-menu-billing">
+                        <a href="" class="spaces-profile-menu-credits" role="menuitem" data-usage-modal-open>
+                            <span class="spaces-profile-menu-credits-row">
+                                <span class="spaces-profile-menu-credits-title">Credits</span>
+                                <span class="spaces-profile-menu-credits-meta">
+                                    <span data-profile-credits-count>50</span>
+                                    <img src="./assets/images/spaces-v2/profile-menu/chevron-right-figma.svg?v=figma1" width="16" height="16" alt="" aria-hidden="true">
+                                </span>
+                            </span>
+                            <span class="spaces-profile-menu-credits-bar" aria-hidden="true">
+                                <span style="width: 6px"></span>
+                            </span>
+                            <span class="spaces-profile-menu-credits-hint">One-time credit pack, it doesn’t renew</span>
                         </a>
-                        <a href="" class="spaces-profile-menu-item" role="menuitem">
-                            <img src="./assets/images/spaces-v2/profile-menu/subscription.svg" width="24" height="24" alt="" aria-hidden="true">
-                            <span>Subscription</span>
-                            <span class="spaces-profile-pro-badge is-free">Free</span>
+                        <div class="spaces-profile-menu-billing-divider" aria-hidden="true"></div>
+                        <a href="" class="spaces-profile-menu-premium" role="menuitem" data-upgrade-modal-open>
+                            <span class="spaces-profile-menu-premium-label">
+                                <img src="./assets/images/spaces-v2/profile-menu/crown-green.svg?v=figma1" width="24" height="24" alt="" aria-hidden="true">
+                                <span>Try Pro for free</span>
+                            </span>
+                            <span class="spaces-profile-menu-premium-upgrade">See plans</span>
                         </a>
                     </div>
-                    <div class="spaces-profile-menu-divider" role="separator"></div>
-                    <a href="" class="spaces-profile-menu-credits" role="menuitem">
-                        <div class="spaces-profile-menu-credits-row">
-                            <span class="spaces-profile-menu-credits-title">Credits</span>
-                            <span class="spaces-profile-menu-credits-meta">
-                                50 credits left
-                                <img src="./assets/images/spaces-v2/profile-menu/chevron-right.svg" width="16" height="16" alt="" aria-hidden="true">
-                            </span>
-                        </div>
-                        <div class="spaces-profile-menu-credits-bar" aria-hidden="true">
-                            <span style="width: 10%"></span>
-                        </div>
-                    </a>
-                    <div class="spaces-profile-menu-divider" role="separator"></div>
-                    <div class="spaces-profile-menu-group">
+                    <div class="spaces-profile-menu-group is-primary">
                         <a href="" class="spaces-profile-menu-item" role="menuitem">
-                            <img src="./assets/images/spaces-v2/profile-menu/settings.svg" width="24" height="24" alt="" aria-hidden="true">
-                            <span>Account Settings</span>
+                            <img src="./assets/images/spaces-v2/profile-menu/my-profile.svg?v=figma1" width="24" height="24" alt="" aria-hidden="true">
+                            <span>View profile</span>
                         </a>
                         <a href="" class="spaces-profile-menu-item" role="menuitem">
-                            <img src="./assets/images/spaces-v2/profile-menu/logout.svg" width="24" height="24" alt="" aria-hidden="true">
+                            <img src="./assets/images/spaces-v2/profile-menu/design-school.svg?v=figma1" width="24" height="24" alt="" aria-hidden="true">
+                            <span>Design school</span>
+                        </a>
+                    </div>
+                    <div class="spaces-profile-menu-group is-settings">
+                        <a href="" class="spaces-profile-menu-item" role="menuitem">
+                            <img src="./assets/images/spaces-v2/profile-menu/settings.svg?v=figma1" width="24" height="24" alt="" aria-hidden="true">
+                            <span>Account Settings</span>
+                        </a>
+                    </div>
+                    <div class="spaces-profile-menu-group is-signout">
+                        <a href="" class="spaces-profile-menu-item" role="menuitem">
+                            <img src="./assets/images/spaces-v2/profile-menu/logout.svg?v=figma1" width="24" height="24" alt="" aria-hidden="true">
                             <span>Log Out</span>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
+                </div>
     </div>
     </div>
 </header>
@@ -662,7 +734,7 @@
                 </button>
             </li>
             <li>
-                <button type="button" class="spaces-sidebar-item">
+                <button type="button" class="spaces-sidebar-item" data-recents-trigger>
                     <img src="./assets/images/sidebar/layout-aa/recents.svg" alt="" aria-hidden="true">
                     <span>Recents</span>
                 </button>
@@ -702,7 +774,7 @@
 
         <section class="spaces-ai-chats-section" data-ai-chats-section hidden>
             <div class="spaces-ai-chats-heading">
-                <h2 class="spaces-sidebar-section-title spaces-ai-chats-title">AI chats</h2>
+                <h2 class="spaces-sidebar-section-title spaces-ai-chats-title">Chats</h2>
                 <div class="spaces-ai-chats-heading-filter-wrap">
                     <button type="button" class="spaces-ai-chats-heading-filter" data-ai-chats-sidebar-filter aria-haspopup="listbox" aria-expanded="false" aria-controls="spaces-ai-chats-sidebar-filter-menu" aria-label="Filter chats by space">
                         <img src="./assets/images/sidebar/filter.svg" width="16" height="16" alt="" aria-hidden="true">
@@ -713,13 +785,14 @@
             <ul class="spaces-sidebar-primary" role="list" data-ai-chats-new-wrap hidden>
                 <li>
                     <button type="button" class="spaces-sidebar-item" data-ai-chats-new>
-                        <img src="./assets/images/sidebar/layout-aa/ai-chat-plus.svg" width="20" height="20" alt="" aria-hidden="true">
+                        <img src="./assets/images/sidebar/layout-aa/ai-chat-plus.svg?v=edit-1" width="20" height="20" alt="" aria-hidden="true">
                         <span>New chat</span>
                         <span class="spaces-ai-chats-shortcut"><span>⌘</span> N</span>
                     </button>
                 </li>
             </ul>
             <ul class="spaces-sidebar-primary spaces-ai-chats-list" role="list" data-ai-chats-list></ul>
+            <p class="spaces-ai-chats-empty" data-ai-chats-empty hidden>No chats in this space</p>
             <button type="button" class="spaces-sidebar-item spaces-ai-chats-all" data-ai-chats-all hidden>View all chats</button>
         </section>
 
@@ -936,6 +1009,11 @@
             <div class="spaces-main-content">
             <div class="spaces-info-wrap">
     <div class="spaces-share-block">
+                    <div class="spaces-info-avatars" data-option54-chrome hidden aria-hidden="true">
+                        <span style="background:#9B7BFF">D</span>
+                        <span style="background:#5B8CFF">A</span>
+                        <span style="background:#2A9AA4">K</span>
+                    </div>
                     <div class="spaces-share-dropdown-wrap">
                 <button type="button" class="spaces-button-share" aria-expanded="false">
                     <img src="./assets/images/spaces-v2/space-invite.svg" alt="" aria-hidden="true">
@@ -1095,6 +1173,9 @@
                     <button class="spaces-info-space-name">
                                     <span data-space-name>Untitled house</span>
                             </button>
+                    <button type="button" class="spaces-info-more" data-option54-chrome aria-label="Space actions" hidden>
+                        <img src="./assets/images/spaces-v2/centered-chat/more-h.svg" width="20" height="20" alt="" aria-hidden="true">
+                    </button>
             <div class="spaces-name-dropdown">
     <header>
         <label>
@@ -1212,7 +1293,10 @@
             
 
             <div class="spaces-option5-create" data-option5-create>
-                <p class="spaces-option52-tools-label" data-option52-tools-label>Or open a tool</p>
+                <button type="button" class="spaces-option52-tools-toggle" data-option52-tools-toggle aria-expanded="true" aria-controls="spaces-quick-actions-panel">
+                    <span class="spaces-option52-tools-label" data-option52-tools-label>Or do it manually</span>
+                    <img class="spaces-option52-tools-chevron" src="./assets/images/spaces-v2/list-chevron.svg" width="12" height="12" alt="" aria-hidden="true">
+                </button>
                 <section id="spaces-quick-actions-panel" class="get-started-panel spaces-quick-actions" aria-label="Create">
                 <button class="get-started-panel-button create"><img src="./assets/images/spaces-v2/action-create.svg" alt=""><span>Create</span></button>
                 <span class="spaces-quick-actions-divider" aria-hidden="true"></span>
@@ -1234,30 +1318,42 @@
                 <span class="visually-hidden" data-home-profile-name>Dora</span>
                 <header class="spaces-home-chat-header">
                     <div class="spaces-home-chat-header-start">
-                        <h2 id="spaces-home-chat-title" data-home-chat-title>New chat</h2>
+                        <button type="button" class="spaces-home-chat-header-title" data-home-chat-menu-button aria-label="Chat actions" aria-haspopup="menu" aria-expanded="false" aria-controls="spaces-home-chat-menu">
+                            <h2 id="spaces-home-chat-title" data-home-chat-title>New chat</h2>
+                            <img class="spaces-home-chat-header-chevron" src="./assets/images/spaces-v2/centered-chat/chevron-bottom.svg?v=header-pop-23744" width="24" height="24" alt="" aria-hidden="true">
+                        </button>
                         <div class="spaces-home-chat-header-space" data-home-chat-space hidden>
                             <span class="spaces-home-space-initial" data-home-chat-space-initial aria-hidden="true">M</span>
                             <span class="spaces-home-chat-header-space-name" data-home-chat-space-name>My Home</span>
                         </div>
+                        <div id="spaces-home-chat-menu" class="spaces-home-chat-header-menu-list" role="menu" hidden data-home-chat-menu></div>
                     </div>
                     <div class="spaces-home-chat-header-end">
+                        <button type="button" class="spaces-home-chat-header-tool" data-editor-chat-new aria-label="New chat" title="New chat">
+                            <img src="./assets/images/spaces-v2/centered-chat/plus-add.svg?v=header-pop-23744" width="24" height="24" alt="" aria-hidden="true">
+                        </button>
+                        <div class="spaces-editor-history-wrap" data-editor-chat-history-wrap>
+                            <button type="button" class="spaces-home-chat-header-tool" data-editor-chat-history aria-label="Chat history" title="Chat history" aria-haspopup="menu" aria-expanded="false" aria-controls="spaces-editor-history-menu">
+                                <img src="./assets/images/spaces-v2/centered-chat/history-figma.svg?v=header-pop-23744" width="24" height="24" alt="" aria-hidden="true">
+                            </button>
+                            <div id="spaces-editor-history-menu" class="spaces-editor-history" hidden data-editor-chat-history-menu></div>
+                        </div>
                         <div class="spaces-home-chat-artifacts" data-home-chat-artifacts>
                             <button type="button" class="spaces-home-chat-artifacts-button" data-home-chat-artifacts-button aria-label="Outputs" aria-haspopup="menu" aria-expanded="false" aria-controls="spaces-home-chat-artifacts-menu">
-                                <img class="spaces-home-chat-artifacts-icon" src="./assets/images/spaces-v2/centered-chat/page.svg" width="24" height="24" alt="" aria-hidden="true">
+                                <img class="spaces-home-chat-artifacts-icon" src="./assets/images/spaces-v2/centered-chat/page.svg?v=outputs-color-6d-1" width="24" height="24" alt="" aria-hidden="true">
                                 <span class="spaces-home-chat-artifacts-label">Outputs</span>
                                 <span class="spaces-home-chat-artifacts-count" data-home-chat-artifacts-count hidden></span>
                             </button>
                             <div id="spaces-home-chat-artifacts-menu" class="spaces-home-chat-artifacts-menu" role="menu" hidden data-home-chat-artifacts-menu></div>
                         </div>
-                        <button type="button" class="spaces-home-chat-header-more" data-home-chat-menu-button aria-label="Chat actions" aria-haspopup="menu" aria-expanded="false" aria-controls="spaces-home-chat-menu">
-                            <img src="./assets/images/spaces-v2/centered-chat/more-h.svg" width="24" height="24" alt="" aria-hidden="true">
+                        <button type="button" class="spaces-home-chat-header-tool is-collapse" data-editor-chat-collapse aria-label="Collapse chat" title="Collapse chat" hidden>
+                            <img src="./assets/images/spaces-v2/centered-chat/collapse-panel.svg?v=collapse-stroke-15" width="24" height="24" alt="" aria-hidden="true">
                         </button>
-                        <div id="spaces-home-chat-menu" class="spaces-home-chat-header-menu-list" role="menu" hidden data-home-chat-menu></div>
                     </div>
                 </header>
 
                 <div class="spaces-home-composer-hero">
-                    <img class="spaces-home-composer-mark" src="./assets/images/spaces-v2/home-composer/mark-sparkles.svg?v=2" width="56" height="56" alt="" aria-hidden="true" data-home-composer-mark>
+                    <img class="spaces-home-composer-mark" src="./assets/images/spaces-v2/home-composer/mark-sparkles-outline.svg?v=4" width="56" height="56" alt="" aria-hidden="true" data-home-composer-mark>
                     <h1 id="spaces-home-title">
                         <span data-chat-ui-option2-copy>What should we do<span data-home-option1-with> in <button type="button" class="spaces-home-title-space" data-home-title-space aria-haspopup="listbox" aria-expanded="false"><span data-home-option1-space-name>My Home</span></button></span>?</span>
                         <span data-chat-ui-option1-copy>What should we do<span data-home-option1-with> in <button type="button" class="spaces-home-title-space" data-home-title-space aria-haspopup="listbox" aria-expanded="false"><span data-home-option1-space-name>My Home</span></button></span>?</span>
@@ -1267,6 +1363,49 @@
                         </span>
                     </h1>
                     <div class="spaces-home-thread" data-home-thread hidden></div>
+                    <div class="spaces-listing-details" data-listing-details hidden>
+                        <button type="button" class="spaces-listing-details-toggle" data-listing-details-toggle aria-expanded="false">
+                            <span class="spaces-listing-details-thumb">
+                                <img alt="" data-listing-details-thumb src="../listings-final/photos/pool.jpg">
+                                <span class="spaces-listing-details-thumb-icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+                                </span>
+                            </span>
+                            <span class="spaces-listing-details-copy">
+                                <span class="spaces-listing-details-title">Listing details</span>
+                                <span class="spaces-listing-details-subtitle" data-listing-details-subtitle>Brief answers and draft card</span>
+                            </span>
+                            <span class="spaces-listing-details-chevron" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+                            </span>
+                        </button>
+                        <div class="spaces-listing-details-body" data-listing-details-body>
+                            <div class="listing-details-panel">
+                                <p class="listing-details-kicker">Collected for this draft</p>
+                                <ul class="listing-details-brief" data-listing-details-brief></ul>
+                                <div class="listing-details-divider"></div>
+                                <p class="listing-details-kicker">Draft listing</p>
+                                <article class="listing-details-card">
+                                    <div class="listing-details-card-media">
+                                        <figure class="is-hero"><img alt="" data-listing-details-photo="0" src="../listings-final/photos/villa.jpg"></figure>
+                                        <figure class="is-top"><img alt="" data-listing-details-photo="1" src="../listings-final/photos/facade.jpg"></figure>
+                                        <figure class="is-bottom"><img alt="" data-listing-details-photo="2" src="../listings-final/photos/kitchen.jpg"></figure>
+                                    </div>
+                                    <div class="listing-details-card-body">
+                                        <p class="listing-details-card-deal" data-listing-details-deal>For rent</p>
+                                        <h2 data-listing-details-heading>13 Abbey Road</h2>
+                                        <p class="listing-details-card-meta" data-listing-details-meta>13 Abbey Road, Dublin · $4,000</p>
+                                        <p class="listing-details-card-copy" data-listing-details-copy>A quiet, light-filled home — four bedrooms, a south garden, and a kitchen that actually gets used. The living room opens straight onto the terrace, so summer evenings don’t need a plan. Built in 2019, BER B2, and finished with the kind of detail you don’t have to explain to a buyer.</p>
+                                        <div class="listing-details-card-actions">
+                                            <button type="button" class="listing-details-card-btn" data-listing-details-edit>Edit</button>
+                                            <button type="button" class="listing-details-card-btn is-secondary" data-listing-details-preview>Preview</button>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="spaces-home-bottom-chrome" data-home-bottom-chrome>
                     <div class="spaces-home-widget-dock" data-home-widget-dock hidden></div>
 
                     <form class="spaces-home-composer" data-home-composer>
@@ -1277,9 +1416,10 @@
                             <label class="visually-hidden" for="spaces-home-composer-input">Ask Copilot</label>
                             <textarea id="spaces-home-composer-input" data-home-composer-input rows="1" maxlength="2000"></textarea>
                             <p class="spaces-home-composer-placeholder" data-home-composer-placeholder>
-                                <span data-chat-ui-option2-copy>Do anything<span data-home-option1-with hidden> in <span data-home-option1-space-name>My Home</span></span></span>
-                                <span data-chat-ui-option1-copy>Do anything<span data-home-option1-with hidden> in <span data-home-option1-space-name>My Home</span></span></span>
-                                <span class="spaces-home-composer-placeholder-centered" data-home-composer-placeholder-centered aria-hidden="true">
+                                <span class="spaces-home-composer-placeholder-rotate" data-home-composer-placeholder-rotate aria-hidden="true">Try &ldquo;Turn the spare room into a home office&rdquo;</span>
+                                <span data-chat-ui-option2-copy hidden>Do anything<span data-home-option1-with hidden> in <span data-home-option1-space-name>My Home</span></span></span>
+                                <span data-chat-ui-option1-copy hidden>Do anything<span data-home-option1-with hidden> in <span data-home-option1-space-name>My Home</span></span></span>
+                                <span class="spaces-home-composer-placeholder-centered" data-home-composer-placeholder-centered aria-hidden="true" hidden>
                                     Type <img class="spaces-home-composer-at" src="./assets/images/spaces-v2/centered-chat/at-sign.svg" width="14" height="14" alt="" aria-hidden="true"> to add any floor plan, image or file
                                 </span>
                             </p>
@@ -1345,8 +1485,38 @@
                             </div>
                         </div>
                     </form>
+                    </div>
 
-                    <div class="spaces-inline-copilot-chips" data-home-option4-chips hidden></div>
+                    <div class="spaces-home-chips-row" data-home-chips-row hidden>
+                    <div class="spaces-home-role-switch" data-home-role-switch hidden>
+                            <button
+                                type="button"
+                                class="spaces-home-role-switch-trigger"
+                                data-home-role-switch-trigger
+                                aria-haspopup="listbox"
+                                aria-expanded="false"
+                                aria-controls="spaces-home-role-switch-menu"
+                                aria-label="Ideas for home owner"
+                            >
+                                <span class="spaces-home-role-switch-prefix" data-home-role-switch-prefix>Ideas for</span>
+                                <span class="spaces-home-role-switch-role" data-home-role-switch-label>home owner</span>
+                            </button>
+                            <div
+                                id="spaces-home-role-switch-menu"
+                                class="spaces-home-role-switch-menu"
+                                role="listbox"
+                                aria-label="Suggestions for"
+                                hidden
+                                data-home-role-switch-menu
+                            >
+                                <button type="button" role="option" aria-selected="true" data-personalization-option="home-owner"><svg class="spaces-home-role-switch-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>home owner</span></button>
+                                <button type="button" role="option" aria-selected="false" data-personalization-option="realtor"><svg class="spaces-home-role-switch-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg><span>realtor</span></button>
+                                <button type="button" role="option" aria-selected="false" data-personalization-option="interior-designer"><svg class="spaces-home-role-switch-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg><span>interior designer</span></button>
+                                <button type="button" role="option" aria-selected="false" data-personalization-option="contractor"><svg class="spaces-home-role-switch-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M14 6a6 6 0 0 1 6 6v3"/><path d="M4 15v-3a6 6 0 0 1 6-6"/><rect x="2" y="15" width="20" height="4" rx="1"/></svg><span>contractor</span></button>
+                            </div>
+                    </div>
+                        <div class="spaces-inline-copilot-chips" data-home-option4-chips></div>
+                    </div>
 
                     <ul class="spaces-home-composer-suggestions" role="list">
                         <li data-personalization-home-owner-only>
@@ -1481,14 +1651,41 @@
 
             <section class="spaces-all-spaces" aria-labelledby="spaces-all-spaces-title" data-all-spaces-page hidden>
                 <header class="spaces-all-spaces-header">
-                    <h1 id="spaces-all-spaces-title" data-all-spaces-title>Spaces</h1>
-                    <button type="button" class="spaces-all-spaces-create" data-all-spaces-create>
-                        <img src="./assets/images/spaces-v2/all-spaces/create-plus.svg" width="24" height="24" alt="" aria-hidden="true">
-                        <span>Create</span>
-                    </button>
+                    <h1 id="spaces-all-spaces-title">Recents</h1>
+                    <p class="spaces-all-spaces-lead" data-all-spaces-lead>Files, chats or spaces you opened or visited</p>
                 </header>
-                <div class="spaces-all-spaces-grid" data-all-spaces-grid></div>
-                <p class="spaces-all-spaces-empty" data-all-spaces-empty hidden>No shared spaces yet.</p>
+                <div class="spaces-all-spaces-intro">
+                    <div class="spaces-all-spaces-toolbar">
+                        <div class="spaces-all-spaces-filters" role="group" aria-label="Filter recent items">
+                            <button type="button" class="spaces-all-spaces-chip is-active" data-all-spaces-chip="files" aria-pressed="true">Files</button>
+                            <button type="button" class="spaces-all-spaces-chip" data-all-spaces-chip="chats" aria-pressed="false">Chats</button>
+                            <button type="button" class="spaces-all-spaces-chip" data-all-spaces-chip="shared" aria-pressed="false">Shared with me</button>
+                        </div>
+                        <div class="spaces-all-spaces-toolbar-actions">
+                            <div class="spaces-all-spaces-space-filter-wrap" data-all-spaces-space-filter-wrap hidden>
+                                <button type="button" class="spaces-all-spaces-space-filter" data-all-spaces-space-filter aria-haspopup="listbox" aria-expanded="false" aria-controls="spaces-all-spaces-space-filter-menu" aria-label="Filter by space">
+                                    <span class="spaces-all-spaces-space-filter-icon" data-all-spaces-space-filter-icon>
+                                        <img src="./assets/images/spaces-v2/home-composer/space.svg" width="16" height="16" alt="" aria-hidden="true">
+                                    </span>
+                                    <span class="spaces-all-spaces-space-filter-label" data-all-spaces-space-filter-label>All spaces</span>
+                                    <img class="spaces-all-spaces-space-filter-chevron" src="./assets/images/spaces-v2/list-chevron.svg" width="16" height="16" alt="" aria-hidden="true">
+                                </button>
+                                <div id="spaces-all-spaces-space-filter-menu" class="spaces-home-composer-scope-menu spaces-all-spaces-space-filter-menu" role="listbox" aria-label="Filter by space" hidden data-all-spaces-space-filter-menu></div>
+                            </div>
+                            <button type="button" class="spaces-all-spaces-view" data-all-spaces-view aria-label="List view">
+                                <img src="./assets/images/spaces-v2/recents/ic-list.svg" width="24" height="24" alt="" aria-hidden="true">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="spaces-all-spaces-body" data-all-spaces-body></div>
+                <div class="spaces-all-spaces-empty" data-all-spaces-empty hidden>
+                    <img class="spaces-all-spaces-empty-illustration" data-all-spaces-empty-illustration src="./assets/images/spaces-v2/recents/empty-shared.svg" width="250" height="180" alt="" aria-hidden="true" hidden>
+                    <div class="spaces-all-spaces-empty-copy">
+                        <h2 class="spaces-all-spaces-empty-title" data-all-spaces-empty-title>Nothing shared yet</h2>
+                        <p class="spaces-all-spaces-empty-body" data-all-spaces-empty-body>When someone shares a file, project or space with you, it will appear here.</p>
+                    </div>
+                </div>
             </section>
 
             <section class="spaces-ai-chats-page" aria-labelledby="spaces-ai-chats-page-title" data-ai-chats-page hidden>
@@ -1517,10 +1714,18 @@
 
             <section class="spaces-listing-studio" aria-label="Listing editor" data-listing-studio hidden>
                 <iframe class="spaces-listing-studio-frame" title="Listing editor" data-listing-studio-frame src="about:blank"></iframe>
+                <button type="button" class="spaces-editor-chat-expand" data-editor-chat-expand hidden aria-label="Expand chat" title="Expand chat">
+                    <img src="./assets/images/spaces-v2/list-chevron.svg" width="16" height="16" alt="" aria-hidden="true">
+                    <span>Chat</span>
+                </button>
             </section>
 
             <section class="spaces-listing-studio spaces-floor-plan-studio" aria-label="Floor plan editor" data-floor-plan-studio hidden>
                 <iframe class="spaces-listing-studio-frame" title="Floor plan editor" data-floor-plan-studio-frame src="about:blank"></iframe>
+                <button type="button" class="spaces-editor-chat-expand" data-editor-chat-expand hidden aria-label="Expand chat" title="Expand chat">
+                    <img src="./assets/images/spaces-v2/list-chevron.svg" width="16" height="16" alt="" aria-hidden="true">
+                    <span>Chat</span>
+                </button>
             </section>
 
             <section class="spaces-search-results spaces-global-search-page" data-global-search-page aria-labelledby="spaces-global-search-title" hidden>
@@ -1541,7 +1746,8 @@
                                 <label class="visually-hidden" for="spaces-inline-copilot-collections">Ask Copilot</label>
                                 <textarea id="spaces-inline-copilot-collections" rows="1" maxlength="2000" data-inline-copilot-input autocomplete="off"></textarea>
                                 <p class="spaces-inline-copilot-placeholder" data-inline-copilot-placeholder>
-                                    <span data-inline-copilot-placeholder-default>Ask Copilot to create, change or add anything in <span data-inline-copilot-placeholder-space>My Home</span></span>
+                                    <span class="spaces-home-composer-placeholder-rotate" data-home-composer-placeholder-rotate aria-hidden="true">Try &ldquo;Turn the spare room into a home office&rdquo;</span>
+                                    <span data-inline-copilot-placeholder-default hidden>Ask Copilot to create, change or add anything in <span data-inline-copilot-placeholder-space>My Home</span></span>
                                     <span data-inline-copilot-placeholder-option5 hidden>
                                         Describe what to change in <span data-inline-copilot-placeholder-space>My Home</span> — or type
                                         <img class="spaces-inline-copilot-at" src="./assets/images/spaces-v2/inline-copilot/at-sign.svg" width="14" height="14" alt="@" aria-hidden="true">
@@ -1853,19 +2059,19 @@
                 <div class="spaces-grid" data-inside-grid>
                     <div class="space-section-item" data-inside-file-search="file name floor plan">
                         <a href="#"><img height="200" width="274" src="./assets/images/spaces-v2/inside-section-file.webp" alt=""><span class="loader"></span></a>
-                        <div><a href="#">File name</a><span>Today at 13:04</span><div class="spaces-item-dropdown"><button type="button" aria-label="More actions"><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-more"></use></svg></button><div><div><ul><li><button type="button" data-add-to-new-chat><svg viewBox="0 0 24 24" width="24" height="24" fill="#1AA73F" aria-hidden="true"><path fill="#1AA73F" d="M13.36 8.226c.266 0 .469.198.516.484.602 4.266 1.166 4.87 5.28 5.371.29.04.492.254.492.532s-.203.5-.492.533c-4.122.468-4.717 1.111-5.28 5.377-.047.278-.25.477-.516.477s-.477-.199-.524-.477c-.618-4.266-1.166-4.813-5.28-5.377-.29-.04-.484-.255-.485-.533 0-.278.203-.5.485-.532 4.122-.469 4.717-1.105 5.28-5.371.047-.286.25-.484.524-.484zM7.09 5.922c.172 0 .298.127.313.302.274 2.137.337 2.2 2.488 2.503.156.023.28.15.28.325 0 .175-.116.294-.28.326h-.008c-2.151.405-2.206.415-2.48 2.51a.31.31 0 01-.313.286c-.172 0-.305-.12-.32-.31-.25-2.09-.337-2.152-2.449-2.486C4.118 9.346 4 9.238 4 9.056c0-.175.118-.298.282-.33 2.143-.405 2.237-.405 2.488-2.495.015-.182.148-.309.32-.31zM11.894 3c.117 0 .187.08.203.19.219 1.295.203 1.343 1.549 1.574.109.016.187.087.187.206s-.07.183-.188.207c-1.345.262-1.33.302-1.548 1.573-.016.111-.086.19-.203.19-.118 0-.188-.079-.204-.19-.219-1.287-.203-1.327-1.54-1.573-.126-.024-.196-.088-.196-.207 0-.12.07-.19.188-.206 1.353-.262 1.337-.303 1.548-1.566.016-.119.086-.198.204-.198z"/></svg>Add to new chat</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-download"></use></svg>Download</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-rename"></use></svg>Rename</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-folder-move"></use></svg>Move</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--header-share"></use></svg>Share</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-trash"></use></svg>Delete</button></li></ul></div></div></div></div>
+                        <div><a href="#">File name</a><span>Today at 13:04</span><div class="spaces-item-dropdown"><button type="button" aria-label="More actions"><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-more"></use></svg></button><div><div><ul><li><button type="button" data-add-to-new-chat><img class="spaces-add-to-chat-icon" src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg?v=add-to-chat-1" width="20" height="20" alt="" aria-hidden="true">Add to chat</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-download"></use></svg>Download</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-rename"></use></svg>Rename</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-folder-move"></use></svg>Move</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--header-share"></use></svg>Share</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-trash"></use></svg>Delete</button></li></ul></div></div></div></div>
                     </div>
                     <div class="space-section-item" data-inside-file-search="file name render">
                         <a href="#"><img height="200" width="274" src="./assets/images/spaces-v2/inside-section-file.webp" alt=""><span class="loader"></span></a>
-                        <div><a href="#">File name</a><span>Today at 13:04</span><div class="spaces-item-dropdown"><button type="button" aria-label="More actions"><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-more"></use></svg></button><div><div><ul><li><button type="button" data-add-to-new-chat><svg viewBox="0 0 24 24" width="24" height="24" fill="#1AA73F" aria-hidden="true"><path fill="#1AA73F" d="M13.36 8.226c.266 0 .469.198.516.484.602 4.266 1.166 4.87 5.28 5.371.29.04.492.254.492.532s-.203.5-.492.533c-4.122.468-4.717 1.111-5.28 5.377-.047.278-.25.477-.516.477s-.477-.199-.524-.477c-.618-4.266-1.166-4.813-5.28-5.377-.29-.04-.484-.255-.485-.533 0-.278.203-.5.485-.532 4.122-.469 4.717-1.105 5.28-5.371.047-.286.25-.484.524-.484zM7.09 5.922c.172 0 .298.127.313.302.274 2.137.337 2.2 2.488 2.503.156.023.28.15.28.325 0 .175-.116.294-.28.326h-.008c-2.151.405-2.206.415-2.48 2.51a.31.31 0 01-.313.286c-.172 0-.305-.12-.32-.31-.25-2.09-.337-2.152-2.449-2.486C4.118 9.346 4 9.238 4 9.056c0-.175.118-.298.282-.33 2.143-.405 2.237-.405 2.488-2.495.015-.182.148-.309.32-.31zM11.894 3c.117 0 .187.08.203.19.219 1.295.203 1.343 1.549 1.574.109.016.187.087.187.206s-.07.183-.188.207c-1.345.262-1.33.302-1.548 1.573-.016.111-.086.19-.203.19-.118 0-.188-.079-.204-.19-.219-1.287-.203-1.327-1.54-1.573-.126-.024-.196-.088-.196-.207 0-.12.07-.19.188-.206 1.353-.262 1.337-.303 1.548-1.566.016-.119.086-.198.204-.198z"/></svg>Add to new chat</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-download"></use></svg>Download</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-rename"></use></svg>Rename</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-folder-move"></use></svg>Move</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--header-share"></use></svg>Share</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-trash"></use></svg>Delete</button></li></ul></div></div></div></div>
+                        <div><a href="#">File name</a><span>Today at 13:04</span><div class="spaces-item-dropdown"><button type="button" aria-label="More actions"><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-more"></use></svg></button><div><div><ul><li><button type="button" data-add-to-new-chat><img class="spaces-add-to-chat-icon" src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg?v=add-to-chat-1" width="20" height="20" alt="" aria-hidden="true">Add to chat</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-download"></use></svg>Download</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-rename"></use></svg>Rename</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-folder-move"></use></svg>Move</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--header-share"></use></svg>Share</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-trash"></use></svg>Delete</button></li></ul></div></div></div></div>
                     </div>
                     <div class="space-section-item" data-inside-file-search="file name loading" data-inside-status-file="true" hidden>
                         <a href="#" class="loading"><img height="200" width="274" src="./assets/images/spaces-v2/inside-section-file.webp" alt=""><span class="loader"></span></a>
-                        <div><a href="#">File name</a><span>Today at 13:04</span><div class="spaces-item-dropdown"><button type="button" aria-label="More actions"><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-more"></use></svg></button><div><div><ul><li><button type="button" data-add-to-new-chat><svg viewBox="0 0 24 24" width="24" height="24" fill="#1AA73F" aria-hidden="true"><path fill="#1AA73F" d="M13.36 8.226c.266 0 .469.198.516.484.602 4.266 1.166 4.87 5.28 5.371.29.04.492.254.492.532s-.203.5-.492.533c-4.122.468-4.717 1.111-5.28 5.377-.047.278-.25.477-.516.477s-.477-.199-.524-.477c-.618-4.266-1.166-4.813-5.28-5.377-.29-.04-.484-.255-.485-.533 0-.278.203-.5.485-.532 4.122-.469 4.717-1.105 5.28-5.371.047-.286.25-.484.524-.484zM7.09 5.922c.172 0 .298.127.313.302.274 2.137.337 2.2 2.488 2.503.156.023.28.15.28.325 0 .175-.116.294-.28.326h-.008c-2.151.405-2.206.415-2.48 2.51a.31.31 0 01-.313.286c-.172 0-.305-.12-.32-.31-.25-2.09-.337-2.152-2.449-2.486C4.118 9.346 4 9.238 4 9.056c0-.175.118-.298.282-.33 2.143-.405 2.237-.405 2.488-2.495.015-.182.148-.309.32-.31zM11.894 3c.117 0 .187.08.203.19.219 1.295.203 1.343 1.549 1.574.109.016.187.087.187.206s-.07.183-.188.207c-1.345.262-1.33.302-1.548 1.573-.016.111-.086.19-.203.19-.118 0-.188-.079-.204-.19-.219-1.287-.203-1.327-1.54-1.573-.126-.024-.196-.088-.196-.207 0-.12.07-.19.188-.206 1.353-.262 1.337-.303 1.548-1.566.016-.119.086-.198.204-.198z"/></svg>Add to new chat</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-download"></use></svg>Download</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-rename"></use></svg>Rename</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-folder-move"></use></svg>Move</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--header-share"></use></svg>Share</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-trash"></use></svg>Delete</button></li></ul></div></div></div></div>
+                        <div><a href="#">File name</a><span>Today at 13:04</span><div class="spaces-item-dropdown"><button type="button" aria-label="More actions"><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-more"></use></svg></button><div><div><ul><li><button type="button" data-add-to-new-chat><img class="spaces-add-to-chat-icon" src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg?v=add-to-chat-1" width="20" height="20" alt="" aria-hidden="true">Add to chat</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-download"></use></svg>Download</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-rename"></use></svg>Rename</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-folder-move"></use></svg>Move</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--header-share"></use></svg>Share</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-trash"></use></svg>Delete</button></li></ul></div></div></div></div>
                     </div>
                     <div class="space-section-item space-section-item-failed" data-inside-file-search="file name failed" data-inside-status-file="true" hidden>
                         <a href="#"><img height="200" width="274" src="./assets/images/spaces-v2/inside-section-file.webp" alt=""><span class="loader"></span><span class="failed-icon"></span></a>
-                        <div><a href="#">File name</a><span>Today at 13:04</span><div class="spaces-item-dropdown"><button type="button" aria-label="More actions"><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-more"></use></svg></button><div><div><ul><li><button type="button" data-add-to-new-chat><svg viewBox="0 0 24 24" width="24" height="24" fill="#1AA73F" aria-hidden="true"><path fill="#1AA73F" d="M13.36 8.226c.266 0 .469.198.516.484.602 4.266 1.166 4.87 5.28 5.371.29.04.492.254.492.532s-.203.5-.492.533c-4.122.468-4.717 1.111-5.28 5.377-.047.278-.25.477-.516.477s-.477-.199-.524-.477c-.618-4.266-1.166-4.813-5.28-5.377-.29-.04-.484-.255-.485-.533 0-.278.203-.5.485-.532 4.122-.469 4.717-1.105 5.28-5.371.047-.286.25-.484.524-.484zM7.09 5.922c.172 0 .298.127.313.302.274 2.137.337 2.2 2.488 2.503.156.023.28.15.28.325 0 .175-.116.294-.28.326h-.008c-2.151.405-2.206.415-2.48 2.51a.31.31 0 01-.313.286c-.172 0-.305-.12-.32-.31-.25-2.09-.337-2.152-2.449-2.486C4.118 9.346 4 9.238 4 9.056c0-.175.118-.298.282-.33 2.143-.405 2.237-.405 2.488-2.495.015-.182.148-.309.32-.31zM11.894 3c.117 0 .187.08.203.19.219 1.295.203 1.343 1.549 1.574.109.016.187.087.187.206s-.07.183-.188.207c-1.345.262-1.33.302-1.548 1.573-.016.111-.086.19-.203.19-.118 0-.188-.079-.204-.19-.219-1.287-.203-1.327-1.54-1.573-.126-.024-.196-.088-.196-.207 0-.12.07-.19.188-.206 1.353-.262 1.337-.303 1.548-1.566.016-.119.086-.198.204-.198z"/></svg>Add to new chat</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-download"></use></svg>Download</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-rename"></use></svg>Rename</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-folder-move"></use></svg>Move</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--header-share"></use></svg>Share</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-trash"></use></svg>Delete</button></li></ul></div></div></div></div>
+                        <div><a href="#">File name</a><span>Today at 13:04</span><div class="spaces-item-dropdown"><button type="button" aria-label="More actions"><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-more"></use></svg></button><div><div><ul><li><button type="button" data-add-to-new-chat><img class="spaces-add-to-chat-icon" src="./assets/images/spaces-v2/home-composer/mark-sparkles-violet.svg?v=add-to-chat-1" width="20" height="20" alt="" aria-hidden="true">Add to chat</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-download"></use></svg>Download</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-rename"></use></svg>Rename</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-folder-move"></use></svg>Move</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--header-share"></use></svg>Share</button></li><li><button><svg><use xlink:href="./assets/sprite/tool.svg#ui--spaces-trash"></use></svg>Delete</button></li></ul></div></div></div></div>
                     </div>
                 </div>
                 <div class="spaces-files-table-scroll" data-inside-files-table hidden>
@@ -2114,10 +2320,26 @@
                 <script src="./s/js/promo/main.js"></script>
         <script src="./s/js/core/common.js"></script>
         <script src="./assets/js/spaces-standalone-state.js"></script>
-        <script src="./assets/js/spaces-account-data.js?v=asset-base-1"></script>
+        <script src="./assets/js/spaces-account-data.js?v=plan-thumb-1"></script>
         <script>
             (() => {
                 const dropdowns = [...document.querySelectorAll('[data-header-dropdown]')];
+                const creditsWrap = document.querySelector('[data-header-credits-wrap]');
+                const creditsTrigger = creditsWrap?.querySelector('[data-header-credits]');
+                const creditsCount = creditsWrap?.querySelector('[data-header-credits-count]');
+                const profileCreditsCount = document.querySelector('[data-profile-credits-count]');
+
+                // Keep header + menu credit numbers in sync.
+                const syncHeaderCreditsLow = (value) => {
+                    if (!creditsCount) return;
+                    const left = Number(String(value ?? creditsCount.textContent ?? '0').replace(/[^\d]/g, '')) || 0;
+                    creditsCount.textContent = String(left);
+                    if (profileCreditsCount) profileCreditsCount.textContent = String(left);
+                    creditsTrigger?.classList.toggle('is-low', left <= 10);
+                    creditsTrigger?.setAttribute('aria-label', `Profile, ${left} credits left`);
+                };
+                syncHeaderCreditsLow();
+                window.SpacesHeaderCredits = { sync: syncHeaderCreditsLow };
 
                 const closeDropdowns = () => {
                     dropdowns.forEach(dropdown => {
@@ -2138,7 +2360,9 @@
                 });
 
                 document.addEventListener('click', event => {
-                    if (!dropdowns.some(dropdown => dropdown.contains(event.target))) closeDropdowns();
+                    if (!dropdowns.some(dropdown => dropdown.contains(event.target))) {
+                        closeDropdowns();
+                    }
                 });
 
                 document.addEventListener('keydown', event => {
@@ -2211,12 +2435,56 @@
                 const newChatPlacementStorageKey = 'planner5d-spaces-v2-new-chat-placement';
                 const newChatEntryOptions = [...document.querySelectorAll('[data-new-chat-entry-option]')];
                 const newChatEntryStorageKey = 'planner5d-spaces-v2-new-chat-entry';
+                const rolePlacementOptions = [...document.querySelectorAll('[data-role-placement-option]')];
+                const rolePlacementStorageKey = 'planner5d-spaces-v2-role-placement';
+                const homeChipsRow = document.querySelector('[data-home-chips-row]');
+                const homeTitle = document.getElementById('spaces-home-title');
                 const assetsLabel = document.querySelector('[data-sidebar-assets-label]');
                 const assetsIcon = document.querySelector('[data-sidebar-assets-icon]');
                 const profilesFabTrigger = document.querySelector('[data-profiles-fab-trigger]');
                 const profilesFabPopover = document.querySelector('[data-profiles-fab-popover]');
                 const profilesFabClose = document.querySelector('[data-profiles-fab-close]');
                 const personalizationOptions = [...document.querySelectorAll('[data-personalization-option]')];
+                const homeRoleSwitch = document.querySelector('[data-home-role-switch]');
+                const homeRoleTrigger = document.querySelector('[data-home-role-switch-trigger]');
+                const homeRoleMenu = document.querySelector('[data-home-role-switch-menu]');
+                const homeRoleLabel = document.querySelector('[data-home-role-switch-label]');
+                const homeRolePrefix = document.querySelector('[data-home-role-switch-prefix]');
+                const roleLabels = {
+                    'home-owner': { prefix: 'Ideas for', role: 'home owner' },
+                    realtor: { prefix: 'Ideas for', role: 'realtor' },
+                    'interior-designer': { prefix: 'Ideas for', role: 'interior designer' },
+                    contractor: { prefix: 'Ideas for', role: 'contractor' }
+                };
+
+                const currentPersonalization = () => {
+                    if (document.body.classList.contains('is-personalization-realtor')) return 'realtor';
+                    if (document.body.classList.contains('is-personalization-interior-designer')) return 'interior-designer';
+                    if (document.body.classList.contains('is-personalization-contractor')) return 'contractor';
+                    return 'home-owner';
+                };
+
+                const syncHomeRoleCopy = (profile = currentPersonalization()) => {
+                    const roleCopy = roleLabels[profile] || roleLabels['home-owner'];
+                    const prefix = document.body.classList.contains('is-role-placement-option2')
+                        ? 'Hi'
+                        : roleCopy.prefix;
+                    if (homeRolePrefix) homeRolePrefix.textContent = prefix;
+                    if (homeRoleLabel) homeRoleLabel.textContent = roleCopy.role;
+                    if (homeRoleTrigger) homeRoleTrigger.setAttribute('aria-label', `${prefix} ${roleCopy.role}`);
+                };
+
+                const closeHomeRoleMenu = () => {
+                    if (!homeRoleMenu || !homeRoleTrigger) return;
+                    homeRoleMenu.hidden = true;
+                    homeRoleTrigger.setAttribute('aria-expanded', 'false');
+                };
+
+                const openHomeRoleMenu = () => {
+                    if (!homeRoleMenu || !homeRoleTrigger) return;
+                    homeRoleMenu.hidden = false;
+                    homeRoleTrigger.setAttribute('aria-expanded', 'true');
+                };
                 const chatUiOptions = [...document.querySelectorAll('[data-chat-ui-option]')];
                 const chatUiStorageKey = 'planner5d-spaces-v2-chat-ui';
                 const profileSettingsTabs = [...document.querySelectorAll('[data-profiles-settings-tab]')];
@@ -2229,12 +2497,21 @@
                 };
 
                 const setPersonalization = profile => {
-                    const selected = profile === 'realtor' ? 'realtor' : 'home-owner';
-                    document.body.classList.toggle('is-personalization-realtor', selected === 'realtor');
+                    const allowed = ['home-owner', 'realtor', 'interior-designer', 'contractor'];
+                    const selected = allowed.includes(profile) ? profile : 'home-owner';
                     document.body.classList.toggle('is-personalization-home-owner', selected === 'home-owner');
+                    document.body.classList.toggle('is-personalization-realtor', selected === 'realtor');
+                    document.body.classList.toggle('is-personalization-interior-designer', selected === 'interior-designer');
+                    document.body.classList.toggle('is-personalization-contractor', selected === 'contractor');
                     personalizationOptions.forEach(option => {
-                        option.setAttribute('aria-pressed', String(option.dataset.personalizationOption === selected));
+                        const isSelected = option.dataset.personalizationOption === selected;
+                        option.setAttribute('aria-pressed', String(isSelected));
+                        if (option.getAttribute('role') === 'option') {
+                            option.setAttribute('aria-selected', String(isSelected));
+                        }
                     });
+                    syncHomeRoleCopy(selected);
+                    closeHomeRoleMenu();
                     try {
                         localStorage.setItem(personalizationStorageKey, selected);
                     } catch {
@@ -2348,11 +2625,12 @@
                 };
 
                 const setNewChatPlacement = (placement, options = {}) => {
-                    const selected = (placement === 'option5' || placement === 'option5-3')
+                    const selected = ['option5', 'option5-3', 'option5-4'].includes(placement)
                         ? placement
-                        : 'option1';
-                    const isOption5Family = selected === 'option5' || selected === 'option5-3';
-                    document.body.classList.toggle('is-new-chat-placement-option1', selected === 'option1');
+                        : 'option5';
+                    const isOption5Family = selected === 'option5' || selected === 'option5-3' || selected === 'option5-4';
+                    const isOption54 = selected === 'option5-4';
+                    document.body.classList.toggle('is-new-chat-placement-option1', false);
                     document.body.classList.toggle('is-new-chat-placement-option2', false);
                     document.body.classList.toggle('is-new-chat-placement-option3', false);
                     document.body.classList.toggle('is-new-chat-placement-option4', false);
@@ -2360,37 +2638,81 @@
                     document.body.classList.toggle('is-new-chat-placement-option5-1', false);
                     document.body.classList.toggle('is-new-chat-placement-option5-2', false);
                     document.body.classList.toggle('is-new-chat-placement-option5-3', selected === 'option5-3');
+                    document.body.classList.toggle('is-new-chat-placement-option5-4', isOption54);
                     document.body.classList.remove('is-option5-create-open');
                     const infoWrap = document.querySelector('.spaces-info-wrap');
                     const option5Create = document.querySelector('[data-option5-create]');
                     const spaceCopilot = document.querySelector('[data-space-copilot]');
                     const spaceCopilotHome = document.querySelector('[data-space-tabs]')
                         || document.querySelector('.spaces-collections');
+                    document.querySelectorAll('[data-option54-chrome]').forEach(node => {
+                        node.hidden = !isOption54;
+                    });
+                    const shareBlock = document.querySelector('.spaces-info-wrap .spaces-share-block');
+                    const additionalTags = document.querySelector('.spaces-info-wrap .spaces-info-additional-tags');
+                    if (shareBlock && infoWrap && additionalTags) {
+                        if (isOption54) {
+                            infoWrap.append(shareBlock);
+                        } else if (shareBlock.parentElement !== additionalTags) {
+                            additionalTags.append(shareBlock);
+                        }
+                    }
                     if (infoWrap && option5Create) {
                         if (spaceCopilot && spaceCopilotHome && spaceCopilot.parentElement === infoWrap) {
                             spaceCopilotHome.before(spaceCopilot);
                         }
-                        infoWrap.after(option5Create);
+                        if (isOption54 && spaceCopilot) {
+                            // Option 5.4: tools sit under the Space chat.
+                            spaceCopilot.after(option5Create);
+                        } else {
+                            infoWrap.after(option5Create);
+                        }
                         const uploadFileLabel = option5Create.querySelector('.upload-file > span');
-                        if (uploadFileLabel) uploadFileLabel.textContent = 'Upload File';
+                        if (uploadFileLabel) {
+                            uploadFileLabel.textContent = isOption54 ? 'Add to Files' : 'Upload File';
+                        }
+                        const toolsLabel = option5Create.querySelector('[data-option52-tools-label]');
+                        if (toolsLabel) {
+                            toolsLabel.textContent = 'Or do it manually';
+                        }
+                    }
+                    // Option 5.4 only: suggestion chips live inside the white chat plate (top).
+                    // Other Option 5 variants keep chips under the plate.
+                    const inlineForm = spaceCopilot?.querySelector('[data-inline-copilot]');
+                    const inlineBar = inlineForm?.querySelector('.spaces-inline-copilot-bar');
+                    const inlineChips = document.querySelector('[data-inline-copilot-chips]');
+                    if (inlineForm && inlineBar && inlineChips) {
+                        if (isOption54) {
+                            const field = inlineBar.querySelector('.spaces-inline-copilot-field');
+                            if (field) inlineBar.insertBefore(inlineChips, field);
+                            else {
+                                const fill = inlineBar.querySelector('.spaces-inline-copilot-bar-fill');
+                                if (fill) fill.after(inlineChips);
+                                else inlineBar.prepend(inlineChips);
+                            }
+                        } else if (inlineChips.parentElement === inlineBar) {
+                            inlineForm.append(inlineChips);
+                        }
                     }
                     const composerMark = document.querySelector('[data-home-composer-mark]');
                     if (composerMark) {
-                        composerMark.src = selected === 'option5-3'
-                            ? './assets/images/spaces-v2/home-composer/mark-sparkles-outline.svg?v=1'
-                            : './assets/images/spaces-v2/home-composer/mark-sparkles.svg?v=2';
+                        // Gray outline sparkles for Option 5 family (not the violet fill).
+                        composerMark.src = './assets/images/spaces-v2/home-composer/mark-sparkles-outline.svg?v=4';
                     }
                     newChatPlacementOptions.forEach(option => {
                         option.setAttribute('aria-pressed', String(option.dataset.newChatPlacement === selected));
                     });
-                    syncChatPlacementSidebar(selected === 'option5-3' ? 'option5' : selected);
+                    syncChatPlacementSidebar(
+                        selected === 'option5-3' || selected === 'option5-4' ? 'option5' : selected
+                    );
                     try {
                         localStorage.setItem(newChatPlacementStorageKey, selected);
                     } catch {
                         // The standalone lab continues without persisted preferences.
                     }
                     // Option 5 / 5.3 live on Spaces Home (sparkle hero) — leave listing studio / open chat.
-                    if (options.revealHome && isOption5Family) {
+                    // Option 5.4 is Space-page only, so stay on Space when switching to it.
+                    if (options.revealHome && (selected === 'option5' || selected === 'option5-3')) {
                         if (window.SpacesListingStudio?.isOpen?.()) {
                             window.SpacesListingStudio.close();
                         }
@@ -2417,6 +2739,59 @@
                         detail: { entry: selected }
                     }));
                 };
+
+                const placeHomeRoleSwitch = placement => {
+                    if (!homeRoleSwitch) return;
+                    if (placement === 'option2' && homeTitle?.parentElement) {
+                        homeTitle.parentElement.insertBefore(homeRoleSwitch, homeTitle);
+                        return;
+                    }
+                    if (homeChipsRow) {
+                        homeChipsRow.insertBefore(homeRoleSwitch, homeChipsRow.firstChild);
+                    }
+                };
+
+                const setRolePlacement = placement => {
+                    const selected = placement === 'option2' ? 'option2' : 'option1';
+                    document.body.classList.toggle('is-role-placement-option1', selected === 'option1');
+                    document.body.classList.toggle('is-role-placement-option2', selected === 'option2');
+                    rolePlacementOptions.forEach(option => {
+                        option.setAttribute('aria-pressed', String(option.dataset.rolePlacement === selected));
+                    });
+                    placeHomeRoleSwitch(selected);
+                    syncHomeRoleCopy();
+                    closeHomeRoleMenu();
+                    try {
+                        localStorage.setItem(rolePlacementStorageKey, selected);
+                    } catch {
+                        // The standalone lab continues without persisted preferences.
+                    }
+                    document.dispatchEvent(new CustomEvent('spaces-role-placement-changed', {
+                        detail: { placement: selected }
+                    }));
+                };
+
+                const toolsCreate = document.querySelector('[data-option5-create]');
+                const toolsToggle = document.querySelector('[data-option52-tools-toggle]');
+                const toolsCollapsedKey = 'planner5d-spaces-v2-option5-tools-collapsed';
+                const setToolsCollapsed = collapsed => {
+                    if (!toolsCreate || !toolsToggle) return;
+                    toolsCreate.classList.toggle('is-tools-collapsed', collapsed);
+                    toolsToggle.setAttribute('aria-expanded', String(!collapsed));
+                    try {
+                        localStorage.setItem(toolsCollapsedKey, collapsed ? '1' : '0');
+                    } catch {
+                        // Prototype keeps working without persistence.
+                    }
+                };
+                toolsToggle?.addEventListener('click', () => {
+                    setToolsCollapsed(!toolsCreate.classList.contains('is-tools-collapsed'));
+                });
+                try {
+                    setToolsCollapsed(localStorage.getItem(toolsCollapsedKey) === '1');
+                } catch {
+                    setToolsCollapsed(false);
+                }
 
                 const setHeaderCreateProfile = profile => {
                     const isHidden = profile === 'hide';
@@ -2454,6 +2829,7 @@
                 let savedChatUi = 'option2';
                 let savedNewChatPlacement = 'option1';
                 let savedNewChatEntry = 'separate';
+                let savedRolePlacement = 'option1';
                 try {
                     savedSidebarProfile = localStorage.getItem(sidebarProfileStorageKey) === 'explore' ? 'explore' : 'sidebar';
                     savedExploreCollapsed = localStorage.getItem(exploreCollapsedStorageKey) === 'true';
@@ -2461,19 +2837,29 @@
                     savedLeftRailDensity = localStorage.getItem(leftRailDensityStorageKey) === 'comfortable' ? 'comfortable' : 'default';
                     savedHeaderCreateProfile = localStorage.getItem(headerCreateProfileStorageKey) === 'hide' ? 'hide' : 'show';
                     savedHeaderLayoutProfile = localStorage.getItem(headerLayoutProfileStorageKey) === 'centered' ? 'centered' : 'side';
-                    savedPersonalization = localStorage.getItem(personalizationStorageKey) === 'realtor' ? 'realtor' : 'home-owner';
+                    savedPersonalization = (() => {
+                        const stored = localStorage.getItem(personalizationStorageKey);
+                        if (['home-owner', 'realtor', 'interior-designer', 'contractor'].includes(stored)) {
+                            return stored;
+                        }
+                        return 'home-owner';
+                    })();
                     savedChatUi = localStorage.getItem(chatUiStorageKey) === 'option1' ? 'option1' : 'option2';
                     savedNewChatPlacement = (() => {
                         const storedPlacement = localStorage.getItem(newChatPlacementStorageKey);
+                        if (storedPlacement === 'option5-4') return 'option5-4';
                         if (storedPlacement === 'option5-3') return 'option5-3';
                         if (storedPlacement === 'option5' || storedPlacement === 'option5-1' || storedPlacement === 'option5-2') {
                             return 'option5';
                         }
-                        return 'option1';
+                        return 'option5';
                     })();
                     savedNewChatEntry = localStorage.getItem(newChatEntryStorageKey) === 'combined'
                         ? 'combined'
                         : 'separate';
+                    savedRolePlacement = localStorage.getItem(rolePlacementStorageKey) === 'option2'
+                        ? 'option2'
+                        : 'option1';
                 } catch {
                     // The standalone lab continues without persisted preferences.
                 }
@@ -2487,6 +2873,7 @@
                 setChatUi(savedChatUi);
                 setNewChatPlacement(savedNewChatPlacement);
                 setNewChatEntry(savedNewChatEntry);
+                setRolePlacement(savedRolePlacement);
 
                 exploreCollapse?.addEventListener('click', () => {
                     const isCollapsed = exploreSection?.classList.toggle('is-collapsed');
@@ -2517,6 +2904,24 @@
                     option.addEventListener('click', () => {
                         setPersonalization(option.dataset.personalizationOption);
                     });
+                });
+
+                homeRoleTrigger?.addEventListener('click', event => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if (homeRoleMenu?.hidden === false) closeHomeRoleMenu();
+                    else openHomeRoleMenu();
+                });
+
+                document.addEventListener('click', event => {
+                    if (!homeRoleSwitch || homeRoleMenu?.hidden !== false) return;
+                    if (homeRoleSwitch.contains(event.target)) return;
+                    closeHomeRoleMenu();
+                });
+
+                document.addEventListener('keydown', event => {
+                    if (event.key !== 'Escape') return;
+                    closeHomeRoleMenu();
                 });
 
                 chatUiOptions.forEach(option => {
@@ -2554,6 +2959,12 @@
                 newChatEntryOptions.forEach(option => {
                     option.addEventListener('click', () => {
                         setNewChatEntry(option.dataset.newChatEntry);
+                    });
+                });
+
+                rolePlacementOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        setRolePlacement(option.dataset.rolePlacement);
                     });
                 });
 
@@ -3160,14 +3571,14 @@
         </script>
         <script src="./assets/js/spaces-account-profile.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-home-data.js?v=asset-base-1"></script>
-        <script src="./assets/js/spaces-home-composer.js?v=new-space-option-1"></script>
-        <script src="./assets/js/spaces-ai-chats.js?v=centered-chat-figma-1"></script>
-        <script src="./assets/js/spaces-listing-chat.js?v=floor-plan-editor-1"></script>
-        <script src="./assets/js/spaces-all-spaces.js?v=asset-base-1"></script>
+        <script src="./assets/js/spaces-home-composer.js?v=done-no-rotate-1"></script>
+        <script src="./assets/js/spaces-ai-chats.js?v=ai-chats-empty-2"></script>
+        <script src="./assets/js/spaces-listing-chat.js?v=done-no-rotate-1"></script>
+        <script src="./assets/js/spaces-all-spaces.js?v=hide-view-on-empty-1"></script>
         <script src="./assets/js/spaces-copilot-panel.js?v=send-icon-fix-1"></script>
-        <script src="./assets/js/spaces-listing-studio.js?v=listing-chat-first-1"></script>
-        <script src="./assets/js/spaces-floor-plan-studio.js?v=floor-plan-editor-1"></script>
-        <script src="./assets/js/spaces-chat-placement.js?v=plan-living-room-1"></script>
+        <script src="./assets/js/spaces-listing-studio.js?v=header-transparent-1"></script>
+        <script src="./assets/js/spaces-floor-plan-studio.js?v=plan-details-2"></script>
+        <script src="./assets/js/spaces-chat-placement.js?v=chips-fill-1"></script>
         <script>
             (() => {
                 const collections = document.querySelector('.spaces-collections');
@@ -3626,7 +4037,11 @@
 
                 const setAllSpacesPage = (visible, options = {}) => {
                     const isVisible = Boolean(visible);
-                    const filter = options.filter === 'shared' ? 'shared' : 'all';
+                    const filter = options.filter === 'shared'
+                        ? 'shared'
+                        : options.filter === 'chats'
+                            ? 'chats'
+                            : 'files';
                     mainContent?.classList.toggle('is-all-spaces-page', isVisible);
                     if (allSpacesPage) allSpacesPage.hidden = !isVisible;
                     if (isVisible) {
@@ -3799,9 +4214,540 @@
                 };
             })();
         </script>
-        <script src="./assets/js/spaces-sidebar-navigation.js?v=home-feed-separate-1"></script>
-        <script src="./assets/js/spaces-ask-copilot-promo.js?v=ask-copilot-promo-2"></script>
+        <script src="./assets/js/spaces-sidebar-navigation.js?v=recents-figma-1"></script>
+        <script src="./assets/js/spaces-ask-copilot-promo.js?v=onboarding-3tips-1"></script>
         <script src="./assets/js/spaces-history-navigation.js?v=all-chats-page-1"></script>
-        <script src="./assets/js/spaces-global-search.js?v=asset-base-1"></script>
+        <script src="./assets/js/spaces-global-search.js?v=suggest-new-chat-1"></script>
+
+        <div class="spaces-upgrade-modal is-annual is-trial-on" data-upgrade-modal hidden>
+            <div class="spaces-upgrade-modal-backdrop" data-upgrade-modal-close tabindex="-1" aria-hidden="true"></div>
+            <div class="spaces-upgrade-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="spaces-upgrade-modal-title" data-upgrade-modal-dialog>
+                <button type="button" class="spaces-upgrade-modal-close" data-upgrade-modal-close aria-label="Close">
+                    <img src="./assets/images/spaces-v2/upgrade/close.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                </button>
+                <div class="spaces-upgrade-modal-header">
+                    <div class="spaces-upgrade-modal-heading">
+                        <h2 id="spaces-upgrade-modal-title">Upgrade your plan</h2>
+                        <p class="spaces-upgrade-modal-lead">More credits, sharper renders and tools for real projects.</p>
+                    </div>
+                    <div class="spaces-upgrade-billing" role="group" aria-label="Billing period">
+                        <button type="button" class="spaces-upgrade-billing-btn" data-upgrade-billing="monthly" aria-pressed="false">Monthly</button>
+                        <button type="button" class="spaces-upgrade-billing-btn is-selected" data-upgrade-billing="yearly" aria-pressed="true">
+                            Annual
+                            <span class="spaces-upgrade-billing-save">Save 33%</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="spaces-upgrade-plans">
+                    <article class="spaces-upgrade-plan is-premium" data-upgrade-plan="premium">
+                        <div class="spaces-upgrade-plan-glow" aria-hidden="true">
+                            <span class="spaces-upgrade-plan-orb is-lime"></span>
+                            <span class="spaces-upgrade-plan-orb is-mint"></span>
+                        </div>
+                        <div class="spaces-upgrade-plan-head">
+                            <h3>Premium</h3>
+                            <p class="spaces-upgrade-plan-subtitle">Design faster with AI</p>
+                        </div>
+                        <div class="spaces-upgrade-credits-stack">
+                            <div class="spaces-upgrade-credits-box">
+                                <div class="spaces-upgrade-credits-title">
+                                    <img src="./assets/images/spaces-v2/upgrade/sparkle-green.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                                    <strong>1,000 credits every month</strong>
+                                </div>
+                                <p class="spaces-upgrade-credits-copy">About 120 room looks or 600 Copilot replies a month</p>
+                                <div class="spaces-upgrade-fixed-pill">
+                                    <img src="./assets/images/spaces-v2/upgrade/check-fixed.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                                    <span>Fixed amount of credits</span>
+                                </div>
+                            </div>
+                            <span class="spaces-upgrade-credits-notch" aria-hidden="true">
+                                <img src="./assets/images/spaces-v2/upgrade/notch-green.svg?v=figma244" width="24" height="8" alt="">
+                            </span>
+                            <div class="spaces-upgrade-start-row">
+                                <div class="spaces-upgrade-start-copy">
+                                    <strong>Instant access</strong>
+                                    <span>All 1,000 credits right away</span>
+                                </div>
+                                <span class="spaces-upgrade-start-icon" aria-hidden="true">
+                                    <img src="./assets/images/spaces-v2/upgrade/flash.svg?v=figma244" width="24" height="24" alt="">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="spaces-upgrade-price-row">
+                            <span class="spaces-upgrade-price-old" data-upgrade-premium-old>$19.99</span>
+                            <strong class="spaces-upgrade-price-new" data-upgrade-premium-price>$4.99</strong>
+                            <span class="spaces-upgrade-price-period">/ month</span>
+                        </div>
+                        <button type="button" class="spaces-upgrade-plan-cta is-premium" data-upgrade-checkout="premium">Get Premium</button>
+                        <p class="spaces-upgrade-bill-note" data-upgrade-premium-note>$59.88 billed yearly</p>
+                        <div class="spaces-upgrade-features-block">
+                            <p class="spaces-upgrade-features-lead">Everything in Free plus:</p>
+                            <ul class="spaces-upgrade-features">
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Advanced AI Copilot for every room</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>AI Studio room looks in seconds</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>1,000 AI credits every month</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>8,000+ furniture items</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Unlimited HD renders</p></li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="spaces-upgrade-plan is-pro" data-upgrade-plan="pro">
+                        <div class="spaces-upgrade-plan-glow" aria-hidden="true">
+                            <span class="spaces-upgrade-plan-orb is-lilac"></span>
+                            <span class="spaces-upgrade-plan-orb is-sky"></span>
+                        </div>
+                        <div class="spaces-upgrade-plan-head">
+                            <h3>Professional</h3>
+                            <p class="spaces-upgrade-plan-subtitle">Maximum AI for client-ready interiors</p>
+                        </div>
+                        <div class="spaces-upgrade-credits-stack">
+                            <div class="spaces-upgrade-credits-box is-adjustable">
+                                <div class="spaces-upgrade-credits-title">
+                                    <img src="./assets/images/spaces-v2/upgrade/sparkle-purple.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                                    <strong><span data-upgrade-pro-credits>3,000</span> credits every month</strong>
+                                </div>
+                                <p class="spaces-upgrade-credits-copy" data-upgrade-pro-copy>About 120 room looks or 600 Copilot replies a month</p>
+                                <div class="spaces-upgrade-slider" data-upgrade-pro-slider>
+                                    <label class="spaces-upgrade-sr-only" for="spaces-upgrade-pro-range">Credits per month</label>
+                                    <input id="spaces-upgrade-pro-range" type="range" min="0" max="2" step="1" value="0" aria-label="Monthly credits" data-upgrade-pro-range>
+                                    <div class="spaces-upgrade-slider-labels" aria-hidden="true">
+                                        <span>3,000</span>
+                                        <span>5,000</span>
+                                        <span>8,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="spaces-upgrade-credits-notch" aria-hidden="true">
+                                <img src="./assets/images/spaces-v2/upgrade/notch-purple.svg?v=figma244" width="24" height="8" alt="">
+                            </span>
+                            <div class="spaces-upgrade-start-row is-trial">
+                                <div class="spaces-upgrade-start-copy">
+                                    <strong>7-day free trial</strong>
+                                    <span data-upgrade-trial-hint>Includes 50 credits to try</span>
+                                </div>
+                                <button type="button" class="spaces-upgrade-trial-switch is-on" role="switch" aria-checked="true" aria-label="7-day free trial" data-upgrade-trial-toggle>
+                                    <span class="spaces-upgrade-trial-knob" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="spaces-upgrade-price-row">
+                            <span class="spaces-upgrade-price-old" data-upgrade-pro-old>$49.99</span>
+                            <strong class="spaces-upgrade-price-new" data-upgrade-pro-price>$33.33</strong>
+                            <span class="spaces-upgrade-price-period">/ month</span>
+                        </div>
+                        <button type="button" class="spaces-upgrade-plan-cta is-pro" data-upgrade-checkout="pro" data-upgrade-pro-cta>Try Pro for 7 days</button>
+                        <p class="spaces-upgrade-bill-note" data-upgrade-pro-note>Free until Oct 10, then $400.88/year</p>
+                        <div class="spaces-upgrade-features-block">
+                            <p class="spaces-upgrade-features-lead">Everything in Premium plus:</p>
+                            <ul class="spaces-upgrade-features">
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Up to 8,000 AI credits a month</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>AI Studio for client work</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Unlimited custom textures</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Unlimited 4K renders</p></li>
+                                <li><img class="spaces-upgrade-feature-icon" src="./assets/images/spaces-v2/upgrade/feature-check.svg?v=figma244" width="20" height="20" alt="" aria-hidden="true"><p>Branded profile</p></li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+                <button type="button" class="spaces-upgrade-footer" data-buy-credits-open>
+                    <span class="spaces-upgrade-footer-copy">
+                        <strong>Don’t want to upgrade right away? Buy credits instead</strong>
+                        <span>Buy one-time subscription pack</span>
+                    </span>
+                    <span class="spaces-upgrade-buy-credits">
+                        <span>Buy credits</span>
+                        <img src="./assets/images/spaces-v2/upgrade/arrow-right.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div class="spaces-usage-modal" data-usage-modal hidden>
+            <div class="spaces-usage-modal-backdrop" data-usage-modal-close tabindex="-1" aria-hidden="true"></div>
+            <div class="spaces-usage-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="spaces-usage-modal-title" data-usage-modal-dialog>
+                <button type="button" class="spaces-usage-modal-close" data-usage-modal-close aria-label="Close">
+                    <img src="./assets/images/spaces-v2/usage-close.svg" width="24" height="24" alt="" aria-hidden="true">
+                </button>
+                <div class="spaces-usage-modal-body">
+                    <h2 id="spaces-usage-modal-title" class="spaces-usage-modal-title">Copilot usage</h2>
+
+                    <section class="spaces-usage-card spaces-usage-card--plan" aria-label="Plan and credits">
+                        <div class="spaces-usage-plan-head">
+                            <div class="spaces-usage-plan-copy">
+                                <div class="spaces-usage-plan-title-row">
+                                    <p class="spaces-usage-plan-name">Planner5d</p>
+                                    <span class="spaces-usage-plan-badge" data-usage-plan>Free</span>
+                                </div>
+                                <p class="spaces-usage-plan-note">Subscription doesn’t include free credits</p>
+                            </div>
+                            <div class="spaces-usage-plan-actions">
+                                <button type="button" class="spaces-usage-btn is-outline" data-usage-buy-credits>Buy credits</button>
+                                <button type="button" class="spaces-usage-btn is-primary" data-usage-upgrade>Upgrade plan</button>
+                            </div>
+                        </div>
+                        <div class="spaces-usage-credits" data-usage-balance>
+                            <div class="spaces-usage-credits-row">
+                                <span class="spaces-usage-credits-label">Credits</span>
+                                <span class="spaces-usage-credits-value" data-usage-left>0</span>
+                            </div>
+                            <div class="spaces-usage-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-usage-bar-wrap>
+                                <span data-usage-bar style="width: 0%"></span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="spaces-usage-card spaces-usage-card--chart" aria-label="Usage chart">
+                        <h3 class="spaces-usage-card-title">Usage</h3>
+                        <div class="spaces-usage-chart" aria-hidden="true">
+                            <div class="spaces-usage-chart-plot"></div>
+                            <div class="spaces-usage-chart-baseline"></div>
+                            <div class="spaces-usage-chart-dates">
+                                <span>Jul 1</span>
+                                <span>Jul 30</span>
+                            </div>
+                        </div>
+                        <div class="spaces-usage-stats">
+                            <div class="spaces-usage-stat">
+                                <span class="spaces-usage-stat-label">Last 30 days</span>
+                                <span class="spaces-usage-stat-value"><span data-usage-period-credits>0</span> credits</span>
+                            </div>
+                            <div class="spaces-usage-stat">
+                                <span class="spaces-usage-stat-label">Messages sent</span>
+                                <span class="spaces-usage-stat-value" data-usage-messages>0</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="spaces-buy-credits-modal" data-buy-credits-modal hidden>
+            <div class="spaces-buy-credits-backdrop" data-buy-credits-close tabindex="-1" aria-hidden="true"></div>
+            <div class="spaces-buy-credits-dialog" role="dialog" aria-modal="true" aria-labelledby="spaces-buy-credits-title" data-buy-credits-dialog>
+                <div class="spaces-buy-credits-main">
+                    <div class="spaces-buy-credits-copy">
+                        <div class="spaces-buy-credits-intro">
+                            <div class="spaces-buy-credits-title-row">
+                                <button type="button" class="spaces-buy-credits-back" data-buy-credits-back aria-label="Back to plans">
+                                    <img src="./assets/images/spaces-v2/checkout/chevron-left.svg" width="24" height="24" alt="" aria-hidden="true">
+                                </button>
+                                <h2 id="spaces-buy-credits-title">Buy credits to continue with your task</h2>
+                            </div>
+                            <p>Pick the size of your work. The same balance powers Copilot here and everything in AI Studio</p>
+                        </div>
+                        <div class="spaces-buy-credits-list" role="radiogroup" aria-label="Credit packs" data-buy-credits-list>
+                            <button type="button" class="spaces-buy-credits-option" role="radio" aria-checked="false" data-buy-credits-option>
+                                <img class="spaces-buy-credits-radio" src="./assets/images/spaces-v2/buy-credits/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-buy-credits-radio>
+                                <span class="spaces-buy-credits-option-text">
+                                    <span class="spaces-buy-credits-option-title">100 credits</span>
+                                    <span class="spaces-buy-credits-option-copy">Enough for designing a one flat</span>
+                                </span>
+                                <strong class="spaces-buy-credits-option-price">$5.99</strong>
+                            </button>
+                            <button type="button" class="spaces-buy-credits-option is-selected" role="radio" aria-checked="true" data-buy-credits-option>
+                                <img class="spaces-buy-credits-radio" src="./assets/images/spaces-v2/buy-credits/radio-on.svg" width="24" height="24" alt="" aria-hidden="true" data-buy-credits-radio>
+                                <span class="spaces-buy-credits-option-text">
+                                    <span class="spaces-buy-credits-option-title-row">
+                                        <span class="spaces-buy-credits-option-title">500 credits</span>
+                                        <span class="spaces-buy-credits-popular">MOST POPULAR</span>
+                                    </span>
+                                    <span class="spaces-buy-credits-option-copy">Enough for designing a one flat</span>
+                                </span>
+                                <strong class="spaces-buy-credits-option-price">$27.99</strong>
+                            </button>
+                            <button type="button" class="spaces-buy-credits-option" role="radio" aria-checked="false" data-buy-credits-option>
+                                <img class="spaces-buy-credits-radio" src="./assets/images/spaces-v2/buy-credits/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-buy-credits-radio>
+                                <span class="spaces-buy-credits-option-text">
+                                    <span class="spaces-buy-credits-option-title">1,000 credits</span>
+                                    <span class="spaces-buy-credits-option-copy">Enough for the whole home with retries</span>
+                                </span>
+                                <strong class="spaces-buy-credits-option-price">$54.99</strong>
+                            </button>
+                            <button type="button" class="spaces-buy-credits-option" role="radio" aria-checked="false" data-buy-credits-option>
+                                <img class="spaces-buy-credits-radio" src="./assets/images/spaces-v2/buy-credits/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-buy-credits-radio>
+                                <span class="spaces-buy-credits-option-text">
+                                    <span class="spaces-buy-credits-option-title">2,500 credits</span>
+                                    <span class="spaces-buy-credits-option-copy">Months of ongoing work with several houses</span>
+                                </span>
+                                <strong class="spaces-buy-credits-option-price">$129.99</strong>
+                            </button>
+                            <button type="button" class="spaces-buy-credits-option" role="radio" aria-checked="false" data-buy-credits-option>
+                                <img class="spaces-buy-credits-radio" src="./assets/images/spaces-v2/buy-credits/radio-off.svg" width="24" height="24" alt="" aria-hidden="true" data-buy-credits-radio>
+                                <span class="spaces-buy-credits-option-text">
+                                    <span class="spaces-buy-credits-option-title">5,000 credits</span>
+                                    <span class="spaces-buy-credits-option-copy">Enough to design anything every day</span>
+                                </span>
+                                <strong class="spaces-buy-credits-option-price">$249.99</strong>
+                            </button>
+                        </div>
+                        <button type="button" class="spaces-buy-credits-cta" data-buy-credits-cta>Buy 500 credits</button>
+                        <p class="spaces-buy-credits-note">One-time payment · credits don’t expire · your plan stays the same</p>
+                    </div>
+                    <div class="spaces-buy-credits-visual" aria-hidden="true">
+                        <div class="spaces-buy-credits-visual-panel">
+                            <img class="spaces-buy-credits-visual-card" src="./assets/images/spaces-v2/buy-credits/visual-room.png" alt="">
+                        </div>
+                        <button type="button" class="spaces-buy-credits-close" data-buy-credits-close aria-label="Close">
+                            <img src="./assets/images/spaces-v2/buy-credits/close.svg" width="24" height="24" alt="" aria-hidden="true">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="spaces-checkout-modal" data-checkout-modal hidden>
+            <div class="spaces-checkout-backdrop" data-checkout-close tabindex="-1" aria-hidden="true"></div>
+            <div class="spaces-checkout-dialog" role="dialog" aria-modal="true" aria-labelledby="spaces-checkout-title" data-checkout-dialog>
+                <button type="button" class="spaces-checkout-back" data-checkout-back aria-label="Back">
+                    <img src="./assets/images/spaces-v2/checkout/back-figma.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                    <span>Back</span>
+                </button>
+                <button type="button" class="spaces-checkout-close" data-checkout-close aria-label="Close">
+                    <img src="./assets/images/spaces-v2/checkout/close-figma.svg?v=figma244" width="24" height="24" alt="" aria-hidden="true">
+                </button>
+                <div class="spaces-checkout-shell">
+                    <h2 id="spaces-checkout-title" class="spaces-checkout-title">Complete order</h2>
+
+                    <div class="spaces-checkout-main">
+                        <div class="spaces-checkout-form">
+                            <!--
+                              Figma 252:12321 Full-Checkout — EXACT match
+                              https://www.figma.com/design/k3DZte02jpRSskHvw1p5PT/Untitled?node-id=252-12321
+                            -->
+                            <div class="spaces-checkout-payment-element is-tabs is-figma252" data-checkout-card-fields data-checkout-layout="tabs" data-checkout-payment-element-root>
+                                <div class="spaces-checkout-pe-tabs" role="tablist" aria-label="Payment methods">
+                                    <button
+                                        type="button"
+                                        class="spaces-checkout-pe-tab is-selected"
+                                        role="tab"
+                                        id="spaces-checkout-tab-card"
+                                        aria-selected="true"
+                                        aria-controls="spaces-checkout-panel-card"
+                                        data-checkout-method="card"
+                                        tabindex="0"
+                                    >
+                                        <img class="spaces-checkout-pe-tab-icon-img" src="./assets/images/spaces-v2/checkout/figma252/card-tab.svg" width="24" height="24" alt="" aria-hidden="true">
+                                        <span class="spaces-checkout-pe-tab-label">Card</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="spaces-checkout-pe-tab"
+                                        role="tab"
+                                        id="spaces-checkout-tab-apple-pay"
+                                        aria-selected="false"
+                                        aria-controls="spaces-checkout-panel-apple-pay"
+                                        data-checkout-method="apple_pay"
+                                        tabindex="-1"
+                                    >
+                                        <img class="spaces-checkout-pe-tab-badge-img" src="./assets/images/spaces-v2/checkout/figma252/apple-pay-badge.svg" width="35" height="24" alt="" aria-hidden="true">
+                                        <span class="spaces-checkout-pe-tab-label">Apple Pay</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="spaces-checkout-pe-tab"
+                                        role="tab"
+                                        id="spaces-checkout-tab-paypal"
+                                        aria-selected="false"
+                                        aria-controls="spaces-checkout-panel-paypal"
+                                        data-checkout-method="paypal"
+                                        tabindex="-1"
+                                    >
+                                        <img class="spaces-checkout-pe-tab-badge-img" src="./assets/images/spaces-v2/checkout/figma252/paypal-mark.svg" width="24" height="24" alt="" aria-hidden="true">
+                                        <span class="spaces-checkout-pe-tab-label">PayPal</span>
+                                    </button>
+                                </div>
+
+                                <div
+                                    class="spaces-checkout-pe-panel"
+                                    role="tabpanel"
+                                    id="spaces-checkout-panel-card"
+                                    aria-labelledby="spaces-checkout-tab-card"
+                                    data-checkout-method-panel="card"
+                                >
+                                    <div class="spaces-checkout-figma-fields" data-checkout-payment-element>
+                                        <div class="spaces-checkout-figma-field">
+                                            <label class="spaces-checkout-figma-label" for="spaces-checkout-card">Card number</label>
+                                            <div class="spaces-checkout-figma-input-wrap is-card">
+                                                <input id="spaces-checkout-card" type="text" inputmode="numeric" placeholder="1424 1424 1424 1424" autocomplete="cc-number">
+                                                <span class="spaces-checkout-figma-brands" aria-hidden="true">
+                                                    <img src="./assets/images/spaces-v2/checkout/figma252/brand-mc.svg" width="35" height="24" alt="">
+                                                    <img src="./assets/images/spaces-v2/checkout/figma252/brand-visa.svg" width="35" height="24" alt="">
+                                                    <img src="./assets/images/spaces-v2/checkout/figma252/brand-amex.svg" width="35" height="24" alt="">
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="spaces-checkout-figma-row">
+                                            <div class="spaces-checkout-figma-field">
+                                                <label class="spaces-checkout-figma-label" for="spaces-checkout-exp">Expiration</label>
+                                                <div class="spaces-checkout-figma-input-wrap">
+                                                    <input id="spaces-checkout-exp" type="text" placeholder="MM/YY" autocomplete="cc-exp">
+                                                </div>
+                                            </div>
+                                            <div class="spaces-checkout-figma-field">
+                                                <label class="spaces-checkout-figma-label" for="spaces-checkout-cvc">CVC</label>
+                                                <div class="spaces-checkout-figma-input-wrap">
+                                                    <input id="spaces-checkout-cvc" type="text" inputmode="numeric" placeholder="•••" autocomplete="cc-csc">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="spaces-checkout-figma-field">
+                                            <label class="spaces-checkout-figma-label" for="spaces-checkout-name">Full name</label>
+                                            <div class="spaces-checkout-figma-input-wrap">
+                                                <input id="spaces-checkout-name" type="text" autocomplete="cc-name">
+                                            </div>
+                                        </div>
+
+                                        <div class="spaces-checkout-figma-field">
+                                            <label class="spaces-checkout-figma-label" for="spaces-checkout-country">Country</label>
+                                            <div class="spaces-checkout-figma-input-wrap is-select">
+                                                <select id="spaces-checkout-country" autocomplete="country-name">
+                                                    <option>Georgia</option>
+                                                    <option>Israel</option>
+                                                    <option>United States</option>
+                                                    <option>United Kingdom</option>
+                                                    <option>Germany</option>
+                                                </select>
+                                                <img class="spaces-checkout-figma-chevron" src="./assets/images/spaces-v2/checkout/figma252/select-chevron.svg" width="24" height="24" alt="" aria-hidden="true">
+                                            </div>
+                                        </div>
+
+                                        <div class="spaces-checkout-figma-field">
+                                            <label class="spaces-checkout-figma-label" for="spaces-checkout-address">Address</label>
+                                            <div class="spaces-checkout-figma-input-wrap">
+                                                <input id="spaces-checkout-address" type="text" autocomplete="street-address">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="spaces-checkout-pe-panel"
+                                    role="tabpanel"
+                                    id="spaces-checkout-panel-apple-pay"
+                                    aria-labelledby="spaces-checkout-tab-apple-pay"
+                                    data-checkout-method-panel="apple_pay"
+                                    hidden
+                                >
+                                    <button type="button" class="spaces-checkout-wallet-btn is-apple" data-checkout-pay="apple" aria-label="Pay with Apple Pay">
+                                        <img src="./assets/images/spaces-v2/checkout/apple-pay-wordmark.svg?v=3" alt="" width="54" height="22">
+                                    </button>
+                                </div>
+
+                                <div
+                                    class="spaces-checkout-pe-panel"
+                                    role="tabpanel"
+                                    id="spaces-checkout-panel-paypal"
+                                    aria-labelledby="spaces-checkout-tab-paypal"
+                                    data-checkout-method-panel="paypal"
+                                    hidden
+                                >
+                                    <button type="button" class="spaces-checkout-wallet-btn is-paypal" data-checkout-pay="paypal" aria-label="Pay with PayPal">
+                                        <img src="./assets/images/spaces-v2/checkout/paypal-wordmark.svg" alt="" width="100" height="28">
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="spaces-checkout-checks">
+                                <div class="spaces-checkout-business" data-checkout-business-block>
+                                    <button type="button" class="spaces-checkout-check" data-checkout-business aria-pressed="false" aria-controls="spaces-checkout-tax-id" aria-expanded="false">
+                                        <span class="spaces-checkout-check-box" aria-hidden="true">
+                                            <img src="./assets/images/spaces-v2/checkout/figma252/check-small.svg" width="20" height="20" alt="">
+                                        </span>
+                                        <span>I’m buying as a business</span>
+                                    </button>
+
+                                    <div class="spaces-checkout-tax-id" id="spaces-checkout-tax-id" data-checkout-tax-id hidden>
+                                        <div class="spaces-checkout-figma-field">
+                                            <label class="spaces-checkout-figma-label" for="spaces-checkout-business-name">Business name</label>
+                                            <div class="spaces-checkout-figma-input-wrap">
+                                                <input id="spaces-checkout-business-name" type="text" autocomplete="organization" data-checkout-business-name>
+                                            </div>
+                                        </div>
+                                        <div class="spaces-checkout-figma-row">
+                                            <div class="spaces-checkout-figma-field">
+                                                <label class="spaces-checkout-figma-label" for="spaces-checkout-tax-type">Tax ID type</label>
+                                                <div class="spaces-checkout-figma-input-wrap is-select">
+                                                    <select id="spaces-checkout-tax-type" data-checkout-tax-type>
+                                                        <option value="ge_vat">🇬🇪  GE  VAT</option>
+                                                        <option value="eu_vat">VAT</option>
+                                                        <option value="us_ein">EIN</option>
+                                                        <option value="gb_vat">GB VAT</option>
+                                                    </select>
+                                                    <img class="spaces-checkout-figma-chevron" src="./assets/images/spaces-v2/checkout/figma252/select-chevron.svg" width="24" height="24" alt="" aria-hidden="true">
+                                                </div>
+                                            </div>
+                                            <div class="spaces-checkout-figma-field">
+                                                <label class="spaces-checkout-figma-label" for="spaces-checkout-tax-value">Tax ID</label>
+                                                <div class="spaces-checkout-figma-input-wrap">
+                                                    <input id="spaces-checkout-tax-value" type="text" autocomplete="off" data-checkout-tax-value>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="spaces-checkout-summary">
+                            <div class="spaces-checkout-order-card">
+                                <div class="spaces-checkout-order-glow" aria-hidden="true">
+                                    <span class="spaces-checkout-order-orb is-a"></span>
+                                    <span class="spaces-checkout-order-orb is-b"></span>
+                                </div>
+                                <div class="spaces-checkout-order-head">
+                                    <div class="spaces-checkout-order-title-row">
+                                        <strong class="spaces-checkout-plan-name" data-checkout-plan-name>Premium</strong>
+                                        <span class="spaces-checkout-trial-pill" data-checkout-trial-pill hidden>+ 7 days for free</span>
+                                    </div>
+                                    <p class="spaces-checkout-order-sub" data-checkout-summary-copy>Design faster with AI</p>
+                                </div>
+                                <div class="spaces-checkout-order-lines">
+                                    <div class="spaces-checkout-line">
+                                        <span>Subtotal</span>
+                                        <span data-checkout-subtotal>$239.88</span>
+                                    </div>
+                                    <div class="spaces-checkout-line is-discount" data-checkout-discount-line>
+                                        <span class="spaces-checkout-discount-label">
+                                            <span data-checkout-discount-label>Annual discount</span>
+                                            <span class="spaces-checkout-discount-badge" data-checkout-discount-badge>33% OFF</span>
+                                        </span>
+                                        <span data-checkout-discount-amount>–$180</span>
+                                    </div>
+                                    <div class="spaces-checkout-line is-vat" data-checkout-vat-line hidden>
+                                        <span data-checkout-vat-label>VAT 18%</span>
+                                        <span data-checkout-vat-amount>$10.78</span>
+                                    </div>
+                                    <div class="spaces-checkout-line is-after-trial" data-checkout-after-trial-line hidden>
+                                        <span>Total after trial</span>
+                                        <span data-checkout-after-trial>$399.96</span>
+                                    </div>
+                                    <p class="spaces-checkout-bill-note" data-checkout-from-label>Billed yearly · $4.99 a month</p>
+                                    <div class="spaces-checkout-line is-trial-highlight" data-checkout-trial-line hidden>
+                                        <span class="spaces-checkout-trial-mark">
+                                            <img src="./assets/images/spaces-v2/checkout/trial-highlight.svg?v=figma247-2" width="96" height="24" alt="" aria-hidden="true">
+                                            <em>7 day trial</em>
+                                        </span>
+                                        <span data-checkout-trial-today>$0 today</span>
+                                    </div>
+                                    <div class="spaces-checkout-line is-total">
+                                        <span data-checkout-total-label>Total</span>
+                                        <strong data-checkout-due-today>$59.88</strong>
+                                    </div>
+                                    <p class="spaces-checkout-bill-note is-cancel" data-checkout-cancel-note hidden>Cancel anytime before 10 Oct, 2026</p>
+                                </div>
+                            </div>
+
+                            <button type="button" class="spaces-checkout-cta" data-checkout-cta>Pay $70.38</button>
+                            <p class="spaces-checkout-legal" data-checkout-legal>Payment is encrypted. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="./assets/js/spaces-upgrade-modal.js?v=checkout-pro-trial-1"></script>
+        <script src="./assets/js/spaces-usage-modal.js?v=figma-1"></script>
+        <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
+        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-match-design-10"></script>
     </body>
 </html>

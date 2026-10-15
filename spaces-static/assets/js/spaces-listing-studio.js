@@ -264,8 +264,8 @@
 
         return {
             id: LISTING_ID,
-            address: '23 Ann Politkovskaya Street, Dublin',
-            title: '23 Ann Politkovskaya Street',
+            address: '13 Abbey Road, Dublin',
+            title: '13 Abbey Road',
             description,
             price,
             dealType: deal,
@@ -323,6 +323,7 @@
                 }
             ],
             editorOption: 'option2',
+            // Chat tab with collapsed Listing details (not Spaces-side chat).
             option2Panel: 'chat',
             credits: 80,
             generatedPayload: null,
@@ -333,28 +334,49 @@
         sessionStorage.setItem(RETURN_KEY, `${window.location.pathname}${window.location.search}${window.location.hash}`);
     };
 
-    const listingsFinalUrl = (hash = '') => {
+    const listingsFinalUrl = (options = {}) => {
         const here = window.location.pathname || '';
-        // GitHub project pages live under /spaces-chat-ai/…
         const base = here.includes('/spaces-chat-ai/')
             ? '/spaces-chat-ai/listings-final/index.html'
             : '/listings-final/index.html';
-        return `${base}?from=spaces&t=${Date.now()}${hash}`;
+        const params = new URLSearchParams({
+            from: 'spaces',
+            t: String(Date.now()),
+            v: 'header-transparent-1'
+        });
+        if (options.withChat) params.set('spacesChat', '1');
+        const hash = options.hash || '';
+        return `${base}?${params.toString()}${hash}`;
+    };
+
+    let keepChatAlive = false;
+
+    const clearSplitChat = () => {
+        document.body.classList.remove('is-listing-with-chat', 'is-editor-with-chat', 'is-floor-plan-chat-collapsed');
+        mainContent.classList.remove('is-listing-with-chat', 'is-editor-with-chat', 'is-floor-plan-chat-collapsed');
+        homePage?.classList.remove('is-editor-split-chat');
     };
 
     const open = (options = {}) => {
-        // Keep the Spaces listing chat alive while the editor is open.
+        // Keep the Spaces listing chat alive only when explicitly requested.
+        // Default Edit opens the iframe Chat (collapsed Listing details) alone.
         window.SpacesListingChat?.prepareOpen?.();
+        const keepChat = options.withChat === true;
+        keepChatAlive = keepChat;
         returnView = captureReturnView();
         storeReturnView(returnView);
-        mainContent.classList.remove('is-home-page', 'is-all-spaces-page', 'is-ai-chats-page');
-        document.body.classList.remove('is-space-home-page');
+        mainContent.classList.remove('is-home-page', 'is-all-spaces-page', 'is-ai-chats-page', 'is-floor-plan-studio-page', 'is-floor-plan-with-chat', 'is-editor-with-chat');
+        document.body.classList.remove('is-space-home-page', 'is-floor-plan-studio-open', 'is-floor-plan-with-chat', 'is-editor-with-chat');
         mainContent.classList.add('is-listing-studio-page');
         document.body.classList.add('is-listing-studio-open');
-        if (homePage) homePage.hidden = true;
         if (allSpacesPage) allSpacesPage.hidden = true;
         const aiChatsPage = document.querySelector('[data-ai-chats-page]');
         if (aiChatsPage) aiChatsPage.hidden = true;
+        const floorPlanStudio = document.querySelector('[data-floor-plan-studio]');
+        if (floorPlanStudio) floorPlanStudio.hidden = true;
+        document.body.classList.remove('is-floor-plan-with-chat');
+        mainContent.classList.remove('is-floor-plan-with-chat');
+        homePage?.classList.remove('is-editor-split-chat');
         studio.hidden = false;
         if (fab) fab.hidden = true;
         window.SpacesPrototypeNavigation?.closeCollection?.({ restoreScroll: false });
@@ -364,8 +386,31 @@
         const mode = options.mode === 'preview' ? 'preview' : 'edit';
         const hash = mode === 'preview'
             ? `#/listing/${LISTING_ID}/preview`
-            : `#/listing/${LISTING_ID}`;
-        frame.src = listingsFinalUrl(hash);
+            : `#/standalone`;
+
+        if (keepChat && homePage) {
+            document.body.classList.add('is-listing-with-chat', 'is-editor-with-chat');
+            mainContent.classList.add('is-listing-with-chat', 'is-editor-with-chat');
+            homePage.hidden = false;
+            homePage.classList.add('is-centered-chat', 'is-editor-split-chat');
+            mainContent.classList.add('is-home-page');
+            window.SpacesAiChats?.syncFromListing?.();
+            window.SpacesAiChats?.syncChatHeader?.();
+            window.SpacesAiChats?.renderArtifacts?.();
+            window.SpacesFloorPlanStudio?.setChatCollapsed?.(false);
+            window.SpacesListingChat?.hideListingDetails?.();
+            window.setTimeout(() => {
+                homePage.querySelector('[data-home-thread]')?.scrollTo?.({
+                    top: homePage.querySelector('[data-home-thread]')?.scrollHeight || 0
+                });
+            }, 0);
+        } else {
+            clearSplitChat();
+            if (homePage) homePage.hidden = true;
+            window.SpacesListingChat?.hideListingDetails?.();
+        }
+
+        frame.src = listingsFinalUrl({ hash, withChat: keepChat });
     };
 
     let closing = false;
@@ -374,12 +419,40 @@
         if (!mainContent.classList.contains('is-listing-studio-page') && studio.hidden) return;
         closing = true;
         try {
+            const kept = keepChatAlive;
             studio.hidden = true;
             frame.src = 'about:blank';
             sessionStorage.removeItem(EMBEDDED_KEY);
             sessionStorage.removeItem(RETURN_KEY);
             document.body.classList.remove('is-listing-studio-open');
             mainContent.classList.remove('is-listing-studio-page');
+            if (kept) {
+                keepChatAlive = false;
+                const snap = returnView?.chatSnapshot
+                    || readStoredReturnView()?.chatSnapshot
+                    || null;
+                clearSplitChat();
+                window.SpacesListingChat?.hideListingDetails?.();
+                mainContent.classList.add('is-home-page');
+                document.body.classList.add('is-space-home-page');
+                if (homePage) {
+                    homePage.hidden = false;
+                    homePage.classList.add('is-centered-chat');
+                }
+                if (allSpacesPage) allSpacesPage.hidden = true;
+                if (snap) window.SpacesListingChat?.restore?.(snap);
+                storeReturnView(null);
+                returnView = null;
+                window.SpacesAiChats?.syncChatHeader?.();
+                window.setTimeout(() => {
+                    homePage?.querySelector('[data-home-thread]')?.scrollTo?.({
+                        top: homePage.querySelector('[data-home-thread]')?.scrollHeight || 0
+                    });
+                }, 0);
+                return;
+            }
+            clearSplitChat();
+            window.SpacesListingChat?.hideListingDetails?.();
             restoreReturnView();
         } finally {
             window.setTimeout(() => {
@@ -402,7 +475,7 @@
                 return false;
             }
         })();
-        if (!fromFrame && event.origin !== window.location.origin && !sameSite && event.origin !== '*') {
+        if (!fromFrame && event.origin !== window.location.origin && !sameSite) {
             // Still close if studio is open — Back must never trap users on the wizard.
             if (!isOpen()) return;
         }
@@ -420,7 +493,7 @@
             const hash = String(win.location.hash || '');
             const path = String(win.location.pathname || '');
             const text = String(win.document?.body?.innerText || '');
-            const onListing = hash.includes('/listing/');
+            const onListing = hash.includes('/listing/') || hash.includes('/standalone');
             const onListingsApp = path.includes('listings-final');
             const onWizard = /Start wizard/i.test(text) || /Four short questions/i.test(text);
             if (onListingsApp && (!onListing || onWizard)) close();
@@ -444,6 +517,7 @@
         returnView = null;
         mainContent.classList.remove('is-listing-studio-page');
         document.body.classList.remove('is-listing-studio-open');
+        clearSplitChat();
         window.setTimeout(() => {
             closing = false;
         }, 0);

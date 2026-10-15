@@ -1,0 +1,14 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <!-- back white -->
+  <g transform="rotate(-18 28 24)">
+    <rect x="18" y="8" width="18" height="24" rx="2.2" fill="#fff" stroke="#1C1C1E" stroke-width="1.3"/>
+  </g>
+  <!-- middle green -->
+  <g transform="rotate(-18 26 26)">
+    <rect x="14" y="11" width="18" height="24" rx="2.2" fill="#32B94D" stroke="#1C1C1E" stroke-width="1.3"/>
+  </g>
+  <!-- front white -->
+  <g transform="rotate(-18 24 28)">
+    <rect x="10" y="14" width="18" height="24" rx="2.2" fill="#fff" stroke="#1C1C1E" stroke-width="1.3"/>
+  </g>
+</svg>
