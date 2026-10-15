@@ -3213,6 +3213,26 @@ body:not(.is-new-chat-placement-option4):not(.is-new-chat-placement-option5) .sp
     gap: 2px;
 }
 
+.spaces-ai-chats-empty{
+    display: none;
+    margin: 4px 0 0;
+    padding: 10px 12px 12px;
+    color: #747474;
+    font: 400 14px/20px "Open Sans", Arial, sans-serif;
+}
+
+.spaces-ai-chats-empty[hidden]{
+    display: none !important;
+}
+
+.spaces-ai-chats-section.is-space-filter-empty .spaces-ai-chats-empty:not([hidden]){
+    display: block !important;
+}
+
+.spaces-ai-chats-section.is-space-filter-empty .spaces-ai-chats-list:empty{
+    display: none;
+}
+
 .spaces-ai-chats-row{
     position: relative;
     display: flex;
@@ -16429,7 +16449,7 @@ body.is-upgrade-modal-open{
     flex-direction: column;
     gap: 16px;
     min-width: 0;
-    min-height: 840px;
+    min-height: 0;
     height: auto;
     padding: 32px 20px 24px;
     border: .5px solid rgba(232, 232, 232, .9);
@@ -16866,8 +16886,8 @@ body.is-upgrade-modal-open{
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: auto;
-    padding-top: 24px;
+    margin-top: 0;
+    padding-top: 16px;
     border-top: 1px solid rgba(0, 0, 0, .09);
 }
 
@@ -17800,9 +17820,23 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-form{
+    /* Figma 252:12321 Full-Checkout form column */
+    --colorPrimary: #1aa73f;
+    --colorBackground: #ffffff;
+    --colorText: #393939;
+    --colorTextSecondary: #393939;
+    --colorTextPlaceholder: #747474;
+    --borderRadius: 16px;
+    --tabBorderRadius: 8px;
+    --tabSpacing: 13px;
+    --fontFamily: "Open Sans", Arial, sans-serif;
+    --pe-border: rgba(0, 0, 0, .09);
+    --pe-border-input: rgba(0, 0, 0, .16);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 32px;
+    width: 100%;
+    max-width: 368px;
     min-width: 0;
     overflow: visible;
 }
@@ -17972,62 +18006,315 @@ body.is-checkout-modal-open{
 }
 
 /*
- * Stripe Payment Element–inspired Card accordion (light theme)
- * Docs: https://docs.stripe.com/payments/payment-element
+ * Figma 252:12321 Full-Checkout — payment methods + fields
+ * https://www.figma.com/design/k3DZte02jpRSskHvw1p5PT/Untitled?node-id=252-12321
  */
 .spaces-checkout-payment-element{
-    --pe-border: #e6e6e6;
-    --pe-border-strong: #c7c7c7;
-    --pe-text: #30313d;
-    --pe-muted: #6d6e78;
-    --pe-placeholder: #a3a4ad;
-    --pe-focus: #0570de;
-    --pe-focus-ring: rgba(5, 112, 222, .2);
-    --pe-radius: 6px;
-    --pe-bg: #fff;
-    --pe-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
+    --colorPrimary: #1aa73f;
+    --colorBackground: #ffffff;
+    --colorText: #393939;
+    --colorTextSecondary: #393939;
+    --colorTextPlaceholder: #747474;
+    --borderRadius: 16px;
+    --tabBorderRadius: 8px;
+    --tabSpacing: 13px;
+    --fontFamily: "Open Sans", Arial, sans-serif;
+    --pe-border: rgba(0, 0, 0, .09);
+    --pe-border-input: rgba(0, 0, 0, .16);
+    --pe-shadow: 0 0 0 .5px rgba(0, 0, 0, .04), 0 2px 6px rgba(0, 0, 0, .1);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-width: 0;
+    box-sizing: border-box;
+    font-family: var(--fontFamily);
+    color: var(--colorText);
+    background: transparent;
+    -webkit-font-smoothing: antialiased;
+}
+
+.spaces-checkout-pe-tabs{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: var(--tabSpacing);
+    width: 100%;
+    max-width: 368px;
     min-width: 0;
     box-sizing: border-box;
 }
 
-.spaces-checkout-pm{
-    overflow: hidden;
+.spaces-checkout-pe-tab{
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 4px;
+    min-width: 0;
+    height: 72px;
+    margin: 0;
+    padding: 12px;
     border: 1px solid var(--pe-border);
-    border-radius: var(--pe-radius);
-    background: var(--pe-bg);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .03), 0 3px 6px rgba(18, 42, 66, .02);
+    border-radius: var(--tabBorderRadius);
+    background: var(--colorBackground);
+    color: #393939;
+    box-shadow: var(--pe-shadow);
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: border-color .12s ease, box-shadow .12s ease;
 }
 
-.spaces-checkout-pm-head{
+.spaces-checkout-pe-tab:hover{
+    color: #393939;
+}
+
+.spaces-checkout-pe-tab:focus-visible{
+    outline: 0;
+    border-color: #1aa73f;
+}
+
+.spaces-checkout-pe-tab.is-selected{
+    border: 2px solid #1aa73f;
+    padding: 11px;
+    color: #393939;
+    box-shadow: none;
+}
+
+.spaces-checkout-pe-tab-icon-img,
+.spaces-checkout-pe-tab-badge-img{
+    display: block;
+    flex: 0 0 auto;
+    width: auto;
+    height: 24px;
+    max-width: 35px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.spaces-checkout-pe-tab-icon-img{
+    width: 24px;
+    height: 24px;
+}
+
+.spaces-checkout-pe-tab-badge{
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: 35px;
+    height: 24px;
+    line-height: 0;
+}
+
+.spaces-checkout-pe-tab-badge > img,
+.spaces-checkout-pe-tab-badge > svg{
+    display: block;
+    width: 35px;
+    height: 24px;
+}
+
+.spaces-checkout-pe-tab-label{
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    font: 600 14px/20px "Open Sans", Arial, sans-serif;
+    color: #393939;
+}
+
+/* Figma fields — labels above, radius 16px */
+.spaces-checkout-figma-fields{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 368px;
+    min-width: 0;
+}
+
+.spaces-checkout-figma-row{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+    width: 100%;
+}
+
+.spaces-checkout-figma-field{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    min-width: 0;
+}
+
+.spaces-checkout-figma-label{
+    margin: 0;
+    color: #393939;
+    font: 600 14px/20px "Open Sans", Arial, sans-serif;
+}
+
+.spaces-checkout-figma-input-wrap{
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
-    min-height: 48px;
-    padding: 12px 14px;
-    box-sizing: border-box;
-}
-
-.spaces-checkout-pm-radio{
-    flex: 0 0 16px;
-    width: 16px;
-    height: 16px;
-    border: 1.5px solid #919191;
-    border-radius: 50%;
-    box-sizing: border-box;
+    width: 100%;
+    min-height: 56px;
+    padding: 0;
+    border: 1px solid rgba(0, 0, 0, .16);
+    border-radius: 16px;
     background: #fff;
+    box-sizing: border-box;
 }
 
-.spaces-checkout-pm.is-open .spaces-checkout-pm-radio{
-    border-color: var(--pe-focus);
-    box-shadow: inset 0 0 0 3.5px var(--pe-focus);
+.spaces-checkout-figma-input-wrap:focus-within{
+    border-color: #1aa73f;
 }
 
-.spaces-checkout-pm-title{
-    flex: 1 1 auto;
+.spaces-checkout-figma-input-wrap > input,
+.spaces-checkout-figma-input-wrap > select{
+    width: 100%;
     min-width: 0;
-    color: var(--pe-text);
-    font: 500 14px/20px var(--pe-font);
-    -webkit-font-smoothing: antialiased;
+    height: 54px;
+    margin: 0;
+    padding: 16px;
+    border: 0;
+    border-radius: 16px;
+    background: transparent;
+    color: #1c1c1c;
+    font: 400 16px/24px "Open Sans", Arial, sans-serif;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.spaces-checkout-figma-input-wrap > input::placeholder{
+    color: #747474;
+}
+
+.spaces-checkout-figma-input-wrap > input:focus,
+.spaces-checkout-figma-input-wrap > select:focus{
+    outline: 0;
+}
+
+.spaces-checkout-figma-input-wrap.is-card > input{
+    padding-right: 130px;
+}
+
+.spaces-checkout-figma-brands{
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.spaces-checkout-figma-brands > img{
+    display: block;
+    width: 35px;
+    height: 24px;
+}
+
+.spaces-checkout-figma-input-wrap.is-select > select{
+    padding-right: 48px;
+    cursor: pointer;
+}
+
+.spaces-checkout-figma-chevron{
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.spaces-checkout-tax-id .spaces-checkout-figma-fields,
+.spaces-checkout-tax-id{
+    max-width: 368px;
+}
+
+/*
+ * Wallet confirm button inside selected PE tab
+ * (Apple Pay / PayPal — same role as Stripe PE wallet action, not Express Checkout Element)
+ */
+.spaces-checkout-wallet-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 52px;
+    height: 52px;
+    margin: 0;
+    padding: 12px 16px;
+    border: 0;
+    border-radius: 12px;
+    background: #000;
+    cursor: pointer;
+    box-sizing: border-box;
+    box-shadow: none;
+}
+
+.spaces-checkout-wallet-btn.is-paypal{
+    background: #ffc439;
+}
+
+.spaces-checkout-wallet-btn:hover,
+.spaces-checkout-wallet-btn:focus-visible{
+    outline: 0;
+    filter: brightness(.97);
+}
+
+.spaces-checkout-wallet-btn > img{
+    display: block;
+    width: auto;
+    height: 24px;
+    max-width: 140px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.spaces-checkout-wallet-btn.is-paypal > img{
+    height: 28px;
+}
+
+/* Stripe docs: overflow / more payment methods control */
+.spaces-checkout-pe-more{
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    min-height: 64px;
+    margin: 0;
+    padding: 8px 4px;
+    border: 1px solid #e0e6eb;
+    border-radius: var(--borderRadius);
+    background: var(--colorBackground);
+    color: var(--colorTextSecondary);
+    box-shadow: var(--pe-shadow);
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.spaces-checkout-pe-more:hover,
+.spaces-checkout-pe-more:focus-visible{
+    outline: 0;
+    color: var(--colorText);
+    box-shadow: var(--pe-shadow), 0 0 0 2px var(--colorPrimary);
+}
+
+.spaces-checkout-pe-more-mark{
+    display: inline-flex;
+    line-height: 0;
+}
+
+.spaces-checkout-pe-more-chevron{
+    display: block;
 }
 
 .spaces-checkout-brands{
@@ -18035,7 +18322,7 @@ body.is-checkout-modal-open{
     flex: 0 0 auto;
     align-items: center;
     gap: 4px;
-    margin-left: auto;
+    margin-right: 10px;
     pointer-events: none;
 }
 
@@ -18043,34 +18330,73 @@ body.is-checkout-modal-open{
     display: block;
     width: 32px;
     height: 20px;
-    border-radius: 3px;
+    border-radius: 2px;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
     background: #fff;
 }
 
-.spaces-checkout-pm-body{
-    display: none;
+.spaces-checkout-field.is-card-number{
+    padding-right: 4px;
+}
+
+.spaces-checkout-field.is-card-number > input{
+    padding-right: 8px;
+}
+
+.spaces-checkout-pe-panel{
+    display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 0 14px 16px;
+    gap: 0;
+    min-width: 0;
+    max-width: 368px;
     box-sizing: border-box;
 }
 
-.spaces-checkout-pm.is-open .spaces-checkout-pm-body{
-    display: flex;
+.spaces-checkout-pe-panel[hidden]{
+    display: none !important;
 }
 
+.spaces-checkout-pe-section-title{
+    margin: 0;
+    color: var(--colorText);
+    font: 600 16px/24px var(--fontFamily);
+}
+
+.spaces-checkout-pe-redirect{
+    display: none !important;
+}
+
+.spaces-checkout-pe-redirect-title{
+    margin: 0;
+    color: var(--colorText);
+    font: 500 14px/20px var(--fontFamily);
+}
+
+.spaces-checkout-pe-redirect-copy{
+    margin: 0;
+    color: var(--colorTextSecondary);
+    font: 400 13px/18px var(--fontFamily);
+}
+
+@media (max-width: 520px){
+    .spaces-checkout-pe-tabs{
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Appearance API: inputs: "condensed" — card number / exp / cvc grouped */
 .spaces-checkout-card-block{
     overflow: hidden;
-    border: 1px solid var(--pe-border-strong);
-    border-radius: var(--pe-radius);
-    background: var(--pe-bg);
+    border: 1px solid var(--pe-border-input);
+    border-radius: var(--borderRadius);
+    background: var(--colorBackground);
+    box-shadow: var(--pe-shadow);
     transition: border-color .15s ease, box-shadow .15s ease;
 }
 
 .spaces-checkout-card-block:focus-within{
-    border-color: var(--pe-focus);
-    box-shadow: 0 0 0 1px var(--pe-focus), 0 0 0 4px var(--pe-focus-ring);
+    border-color: var(--colorPrimary);
+    box-shadow: var(--pe-shadow), 0 0 0 1px var(--colorPrimary);
 }
 
 .spaces-checkout-field{
@@ -18082,21 +18408,66 @@ body.is-checkout-modal-open{
     box-sizing: border-box;
 }
 
+/* Appearance API: labels: "above" (default) + spaced billing inputs */
 .spaces-checkout-field.is-billing{
     flex-direction: column;
     align-items: stretch;
-    gap: 6px;
+    gap: 4px;
 }
 
+/* Appearance API: .Label */
 .spaces-checkout-field-label{
     margin: 0;
-    color: var(--pe-muted);
-    font: 400 13px/16px var(--pe-font);
-    -webkit-font-smoothing: antialiased;
+    color: var(--colorTextSecondary);
+    font: 400 13px/16px var(--fontFamily);
+}
+
+/*
+ * Appearance API: labels: "floating" (.Label--floating / notched border label)
+ * Label sits on the top edge of .Input with a white cutout.
+ */
+.spaces-checkout-field.is-billing.is-floating{
+    position: relative;
+    gap: 0;
+    padding-top: 0;
+}
+
+.spaces-checkout-field.is-billing.is-floating > .spaces-checkout-field-label{
+    position: absolute;
+    top: 0;
+    left: 12px;
+    z-index: 2;
+    padding: 0 6px;
+    /* Notch cutout must match input fill (Appearance colorBackground), not page gray */
+    background: var(--colorBackground);
+    color: var(--colorTextSecondary);
+    font: 400 12px/1 var(--fontFamily);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.spaces-checkout-field.is-billing.is-floating > input,
+.spaces-checkout-field.is-billing.is-floating .spaces-checkout-select-wrap > select{
+    height: 52px;
+    padding-top: 14px;
+    padding-bottom: 12px;
+    border-radius: var(--borderRadius);
+    border-color: var(--pe-border-input);
+    box-shadow: none;
+}
+
+.spaces-checkout-field.is-billing.is-floating > input:focus,
+.spaces-checkout-field.is-billing.is-floating .spaces-checkout-select-wrap > select:focus{
+    border-color: var(--colorPrimary);
+    box-shadow: 0 0 0 1px var(--colorPrimary);
+}
+
+.spaces-checkout-field.is-billing.is-floating > input::placeholder{
+    color: transparent;
 }
 
 .spaces-checkout-card-block .spaces-checkout-field.is-card-number{
-    border-bottom: 1px solid var(--pe-border);
+    border-bottom: 1px solid var(--pe-border-input);
 }
 
 .spaces-checkout-field-row{
@@ -18105,52 +18476,52 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-field-row > .spaces-checkout-field.is-exp{
-    border-right: 1px solid var(--pe-border);
+    border-right: 1px solid var(--pe-border-input);
 }
 
 .spaces-checkout-field.is-cvc{
-    padding-right: 8px;
+    padding-right: 0;
 }
 
 .spaces-checkout-card-block input{
     width: 100%;
     min-width: 0;
-    height: 44px;
+    height: 48px;
     margin: 0;
-    padding: 10px 12px;
+    padding: 12px 14px;
     border: 0;
     border-radius: 0;
     box-sizing: border-box;
     background: transparent;
-    color: var(--pe-text);
-    font: 400 16px/24px var(--pe-font);
-    -webkit-font-smoothing: antialiased;
+    color: var(--colorText);
+    font: 400 16px/24px var(--fontFamily);
 }
 
+/* Appearance API: .Input (spaced / floating) */
 .spaces-checkout-field.is-billing > input,
 .spaces-checkout-select-wrap > select{
     width: 100%;
     min-width: 0;
-    height: 44px;
+    height: 48px;
     margin: 0;
-    padding: 10px 12px;
-    border: 1px solid var(--pe-border-strong);
-    border-radius: var(--pe-radius);
+    padding: 12px 14px;
+    border: 1px solid var(--pe-border-input);
+    border-radius: var(--borderRadius);
     box-sizing: border-box;
-    background: var(--pe-bg);
-    color: var(--pe-text);
-    font: 400 16px/24px var(--pe-font);
+    background: var(--colorBackground);
+    color: var(--colorText);
+    font: 400 16px/24px var(--fontFamily);
+    box-shadow: none;
     appearance: none;
     -webkit-appearance: none;
-    -webkit-font-smoothing: antialiased;
     transition: border-color .15s ease, box-shadow .15s ease;
 }
 
 .spaces-checkout-field.is-billing > input:focus,
 .spaces-checkout-select-wrap > select:focus{
     outline: 0;
-    border-color: var(--pe-focus);
-    box-shadow: 0 0 0 1px var(--pe-focus), 0 0 0 4px var(--pe-focus-ring);
+    border-color: var(--colorPrimary);
+    box-shadow: 0 0 0 1px var(--colorPrimary);
 }
 
 .spaces-checkout-card-block input:focus{
@@ -18159,7 +18530,7 @@ body.is-checkout-modal-open{
 
 .spaces-checkout-card-block input::placeholder,
 .spaces-checkout-field.is-billing > input::placeholder{
-    color: var(--pe-placeholder);
+    color: var(--colorTextPlaceholder);
 }
 
 .spaces-checkout-cvc-icon{
@@ -18210,6 +18581,10 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-check-box{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex: 0 0 20px;
     width: 20px;
     height: 20px;
@@ -18217,31 +18592,41 @@ body.is-checkout-modal-open{
     border-radius: 6px;
     box-sizing: border-box;
     background: transparent;
+    overflow: hidden;
+}
+
+.spaces-checkout-check-box > img{
+    display: none;
+    width: 20px;
+    height: 20px;
 }
 
 .spaces-checkout-check[aria-pressed="true"] .spaces-checkout-check-box{
     border-color: #1aa73f;
-    background: #1aa73f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+    background: #1aa73f;
 }
 
-/* Stripe Tax ID Element–inspired panel
-   https://docs.stripe.com/elements/tax-id-element */
+.spaces-checkout-check[aria-pressed="true"] .spaces-checkout-check-box > img{
+    display: block;
+}
+
+/* Figma 252:12321 — business + tax fields (no Stripe Tax ID box) */
 .spaces-checkout-business{
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     min-width: 0;
 }
 
 .spaces-checkout-tax-id{
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 14px;
-    border: 1px solid #e6e6e6;
-    border-radius: 6px;
-    background: #fff;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .03), 0 3px 6px rgba(18, 42, 66, .02);
+    gap: 16px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
     box-sizing: border-box;
 }
 
@@ -18249,24 +18634,8 @@ body.is-checkout-modal-open{
     display: none !important;
 }
 
-.spaces-checkout-tax-id .spaces-checkout-field.is-billing > input,
-.spaces-checkout-tax-id .spaces-checkout-select-wrap > select{
-    height: 44px;
-    border: 1px solid #c7c7c7;
-    border-radius: 6px;
-    color: #30313d;
-    font: 400 16px/24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
-}
-
-.spaces-checkout-tax-id .spaces-checkout-field-label{
-    color: #6d6e78;
-    font: 400 13px/16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
-}
-
 .spaces-checkout-tax-id-hint{
-    margin: 0;
-    color: #6d6e78;
-    font: 400 12px/16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
+    display: none;
 }
 
 .spaces-checkout-summary{
@@ -18561,8 +18930,9 @@ body.is-checkout-modal-open{
 }
 
 .spaces-checkout-legal{
+    display: block;
     margin: 0 auto;
-    max-width: 392px;
+    max-width: 332px;
     color: #575757;
     font: 400 14px/20px "Open Sans", Arial, sans-serif;
     text-align: center;

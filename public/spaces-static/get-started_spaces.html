@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=checkout-card-glow-1">
+    <link rel="stylesheet" href="./assets/css/spaces-overrides.css?v=ai-chats-empty-2">
 
         <title>Get Started Spaces</title>
 
@@ -792,6 +792,7 @@
                 </li>
             </ul>
             <ul class="spaces-sidebar-primary spaces-ai-chats-list" role="list" data-ai-chats-list></ul>
+            <p class="spaces-ai-chats-empty" data-ai-chats-empty hidden>No chats in this space</p>
             <button type="button" class="spaces-sidebar-item spaces-ai-chats-all" data-ai-chats-all hidden>View all chats</button>
         </section>
 
@@ -3571,7 +3572,7 @@
         <script src="./assets/js/spaces-account-profile.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-home-data.js?v=asset-base-1"></script>
         <script src="./assets/js/spaces-home-composer.js?v=done-no-rotate-1"></script>
-        <script src="./assets/js/spaces-ai-chats.js?v=icon-edit-1"></script>
+        <script src="./assets/js/spaces-ai-chats.js?v=ai-chats-empty-2"></script>
         <script src="./assets/js/spaces-listing-chat.js?v=done-no-rotate-1"></script>
         <script src="./assets/js/spaces-all-spaces.js?v=hide-view-on-empty-1"></script>
         <script src="./assets/js/spaces-copilot-panel.js?v=send-icon-fix-1"></script>
@@ -4507,144 +4508,181 @@
 
                     <div class="spaces-checkout-main">
                         <div class="spaces-checkout-form">
-                            <div class="spaces-checkout-express" aria-label="Express payment methods">
-                                <button type="button" class="spaces-checkout-express-btn is-apple" data-checkout-pay="apple" aria-label="Pay with Apple Pay">
-                                    <img src="./assets/images/spaces-v2/checkout/apple-pay-wordmark.svg?v=3" alt="" width="54" height="22">
-                                </button>
-                                <button type="button" class="spaces-checkout-express-btn is-google" data-checkout-pay="google" aria-label="Pay with Google Pay">
-                                    <img src="./assets/images/spaces-v2/checkout/google-pay-wordmark.svg?v=3" alt="" width="58" height="24">
-                                </button>
-                                <button type="button" class="spaces-checkout-express-btn is-paypal" data-checkout-pay="paypal" aria-label="Pay with PayPal">
-                                    <img src="./assets/images/spaces-v2/checkout/paypal-logo-figma.svg?v=figma244" alt="" width="100" height="28">
-                                </button>
-                            </div>
-
-                            <div class="spaces-checkout-or" aria-hidden="true">
-                                <span></span>
-                                <em>or pay with</em>
-                                <span></span>
-                            </div>
-
-                            <div class="spaces-checkout-currency" data-checkout-currency>
-                                <div class="spaces-checkout-toggle-group" role="radiogroup" aria-label="Choose currency">
-                                    <label class="spaces-checkout-toggle-item is-selected">
-                                        <input class="visually-hidden" type="radio" name="spaces-checkout-currency" value="gel" data-checkout-currency-option="gel" checked>
-                                        <span class="spaces-checkout-toggle-label">
-                                            <span class="spaces-checkout-toggle-flag" aria-hidden="true">
-                                                <img src="./assets/images/spaces-v2/checkout/flags/ge.svg?v=stripe4" width="16" height="16" alt="">
-                                            </span>
-                                            <span dir="ltr">GEL</span>
-                                        </span>
-                                    </label>
-                                    <label class="spaces-checkout-toggle-item">
-                                        <input class="visually-hidden" type="radio" name="spaces-checkout-currency" value="usd" data-checkout-currency-option="usd">
-                                        <span class="spaces-checkout-toggle-label">
-                                            <span class="spaces-checkout-toggle-flag" aria-hidden="true">
-                                                <img src="./assets/images/spaces-v2/checkout/flags/us.svg?v=stripe4" width="16" height="16" alt="">
-                                            </span>
-                                            <span dir="ltr">USD</span>
-                                        </span>
-                                    </label>
+                            <!--
+                              Figma 252:12321 Full-Checkout — EXACT match
+                              https://www.figma.com/design/k3DZte02jpRSskHvw1p5PT/Untitled?node-id=252-12321
+                            -->
+                            <div class="spaces-checkout-payment-element is-tabs is-figma252" data-checkout-card-fields data-checkout-layout="tabs" data-checkout-payment-element-root>
+                                <div class="spaces-checkout-pe-tabs" role="tablist" aria-label="Payment methods">
+                                    <button
+                                        type="button"
+                                        class="spaces-checkout-pe-tab is-selected"
+                                        role="tab"
+                                        id="spaces-checkout-tab-card"
+                                        aria-selected="true"
+                                        aria-controls="spaces-checkout-panel-card"
+                                        data-checkout-method="card"
+                                        tabindex="0"
+                                    >
+                                        <img class="spaces-checkout-pe-tab-icon-img" src="./assets/images/spaces-v2/checkout/figma252/card-tab.svg" width="24" height="24" alt="" aria-hidden="true">
+                                        <span class="spaces-checkout-pe-tab-label">Card</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="spaces-checkout-pe-tab"
+                                        role="tab"
+                                        id="spaces-checkout-tab-apple-pay"
+                                        aria-selected="false"
+                                        aria-controls="spaces-checkout-panel-apple-pay"
+                                        data-checkout-method="apple_pay"
+                                        tabindex="-1"
+                                    >
+                                        <img class="spaces-checkout-pe-tab-badge-img" src="./assets/images/spaces-v2/checkout/figma252/apple-pay-badge.svg" width="35" height="24" alt="" aria-hidden="true">
+                                        <span class="spaces-checkout-pe-tab-label">Apple Pay</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="spaces-checkout-pe-tab"
+                                        role="tab"
+                                        id="spaces-checkout-tab-paypal"
+                                        aria-selected="false"
+                                        aria-controls="spaces-checkout-panel-paypal"
+                                        data-checkout-method="paypal"
+                                        tabindex="-1"
+                                    >
+                                        <img class="spaces-checkout-pe-tab-badge-img" src="./assets/images/spaces-v2/checkout/figma252/paypal-mark.svg" width="24" height="24" alt="" aria-hidden="true">
+                                        <span class="spaces-checkout-pe-tab-label">PayPal</span>
+                                    </button>
                                 </div>
-                                <p class="spaces-checkout-currency-rate" data-checkout-currency-rate dir="ltr">
-                                    <span data-checkout-currency-rate-text>1 USD = 2.7045 GEL</span> (incl. 2% conversion fee).
-                                </p>
-                            </div>
 
-                            <div class="spaces-checkout-payment-element" data-checkout-card-fields>
-                                <div class="spaces-checkout-pm is-card is-open" data-checkout-method="card">
-                                    <div class="spaces-checkout-pm-head">
-                                        <span class="spaces-checkout-pm-radio" aria-hidden="true"></span>
-                                        <span class="spaces-checkout-pm-title">Card</span>
-                                        <span class="spaces-checkout-brands" aria-hidden="true">
-                                            <img src="./assets/images/spaces-v2/checkout/brand-mastercard.svg?v=figma244" width="32" height="20" alt="">
-                                            <img src="./assets/images/spaces-v2/checkout/brand-visa.svg?v=figma244" width="32" height="20" alt="">
-                                            <img src="./assets/images/spaces-v2/checkout/brand-amex.svg?v=figma244" width="32" height="20" alt="">
-                                        </span>
-                                    </div>
-
-                                    <div class="spaces-checkout-pm-body">
-                                        <div class="spaces-checkout-card-block" data-checkout-payment-element>
-                                            <div class="spaces-checkout-field is-card-number">
-                                                <label class="visually-hidden" for="spaces-checkout-card">Card number</label>
-                                                <input id="spaces-checkout-card" type="text" inputmode="numeric" placeholder="1234 1234 1234 1234" autocomplete="cc-number">
+                                <div
+                                    class="spaces-checkout-pe-panel"
+                                    role="tabpanel"
+                                    id="spaces-checkout-panel-card"
+                                    aria-labelledby="spaces-checkout-tab-card"
+                                    data-checkout-method-panel="card"
+                                >
+                                    <div class="spaces-checkout-figma-fields" data-checkout-payment-element>
+                                        <div class="spaces-checkout-figma-field">
+                                            <label class="spaces-checkout-figma-label" for="spaces-checkout-card">Card number</label>
+                                            <div class="spaces-checkout-figma-input-wrap is-card">
+                                                <input id="spaces-checkout-card" type="text" inputmode="numeric" placeholder="1424 1424 1424 1424" autocomplete="cc-number">
+                                                <span class="spaces-checkout-figma-brands" aria-hidden="true">
+                                                    <img src="./assets/images/spaces-v2/checkout/figma252/brand-mc.svg" width="35" height="24" alt="">
+                                                    <img src="./assets/images/spaces-v2/checkout/figma252/brand-visa.svg" width="35" height="24" alt="">
+                                                    <img src="./assets/images/spaces-v2/checkout/figma252/brand-amex.svg" width="35" height="24" alt="">
+                                                </span>
                                             </div>
-                                            <div class="spaces-checkout-field-row">
-                                                <div class="spaces-checkout-field is-exp">
-                                                    <label class="visually-hidden" for="spaces-checkout-exp">Expiration</label>
-                                                    <input id="spaces-checkout-exp" type="text" placeholder="MM / YY" autocomplete="cc-exp">
+                                        </div>
+
+                                        <div class="spaces-checkout-figma-row">
+                                            <div class="spaces-checkout-figma-field">
+                                                <label class="spaces-checkout-figma-label" for="spaces-checkout-exp">Expiration</label>
+                                                <div class="spaces-checkout-figma-input-wrap">
+                                                    <input id="spaces-checkout-exp" type="text" placeholder="MM/YY" autocomplete="cc-exp">
                                                 </div>
-                                                <div class="spaces-checkout-field is-cvc">
-                                                    <label class="visually-hidden" for="spaces-checkout-cvc">CVC</label>
-                                                    <input id="spaces-checkout-cvc" type="text" inputmode="numeric" placeholder="CVC" autocomplete="cc-csc">
-                                                    <svg class="spaces-checkout-cvc-icon" width="24" height="16" viewBox="0 0 24 16" fill="none" aria-hidden="true"><rect x=".75" y=".75" width="22.5" height="14.5" rx="2.25" stroke="#A3A4AD" stroke-width="1.5"/><path d="M.75 5h22.5" stroke="#A3A4AD" stroke-width="1.5"/><path d="M14 10h5" stroke="#A3A4AD" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                            </div>
+                                            <div class="spaces-checkout-figma-field">
+                                                <label class="spaces-checkout-figma-label" for="spaces-checkout-cvc">CVC</label>
+                                                <div class="spaces-checkout-figma-input-wrap">
+                                                    <input id="spaces-checkout-cvc" type="text" inputmode="numeric" placeholder="•••" autocomplete="cc-csc">
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="spaces-checkout-field is-billing">
-                                            <label class="spaces-checkout-field-label" for="spaces-checkout-name">Cardholder name</label>
-                                            <input id="spaces-checkout-name" type="text" placeholder="Full name on card" autocomplete="cc-name">
+                                        <div class="spaces-checkout-figma-field">
+                                            <label class="spaces-checkout-figma-label" for="spaces-checkout-name">Full name</label>
+                                            <div class="spaces-checkout-figma-input-wrap">
+                                                <input id="spaces-checkout-name" type="text" autocomplete="cc-name">
+                                            </div>
                                         </div>
-                                        <div class="spaces-checkout-field is-billing is-country">
-                                            <label class="spaces-checkout-field-label" for="spaces-checkout-country">Country or region</label>
-                                            <div class="spaces-checkout-select-wrap">
+
+                                        <div class="spaces-checkout-figma-field">
+                                            <label class="spaces-checkout-figma-label" for="spaces-checkout-country">Country</label>
+                                            <div class="spaces-checkout-figma-input-wrap is-select">
                                                 <select id="spaces-checkout-country" autocomplete="country-name">
+                                                    <option>Georgia</option>
                                                     <option>Israel</option>
                                                     <option>United States</option>
                                                     <option>United Kingdom</option>
                                                     <option>Germany</option>
-                                                    <option>Georgia</option>
                                                 </select>
-                                                <img class="spaces-checkout-select-chevron" src="./assets/images/spaces-v2/checkout/select-chevron-figma.svg?v=figma244" width="16" height="16" alt="" aria-hidden="true">
+                                                <img class="spaces-checkout-figma-chevron" src="./assets/images/spaces-v2/checkout/figma252/select-chevron.svg" width="24" height="24" alt="" aria-hidden="true">
                                             </div>
                                         </div>
-                                        <div class="spaces-checkout-field is-billing">
-                                            <label class="spaces-checkout-field-label" for="spaces-checkout-address">Address</label>
-                                            <input id="spaces-checkout-address" type="text" placeholder="Address" autocomplete="street-address">
-                                        </div>
-                                        <div class="spaces-checkout-field is-billing">
-                                            <label class="spaces-checkout-field-label" for="spaces-checkout-email">Email</label>
-                                            <input id="spaces-checkout-email" type="email" placeholder="email@example.com" autocomplete="email">
+
+                                        <div class="spaces-checkout-figma-field">
+                                            <label class="spaces-checkout-figma-label" for="spaces-checkout-address">Address</label>
+                                            <div class="spaces-checkout-figma-input-wrap">
+                                                <input id="spaces-checkout-address" type="text" autocomplete="street-address">
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div
+                                    class="spaces-checkout-pe-panel"
+                                    role="tabpanel"
+                                    id="spaces-checkout-panel-apple-pay"
+                                    aria-labelledby="spaces-checkout-tab-apple-pay"
+                                    data-checkout-method-panel="apple_pay"
+                                    hidden
+                                >
+                                    <button type="button" class="spaces-checkout-wallet-btn is-apple" data-checkout-pay="apple" aria-label="Pay with Apple Pay">
+                                        <img src="./assets/images/spaces-v2/checkout/apple-pay-wordmark.svg?v=3" alt="" width="54" height="22">
+                                    </button>
+                                </div>
+
+                                <div
+                                    class="spaces-checkout-pe-panel"
+                                    role="tabpanel"
+                                    id="spaces-checkout-panel-paypal"
+                                    aria-labelledby="spaces-checkout-tab-paypal"
+                                    data-checkout-method-panel="paypal"
+                                    hidden
+                                >
+                                    <button type="button" class="spaces-checkout-wallet-btn is-paypal" data-checkout-pay="paypal" aria-label="Pay with PayPal">
+                                        <img src="./assets/images/spaces-v2/checkout/paypal-wordmark.svg" alt="" width="100" height="28">
+                                    </button>
                                 </div>
                             </div>
 
                             <div class="spaces-checkout-checks">
-                                <button type="button" class="spaces-checkout-check" data-checkout-save aria-pressed="false">
-                                    <span class="spaces-checkout-check-box" aria-hidden="true"></span>
-                                    <span>Safe information for future payments</span>
-                                </button>
-
                                 <div class="spaces-checkout-business" data-checkout-business-block>
                                     <button type="button" class="spaces-checkout-check" data-checkout-business aria-pressed="false" aria-controls="spaces-checkout-tax-id" aria-expanded="false">
-                                        <span class="spaces-checkout-check-box" aria-hidden="true"></span>
+                                        <span class="spaces-checkout-check-box" aria-hidden="true">
+                                            <img src="./assets/images/spaces-v2/checkout/figma252/check-small.svg" width="20" height="20" alt="">
+                                        </span>
                                         <span>I’m buying as a business</span>
                                     </button>
 
                                     <div class="spaces-checkout-tax-id" id="spaces-checkout-tax-id" data-checkout-tax-id hidden>
-                                        <div class="spaces-checkout-field is-billing">
-                                            <label class="spaces-checkout-field-label" for="spaces-checkout-business-name">Business name</label>
-                                            <input id="spaces-checkout-business-name" type="text" placeholder="Business name" autocomplete="organization" data-checkout-business-name>
-                                        </div>
-                                        <div class="spaces-checkout-field is-billing is-country">
-                                            <label class="spaces-checkout-field-label" for="spaces-checkout-tax-type">Tax ID type</label>
-                                            <div class="spaces-checkout-select-wrap">
-                                                <select id="spaces-checkout-tax-type" data-checkout-tax-type>
-                                                    <option value="eu_vat">VAT</option>
-                                                    <option value="us_ein">EIN</option>
-                                                    <option value="gb_vat">GB VAT</option>
-                                                    <option value="ge_vat">GE VAT</option>
-                                                </select>
-                                                <img class="spaces-checkout-select-chevron" src="./assets/images/spaces-v2/checkout/select-chevron-figma.svg?v=figma244" width="16" height="16" alt="" aria-hidden="true">
+                                        <div class="spaces-checkout-figma-field">
+                                            <label class="spaces-checkout-figma-label" for="spaces-checkout-business-name">Business name</label>
+                                            <div class="spaces-checkout-figma-input-wrap">
+                                                <input id="spaces-checkout-business-name" type="text" autocomplete="organization" data-checkout-business-name>
                                             </div>
                                         </div>
-                                        <div class="spaces-checkout-field is-billing">
-                                            <label class="spaces-checkout-field-label" for="spaces-checkout-tax-value">Tax ID</label>
-                                            <input id="spaces-checkout-tax-value" type="text" placeholder="Tax ID" autocomplete="off" data-checkout-tax-value>
+                                        <div class="spaces-checkout-figma-row">
+                                            <div class="spaces-checkout-figma-field">
+                                                <label class="spaces-checkout-figma-label" for="spaces-checkout-tax-type">Tax ID type</label>
+                                                <div class="spaces-checkout-figma-input-wrap is-select">
+                                                    <select id="spaces-checkout-tax-type" data-checkout-tax-type>
+                                                        <option value="ge_vat">🇬🇪  GE  VAT</option>
+                                                        <option value="eu_vat">VAT</option>
+                                                        <option value="us_ein">EIN</option>
+                                                        <option value="gb_vat">GB VAT</option>
+                                                    </select>
+                                                    <img class="spaces-checkout-figma-chevron" src="./assets/images/spaces-v2/checkout/figma252/select-chevron.svg" width="24" height="24" alt="" aria-hidden="true">
+                                                </div>
+                                            </div>
+                                            <div class="spaces-checkout-figma-field">
+                                                <label class="spaces-checkout-figma-label" for="spaces-checkout-tax-value">Tax ID</label>
+                                                <div class="spaces-checkout-figma-input-wrap">
+                                                    <input id="spaces-checkout-tax-value" type="text" autocomplete="off" data-checkout-tax-value>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p class="spaces-checkout-tax-id-hint" data-checkout-tax-hint>Used on invoices and for VAT refunds where available.</p>
                                     </div>
                                 </div>
                             </div>
@@ -4699,7 +4737,7 @@
                                 </div>
                             </div>
 
-                            <button type="button" class="spaces-checkout-cta" data-checkout-cta>Get Premium</button>
+                            <button type="button" class="spaces-checkout-cta" data-checkout-cta>Pay $70.38</button>
                             <p class="spaces-checkout-legal" data-checkout-legal>Payment is encrypted. By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
                         </aside>
                     </div>
@@ -4710,6 +4748,6 @@
         <script src="./assets/js/spaces-upgrade-modal.js?v=checkout-pro-trial-1"></script>
         <script src="./assets/js/spaces-usage-modal.js?v=figma-1"></script>
         <script src="./assets/js/spaces-buy-credits-modal.js?v=3"></script>
-        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-amount-nowrap-1"></script>
+        <script src="./assets/js/spaces-checkout-modal.js?v=checkout-match-design-10"></script>
     </body>
 </html>

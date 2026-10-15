@@ -6,6 +6,7 @@
     const ALL_CHATS_MIN = 3;
     const section = document.querySelector('[data-ai-chats-section]');
     const list = section?.querySelector('[data-ai-chats-list]');
+    const sidebarEmpty = section?.querySelector('[data-ai-chats-empty]');
     const allButton = section?.querySelector('[data-ai-chats-all]');
     const newWrap = section?.querySelector('[data-ai-chats-new-wrap]');
     const newButton = section?.querySelector('[data-ai-chats-new]');
@@ -225,11 +226,42 @@
     };
 
     const chatMatchesSpaceFilter = (chat, filterId = pageSpaceFilter) => {
-        if (!filterId || filterId === 'all') return true;
-        return spaceFilterValue(chatSpace(chat)) === String(filterId);
+        const selected = String(filterId || 'all');
+        if (!selected || selected === 'all') return true;
+        const space = chatSpace(chat);
+        if (selected === NONE_FILTER) return !space;
+        if (!space) return false;
+        if (spaceFilterValue(space) === selected) return true;
+        const byId = knownSpaces.find(item => String(item.id) === selected);
+        if (byId && chatSpaceTitle(chat)) {
+            return chatSpaceTitle(chat).toLowerCase() === String(byId.title || '').toLowerCase();
+        }
+        if (selected.startsWith('title:')) {
+            return chatSpaceTitle(chat).toLowerCase() === selected.slice(6).toLowerCase();
+        }
+        return false;
     };
 
     const filteredChats = () => chats.filter(chat => chatMatchesSpaceFilter(chat));
+
+    const syncSidebarEmpty = () => {
+        if (!section || !list) return;
+        let emptyNode = section.querySelector('[data-ai-chats-empty]');
+        if (!emptyNode) {
+            emptyNode = document.createElement('p');
+            emptyNode.className = 'spaces-ai-chats-empty';
+            emptyNode.setAttribute('data-ai-chats-empty', '');
+            list.insertAdjacentElement('afterend', emptyNode);
+        }
+        const matchedCount = filteredChats().length;
+        const showEmpty = chats.length > 0 && matchedCount === 0;
+        emptyNode.textContent = pageSpaceFilter !== 'all'
+            ? 'No chats in this space'
+            : 'No chats yet';
+        emptyNode.hidden = !showEmpty;
+        emptyNode.setAttribute('aria-hidden', showEmpty ? 'false' : 'true');
+        section.classList.toggle('is-space-filter-empty', showEmpty);
+    };
 
     const spaceFilterOptions = () => {
         const seen = new Set();
@@ -314,7 +346,12 @@
     const applySpaceFilter = (value, { persist = true, renderLists = true } = {}) => {
         pageSpaceFilter = String(value || 'all');
         const options = spaceFilterOptions();
-        if (!options.some(option => optionFilterId(option) === pageSpaceFilter)) {
+        const hasSpaceOptions = options.some(option => {
+            const id = optionFilterId(option);
+            return id !== 'all' && id !== NONE_FILTER;
+        });
+        // Only reset unknown filters after spaces have loaded.
+        if (hasSpaceOptions && !options.some(option => optionFilterId(option) === pageSpaceFilter)) {
             pageSpaceFilter = 'all';
         }
         if (persist) persistSpaceFilter(pageSpaceFilter);
@@ -328,6 +365,7 @@
         });
         renderSpaceFilterMenu();
         if (renderLists) render();
+        else syncSidebarEmpty();
     };
 
     const fillFilterMenu = menu => {
@@ -1248,12 +1286,16 @@
                 allButton.removeAttribute('aria-current');
             }
             list.replaceChildren();
+            section.classList.remove('is-space-filter-empty');
+            if (sidebarEmpty) sidebarEmpty.hidden = true;
+            syncSidebarEmpty();
             renderAllPage();
             renderContinue();
             return;
         }
 
-        list.replaceChildren(...visibleChats().map(chat => {
+        const matchedChats = filteredChats();
+        const rows = matchedChats.slice(0, SIDEBAR_LIMIT).map(chat => {
             const item = document.createElement('li');
             item.className = 'spaces-ai-chats-row';
             if (chat.id === currentId) item.classList.add('is-active');
@@ -1283,7 +1325,9 @@
             item.append(button);
             attachChatActions(item, chat);
             return item;
-        }));
+        });
+        list.replaceChildren(...rows);
+        syncSidebarEmpty();
 
         if (allButton) {
             const showAllChats = chats.length >= ALL_CHATS_MIN;
@@ -1787,25 +1831,22 @@
 
     document.addEventListener('spaces-account-profile-ready', event => {
         knownSpaces = event.detail?.account?.spaces || [];
-        if (isAllChatsPage()) renderAllPage();
+        applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: true });
         renderContinue();
-        applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: false });
     });
 
     if (window.SpacesAccountData?.load) {
         window.SpacesAccountData.load().then(account => {
             knownSpaces = account?.spaces || [];
-            if (isAllChatsPage()) renderAllPage();
+            applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: true });
             renderContinue();
-            applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: false });
         }).catch(() => {});
     }
 
     chats = readStore();
     pageSpaceFilter = readSpaceFilter();
-    render();
+    applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: true });
     renderArtifacts();
-    applySpaceFilter(pageSpaceFilter, { persist: false, renderLists: false });
 
     window.SpacesAiChats = {
         captureCurrent,

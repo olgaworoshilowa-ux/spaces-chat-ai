@@ -24,7 +24,6 @@
     const fromLabel = modal?.querySelector('[data-checkout-from-label]');
     const cancelNote = modal?.querySelector('[data-checkout-cancel-note]');
     const legalNode = modal?.querySelector('[data-checkout-legal]');
-    const saveToggle = modal?.querySelector('[data-checkout-save]');
     const businessToggle = modal?.querySelector('[data-checkout-business]');
     const taxIdPanel = modal?.querySelector('[data-checkout-tax-id]');
     const taxTypeSelect = modal?.querySelector('[data-checkout-tax-type]');
@@ -53,7 +52,7 @@
     let lastFocus = null;
     let returnTo = 'buy-credits';
     let startMode = 'trial';
-    let selectedCurrency = currencyRoot?.querySelector('[data-checkout-currency-option]:checked')?.value || 'gel';
+    let selectedCurrency = 'usd';
     let currentPack = {
         kind: 'credits',
         credits: 500,
@@ -100,7 +99,7 @@
         const { isPlan, annual, unitPrice, monthlyList, billedTotal, listTotal } = getUsdTotals();
         const useTrial = Boolean(currentPack.trialAvailable) && startMode === 'trial';
         const asBusiness = businessToggle?.getAttribute('aria-pressed') === 'true';
-        const taxConfig = TAX_BY_COUNTRY[countrySelect?.value || 'Israel'] || TAX_BY_COUNTRY.Israel;
+        const taxConfig = TAX_BY_COUNTRY[countrySelect?.value || 'Georgia'] || TAX_BY_COUNTRY.Georgia;
         const vatUsd = asBusiness ? billedTotal * taxConfig.rate : 0;
         const dueUsd = billedTotal + vatUsd;
         const credits = formatCredits(currentPack.credits || 0);
@@ -198,25 +197,14 @@
                 ? `Billed yearly · ${money(unitPrice)} a month`
                 : 'Billed monthly',
             cancelLabel: '',
-            cta: currentPack.cta || `Get ${currentPack.name || 'plan'}`,
+            cta: `Pay ${money(dueUsd)}`,
             legal: legalEncrypted,
             selectorTotalUsd: dueUsd
         };
     };
 
     const syncCurrencyToggle = () => {
-        currencyInputs.forEach(input => {
-            const code = input.value || 'gel';
-            const label = input.closest('.spaces-checkout-toggle-item');
-            const active = code === selectedCurrency;
-            input.checked = active;
-            label?.classList.toggle('is-selected', active);
-        });
-        if (currencyRateNode) {
-            currencyRateNode.textContent = selectedCurrency === 'usd'
-                ? `1 GEL = ${(1 / CURRENCIES.gel.rate).toFixed(4)} USD`
-                : `1 USD = ${CURRENCIES.gel.rate} GEL`;
-        }
+        /* Currency is outside Payment Element (Stripe docs). Kept for totals only. */
     };
 
     const syncPack = () => {
@@ -267,6 +255,48 @@
         if (restoreFocus) lastFocus = null;
     };
 
+    const paymentRoot = modal.querySelector('[data-checkout-payment-element-root]');
+    const paymentTabs = paymentRoot
+        ? Array.from(paymentRoot.querySelectorAll('[role="tab"][data-checkout-method]'))
+        : [];
+    const paymentPanels = paymentRoot
+        ? Array.from(paymentRoot.querySelectorAll('[data-checkout-method-panel]'))
+        : [];
+
+    const selectPaymentMethod = (method) => {
+        if (!paymentRoot || !method) return;
+        paymentTabs.forEach(tab => {
+            const selected = tab.getAttribute('data-checkout-method') === method;
+            tab.classList.toggle('is-selected', selected);
+            tab.setAttribute('aria-selected', String(selected));
+            tab.tabIndex = selected ? 0 : -1;
+        });
+        paymentPanels.forEach(panel => {
+            const active = panel.getAttribute('data-checkout-method-panel') === method;
+            panel.hidden = !active;
+        });
+    };
+
+    paymentTabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => {
+            selectPaymentMethod(tab.getAttribute('data-checkout-method'));
+        });
+        tab.addEventListener('keydown', event => {
+            if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && event.key !== 'Home' && event.key !== 'End') {
+                return;
+            }
+            event.preventDefault();
+            let nextIndex = index;
+            if (event.key === 'ArrowRight') nextIndex = (index + 1) % paymentTabs.length;
+            if (event.key === 'ArrowLeft') nextIndex = (index - 1 + paymentTabs.length) % paymentTabs.length;
+            if (event.key === 'Home') nextIndex = 0;
+            if (event.key === 'End') nextIndex = paymentTabs.length - 1;
+            const next = paymentTabs[nextIndex];
+            selectPaymentMethod(next.getAttribute('data-checkout-method'));
+            next.focus();
+        });
+    });
+
     const openModal = (pack, trigger, options = {}) => {
         lastFocus = trigger || document.activeElement;
         if (pack) currentPack = pack;
@@ -281,6 +311,8 @@
         }
         modal.hidden = false;
         document.body.classList.add('is-checkout-modal-open');
+        if (countrySelect && !countrySelect.value) countrySelect.value = 'Georgia';
+        selectPaymentMethod('card');
         syncPack();
         modal.querySelector('[data-checkout-back]')?.focus();
     };
@@ -298,8 +330,8 @@
     };
 
     const syncTaxIdForCountry = () => {
-        const country = countrySelect?.value || 'Israel';
-        const config = TAX_BY_COUNTRY[country] || TAX_BY_COUNTRY.Israel;
+        const country = countrySelect?.value || 'Georgia';
+        const config = TAX_BY_COUNTRY[country] || TAX_BY_COUNTRY.Georgia;
         if (taxTypeSelect) taxTypeSelect.value = config.type;
         if (taxValueInput) taxValueInput.placeholder = config.placeholder;
         const hint = modal.querySelector('[data-checkout-tax-hint]');
@@ -318,15 +350,6 @@
         syncPack();
     };
 
-    const wireToggle = (button) => {
-        button?.addEventListener('click', () => {
-            const pressed = button.getAttribute('aria-pressed') === 'true';
-            button.setAttribute('aria-pressed', String(!pressed));
-        });
-    };
-
-    wireToggle(saveToggle);
-
     businessToggle?.addEventListener('click', () => {
         const open = businessToggle.getAttribute('aria-pressed') !== 'true';
         setBusinessOpen(open);
@@ -341,7 +364,7 @@
 
     currencyInputs.forEach(input => {
         input.addEventListener('change', () => {
-            selectedCurrency = input.value || 'gel';
+            selectedCurrency = input.value || 'usd';
             syncPack();
         });
     });
